@@ -15,6 +15,7 @@
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
 [![CI](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8B-orange)](https://fair-software.eu)
 
 `cosmicjellyfish` is a Python package for cosmological Fisher forecasts. It helps prepare and compare forecasts for surveys such as Euclid, DESI, SKAO and CMB experiments.
 
