@@ -4,7 +4,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/santiagocasas/cosmicjellyfish/main/docs/source/_static/logo/banner-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/santiagocasas/cosmicjellyfish/main/docs/source/_static/logo/banner-light.svg">
-    <img alt="CosmicJellyfish: Fisher and Monte Carlo cosmological forecasts with Python and JAX" width="600" src="https://raw.githubusercontent.com/santiagocasas/cosmicjellyfish/main/docs/source/_static/logo/banner-dark@2x.png">
+    <img alt="CosmicJellyfish: Fisher and Monte Carlo cosmological forecasts with Python and JAX" width="1000" src="https://raw.githubusercontent.com/santiagocasas/cosmicjellyfish/main/docs/source/_static/logo/banner-dark@2x.png">
   </picture>
 </p>
 
