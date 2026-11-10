@@ -153,5 +153,6 @@ forwarded to `run_cmb_fisher_smoke.py`.
 | Script | Invocation |
 | --- | --- |
 | `scripts/maintenance/release/prepare_changelog.py` | `uv run python scripts/maintenance/release/prepare_changelog.py` moves the current version from the Unreleased section into a dated `CHANGELOG.md` heading. It edits the file in place and takes no arguments. |
+| `scripts/maintenance/release/check_version_consistency.py` | `uv run python scripts/maintenance/release/check_version_consistency.py` exits with an error if `CITATION.cff` carries a different `version:` than `cosmicjellyfish/version.py`; it runs in CI as the `Metadata` task. |
 | `scripts/maintenance/release/release_notes.py` | `TAG=<git-tag> uv run python scripts/maintenance/release/release_notes.py` generates release notes; the release GitHub Actions workflow also uses it. |
 | `scripts/maintenance/release/release.sh` | `bash scripts/maintenance/release/release.sh` is an interactive helper that prepares the changelog, commits, tags, and pushes commits and tags. It has no help mode; read it and check the repository state before running. |

@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `scripts/maintenance/release/check_version_consistency.py` and a `Metadata` CI task that fail
+  when the `version:` entry of `CITATION.cff` differs from `cosmicjellyfish/version.py`.
 - `environment.yml` for `mamba`/`conda` users (`conda-forge` channel, versions mirroring
   `pyproject.toml`), documented in the installation guide and README.
 
@@ -20,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Package version bumped to `2.0.0rc1` (first PyPI release candidate of the 2.0 series, which
+  covers the `cosmicfishpie` to `cosmicjellyfish` rename, the JAX backend and the symbolic
+  backend overhaul). The legacy `1.3.1` heading now uses the `## [vX.Y.Z]` format that
+  `release_notes.py` expects.
 - Prepare PyPI publishing. `symbolic-pofk` is no longer a direct-URL dependency of the
   package (PyPI rejects those); `code="symbolic"` now raises an `ImportError` with
   install instructions (`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`)
@@ -214,7 +220,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reorganize `scripts/` into category subfolders and notebooks into a numbered workflow
   (legacy notebooks archived); add backend validation and symbolic provenance docs pages.
 
-## 1.3.1
+## [v1.3.1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v1.3.1)
 
 - Add the CAMB/CLASS validation suite, threshold-aware dashboard, and manual
   GitHub Pages publication workflow.

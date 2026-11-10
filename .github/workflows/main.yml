@@ -60,6 +60,12 @@ jobs:
                 isort --check .
                 black --check --diff .
 
+          - python: "3.10"
+            task:
+              name: Metadata
+              run: |
+                python scripts/maintenance/release/check_version_consistency.py
+
     steps:
       - uses: actions/checkout@v7
 
