@@ -279,9 +279,11 @@ set one to `0` to compare against the slower path.
 
 ## Project status and citation
 
-Cosmicjellyfish has a backend-neutral derivative-provider interface, so a future
-differentiable solver or emulator can supply derivatives. JAX is not currently
-an implemented backend.
+Cosmicjellyfish has a backend-neutral derivative-provider interface. The optional
+JAXcosmo backend uses it to supply automatic-differentiation derivatives for the
+photometric (`GCph`, `WL`) and spectroscopic (`GCsp`) observables, alongside the
+default finite-difference schemes. See {doc}`jaxcosmo` for the supported models,
+the AD and FD routes, and their known limitations.
 
 To cite the project, use the repository's
 [CITATION.cff](https://github.com/santiagocasas/cosmicjellyfish/blob/main/CITATION.cff).

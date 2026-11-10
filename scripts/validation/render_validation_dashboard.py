@@ -566,7 +566,7 @@ def _relevant_paths(case: CaseDef, repo_root: Path) -> list[str]:
         "cosmicjellyfish/configs/other_survey_specifications",
         "cosmicjellyfish/configs/external_data",
         "pyproject.toml",
-        "requirements.txt",
+        "environment.yml",
         "uv.lock",
         "scripts/validation/run_fisher_compare_backends.py",
         "scripts/validation/compare_fishers_in_dir.py",

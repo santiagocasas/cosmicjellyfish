@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `environment.yml` for `mamba`/`conda` users (`conda-forge` channel, versions mirroring
+  `pyproject.toml`), documented in the installation guide and README.
+
+### Removed
+
+- `requirements.txt`. It had drifted from `pyproject.toml` (unpinned NumPy, a pinned `uv`,
+  no JAX extras) and nothing used it; `pyproject.toml` is the single source of truth for
+  `pip`/`uv`, and `environment.yml` covers conda.
+
 ### Changed
 
 - Prepare PyPI publishing. `symbolic-pofk` is no longer a direct-URL dependency of the
@@ -19,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Align metadata and docs: `CITATION.cff` now carries version 1.3.1 and all four authors
+  (matching `pyproject.toml` and the docs BibTeX entry), the comprehensive guide no longer
+  says JAX is not implemented, and the README feature list mentions JAX autodiff.
 - Normalise GCsp Fisher parameter axes before covariance inversion and nuisance
   marginalisation so physical `As` units do not suppress other uncertainties; use a
   purely relative finite-difference step for physical `As` in the final Jacobian; make
