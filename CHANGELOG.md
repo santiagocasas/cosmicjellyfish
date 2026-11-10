@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Prepare PyPI publishing. `symbolic-pofk` is no longer a direct-URL dependency of the
+  package (PyPI rejects those); `code="symbolic"` now raises an `ImportError` with
+  install instructions (`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`)
+  when it is missing. Source checkouts keep installing it through `uv` (default
+  dependency group, unpinned upstream repository). The release workflow now uses PyPI
+  Trusted Publishing: `rc` tags and manual runs go to TestPyPI, final `vX.Y.Z` tags to
+  PyPI, replacing the stored-password `twine upload`.
+
 ### Fixed
 
 - Normalise GCsp Fisher parameter axes before covariance inversion and nuisance

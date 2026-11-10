@@ -290,9 +290,12 @@ class boltzmann_code:
                 self.colossus_settings = colossus_settings
                 self.symblin = symblin
                 self.symbfit = symbfit
-            except ImportError:
-                print("Module symbolic_pofk not properly installed. Aborting")
-                sys.exit()
+            except ImportError as err:
+                from cosmicjellyfish.cosmology.symbolic_new import (
+                    SYMBOLIC_POFK_INSTALL_HINT,
+                )
+
+                raise ImportError(SYMBOLIC_POFK_INSTALL_HINT) from err
             self.halofit_version = self.boltzmann_symbolicpars["COSMO_SETTINGS"][
                 "halofit_version"
             ]  # 'syren' or 'halofit+' or 'takahashi'

@@ -657,7 +657,6 @@ dependencies = [
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scipy", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "seaborn" },
-    { name = "symbolic-pofk" },
 ]
 
 [package.optional-dependencies]
@@ -706,6 +705,11 @@ jaxcosmo = [
     { name = "jaxlib", version = "0.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
     { name = "jaxlib", version = "0.12.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "setuptools" },
+]
+
+[package.dev-dependencies]
+symbolic = [
+    { name = "symbolic-pofk" },
 ]
 
 [package.metadata]
@@ -760,11 +764,13 @@ requires-dist = [
     { name = "sphinx-copybutton", marker = "extra == 'dev'", specifier = "==0.5.2" },
     { name = "sphinx-copybutton", marker = "extra == 'docs'", specifier = ">=0.5.2" },
     { name = "sphinx-design", marker = "extra == 'docs'", specifier = ">=0.6.1" },
-    { name = "symbolic-pofk", url = "https://github.com/DeaglanBartlett/symbolic_pofk/archive/cb4d2bb5a759d0c682dc1499cf3aad1c496436ac.tar.gz" },
     { name = "twine", marker = "extra == 'dev'", specifier = ">=7.0.0" },
     { name = "wheel", marker = "extra == 'dev'" },
 ]
 provides-extras = ["emulators", "jaxcosmo", "docs", "dev"]
+
+[package.metadata.requires-dev]
+symbolic = [{ name = "symbolic-pofk", git = "https://github.com/DeaglanBartlett/symbolic_pofk" }]
 
 [[package]]
 name = "coverage"
@@ -3566,7 +3572,7 @@ wheels = [
 [[package]]
 name = "symbolic-pofk"
 version = "0.1.0"
-source = { url = "https://github.com/DeaglanBartlett/symbolic_pofk/archive/cb4d2bb5a759d0c682dc1499cf3aad1c496436ac.tar.gz" }
+source = { git = "https://github.com/DeaglanBartlett/symbolic_pofk#cb4d2bb5a759d0c682dc1499cf3aad1c496436ac" }
 dependencies = [
     { name = "colossus" },
     { name = "matplotlib" },
@@ -3574,17 +3580,6 @@ dependencies = [
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "scipy", version = "1.17.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
-sdist = { hash = "sha256:fc7c73c15cef5e010ef092322749c00b618247124bd1b1c152517b335980a2cd" }
-
-[package.metadata]
-requires-dist = [
-    { name = "colossus" },
-    { name = "matplotlib" },
-    { name = "numpy" },
-    { name = "scipy" },
-    { name = "torch", marker = "extra == 'torch'" },
-]
-provides-extras = ["torch"]
 
 [[package]]
 name = "sympy"

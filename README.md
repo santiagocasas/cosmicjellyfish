@@ -42,6 +42,12 @@ for targeted DVC downloads and instructions to run the comparisons.
 pip install cosmicjellyfish
 ```
 
+The `symbolic` backend additionally needs [`symbolic_pofk`](https://github.com/DeaglanBartlett/symbolic_pofk), which is not on PyPI. Install it with
+
+```bash
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+```
+
 To work from a source checkout, use [`uv`](https://docs.astral.sh/uv/):
 
 ```bash
@@ -60,7 +66,7 @@ and, from a source checkout, run the tests with `uv run pytest`. Conda setup, op
 
 ## Minimal example
 
-A photometric forecast with the `symbolic` backend. It needs no solver setup and runs in a few seconds from any directory, writing its output to `results/`:
+A photometric forecast with the `symbolic` backend (requires `symbolic_pofk`, see above). It needs no solver setup and runs in a few seconds from any directory, writing its output to `results/`:
 
 ```python
 from cosmicjellyfish.fishermatrix import cosmicfish as cff

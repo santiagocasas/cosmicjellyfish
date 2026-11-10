@@ -16,6 +16,33 @@ from scipy.interpolate import InterpolatedUnivariateSpline, RectBivariateSpline
 
 SPEED_OF_LIGHT_KM_S = 299792.458
 
+SYMBOLIC_POFK_INSTALL_HINT = (
+    "The 'symbolic' backend needs the optional package 'symbolic_pofk', which is not "
+    "published on PyPI. Install it with:\n"
+    "    pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git"
+)
+
+
+def import_symbolic_pofk(module: str):
+    """Import a ``symbolic_pofk`` submodule or raise an ``ImportError`` with install guidance.
+
+    Parameters
+    ----------
+    module : str
+        Submodule name relative to ``symbolic_pofk`` (e.g. ``"linear_new"``).
+
+    Returns
+    -------
+    module
+        The imported submodule.
+    """
+    import importlib
+
+    try:
+        return importlib.import_module(f"symbolic_pofk.{module}")
+    except ImportError as err:
+        raise ImportError(SYMBOLIC_POFK_INSTALL_HINT) from err
+
 
 def _as_scalar(value: float | np.ndarray) -> float:
     return float(np.asarray(value))
@@ -64,7 +91,9 @@ class SyrenNewProvider:
             as_value = np.exp(_as_scalar(parameters["logAs"])) * 0.1
 
         if as_value is None:
-            from symbolic_pofk.linear_new import sigma8_to_As_max_precision
+            sigma8_to_As_max_precision = import_symbolic_pofk(
+                "linear_new"
+            ).sigma8_to_As_max_precision
 
             as_value = sigma8_to_As_max_precision(
                 _as_scalar(parameters.get("sigma8", 0.815583)),
@@ -92,8 +121,8 @@ class SyrenNewProvider:
         return resolved
 
     def build(self) -> SimpleNamespace:
-        from symbolic_pofk.linear_new import plin_new_emulated
-        from symbolic_pofk.syren_new import pnl_new_emulated
+        plin_new_emulated = import_symbolic_pofk("linear_new").plin_new_emulated
+        pnl_new_emulated = import_symbolic_pofk("syren_new").pnl_new_emulated
 
         h = self.cosmopars["h"]
         zgrid = np.linspace(

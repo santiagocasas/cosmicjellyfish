@@ -11,8 +11,9 @@ parameter on which the conversion depends.
 The expressions below are the "max precision" symbolic fits of
 ``symbolic_pofk.linear_new`` (Bartlett et al.), ported verbatim to
 ``jax.numpy`` so that they can be traced, jitted and differentiated.  The
-coefficients are copied from the ``symbolic_pofk`` revision pinned in
-``pyproject.toml``; ``tests`` should compare against that package.
+coefficients are copied from the upstream ``symbolic_pofk`` package (the
+revision used for development is locked in ``uv.lock``); ``tests`` should
+compare against that package.
 
 All functions are pure and accept scalars or arrays.  ``As`` is ``10^9 A_s``.
 The fit is valid for the symbolic_pofk training domain; callers are
