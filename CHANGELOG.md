@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `scripts/maintenance/release/release.sh` rewritten as a guarded, documented release helper:
+  it requires a clean, up-to-date `main`, checks that the tag does not exist and that
+  `version.py` and `CITATION.cff` agree, commits only `CHANGELOG.md`, creates the tag, supports
+  `--dry-run`, and never pushes (it prints the push commands instead).
 - `scripts/maintenance/release/check_version_consistency.py` and a `Metadata` CI task that fail
   when the `version:` entry of `CITATION.cff` differs from `cosmicjellyfish/version.py`.
 - `environment.yml` for `mamba`/`conda` users (`conda-forge` channel, versions mirroring
