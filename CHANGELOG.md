@@ -40,6 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Review fixes for the PyPI preparation: the publish jobs check out with
+  `persist-credentials: false`; the legacy symbolic backend only shows the `symbolic_pofk`
+  install hint when `symbolic_pofk` itself is missing (a missing `colossus` is reported as
+  such); `environment.yml` uses `nodefaults` and provides conda-forge compilers so the
+  source-built `classy` installs without system compilers. Tests cover the import-error paths.
 - Align metadata and docs: `CITATION.cff` now carries version 1.3.1 and all four authors
   (matching `pyproject.toml` and the docs BibTeX entry), the comprehensive guide no longer
   says JAX is not implemented, and the README feature list mentions JAX autodiff.

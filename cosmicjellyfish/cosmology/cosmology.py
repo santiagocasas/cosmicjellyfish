@@ -273,29 +273,30 @@ class boltzmann_code:
                 raise ValueError(
                     f"Unknown symbolic provider {provider_name!r}; expected 'syren_new' or 'legacy'."
                 )
-            try:
-                import colossus.cosmology as colmo
-                import colossus.settings as colossus_settings
+            # colossus is a regular dependency: a failure here propagates unchanged.
+            import colossus.cosmology as colmo
+            import colossus.settings as colossus_settings
 
-                # Respect CosmicJellyfish configuration before symbolic backend objects are created.
-                # Empty persistence disables Colossus disk caching but keeps in-memory caching.
-                colossus_persistence = self.settings.get("colossus_persistence", "")
-                if colossus_persistence is None:
-                    colossus_persistence = ""
-                colossus_settings.PERSISTENCE = colossus_persistence
+            # Respect CosmicJellyfish configuration before symbolic backend objects are created.
+            # Empty persistence disables Colossus disk caching but keeps in-memory caching.
+            colossus_persistence = self.settings.get("colossus_persistence", "")
+            if colossus_persistence is None:
+                colossus_persistence = ""
+            colossus_settings.PERSISTENCE = colossus_persistence
+            # symbolic_pofk is optional (not on PyPI): only its absence gets the install hint.
+            try:
                 import symbolic_pofk.linear as symblin
                 import symbolic_pofk.syrenhalofit as symbfit
-
-                self.colmo = colmo
-                self.colossus_settings = colossus_settings
-                self.symblin = symblin
-                self.symbfit = symbfit
             except ImportError as err:
                 from cosmicjellyfish.cosmology.symbolic_new import (
                     SYMBOLIC_POFK_INSTALL_HINT,
                 )
 
                 raise ImportError(SYMBOLIC_POFK_INSTALL_HINT) from err
+            self.colmo = colmo
+            self.colossus_settings = colossus_settings
+            self.symblin = symblin
+            self.symbfit = symbfit
             self.halofit_version = self.boltzmann_symbolicpars["COSMO_SETTINGS"][
                 "halofit_version"
             ]  # 'syren' or 'halofit+' or 'takahashi'

@@ -51,7 +51,8 @@ mamba activate cosmicjellyfish
 ```
 
 `classy`, `chainconsumer` and `colossus` are not on conda-forge, so they come from PyPI
-inside that same step. To add optional extras afterwards, use
+inside that same step. `classy` is compiled from source, so the environment also installs
+the conda-forge C/C++ compilers and `make` (you do not need system compilers). To add optional extras afterwards, use
 `pip install -e ".[jaxcosmo]"` (or `emulators`, `docs`, `dev`) in the activated
 environment. The versions in `environment.yml` mirror `pyproject.toml`; `ipython` is the
 one exception, since conda-forge stops at 8.37 and `pip` moves it to the pinned 8.39.
