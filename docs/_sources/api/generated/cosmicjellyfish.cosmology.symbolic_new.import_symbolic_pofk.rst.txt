@@ -1,0 +1,6 @@
+import\_symbolic\_pofk
+======================
+
+.. currentmodule:: cosmicjellyfish.cosmology.symbolic_new
+
+.. autofunction:: import_symbolic_pofk

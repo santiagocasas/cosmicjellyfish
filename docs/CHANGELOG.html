@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Changelog &#8212; cosmicjellyfish v1.3.1</title>
+    <title>Changelog &#8212; cosmicjellyfish v2.0.0rc1</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="_static/documentation_options.js?v=bb516dca"></script>
+    <script src="_static/documentation_options.js?v=f2943afd"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -53,10 +53,10 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Backend validation" href="backend_validation.html" />
-    <link rel="prev" title="Contributing" href="CONTRIBUTING.html" />
+    <link rel="prev" title="Releasing" href="releasing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.3" />
+  <meta name="docsearch:version" content="2.0" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -418,6 +418,7 @@
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasing.html">Releasing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Changelog</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Validation and tools</span></p>
@@ -508,9 +509,60 @@
 and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <section id="unreleased">
 <h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<section id="added">
+<h3>Added<a class="headerlink" href="#added" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/release.sh</span></code> rewritten as a guarded, step-by-step release helper:
+it requires a clean, up-to-date <code class="docutils literal notranslate"><span class="pre">main</span></code>, checks that the tag does not exist and that
+<code class="docutils literal notranslate"><span class="pre">version.py</span></code> and <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code> agree, explains and confirms each step, commits only
+<code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code>, creates the tag, supports <code class="docutils literal notranslate"><span class="pre">--dry-run</span></code> and <code class="docutils literal notranslate"><span class="pre">--yes</span></code>, and never pushes (it
+prints the push commands and the post-release checks instead).</p></li>
+<li><p>Release guide <code class="docutils literal notranslate"><span class="pre">docs/source/releasing.md</span></code> (TestPyPI and PyPI flow, one-time setup, recovery),
+replacing the outdated <code class="docutils literal notranslate"><span class="pre">docs/RELEASE_PROCESS.md</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/check_version_consistency.py</span></code> and a <code class="docutils literal notranslate"><span class="pre">Metadata</span></code> CI task that fail
+when the <code class="docutils literal notranslate"><span class="pre">version:</span></code> entry of <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code> differs from <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/version.py</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> for <code class="docutils literal notranslate"><span class="pre">mamba</span></code>/<code class="docutils literal notranslate"><span class="pre">conda</span></code> users (<code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> channel, versions mirroring
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>), documented in the installation guide and README.</p></li>
+</ul>
+</section>
+<section id="removed">
+<h3>Removed<a class="headerlink" href="#removed" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>. It had drifted from <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (unpinned NumPy, a pinned <code class="docutils literal notranslate"><span class="pre">uv</span></code>,
+no JAX extras) and nothing used it; <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> is the single source of truth for
+<code class="docutils literal notranslate"><span class="pre">pip</span></code>/<code class="docutils literal notranslate"><span class="pre">uv</span></code>, and <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> covers conda.</p></li>
+</ul>
+</section>
+<section id="changed">
+<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Package version bumped to <code class="docutils literal notranslate"><span class="pre">2.0.0rc1</span></code> (first PyPI release candidate of the 2.0 series, which
+covers the <code class="docutils literal notranslate"><span class="pre">cosmicfishpie</span></code> to <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish</span></code> rename, the JAX backend and the symbolic
+backend overhaul). The legacy <code class="docutils literal notranslate"><span class="pre">1.3.1</span></code> heading now uses the <code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">[vX.Y.Z]</span></code> format that
+<code class="docutils literal notranslate"><span class="pre">release_notes.py</span></code> expects.</p></li>
+<li><p>Prepare PyPI publishing. <code class="docutils literal notranslate"><span class="pre">symbolic-pofk</span></code> is no longer a direct-URL dependency of the
+package (PyPI rejects those); <code class="docutils literal notranslate"><span class="pre">code=&quot;symbolic&quot;</span></code> now raises an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> with
+install instructions (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">git+https://github.com/DeaglanBartlett/symbolic_pofk.git</span></code>)
+when it is missing. Source checkouts keep installing it through <code class="docutils literal notranslate"><span class="pre">uv</span></code> (default
+dependency group, unpinned upstream repository). The release workflow now uses PyPI
+Trusted Publishing: <code class="docutils literal notranslate"><span class="pre">rc</span></code> tags and manual runs go to TestPyPI, final <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> tags to
+PyPI, replacing the stored-password <code class="docutils literal notranslate"><span class="pre">twine</span> <span class="pre">upload</span></code>.</p></li>
+</ul>
+</section>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Review fixes for the PyPI preparation: the publish jobs check out with
+<code class="docutils literal notranslate"><span class="pre">persist-credentials:</span> <span class="pre">false</span></code>; the legacy symbolic backend only shows the <code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code>
+install hint when <code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code> itself is missing (a missing <code class="docutils literal notranslate"><span class="pre">colossus</span></code> is reported as
+such); <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> uses <code class="docutils literal notranslate"><span class="pre">nodefaults</span></code> and provides conda-forge <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">gxx</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code>
+(the commands the source-built <code class="docutils literal notranslate"><span class="pre">classy</span></code> calls by name); <code class="docutils literal notranslate"><span class="pre">release.sh</span></code> accepts multi-word
+<code class="docutils literal notranslate"><span class="pre">PYTHON</span></code> values such as <code class="docutils literal notranslate"><span class="pre">PYTHON=&quot;uv</span> <span class="pre">run</span> <span class="pre">python&quot;</span></code> and keeps an executable path with spaces as
+one argument; the macOS SDK prerequisite for the source-built <code class="docutils literal notranslate"><span class="pre">classy</span></code> is documented.
+Tests cover the import-error paths.</p></li>
+<li><p>Align metadata and docs: <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code> now carries version 1.3.1 and all four authors
+(matching <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> and the docs BibTeX entry), the comprehensive guide no longer
+says JAX is not implemented, and the README feature list mentions JAX autodiff.</p></li>
 <li><p>Normalise GCsp Fisher parameter axes before covariance inversion and nuisance
 marginalisation so physical <code class="docutils literal notranslate"><span class="pre">As</span></code> units do not suppress other uncertainties; use a
 purely relative finite-difference step for physical <code class="docutils literal notranslate"><span class="pre">As</span></code> in the final Jacobian; make
@@ -677,8 +729,8 @@ spectra handling.</p></li>
 </ul>
 </section>
 </section>
-<section id="id1">
-<h2>1.3.1<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="v1-3-1">
+<h2><a class="reference external" href="https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v1.3.1">v1.3.1</a><a class="headerlink" href="#v1-3-1" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Add the CAMB/CLASS validation suite, threshold-aware dashboard, and manual
 GitHub Pages publication workflow.</p></li>
@@ -725,12 +777,12 @@ Change <code class="docutils literal notranslate"><span class="pre">is</span> <s
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="CONTRIBUTING.html"
+       href="releasing.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Contributing</p>
+        <p class="prev-next-title">Releasing</p>
       </div>
     </a>
     <a class="right-next"
@@ -762,10 +814,13 @@ Change <code class="docutils literal notranslate"><span class="pre">is</span> <s
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removed">Removed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#changed">Changed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.3.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v1-3-1">v1.3.1</a></li>
 </ul>
   </nav></div>
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scripts reference &#8212; cosmicjellyfish v1.3.1</title>
+    <title>Scripts reference &#8212; cosmicjellyfish v2.0.0rc1</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="_static/documentation_options.js?v=bb516dca"></script>
+    <script src="_static/documentation_options.js?v=f2943afd"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -56,7 +56,7 @@
     <link rel="prev" title="jaxcosmo backend: review log" href="jaxcosmo_review.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.3" />
+  <meta name="docsearch:version" content="2.0" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -418,6 +418,7 @@
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Project</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releasing.html">Releasing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Changelog</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Validation and tools</span></p>
@@ -805,11 +806,14 @@ forwarded to <code class="docutils literal notranslate"><span class="pre">run_cm
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/prepare_changelog.py</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">python</span> <span class="pre">scripts/maintenance/release/prepare_changelog.py</span></code> moves the current version from the Unreleased section into a dated <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> heading. It edits the file in place and takes no arguments.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/release_notes.py</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/check_version_consistency.py</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">run</span> <span class="pre">python</span> <span class="pre">scripts/maintenance/release/check_version_consistency.py</span></code> exits with an error if <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code> carries a different <code class="docutils literal notranslate"><span class="pre">version:</span></code> than <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/version.py</span></code>; it runs in CI as the <code class="docutils literal notranslate"><span class="pre">Metadata</span></code> task.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/release_notes.py</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">TAG=&lt;git-tag&gt;</span> <span class="pre">uv</span> <span class="pre">run</span> <span class="pre">python</span> <span class="pre">scripts/maintenance/release/release_notes.py</span></code> generates release notes; the release GitHub Actions workflow also uses it.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/release.sh</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">scripts/maintenance/release/release.sh</span></code> is an interactive helper that prepares the changelog, commits, tags, and pushes commits and tags. It has no help mode; read it and check the repository state before running.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">scripts/maintenance/release/release.sh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">scripts/maintenance/release/release.sh</span> <span class="pre">[--dry-run]</span> <span class="pre">[--yes]</span></code> is a guided, step-by-step release helper. From a clean, up-to-date <code class="docutils literal notranslate"><span class="pre">main</span></code> it checks that <code class="docutils literal notranslate"><span class="pre">version.py</span></code> and <code class="docutils literal notranslate"><span class="pre">CITATION.cff</span></code> agree, turns <code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">Unreleased</span></code> into a dated <code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">[vX.Y.Z]</span></code> changelog section, commits only <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> and creates the tag <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code>, explaining and confirming each step. It never pushes; it prints the push commands and the post-release checks. A tag containing <code class="docutils literal notranslate"><span class="pre">rc</span></code> publishes to TestPyPI, any other tag to PyPI. See <a class="reference internal" href="releasing.html"><span class="doc">Releasing</span></a>.</p></td>
 </tr>
 </tbody>
 </table>

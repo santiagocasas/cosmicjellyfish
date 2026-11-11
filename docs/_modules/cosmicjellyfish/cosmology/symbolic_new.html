@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cosmicjellyfish.cosmology.symbolic_new &#8212; cosmicjellyfish v1.3.1</title>
+    <title>cosmicjellyfish.cosmology.symbolic_new &#8212; cosmicjellyfish v2.0.0rc1</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="../../../_static/documentation_options.js?v=bb516dca"></script>
+    <script src="../../../_static/documentation_options.js?v=f2943afd"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -53,7 +53,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.3" />
+  <meta name="docsearch:version" content="2.0" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -472,6 +472,36 @@
 
 <span class="n">SPEED_OF_LIGHT_KM_S</span> <span class="o">=</span> <span class="mf">299792.458</span>
 
+<span class="n">SYMBOLIC_POFK_INSTALL_HINT</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;The &#39;symbolic&#39; backend needs the optional package &#39;symbolic_pofk&#39;, which is not &quot;</span>
+    <span class="s2">&quot;published on PyPI. Install it with:</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="s2">&quot;    pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git&quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="import_symbolic_pofk">
+<a class="viewcode-back" href="../../../api/generated/cosmicjellyfish.cosmology.symbolic_new.import_symbolic_pofk.html#cosmicjellyfish.cosmology.symbolic_new.import_symbolic_pofk">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">import_symbolic_pofk</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import a ``symbolic_pofk`` submodule or raise an ``ImportError`` with install guidance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module : str</span>
+<span class="sd">        Submodule name relative to ``symbolic_pofk`` (e.g. ``&quot;linear_new&quot;``).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    module</span>
+<span class="sd">        The imported submodule.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;symbolic_pofk.</span><span class="si">{</span><span class="n">module</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">SYMBOLIC_POFK_INSTALL_HINT</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span></div>
+
+
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_as_scalar</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
@@ -522,7 +552,9 @@
             <span class="n">as_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">_as_scalar</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s2">&quot;logAs&quot;</span><span class="p">]))</span> <span class="o">*</span> <span class="mf">0.1</span>
 
         <span class="k">if</span> <span class="n">as_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">symbolic_pofk.linear_new</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigma8_to_As_max_precision</span>
+            <span class="n">sigma8_to_As_max_precision</span> <span class="o">=</span> <span class="n">import_symbolic_pofk</span><span class="p">(</span>
+                <span class="s2">&quot;linear_new&quot;</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">sigma8_to_As_max_precision</span>
 
             <span class="n">as_value</span> <span class="o">=</span> <span class="n">sigma8_to_As_max_precision</span><span class="p">(</span>
                 <span class="n">_as_scalar</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sigma8&quot;</span><span class="p">,</span> <span class="mf">0.815583</span><span class="p">)),</span>
@@ -550,8 +582,8 @@
         <span class="k">return</span> <span class="n">resolved</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimpleNamespace</span><span class="p">:</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">symbolic_pofk.linear_new</span><span class="w"> </span><span class="kn">import</span> <span class="n">plin_new_emulated</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">symbolic_pofk.syren_new</span><span class="w"> </span><span class="kn">import</span> <span class="n">pnl_new_emulated</span>
+        <span class="n">plin_new_emulated</span> <span class="o">=</span> <span class="n">import_symbolic_pofk</span><span class="p">(</span><span class="s2">&quot;linear_new&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">plin_new_emulated</span>
+        <span class="n">pnl_new_emulated</span> <span class="o">=</span> <span class="n">import_symbolic_pofk</span><span class="p">(</span><span class="s2">&quot;syren_new&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pnl_new_emulated</span>
 
         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cosmopars</span><span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">]</span>
         <span class="n">zgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>

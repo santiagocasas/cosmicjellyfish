@@ -7,8 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `scripts/maintenance/release/release.sh` rewritten as a guarded, step-by-step release helper:
+  it requires a clean, up-to-date `main`, checks that the tag does not exist and that
+  `version.py` and `CITATION.cff` agree, explains and confirms each step, commits only
+  `CHANGELOG.md`, creates the tag, supports `--dry-run` and `--yes`, and never pushes (it
+  prints the push commands and the post-release checks instead).
+- Release guide `docs/source/releasing.md` (TestPyPI and PyPI flow, one-time setup, recovery),
+  replacing the outdated `docs/RELEASE_PROCESS.md`.
+- `scripts/maintenance/release/check_version_consistency.py` and a `Metadata` CI task that fail
+  when the `version:` entry of `CITATION.cff` differs from `cosmicjellyfish/version.py`.
+- `environment.yml` for `mamba`/`conda` users (`conda-forge` channel, versions mirroring
+  `pyproject.toml`), documented in the installation guide and README.
+
+### Removed
+
+- `requirements.txt`. It had drifted from `pyproject.toml` (unpinned NumPy, a pinned `uv`,
+  no JAX extras) and nothing used it; `pyproject.toml` is the single source of truth for
+  `pip`/`uv`, and `environment.yml` covers conda.
+
+### Changed
+
+- Package version bumped to `2.0.0rc1` (first PyPI release candidate of the 2.0 series, which
+  covers the `cosmicfishpie` to `cosmicjellyfish` rename, the JAX backend and the symbolic
+  backend overhaul). The legacy `1.3.1` heading now uses the `## [vX.Y.Z]` format that
+  `release_notes.py` expects.
+- Prepare PyPI publishing. `symbolic-pofk` is no longer a direct-URL dependency of the
+  package (PyPI rejects those); `code="symbolic"` now raises an `ImportError` with
+  install instructions (`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`)
+  when it is missing. Source checkouts keep installing it through `uv` (default
+  dependency group, unpinned upstream repository). The release workflow now uses PyPI
+  Trusted Publishing: `rc` tags and manual runs go to TestPyPI, final `vX.Y.Z` tags to
+  PyPI, replacing the stored-password `twine upload`.
+
 ### Fixed
 
+- Review fixes for the PyPI preparation: the publish jobs check out with
+  `persist-credentials: false`; the legacy symbolic backend only shows the `symbolic_pofk`
+  install hint when `symbolic_pofk` itself is missing (a missing `colossus` is reported as
+  such); `environment.yml` uses `nodefaults` and provides conda-forge `gcc`, `gxx` and `make`
+  (the commands the source-built `classy` calls by name); `release.sh` accepts multi-word
+  `PYTHON` values such as `PYTHON="uv run python"` and keeps an executable path with spaces as
+  one argument; the macOS SDK prerequisite for the source-built `classy` is documented.
+  Tests cover the import-error paths.
+- Align metadata and docs: `CITATION.cff` now carries version 1.3.1 and all four authors
+  (matching `pyproject.toml` and the docs BibTeX entry), the comprehensive guide no longer
+  says JAX is not implemented, and the README feature list mentions JAX autodiff.
 - Normalise GCsp Fisher parameter axes before covariance inversion and nuisance
   marginalisation so physical `As` units do not suppress other uncertainties; use a
   purely relative finite-difference step for physical `As` in the final Jacobian; make
@@ -190,7 +235,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reorganize `scripts/` into category subfolders and notebooks into a numbered workflow
   (legacy notebooks archived); add backend validation and symbolic provenance docs pages.
 
-## 1.3.1
+## [v1.3.1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v1.3.1)
 
 - Add the CAMB/CLASS validation suite, threshold-aware dashboard, and manual
   GitHub Pages publication workflow.

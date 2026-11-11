@@ -9,9 +9,18 @@ pip install cosmicjellyfish
 ```
 
 `camb` and `classy` (the CLASS Python wrapper) are required dependencies, so this already gives
-you both solvers. The built-in `symbolic` backend (`"code": "symbolic"`) does not run a
-Boltzmann solver at runtime, although CAMB and CLASS are still installed as package dependencies.
-The {doc}`first_forecast` uses it.
+you both solvers. The `symbolic` backend (`"code": "symbolic"`) does not run a
+Boltzmann solver at runtime and is used by the {doc}`first_forecast`. It relies on the
+[`symbolic_pofk`](https://github.com/DeaglanBartlett/symbolic_pofk) package, which is not
+published on PyPI and therefore cannot be installed automatically with `cosmicjellyfish`
+(PyPI does not allow packages to depend on Git URLs). Install it once by hand:
+
+```bash
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+```
+
+Without it, `"code": "symbolic"` raises an `ImportError` with this same hint; the `camb`
+and `class` backends are unaffected.
 
 ## Install from source
 
@@ -25,18 +34,31 @@ uv sync --extra dev        # or: pip install -e ".[dev]"
 ```
 
 Leave out `--extra dev` (or `[dev]`) for a lighter install without the test and
-linting tools.
+linting tools. With `uv`, `symbolic_pofk` is installed automatically from its upstream Git
+repository (via a default dependency group); with `pip`, add it by hand as shown above.
 
-If you prefer conda-style environments, create one with `mamba` (or `conda`) and install
-in editable mode:
+## Install with mamba or conda
+
+The repository ships an `environment.yml` that takes the compiled scientific packages
+(CAMB, NumPy, SciPy, h5py, ...) from `conda-forge` and installs the rest, including
+`symbolic_pofk` and cosmicjellyfish itself (editable), with `pip`:
 
 ```bash
-mamba create -n cosmicjellyfish -c conda-forge python=3.11 pip
-mamba activate cosmicjellyfish
 git clone https://github.com/santiagocasas/cosmicjellyfish.git
 cd cosmicjellyfish
-pip install -e .
+mamba env create -f environment.yml    # or: conda env create -f environment.yml
+mamba activate cosmicjellyfish
 ```
+
+`classy`, `chainconsumer` and `colossus` are not on conda-forge, so they come from PyPI
+inside that same step. `classy` is compiled from source and its build calls `gcc`, `g++` and `make` by name, so the
+environment also installs the conda-forge `gcc`, `gxx` and `make` packages (Linux and
+macOS), so no system compilers are needed. On macOS the compiler still needs an SDK:
+install the Xcode Command Line Tools (`xcode-select --install`) or point `SDKROOT` at
+an SDK before creating the environment. To add optional extras afterward, use
+`pip install -e ".[jaxcosmo]"` (or `emulators`, `docs`, `dev`) in the activated
+environment. The versions in `environment.yml` mirror `pyproject.toml`; `ipython` is the
+one exception, since conda-forge stops at 8.37 and `pip` moves it to the pinned 8.39.
 
 ## Optional extras
 

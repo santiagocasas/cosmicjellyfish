@@ -9,6 +9,14 @@ cosmicjellyfish.cosmology.symbolic\_new
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      import_symbolic_pofk
+   
    
 
    

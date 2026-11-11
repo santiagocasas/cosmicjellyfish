@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Installation &#8212; cosmicjellyfish v1.3.1</title>
+    <title>Installation &#8212; cosmicjellyfish v2.0.0rc1</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="_static/documentation_options.js?v=bb516dca"></script>
+    <script src="_static/documentation_options.js?v=f2943afd"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -56,7 +56,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.3" />
+  <meta name="docsearch:version" content="2.0" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -488,9 +488,16 @@
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">camb</span></code> and <code class="docutils literal notranslate"><span class="pre">classy</span></code> (the CLASS Python wrapper) are required dependencies, so this already gives
-you both solvers. The built-in <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> backend (<code class="docutils literal notranslate"><span class="pre">&quot;code&quot;:</span> <span class="pre">&quot;symbolic&quot;</span></code>) does not run a
-Boltzmann solver at runtime, although CAMB and CLASS are still installed as package dependencies.
-The <a class="reference internal" href="first_forecast.html"><span class="doc">A verified first forecast</span></a> uses it.</p>
+you both solvers. The <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> backend (<code class="docutils literal notranslate"><span class="pre">&quot;code&quot;:</span> <span class="pre">&quot;symbolic&quot;</span></code>) does not run a
+Boltzmann solver at runtime and is used by the <a class="reference internal" href="first_forecast.html"><span class="doc">A verified first forecast</span></a>. It relies on the
+<a class="reference external" href="https://github.com/DeaglanBartlett/symbolic_pofk"><code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code></a> package, which is not
+published on PyPI and therefore cannot be installed automatically with <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish</span></code>
+(PyPI does not allow packages to depend on Git URLs). Install it once by hand:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+</pre></div>
+</div>
+<p>Without it, <code class="docutils literal notranslate"><span class="pre">&quot;code&quot;:</span> <span class="pre">&quot;symbolic&quot;</span></code> raises an <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> with this same hint; the <code class="docutils literal notranslate"><span class="pre">camb</span></code>
+and <code class="docutils literal notranslate"><span class="pre">class</span></code> backends are unaffected.</p>
 </section>
 <section id="install-from-source">
 <h2>Install from source<a class="headerlink" href="#install-from-source" title="Link to this heading">#</a></h2>
@@ -502,16 +509,29 @@ uv<span class="w"> </span>sync<span class="w"> </span>--extra<span class="w"> </
 </pre></div>
 </div>
 <p>Leave out <code class="docutils literal notranslate"><span class="pre">--extra</span> <span class="pre">dev</span></code> (or <code class="docutils literal notranslate"><span class="pre">[dev]</span></code>) for a lighter install without the test and
-linting tools.</p>
-<p>If you prefer conda-style environments, create one with <code class="docutils literal notranslate"><span class="pre">mamba</span></code> (or <code class="docutils literal notranslate"><span class="pre">conda</span></code>) and install
-in editable mode:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mamba<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>cosmicjellyfish<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11<span class="w"> </span>pip
-mamba<span class="w"> </span>activate<span class="w"> </span>cosmicjellyfish
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/santiagocasas/cosmicjellyfish.git
+linting tools. With <code class="docutils literal notranslate"><span class="pre">uv</span></code>, <code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code> is installed automatically from its upstream Git
+repository (via a default dependency group); with <code class="docutils literal notranslate"><span class="pre">pip</span></code>, add it by hand as shown above.</p>
+</section>
+<section id="install-with-mamba-or-conda">
+<h2>Install with mamba or conda<a class="headerlink" href="#install-with-mamba-or-conda" title="Link to this heading">#</a></h2>
+<p>The repository ships an <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> that takes the compiled scientific packages
+(CAMB, NumPy, SciPy, h5py, …) from <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> and installs the rest, including
+<code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code> and cosmicjellyfish itself (editable), with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/santiagocasas/cosmicjellyfish.git
 <span class="nb">cd</span><span class="w"> </span>cosmicjellyfish
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+mamba<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>environment.yml<span class="w">    </span><span class="c1"># or: conda env create -f environment.yml</span>
+mamba<span class="w"> </span>activate<span class="w"> </span>cosmicjellyfish
 </pre></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">classy</span></code>, <code class="docutils literal notranslate"><span class="pre">chainconsumer</span></code> and <code class="docutils literal notranslate"><span class="pre">colossus</span></code> are not on conda-forge, so they come from PyPI
+inside that same step. <code class="docutils literal notranslate"><span class="pre">classy</span></code> is compiled from source and its build calls <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">g++</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code> by name, so the
+environment also installs the conda-forge <code class="docutils literal notranslate"><span class="pre">gcc</span></code>, <code class="docutils literal notranslate"><span class="pre">gxx</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code> packages (Linux and
+macOS), so no system compilers are needed. On macOS the compiler still needs an SDK:
+install the Xcode Command Line Tools (<code class="docutils literal notranslate"><span class="pre">xcode-select</span> <span class="pre">--install</span></code>) or point <code class="docutils literal notranslate"><span class="pre">SDKROOT</span></code> at
+an SDK before creating the environment. To add optional extras afterward, use
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">&quot;.[jaxcosmo]&quot;</span></code> (or <code class="docutils literal notranslate"><span class="pre">emulators</span></code>, <code class="docutils literal notranslate"><span class="pre">docs</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>) in the activated
+environment. The versions in <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> mirror <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>; <code class="docutils literal notranslate"><span class="pre">ipython</span></code> is the
+one exception, since conda-forge stops at 8.37 and <code class="docutils literal notranslate"><span class="pre">pip</span></code> moves it to the pinned 8.39.</p>
 </section>
 <section id="optional-extras">
 <h2>Optional extras<a class="headerlink" href="#optional-extras" title="Link to this heading">#</a></h2>
@@ -610,6 +630,7 @@ runs the test suite.</p>
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-pypi">Install from PyPI</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-source">Install from source</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-with-mamba-or-conda">Install with mamba or conda</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extras">Optional extras</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#survey-data">Survey data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-installation">Check the installation</a></li>
