@@ -29,8 +29,9 @@ for targeted DVC downloads and instructions to run the comparisons.
 ## Features
 
 - **Observables.** Photometric (`GCph`, `WL`) and spectroscopic (`GCsp`) galaxy clustering and weak lensing, CMB (`CMB_T`, `CMB_E`, `CMB_B`) and HI intensity mapping (`IM`).
-- **Backends.** CAMB, CLASS, a built-in `symbolic` backend that needs no Einstein-Boltzmann solver, or precomputed tables.
+- **Backends.** CAMB, CLASS, a built-in `symbolic` backend that needs no Einstein-Boltzmann solver, optional JAXcosmo, or precomputed tables.
 - **Derivatives.** Four finite-difference schemes (`3PT`, `STEM`, `POLY`, `4PT_FWD`), chosen with one option.
+- **Automatic differentiation.** With the optional `jaxcosmo` extra, photometric and spectroscopic observables are differentiated with JAX, and can be compared against finite differences.
 - **Analysis and plots.** Marginalise, reshuffle and combine Fisher matrices, and draw triangle plots to compare surveys and settings.
 - **Likelihood sampling.** Sample the full posterior of the photometric and spectroscopic likelihoods with [Nautilus](https://nautilus-sampler.readthedocs.io/) and compare it with the Fisher forecast.
 
@@ -42,6 +43,12 @@ for targeted DVC downloads and instructions to run the comparisons.
 pip install cosmicjellyfish
 ```
 
+The `symbolic` backend additionally needs [`symbolic_pofk`](https://github.com/DeaglanBartlett/symbolic_pofk), which is not on PyPI. Install it with
+
+```bash
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+```
+
 To work from a source checkout, use [`uv`](https://docs.astral.sh/uv/):
 
 ```bash
@@ -49,6 +56,9 @@ git clone https://github.com/santiagocasas/cosmicjellyfish.git
 cd cosmicjellyfish
 uv sync --extra dev
 ```
+
+Prefer `mamba`/`conda`? From a checkout, `mamba env create -f environment.yml` builds a
+`conda-forge` environment called `cosmicjellyfish` with everything installed.
 
 Check the installation with
 
@@ -60,7 +70,7 @@ and, from a source checkout, run the tests with `uv run pytest`. Conda setup, op
 
 ## Minimal example
 
-A photometric forecast with the `symbolic` backend. It needs no solver setup and runs in a few seconds from any directory, writing its output to `results/`:
+A photometric forecast with the `symbolic` backend (requires `symbolic_pofk`, see above). It needs no solver setup and runs in a few seconds from any directory, writing its output to `results/`:
 
 ```python
 from cosmicjellyfish.fishermatrix import cosmicfish as cff

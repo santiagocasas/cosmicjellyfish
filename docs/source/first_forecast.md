@@ -3,8 +3,8 @@
 
 This page runs a complete photometric Fisher forecast (weak lensing plus
 photometric galaxy clustering) for two cosmological parameters. It uses the
-built-in `symbolic` backend, so you need no Einstein-Boltzmann solver setup, and
-it finishes in well under a minute. It is the same compact configuration the
+`symbolic` backend, so you need no Einstein-Boltzmann solver setup (but you do need
+`symbolic_pofk`, see {doc}`installation`), and it finishes in well under a minute. It is the same compact configuration the
 test suite exercises.
 
 ## Run it

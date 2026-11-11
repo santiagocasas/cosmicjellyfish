@@ -9,6 +9,7 @@ the {doc}`scripts_reference`.
 :caption: Project
 
 CONTRIBUTING
+releasing
 CHANGELOG
 ```
 

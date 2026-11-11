@@ -43,8 +43,11 @@ dependencies = [
     "SciPy>=1.15.3",
     "seaborn",
     "colossus",
-    "symbolic-pofk @ https://github.com/DeaglanBartlett/symbolic_pofk/archive/cb4d2bb5a759d0c682dc1499cf3aad1c496436ac.tar.gz",
 ]
+# ``symbolic-pofk`` (SYREN emulators, ``code="symbolic"``) is not on PyPI and PyPI
+# rejects direct-URL dependencies, so it is NOT a runtime requirement. Install it
+# manually with ``pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git``.
+# Source checkouts get it through the ``symbolic`` dependency group below.
 
 [project.urls]
 Homepage = "https://github.com/santiagocasas/cosmicjellyfish"
@@ -96,6 +99,19 @@ dev = [
     "sphinx-autodoc-typehints==1.23.3",
     "packaging",
 ]
+
+# PEP 735 dependency group: local/CI only, never written to the published metadata.
+[dependency-groups]
+symbolic = [
+    "symbolic-pofk",
+]
+
+[tool.uv]
+# ``uv sync`` installs these groups by default, so source checkouts and CI keep SYREN.
+default-groups = ["symbolic"]
+
+[tool.uv.sources]
+symbolic-pofk = { git = "https://github.com/DeaglanBartlett/symbolic_pofk" }
 
 [tool.setuptools.packages.find]
 exclude = [
