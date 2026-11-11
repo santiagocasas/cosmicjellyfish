@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Replaced the invalid `Topic :: Scientific/Engineering :: Cosmology` trove classifier, which
+  made TestPyPI reject the `v2.0.0rc1` upload, with valid Astronomy, Physics, Information
+  Analysis and Mathematics topics, and added `Operating System`, `Python 3 :: Only` and
+  `Typing :: Typed` classifiers. The development status classifier is raised from Alpha to
+  Beta. The version is bumped to `2.0.0rc2` because the failed
+  `v2.0.0rc1` tag cannot be reused.
+
 ## [v2.0.0rc1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc1) - 2026-11-11
 
 ### Added

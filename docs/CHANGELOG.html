@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Changelog &#8212; cosmicjellyfish v2.0.0rc1</title>
+    <title>Changelog &#8212; cosmicjellyfish v2.0.0rc2</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
-    <script src="_static/documentation_options.js?v=f2943afd"></script>
+    <script src="_static/documentation_options.js?v=c56cb097"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -509,6 +509,17 @@
 and this project adheres to <a class="reference external" href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <section id="unreleased">
 <h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<section id="fixed">
+<h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Replaced the invalid <code class="docutils literal notranslate"><span class="pre">Topic</span> <span class="pre">::</span> <span class="pre">Scientific/Engineering</span> <span class="pre">::</span> <span class="pre">Cosmology</span></code> trove classifier, which
+made TestPyPI reject the <code class="docutils literal notranslate"><span class="pre">v2.0.0rc1</span></code> upload, with valid Astronomy, Physics, Information
+Analysis and Mathematics topics, and added <code class="docutils literal notranslate"><span class="pre">Operating</span> <span class="pre">System</span></code>, <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">3</span> <span class="pre">::</span> <span class="pre">Only</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Typing</span> <span class="pre">::</span> <span class="pre">Typed</span></code> classifiers. The development status classifier is raised from Alpha to
+Beta. The version is bumped to <code class="docutils literal notranslate"><span class="pre">2.0.0rc2</span></code> because the failed
+<code class="docutils literal notranslate"><span class="pre">v2.0.0rc1</span></code> tag cannot be reused.</p></li>
+</ul>
+</section>
 </section>
 <section id="v2-0-0rc1-2026-11-11">
 <h2><a class="reference external" href="https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc1">v2.0.0rc1</a> - 2026-11-11<a class="headerlink" href="#v2-0-0rc1-2026-11-11" title="Link to this heading">#</a></h2>
@@ -552,8 +563,8 @@ Trusted Publishing: <code class="docutils literal notranslate"><span class="pre"
 PyPI, replacing the stored-password <code class="docutils literal notranslate"><span class="pre">twine</span> <span class="pre">upload</span></code>.</p></li>
 </ul>
 </section>
-<section id="fixed">
-<h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h3>Fixed<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Review fixes for the PyPI preparation: the publish jobs check out with
 <code class="docutils literal notranslate"><span class="pre">persist-credentials:</span> <span class="pre">false</span></code>; the legacy symbolic backend only shows the <code class="docutils literal notranslate"><span class="pre">symbolic_pofk</span></code>
@@ -816,12 +827,15 @@ Change <code class="docutils literal notranslate"><span class="pre">is</span> <s
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v2-0-0rc1-2026-11-11">v2.0.0rc1 - 2026-11-11</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#added">Added</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#removed">Removed</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#changed">Changed</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed">Fixed</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fixed</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#v1-3-1">v1.3.1</a></li>
