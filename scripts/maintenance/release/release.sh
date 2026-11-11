@@ -39,7 +39,8 @@ set -euo pipefail
 
 RELEASE_BRANCH="main"
 REMOTE="origin"
-PYTHON="${PYTHON:-python}"
+# Split into an array so that multi-word commands such as "uv run python" work.
+read -r -a PYTHON <<< "${PYTHON:-python}"
 DRY_RUN=0
 
 for arg in "$@"; do
@@ -78,12 +79,12 @@ git fetch --quiet "${REMOTE}" "${RELEASE_BRANCH}" --tags
     || fail "local '${RELEASE_BRANCH}' differs from '${REMOTE}/${RELEASE_BRANCH}'. Run 'git pull' (or push your commits) first."
 
 # Read the version without importing the package (no dependencies needed).
-VERSION="$("${PYTHON}" -c 'import runpy; print(runpy.run_path("cosmicjellyfish/version.py")["VERSION"])')"
+VERSION="$("${PYTHON[@]}" -c 'import runpy; print(runpy.run_path("cosmicjellyfish/version.py")["VERSION"])')"
 [[ -n "${VERSION}" ]] || fail "could not read VERSION from cosmicjellyfish/version.py."
 TAG="v${VERSION}"
 
 # version.py and CITATION.cff must agree (the same check that CI runs).
-"${PYTHON}" scripts/maintenance/release/check_version_consistency.py
+"${PYTHON[@]}" scripts/maintenance/release/check_version_consistency.py
 
 if git rev-parse --quiet --verify "refs/tags/${TAG}" >/dev/null; then
     fail "tag ${TAG} already exists locally or on ${REMOTE}. Bump the version in version.py instead of re-using a tag."
@@ -110,7 +111,7 @@ read -r -p "Create the changelog commit and tag ${TAG} locally? [y/N] " answer
 
 # Moves the notes under "## Unreleased" into a dated "## [vX.Y.Z]" heading, the format that
 # release_notes.py needs to build the GitHub release text. Does nothing if it already exists.
-"${PYTHON}" scripts/maintenance/release/prepare_changelog.py
+"${PYTHON[@]}" scripts/maintenance/release/prepare_changelog.py
 
 grep -q "^## \[${TAG}\]" CHANGELOG.md \
     || fail "CHANGELOG.md has no '## [${TAG}]' section after prepare_changelog.py."

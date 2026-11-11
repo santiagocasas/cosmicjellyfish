@@ -6,7 +6,7 @@
 # Binary-heavy dependencies come from conda-forge, with versions matching
 # ``pyproject.toml``. Packages that conda-forge does not provide (classy,
 # chainconsumer, colossus, symbolic_pofk) and cosmicjellyfish itself are installed
-# by pip at the end; classy is compiled from source, hence the conda compilers.
+# by pip at the end; classy is compiled from source, hence conda-forge gcc/gxx/make.
 # Keep the pins below in sync with ``pyproject.toml``.
 name: cosmicjellyfish
 channels:
@@ -15,9 +15,10 @@ channels:
 dependencies:
   - python=3.11
   - pip
-  # Compilers: classy has no wheel for most platforms and is built from source by pip.
-  - c-compiler
-  - cxx-compiler
+  # classy is built from source by pip and its build calls ``gcc``, ``g++`` and ``make`` by
+  # name; the conda-forge ``gcc``/``gxx`` packages provide those commands on Linux and macOS.
+  - gcc
+  - gxx
   - make
   - astropy=6.1.7
   - camb=2.0.4
