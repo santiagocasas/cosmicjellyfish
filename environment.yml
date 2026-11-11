@@ -7,6 +7,8 @@
 # ``pyproject.toml``. Packages that conda-forge does not provide (classy,
 # chainconsumer, colossus, symbolic_pofk) and cosmicjellyfish itself are installed
 # by pip at the end; classy is compiled from source, hence conda-forge gcc/gxx/make.
+# On macOS the compiler still needs an SDK: install the Xcode Command Line Tools
+# (``xcode-select --install``) or point ``SDKROOT`` at an SDK before creating the env.
 # Keep the pins below in sync with ``pyproject.toml``.
 name: cosmicjellyfish
 channels:

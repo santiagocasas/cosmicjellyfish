@@ -35,8 +35,14 @@ set -euo pipefail
 RELEASE_BRANCH="main"
 REMOTE="origin"
 ACTIONS_URL="https://github.com/santiagocasas/cosmicjellyfish/actions"
-# Split into an array so that multi-word commands such as "uv run python" work.
-read -r -a PYTHON <<< "${PYTHON:-python}"
+# Build an array so that multi-word commands such as "uv run python" work, while an
+# existing executable path (even one containing spaces) stays a single argument.
+PYTHON_CMD="${PYTHON:-python}"
+if [[ -x "$PYTHON_CMD" && ! -d "$PYTHON_CMD" ]]; then
+    PYTHON=("$PYTHON_CMD")
+else
+    read -r -a PYTHON <<< "$PYTHON_CMD"
+fi
 DRY_RUN=0
 ASSUME_YES=0
 TOTAL_STEPS=5
