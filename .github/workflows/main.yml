@@ -253,7 +253,8 @@ jobs:
 
       - name: Generate release notes
         run: |
-          python scripts/maintenance/release/release_notes.py > ${{ github.workspace }}-RELEASE_NOTES.md
+          # `uv sync` installs into .venv, so run through uv rather than the system python.
+          uv run --no-sync python scripts/maintenance/release/release_notes.py > ${{ github.workspace }}-RELEASE_NOTES.md
 
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v3
