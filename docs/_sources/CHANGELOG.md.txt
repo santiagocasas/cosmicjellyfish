@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v2.0.0rc1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc1) - 2026-11-11
+
 ### Added
 
 - `scripts/maintenance/release/release.sh` rewritten as a guarded, step-by-step release helper:
