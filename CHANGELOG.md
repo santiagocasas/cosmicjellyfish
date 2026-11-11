@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v2.0.0rc2](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc2) - 2026-11-11
+
 ### Fixed
 
 - Replaced the invalid `Topic :: Scientific/Engineering :: Cosmology` trove classifier, which
