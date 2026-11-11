@@ -61,8 +61,6 @@ it is and what is wrong. Items marked (docs) are already worked around in the do
 - `ns_response_metadata.json` records `k_hmpc.samples: 243`, while
   `plot_ns_power_response.py` defaults `--k-samples` to 240. The artifact was probably
   made with non-default flags that the metadata does not record.
-- `docs/RELEASE_PROCESS.md`, "Fixing a failed release": it deletes all local tags
-  (`git tag -l | xargs git tag -d`), not just the broken one. Not wrong, but blunt.
 
 ## Tests missing
 
