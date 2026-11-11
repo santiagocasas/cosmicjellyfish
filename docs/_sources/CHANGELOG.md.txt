@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- The `Release` job in the `Main` workflow now generates the release notes through `uv run`,
+  so `release_notes.py` finds the `packaging` module installed in the project environment.
+  Previously it used the system Python and failed after the `v2.0.0rc2` publish.
+
 ## [v2.0.0rc2](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc2) - 2026-11-11
 
 ### Fixed
