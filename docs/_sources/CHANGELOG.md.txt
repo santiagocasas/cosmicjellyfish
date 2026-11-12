@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [v2.0.0](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0) - 2026-11-12
+
 ### Fixed
 
 - The `Release` job in the `Main` workflow now generates the release notes through `uv run`,
