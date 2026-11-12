@@ -10,6 +10,8 @@
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 [![Documentation](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/docs.yml/badge.svg)](https://www.santicasas.space/cosmicjellyfish/docs/)
+[![PyPI](https://img.shields.io/pypi/v/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
+[![Python versions](https://img.shields.io/pypi/pyversions/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![codecov](https://codecov.io/github/santiagocasas/cosmicjellyfish/graph/badge.svg?token=BXTVDPXPUO)](https://codecov.io/github/santiagocasas/cosmicjellyfish)
 [![37.50 % FAIR](https://img.shields.io/badge/FAIR_assessment-37.50_%25-red)](https://fair-checker.france-bioinformatique.fr/assessment/68da9e3cc49e421b3e2cf501)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
