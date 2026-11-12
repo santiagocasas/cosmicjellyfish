@@ -13,11 +13,12 @@
 [![PyPI](https://img.shields.io/pypi/v/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![codecov](https://codecov.io/github/santiagocasas/cosmicjellyfish/graph/badge.svg?token=BXTVDPXPUO)](https://codecov.io/github/santiagocasas/cosmicjellyfish)
-[![37.50 % FAIR](https://img.shields.io/badge/FAIR_assessment-37.50_%25-red)](https://fair-checker.france-bioinformatique.fr/assessment/68da9e3cc49e421b3e2cf501)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
 [![CI](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
-[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B%20%20%E2%97%8F%20%20%E2%97%8F-yellow)](https://fair-software.eu)
+
+[![37.50 % FAIR](https://img.shields.io/badge/FAIR_assessment-37.50_%25-red)](https://fair-checker.france-bioinformatique.fr/assessment/68da9e3cc49e421b3e2cf501)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B-yellow)](https://fair-software.eu)
 
 `cosmicjellyfish` is a Python package for cosmological Fisher forecasts. It helps prepare and compare forecasts for surveys such as Euclid, DESI, SKAO and CMB experiments.
 
