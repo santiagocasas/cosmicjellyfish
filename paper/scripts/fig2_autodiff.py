@@ -46,10 +46,16 @@ assert names == fisher_jfd.get_param_names() == fisher_fd.get_param_names()
 sig_ad = fisher_ad.get_confidence_bounds()
 r_jfd = fisher_jfd.get_confidence_bounds() / sig_ad - 1
 r_fd = fisher_fd.get_confidence_bounds() / sig_ad - 1
-dF = (
-    lambda f: np.abs(f.fisher_matrix - fisher_ad.fisher_matrix).max()
-    / np.abs(fisher_ad.fisher_matrix).max()
-)
+
+
+def dF(f):
+    """Max relative deviation of a Fisher matrix from the autodiff one."""
+    return (
+        np.abs(f.fisher_matrix - fisher_ad.fisher_matrix).max()
+        / np.abs(fisher_ad.fisher_matrix).max()
+    )
+
+
 print("max|dF|/max|F|  JAX FD:", dF(fisher_jfd), " standard FD:", dF(fisher_fd))
 print("max |sigma ratio - 1|  JAX FD:", np.abs(r_jfd).max(), " standard FD:", np.abs(r_fd).max())
 np.savetxt(
