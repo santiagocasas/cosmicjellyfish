@@ -1,0 +1,29 @@
+# Copy this file to .github/workflows/draft-pdf.yml
+name: Draft PDF
+on:
+  push:
+    paths:
+      - paper/**
+      - .github/workflows/draft-pdf.yml
+  workflow_dispatch:
+
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    name: Paper Draft
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build draft PDF
+        uses: openjournals/openjournals-draft-action@master
+        with:
+          journal: joss
+          # Path to the paper, relative to the repository root.
+          paper-path: paper/paper.md
+      - name: Upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: paper
+          # The PDF is written next to paper.md.
+          path: paper/paper.pdf
+          archive: false

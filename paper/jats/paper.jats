@@ -1,0 +1,1505 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 20190208//EN"
+                  "JATS-publishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="1.2" article-type="other">
+<front>
+<journal-meta>
+<journal-id></journal-id>
+<journal-title-group>
+<journal-title>Journal of Open Source Software</journal-title>
+<abbrev-journal-title>JOSS</abbrev-journal-title>
+</journal-title-group>
+<issn publication-format="electronic">2475-9066</issn>
+<publisher>
+<publisher-name>Open Journals</publisher-name>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">0</article-id>
+<article-id pub-id-type="doi">N/A</article-id>
+<title-group>
+<article-title>cosmicjellyfish: Fisher-matrix and Monte Carlo forecasts
+for cosmological surveys in Python and JAX</article-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-4751-5138</contrib-id>
+<name>
+<surname>Casas</surname>
+<given-names>Santiago</given-names>
+</name>
+<xref ref-type="aff" rid="aff-1"/>
+<xref ref-type="aff" rid="aff-2"/>
+<xref ref-type="corresp" rid="cor-1"><sup>*</sup></xref>
+</contrib>
+<contrib contrib-type="author">
+<name>
+<surname>Martinelli</surname>
+<given-names>Matteo</given-names>
+</name>
+<xref ref-type="aff" rid="aff-3"/>
+</contrib>
+<contrib contrib-type="author">
+<contrib-id contrib-id-type="orcid">https://orcid.org/0009-0004-0852-8624</contrib-id>
+<name>
+<surname>Pamuk</surname>
+<given-names>Sefa</given-names>
+</name>
+<xref ref-type="aff" rid="aff-4"/>
+</contrib>
+<contrib contrib-type="author">
+<name>
+<surname>M.</surname>
+<given-names>Sabarish V.</given-names>
+</name>
+<xref ref-type="aff" rid="aff-5"/>
+</contrib>
+<aff id="aff-1">
+<institution-wrap>
+<institution>Scientific Information, German Aerospace Center (DLR),
+Germany</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-2">
+<institution-wrap>
+<institution>Institute of Cosmology and Gravitation, University of
+Portsmouth, United Kingdom</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-3">
+<institution-wrap>
+<institution>TODO affiliation of M. Martinelli</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-4">
+<institution-wrap>
+<institution>Universidad de Cantabria, Spain</institution>
+</institution-wrap>
+</aff>
+<aff id="aff-5">
+<institution-wrap>
+<institution>TODO affiliation of Sabarish V. M.</institution>
+</institution-wrap>
+</aff>
+</contrib-group>
+<author-notes>
+<corresp id="cor-1">* E-mail: <email></email></corresp>
+</author-notes>
+<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2026-11-13">
+<day>13</day>
+<month>11</month>
+<year>2026</year>
+</pub-date>
+<volume>¿VOL?</volume>
+<issue>¿ISSUE?</issue>
+<fpage>¿PAGE?</fpage>
+<permissions>
+<copyright-statement>Authors of papers retain copyright and release the
+work under a Creative Commons Attribution 4.0 International License (CC
+BY 4.0)</copyright-statement>
+<copyright-year>1970</copyright-year>
+<copyright-holder>The article authors</copyright-holder>
+<license license-type="open-access" xlink:href="https://creativecommons.org/licenses/by/4.0/">
+<license-p>Authors of papers retain copyright and release the work under
+a Creative Commons Attribution 4.0 International License (CC BY
+4.0)</license-p>
+</license>
+</permissions>
+<kwd-group kwd-group-type="author">
+<kwd>Python</kwd>
+<kwd>JAX</kwd>
+<kwd>cosmology</kwd>
+<kwd>large-scale structure</kwd>
+<kwd>Fisher matrix</kwd>
+<kwd>forecasts</kwd>
+<kwd>automatic differentiation</kwd>
+<kwd>nested sampling</kwd>
+</kwd-group>
+</article-meta>
+</front>
+<body>
+<sec id="summary">
+  <title>Summary</title>
+  <p><monospace>cosmicjellyfish</monospace> is a Python package for
+  cosmological forecasts with Fisher-matrix and Monte Carlo methods.
+  Given a fiducial cosmology and a survey specification, it computes the
+  observables of galaxy clustering, weak lensing, intensity mapping and
+  the cosmic microwave background (CMB), and it returns the expected
+  constraints on cosmological parameters, either as a Fisher matrix or
+  as a sampled posterior. Previously known as
+  <monospace>cosmicfishpie</monospace>, it has been used in about ten
+  papers since the Euclid IST:F forecasts
+  (<xref alt="Euclid Collaboration et al., 2020" rid="ref-Blanchard2020" ref-type="bibr">Euclid
+  Collaboration et al., 2020</xref>).</p>
+  <p>Three things are new in this release:</p>
+  <list list-type="bullet">
+    <list-item>
+      <p><bold>Speed.</bold> The symbolic emulator
+      (<xref alt="Bartlett, Kammerer, et al., 2024" rid="ref-Bartlett2024a" ref-type="bibr">Bartlett,
+      Kammerer, et al., 2024</xref>;
+      <xref alt="Bartlett, Wandelt, et al., 2024" rid="ref-Bartlett2024b" ref-type="bibr">Bartlett,
+      Wandelt, et al., 2024</xref>;
+      <xref alt="Sui et al., 2025" rid="ref-Sui2025" ref-type="bibr">Sui
+      et al., 2025</xref>) gives Fisher matrices in about 5 seconds.</p>
+    </list-item>
+    <list-item>
+      <p><bold>Differentiability.</bold> The integration of JAX
+      (<xref alt="Bradbury et al., 2018" rid="ref-Bradbury2018" ref-type="bibr">Bradbury
+      et al., 2018</xref>) and of the <monospace>jax-cosmo</monospace>
+      backend
+      (<xref alt="Campagne et al., 2023" rid="ref-Campagne2023" ref-type="bibr">Campagne
+      et al., 2023</xref>) allows for autodiff Fisher matrices.</p>
+    </list-item>
+    <list-item>
+      <p><bold>Fisher and MCMC from the same settings.</bold> This is
+      version 2.0 also because MCMC forecasts can now be run with
+      exactly the same settings as the Fisher forecast, which allows us
+      to test contours that were not obvious before.</p>
+    </list-item>
+  </list>
+  <p>This is also, to our knowledge, the only project that provides a
+  CAMB–CLASS validation dashboard for many cosmological models in a FAIR
+  way (Findable, Accessible, Interoperable, Reusable)
+  (<xref alt="Wilkinson et al., 2016" rid="ref-Wilkinson2016" ref-type="bibr">Wilkinson
+  et al., 2016</xref>), with all the ini files, YAML files and a full
+  reproducibility pipeline. A companion DagsHub repository contains the
+  validation data for both Fisher matrices and MCMC chains.</p>
+  <p>The tentacles of the jellyfish in the logo stand for the chains,
+  and the J in the name stands for the new JAX compatibility.</p>
+</sec>
+<sec id="statement-of-need">
+  <title>Statement of need</title>
+  <p><monospace>cosmicjellyfish</monospace> is needed to forecast
+  constraints for current and future probes, and especially for their
+  combinations, in an efficient, validated and reproducible way.</p>
+  <p>The code ships survey specifications for Euclid
+  (<xref alt="Euclid Collaboration, Mellier, et al., 2025" rid="ref-Mellier2025" ref-type="bibr">Euclid
+  Collaboration, Mellier, et al., 2025</xref>), SKAO
+  (<xref alt="Square Kilometre Array Cosmology Science Working Group et al., 2020" rid="ref-Bacon2020" ref-type="bibr">Square
+  Kilometre Array Cosmology Science Working Group et al., 2020</xref>)
+  and Planck-like CMB experiments
+  (<xref alt="Planck Collaboration et al., 2020" rid="ref-Planck2018" ref-type="bibr">Planck
+  Collaboration et al., 2020</xref>), and it can load user
+  specifications for DESI
+  (<xref alt="DESI Collaboration et al., 2016" rid="ref-DESI2016" ref-type="bibr">DESI
+  Collaboration et al., 2016</xref>) and LSST
+  (<xref alt="Ivezić &amp; others, 2019" rid="ref-Ivezic2019" ref-type="bibr">Ivezić
+  &amp; others, 2019</xref>). These surveys are far from over: Euclid
+  still has about six years of observations ahead and LSST ten, and
+  their cross-correlations have barely been studied so far. A
+  forecasting code of this kind will therefore remain useful for a long
+  time. Moreover, the step from here into real-data analysis is no
+  longer a large one.</p>
+  <p>The plan for the future is twofold:</p>
+  <list list-type="bullet">
+    <list-item>
+      <p>implement new probes, such as SPHEREx
+      (<xref alt="Doré &amp; others, 2014" rid="ref-Dore2014" ref-type="bibr">Doré
+      &amp; others, 2014</xref>), WST
+      (<xref alt="Mainieri &amp; others, 2024" rid="ref-Mainieri2024" ref-type="bibr">Mainieri
+      &amp; others, 2024</xref>) and other futuristic probes, or
+      extensions such as SPT-10k <bold>[TODO: cite SPT-10k]</bold>;</p>
+    </list-item>
+    <list-item>
+      <p>implement cross-correlations that have been studied in previous
+      papers, such as dark sirens <inline-formula><alternatives>
+      <tex-math><![CDATA[\times]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>×</mml:mi></mml:math></alternatives></inline-formula>
+      Euclid GCph <bold>[TODO: cite Giona’s paper]</bold>.</p>
+    </list-item>
+  </list>
+</sec>
+<sec id="state-of-the-field">
+  <title>State of the field</title>
+  <p><bold>Unvalidated forecasts.</bold> Many forecasts in the
+  literature, especially those based on Fisher matrices, are not
+  validated. We have seen in the Euclid IST:F paper
+  (<xref alt="Euclid Collaboration et al., 2020" rid="ref-Blanchard2020" ref-type="bibr">Euclid
+  Collaboration et al., 2020</xref>) and in other works that independent
+  pipelines differed by 10% or more, and that it was hard to make them
+  agree. The same lesson appears elsewhere: the Fisher approach for
+  spectroscopic surveys had to be validated against MCMC
+  (<xref alt="Yahia-Cherif et al., 2021" rid="ref-YahiaCherif2021" ref-type="bibr">Yahia-Cherif
+  et al., 2021</xref>), numerical derivatives were shown to be a major
+  source of instability in LSST-like forecasts
+  (<xref alt="Bhandari et al., 2021" rid="ref-Bhandari2021" ref-type="bibr">Bhandari
+  et al., 2021</xref>), and the Euclid <inline-formula><alternatives>
+  <tex-math><![CDATA[\times]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>×</mml:mi></mml:math></alternatives></inline-formula>
+  CMB forecasts needed their own cross-validation
+  (<xref alt="Euclid Collaboration et al., 2022" rid="ref-Ilic2022" ref-type="bibr">Euclid
+  Collaboration et al., 2022</xref>). Recent tools address parts of the
+  problem: <monospace>Augur</monospace>
+  (<xref alt="Rogozenski et al., 2026" rid="ref-Rogozenski2026" ref-type="bibr">Rogozenski
+  et al., 2026</xref>) is the Fisher tool of LSST DESC, built on CCL
+  (<xref alt="Chisari et al., 2019" rid="ref-Chisari2019" ref-type="bibr">Chisari
+  et al., 2019</xref>) and validated against CosmoSIS
+  (<xref alt="Zuntz et al., 2015" rid="ref-Zuntz2015" ref-type="bibr">Zuntz
+  et al., 2015</xref>) and nested sampling, and
+  <monospace>DerivKit</monospace>
+  (<xref alt="Šarčević et al., 2026" rid="ref-Sarcevic2026" ref-type="bibr">Šarčević
+  et al., 2026</xref>) provides stable numerical derivatives
+  independently of any cosmology code. General samplers such as
+  MontePython
+  (<xref alt="Audren et al., 2013" rid="ref-Audren2013" ref-type="bibr">Audren
+  et al., 2013</xref>;
+  <xref alt="Brinckmann &amp; Lesgourgues, 2019" rid="ref-Brinckmann2019" ref-type="bibr">Brinckmann
+  &amp; Lesgourgues, 2019</xref>) and Cobaya
+  (<xref alt="Torrado &amp; Lewis, 2021" rid="ref-Torrado2021" ref-type="bibr">Torrado
+  &amp; Lewis, 2021</xref>) can produce forecasts, but they are not
+  Fisher codes.</p>
+  <p><bold>CAMB versus CLASS.</bold> Beyond the original comparisons of
+  the two codes at the level of spectra
+  (<xref alt="Lesgourgues, 2011" rid="ref-Lesgourgues2011" ref-type="bibr">Lesgourgues,
+  2011</xref>;
+  <xref alt="Lesgourgues &amp; Tram, 2011" rid="ref-LesgourguesTram2011" ref-type="bibr">Lesgourgues
+  &amp; Tram, 2011</xref>), almost no one has published validated
+  comparisons between CAMB
+  (<xref alt="Lewis et al., 2000" rid="ref-Lewis2000" ref-type="bibr">Lewis
+  et al., 2000</xref>) and CLASS
+  (<xref alt="Blas et al., 2011" rid="ref-Blas2011" ref-type="bibr">Blas
+  et al., 2011</xref>) at the level of forecasts, especially in the
+  neutrino sector
+  (<xref alt="Euclid Collaboration, Archidiacono, et al., 2025" rid="ref-Archidiacono2025" ref-type="bibr">Euclid
+  Collaboration, Archidiacono, et al., 2025</xref>).
+  <monospace>cosmicjellyfish</monospace> therefore also acts as a
+  translator between these two codes in a FAIR way, or at least on the
+  road to FAIR.</p>
+  <p><bold>Autodiff Fisher matrices.</bold>
+  <monospace>jax-cosmo</monospace> showcased autodiff Fisher matrices
+  and compared them with finite differences from CCL for two parameters
+  (<xref alt="Campagne et al., 2023" rid="ref-Campagne2023" ref-type="bibr">Campagne
+  et al., 2023</xref>), and differentiable emulators have followed in
+  recent years
+  (<xref alt="Piras &amp; Spurio Mancini, 2023" rid="ref-Piras2023" ref-type="bibr">Piras
+  &amp; Spurio Mancini, 2023</xref>). Here we show, for a full Euclid
+  setup with nuisance parameters, that the autodiff Fisher matrix agrees
+  well with finite differences of the same observable, and also with a
+  non-JAX implementation of the observable.</p>
+  <p><bold>An independent testing ground.</bold> Finally, we have
+  implemented likelihoods that agree with the direct Fisher method. The
+  Fisher recipes were validated against the MontePython likelihoods in
+  2023
+  (<xref alt="S. Casas et al., 2024" rid="ref-Casas2024" ref-type="bibr">S.
+  Casas et al., 2024</xref>), and those likelihoods were in turn used as
+  a backbone of current likelihoods such as
+  <monospace>cloelike</monospace>
+  (<xref alt="Bonici et al., 2026b" rid="ref-cloelike2026" ref-type="bibr">Bonici
+  et al., 2026b</xref>), which uses <monospace>cloelib</monospace>
+  (<xref alt="Bonici et al., 2026a" rid="ref-Bonici2026" ref-type="bibr">Bonici
+  et al., 2026a</xref>). <monospace>cosmicjellyfish</monospace> is
+  therefore a very good way of having a fully independent but modern
+  code as a backdrop, testing ground and validation tool.</p>
+</sec>
+<sec id="software-design">
+  <title>Software design</title>
+  <p>The software is designed in a very modular way. The package layout
+  follows the steps of a forecast:</p>
+  <preformat>cosmicjellyfish/
+  cosmology/     background, power spectra, backends, nuisance models
+  LSSsurvey/     photometric, spectroscopic and intensity-mapping probes
+  CMBsurvey/     CMB observables and covariances
+  fishermatrix/  FisherMatrix driver, finite-difference and autodiff derivatives
+  likelihood/    photometric and spectroscopic likelihoods, Nautilus sampler
+  analysis/      Fisher operations, plotting, chains on top of Fisher contours
+  configs/       survey specifications and Boltzmann-solver profiles (YAML)</preformat>
+  <p><bold>Cosmology and backends.</bold> The cosmology module computes
+  the background and other quantities, and it calls the different
+  backends: CAMB
+  (<xref alt="Lewis et al., 2000" rid="ref-Lewis2000" ref-type="bibr">Lewis
+  et al., 2000</xref>) and CLASS
+  (<xref alt="Blas et al., 2011" rid="ref-Blas2011" ref-type="bibr">Blas
+  et al., 2011</xref>) through their Python wrappers, SYREN
+  (<monospace>symbolic_pofk</monospace>), a fast symbolic emulator
+  (<xref alt="Bartlett, Kammerer, et al., 2024" rid="ref-Bartlett2024a" ref-type="bibr">Bartlett,
+  Kammerer, et al., 2024</xref>;
+  <xref alt="Bartlett, Wandelt, et al., 2024" rid="ref-Bartlett2024b" ref-type="bibr">Bartlett,
+  Wandelt, et al., 2024</xref>;
+  <xref alt="Sui et al., 2025" rid="ref-Sui2025" ref-type="bibr">Sui et
+  al., 2025</xref>), and <monospace>jax-cosmo</monospace>, a JAX
+  implementation of the cosmological background and perturbation
+  quantities
+  (<xref alt="Campagne et al., 2023" rid="ref-Campagne2023" ref-type="bibr">Campagne
+  et al., 2023</xref>). The backend is chosen with a single option,
+  <monospace>options[&quot;code&quot;]</monospace>, which takes
+  <monospace>&quot;camb&quot;</monospace>,
+  <monospace>&quot;class&quot;</monospace>,
+  <monospace>&quot;symbolic&quot;</monospace>,
+  <monospace>&quot;jaxcosmo&quot;</monospace> or
+  <monospace>&quot;external&quot;</monospace> (precomputed tables). This
+  design makes it easy to implement other backends in the future, such
+  as CosmoPower-JAX
+  (<xref alt="Piras &amp; Spurio Mancini, 2023" rid="ref-Piras2023" ref-type="bibr">Piras
+  &amp; Spurio Mancini, 2023</xref>) and DISCO-DJ
+  (<xref alt="Hahn et al., 2024" rid="ref-Hahn2024" ref-type="bibr">Hahn
+  et al., 2024</xref>), which are also differentiable.</p>
+  <p><bold>Probes.</bold> The photometric, spectroscopic and
+  intensity-mapping probes are coded independently in their own modules,
+  and they work with any cosmological backend. The CMB part can in
+  principle also be used with several backends, although for the moment
+  we limit it to CAMB. In the near future we might integrate it with
+  candl
+  (<xref alt="Balkenhol et al., 2024" rid="ref-Balkenhol2024" ref-type="bibr">Balkenhol
+  et al., 2024</xref>) to get easier access to CMB likelihoods.</p>
+  <p><bold>Derivatives.</bold> The derivatives are also coded in a
+  modular way, so that the different finite-difference methods
+  (<monospace>3PT</monospace>, <monospace>4PT_FWD</monospace>,
+  <monospace>POLY</monospace>, <monospace>STEM</monospace>) can be used
+  independently, and JAX autodiff can be used instead by passing a
+  derivative provider to <monospace>FisherMatrix</monospace>.</p>
+  <p><bold>Likelihoods and sampling.</bold> We also have independent
+  likelihood modules with several options, and modules that manage the
+  runs with Nautilus
+  (<xref alt="Lange, 2023" rid="ref-Lange2023" ref-type="bibr">Lange,
+  2023</xref>). While Nautilus is the standard sampler for now, this can
+  easily be extended to samplers such as pocoMC
+  (<xref alt="Karamanis et al., 2022" rid="ref-Karamanis2022" ref-type="bibr">Karamanis
+  et al., 2022</xref>) and others, and to gradient-based methods such as
+  HMC that make use of autodiff gradients, as was done in
+  <monospace>jax-cosmo</monospace>
+  (<xref alt="Campagne et al., 2023" rid="ref-Campagne2023" ref-type="bibr">Campagne
+  et al., 2023</xref>).</p>
+  <p><bold>Analysis and plotting.</bold> Finally, the code provides a
+  set of tools for analysing and plotting Fisher matrices:
+  marginalising, combining, reparametrising and so on. Chains can easily
+  be plotted on top of Fisher contours, using ChainConsumer
+  (<xref alt="Hinton, 2016" rid="ref-Hinton2016" ref-type="bibr">Hinton,
+  2016</xref>).</p>
+</sec>
+<sec id="usage-examples">
+  <title>Usage examples</title>
+  <sec id="a-euclid-photometric-fisher-matrix-combined-with-spectroscopic">
+    <title>A Euclid photometric Fisher matrix, combined with
+    spectroscopic</title>
+    <p>A simple Euclid photometric Fisher matrix, combined with the
+    spectroscopic one and marginalised over the nuisance parameters.
+    With the symbolic backend the two forecasts take a few seconds on a
+    laptop. The result is shown in
+    <xref alt="[fig:probes]" rid="figU003Aprobes">[fig:probes]</xref>.</p>
+    <code language="python">from cosmicjellyfish.analysis.fisher_operations import marginalise
+from cosmicjellyfish.analysis.fishconsumer import make_triangle_plot
+from cosmicjellyfish.fishermatrix import cosmicfish as cff
+
+fiducial = {&quot;Omegam&quot;: 0.32, &quot;Omegab&quot;: 0.05, &quot;h&quot;: 0.67,
+            &quot;ns&quot;: 0.96, &quot;sigma8&quot;: 0.815584}
+freepars = {&quot;Omegam&quot;: 0.01, &quot;h&quot;: 0.01, &quot;sigma8&quot;: 0.01}  # relative steps
+
+
+def options(photo, spectro):
+    return {
+        &quot;code&quot;: &quot;symbolic&quot;,  # or &quot;camb&quot; / &quot;class&quot;
+        &quot;accuracy&quot;: 1,
+        &quot;nonlinear&quot;: True,
+        &quot;derivatives&quot;: &quot;3PT&quot;,
+        &quot;results_dir&quot;: &quot;results&quot;,
+        &quot;outroot&quot;: &quot;example&quot;,
+        &quot;survey_name&quot;: &quot;Euclid&quot;,
+        &quot;survey_name_photo&quot;: photo,
+        &quot;survey_name_spectro&quot;: spectro,
+    }
+
+
+photo = cff.FisherMatrix(
+    fiducialpars=fiducial,
+    freepars=freepars,
+    options=options(&quot;Euclid-Photometric-ISTF-Pessimistic&quot;, False),
+    observables=[&quot;WL&quot;, &quot;GCph&quot;],
+    cosmoModel=&quot;LCDM&quot;,
+    surveyName=&quot;Euclid&quot;,
+).compute()
+
+spectro = cff.FisherMatrix(
+    fiducialpars=fiducial,
+    freepars=freepars,
+    options=options(False, &quot;Euclid-Spectroscopic-ISTF-Pessimistic&quot;),
+    observables=[&quot;GCsp&quot;],
+    cosmoModel=&quot;LCDM&quot;,
+    surveyName=&quot;Euclid&quot;,
+).compute()
+
+combined = photo + spectro  # nuisance parameters of both probes are kept
+reduced = marginalise(combined, [&quot;Omegam&quot;, &quot;h&quot;, &quot;sigma8&quot;])
+print(reduced.get_confidence_bounds())  # marginalised 1-sigma errors
+
+make_triangle_plot(
+    fishers=[spectro, photo, combined],
+    fisher_labels=[&quot;GCsp&quot;, &quot;WL+GCph&quot;, &quot;WL+GCph+GCsp&quot;],
+    params=[&quot;Omegam&quot;, &quot;h&quot;, &quot;sigma8&quot;],
+    savefile=&quot;euclid_triangle.png&quot;,
+)</code>
+    <p>Another experiment is added in the same way, by choosing another
+    shipped specification (for example
+    <monospace>&quot;SKAO-Spectroscopic-Redbook&quot;</monospace>) and
+    summing the resulting Fisher matrix.</p>
+    <fig>
+      <caption><p>Marginalised constraints from Euclid spectroscopic
+      clustering (GCsp), the photometric probes (WL+GCph) and their
+      combination, for flat <inline-formula><alternatives>
+      <tex-math><![CDATA[\Lambda]]></tex-math>
+      <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="normal">Λ</mml:mi></mml:math></alternatives></inline-formula>CDM
+      with the IST:F pessimistic specifications and the symbolic
+      backend. This is the output of the example
+      above.<styled-content id="figU003Aprobes"></styled-content></p></caption>
+      <graphic mimetype="image" mime-subtype="png" xlink:href="fig1_euclid_probes.png" />
+    </fig>
+  </sec>
+  <sec id="a-nautilus-chain-that-matches-the-fisher-matrix">
+    <title>A Nautilus chain that matches the Fisher matrix</title>
+    <p>A simple example running a chain with Nautilus from the same
+    settings as the Fisher forecast. The sampler writes the weighted
+    chain, a resumable checkpoint and a metadata file, which are then
+    loaded and plotted on top of the Fisher contours.</p>
+    <code language="python">from cosmicjellyfish.likelihood import NautilusSampler
+
+config = {
+    &quot;name&quot;: &quot;wl_demo&quot;,
+    &quot;fiducial&quot;: fiducial,  # as above
+    &quot;observables&quot;: [&quot;WL&quot;],
+    &quot;options&quot;: {
+        &quot;code&quot;: &quot;symbolic&quot;,
+        &quot;cosmo_model&quot;: &quot;LCDM&quot;,
+        &quot;accuracy&quot;: 1,
+        &quot;nonlinear&quot;: True,
+        &quot;ell_sampling&quot;: 25,  # coarse grid for speed
+        &quot;results_dir&quot;: &quot;results&quot;,
+        &quot;outroot&quot;: &quot;wl_demo&quot;,
+        &quot;survey_name&quot;: &quot;Euclid&quot;,
+        &quot;survey_name_photo&quot;: &quot;Euclid-Photometric-ISTF-Pessimistic&quot;,
+        &quot;survey_name_spectro&quot;: False,
+    },
+    &quot;priors&quot;: {&quot;Omegam&quot;: [0.28, 0.36], &quot;sigma8&quot;: [0.75, 0.87]},
+    &quot;sampler_settings&quot;: {&quot;n_live&quot;: 500, &quot;n_networks&quot;: 1, &quot;n_batch&quot;: 50,
+                         &quot;pool&quot;: 8, &quot;n_eff&quot;: 2000, &quot;verbose&quot;: False},
+}
+
+if __name__ == &quot;__main__&quot;:  # required for pool &gt; 1: workers are spawned
+    NautilusSampler(config).run()</code>
+    <code language="python">from cosmicjellyfish.analysis.fishconsumer import (
+    load_Nautilus_chains_from_txt,
+    make_triangle_plot,
+)
+from cosmicjellyfish.likelihood.sampler import load_chain_metadata
+
+chain_file, sampled_fiducial, metadata, labels = load_chain_metadata(
+    &quot;chains/chains_wl_demo&quot;
+)
+columns = open(chain_file).readline().lstrip(&quot;# &quot;).split()[:-2]
+chain = load_Nautilus_chains_from_txt(chain_file, columns)
+
+make_triangle_plot(
+    chains=[chain], chain_labels=[&quot;Nautilus&quot;],
+    fishers=[fisher], fisher_labels=[&quot;Fisher&quot;],  # a WL Fisher matrix
+    params=columns, truth_values=sampled_fiducial, param_labels=labels,
+    savefile=&quot;wl_chain_vs_fisher.png&quot;,
+)</code>
+    <p>A chain that samples only the cosmological parameters has to be
+    compared with the Fisher matrix at fixed nuisance parameters
+    (<monospace>eliminate_parameters</monospace>); when the nuisance
+    parameters are sampled as well, it is compared with the marginalised
+    one, as in
+    <xref alt="[fig:nautilus]" rid="figU003Anautilus">[fig:nautilus]</xref>.</p>
+  </sec>
+  <sec id="a-jax-autodiff-fisher-matrix-against-the-standard-one">
+    <title>A JAX autodiff Fisher matrix against the standard one</title>
+    <p>Finally, a JAX autodiff Fisher matrix against the standard
+    finite-difference one, with the same <monospace>jaxcosmo</monospace>
+    theory. This needs the optional extra,
+    <monospace>pip install &quot;cosmicjellyfish[jaxcosmo]&quot;</monospace>.</p>
+    <code language="python">from cosmicjellyfish.fishermatrix.cosmicfish import FisherMatrix
+from cosmicjellyfish.fishermatrix.jaxcosmo_derivatives import JaxAutodiffProvider
+
+fiducial = {&quot;10^9As&quot;: 2.1, &quot;Omegam&quot;: 0.32, &quot;Omegab&quot;: 0.05,
+            &quot;h&quot;: 0.67, &quot;ns&quot;: 0.96, &quot;mnu&quot;: 0.0}
+freepars = {name: 0.01 for name in (&quot;10^9As&quot;, &quot;Omegam&quot;, &quot;Omegab&quot;, &quot;h&quot;)}
+
+
+def forecast(provider, outroot):
+    options = {  # a fresh dictionary for each forecast
+        &quot;code&quot;: &quot;jaxcosmo&quot;,
+        &quot;accuracy&quot;: 1,
+        &quot;nonlinear&quot;: True,
+        &quot;derivatives&quot;: &quot;3PT&quot;,
+        &quot;results_dir&quot;: &quot;results&quot;,
+        &quot;outroot&quot;: outroot,
+        &quot;survey_name_photo&quot;: &quot;Euclid-Photometric-ISTF-Pessimistic&quot;,
+    }
+    return FisherMatrix(
+        fiducialpars=fiducial,
+        freepars=freepars,
+        options=options,
+        observables=[&quot;GCph&quot;, &quot;WL&quot;],
+        cosmoModel=&quot;LCDM&quot;,
+        surveyName=&quot;Euclid&quot;,
+        derivative_provider=provider,
+    ).compute()
+
+
+fisher_ad = forecast(JaxAutodiffProvider(), &quot;photo_ad&quot;)  # autodiff (jax.jacfwd)
+fisher_fd = forecast(None, &quot;photo_fd&quot;)  # standard finite differences
+
+print(fisher_ad.get_confidence_bounds() / fisher_fd.get_confidence_bounds())</code>
+    <p>For this setup the marginalised errors of the two routes agree to
+    better than 0.4% for all 17 cosmological and nuisance parameters
+    (<xref alt="[fig:autodiff]" rid="figU003Aautodiff">[fig:autodiff]</xref>).
+    When the finite differences are taken on the same JAX observable
+    (<monospace>JaxFiniteDifferenceProvider</monospace>), the agreement
+    improves to better than 0.05%, and the two Fisher matrices differ by
+    <inline-formula><alternatives>
+    <tex-math><![CDATA[1.8\times10^{-5}]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>1.8</mml:mn><mml:mo>×</mml:mo><mml:msup><mml:mn>10</mml:mn><mml:mrow><mml:mi>−</mml:mi><mml:mn>5</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
+    in <inline-formula><alternatives>
+    <tex-math><![CDATA[\max|\Delta F|/\max|F|]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>max</mml:mi><mml:mo>&#8289;</mml:mo><mml:mo stretchy="false" form="prefix">|</mml:mo><mml:mi mathvariant="normal">Δ</mml:mi><mml:mi>F</mml:mi><mml:mo stretchy="false" form="prefix">|</mml:mo><mml:mi>/</mml:mi><mml:mi>max</mml:mi><mml:mo>&#8289;</mml:mo><mml:mo stretchy="false" form="prefix">|</mml:mo><mml:mi>F</mml:mi><mml:mo stretchy="false" form="prefix">|</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>.
+    The remaining difference is therefore due to the two implementations
+    of the observable and not to the derivative method.</p>
+    <fig>
+      <caption><p>Marginalised errors from finite differences relative
+      to those from automatic differentiation, for the Euclid WL+GCph
+      forecast with the <monospace>jaxcosmo</monospace> backend. Filled
+      circles: finite differences of the same JAX observable. Open
+      squares: finite differences of the standard NumPy
+      observable.<styled-content id="figU003Aautodiff"></styled-content></p></caption>
+      <graphic mimetype="image" mime-subtype="png" xlink:href="fig2_autodiff_ratios.png" />
+    </fig>
+  </sec>
+</sec>
+<sec id="validation-and-performance">
+  <title>Validation and performance</title>
+  <p><bold>Validation.</bold> The CAMB–CLASS validation and the
+  MontePython validation are documented in the validation dashboard
+  (<ext-link ext-link-type="uri" xlink:href="https://www.santicasas.space/cosmicjellyfish/dashboard/">https://www.santicasas.space/cosmicjellyfish/dashboard/</ext-link>),
+  with all the scripts and results in the data folders of the DagsHub
+  repository
+  (<ext-link ext-link-type="uri" xlink:href="https://dagshub.com/santiagocasas/cjfp-data">https://dagshub.com/santiagocasas/cjfp-data</ext-link>).
+  The suite covers 25 cases: photometric and spectroscopic Euclid probes
+  for <inline-formula><alternatives>
+  <tex-math><![CDATA[\Lambda]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="normal">Λ</mml:mi></mml:math></alternatives></inline-formula>CDM
+  and <inline-formula><alternatives>
+  <tex-math><![CDATA[w_0w_a]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:msub><mml:mi>w</mml:mi><mml:mi>a</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>CDM,
+  with and without massive neutrinos and <inline-formula><alternatives>
+  <tex-math><![CDATA[N_{\mathrm{eff}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>N</mml:mi><mml:mrow><mml:mi mathvariant="normal">e</mml:mi><mml:mi mathvariant="normal">f</mml:mi><mml:mi mathvariant="normal">f</mml:mi></mml:mrow></mml:msub></mml:math></alternatives></inline-formula>,
+  following the settings of S. Casas et al.
+  (<xref alt="2024" rid="ref-Casas2024" ref-type="bibr">2024</xref>) and
+  Euclid Collaboration, Archidiacono, et al.
+  (<xref alt="2025" rid="ref-Archidiacono2025" ref-type="bibr">2025</xref>).
+  <monospace>cosmicjellyfish</monospace> itself (formerly
+  <monospace>cosmicfishpie</monospace>) was validated in several Euclid
+  papers and beyond
+  (<xref alt="S. Casas et al., 2024" rid="ref-Casas2024" ref-type="bibr">S.
+  Casas et al., 2024</xref>;
+  <xref alt="Euclid Collaboration et al., 2020" rid="ref-Blanchard2020" ref-type="bibr">Euclid
+  Collaboration et al., 2020</xref>;
+  <xref alt="Euclid Collaboration, Archidiacono, et al., 2025" rid="ref-Archidiacono2025" ref-type="bibr">Euclid
+  Collaboration, Archidiacono, et al., 2025</xref>).</p>
+  <p><bold>Performance.</bold> For a Euclid photometric forecast, the
+  default profiles take about 30 s (CAMB) and 111 s (CLASS), against 138
+  s and 186 s for the high-precision profiles of Euclid Collaboration,
+  Archidiacono, et al.
+  (<xref alt="2025" rid="ref-Archidiacono2025" ref-type="bibr">2025</xref>).
+  The performance has been improving over the years. With the symbolic
+  module we now obtain Fisher matrices in a few seconds, also for models
+  such as <inline-formula><alternatives>
+  <tex-math><![CDATA[w_0w_a]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:msub><mml:mi>w</mml:mi><mml:mi>a</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>CDM:
+  with seven cosmological parameters and all nuisance parameters, the
+  WL+GCph Fisher matrix (20 parameters) takes about 8 s and the GCsp one
+  (15 parameters) about 2.5 s <bold>[TODO: measured on two cores of a
+  cloud VM; replace by your own hardware]</bold>. With CAMB and CLASS we
+  provide several levels of accuracy and precision, and the Fisher
+  matrices take less or more time depending on that.</p>
+  <p><bold>Chains against Fisher matrices.</bold> We have also validated
+  our chains against our own Fisher matrices and shown that they agree
+  (<xref alt="[fig:nautilus]" rid="figU003Anautilus">[fig:nautilus]</xref>).
+  For Euclid WL, GCsp and their combination, with all nuisance
+  parameters sampled, the marginalised Nautilus errors on
+  <inline-formula><alternatives>
+  <tex-math><![CDATA[\Omega_{\mathrm{m}}]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi mathvariant="normal">Ω</mml:mi><mml:mi mathvariant="normal">m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+  and <inline-formula><alternatives>
+  <tex-math><![CDATA[\sigma_8]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mn>8</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+  are within 5%, 0.4% and 1.3% of the Fisher ones, respectively, and the
+  posterior means lie within 0.1<inline-formula><alternatives>
+  <tex-math><![CDATA[\sigma]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>σ</mml:mi></mml:math></alternatives></inline-formula>
+  of the fiducial values.</p>
+  <p>The timings of these runs are interesting in themselves. With the
+  symbolic backend, 64 Nautilus workers on JURECA,
+  <monospace>n_live=500</monospace> and a target of 2000 effective
+  samples, the WL chain (5 sampled dimensions) took 17 minutes, the GCsp
+  chain (10 dimensions) 22 minutes and the joint WL+GCsp chain (13
+  dimensions) 1 hour and 45 minutes. A full posterior for the Euclid
+  primary probes, including nuisance parameters, is thus obtained in
+  about 18, 24 and 112 core-hours, respectively, while the corresponding
+  Fisher matrices take seconds. This makes it affordable to check the
+  Gaussian approximation case by case, instead of assuming it.</p>
+  <fig>
+    <caption><p>Fisher forecasts (dark, thick lines) against Nautilus
+    posteriors (light, thin lines) for Euclid weak lensing,
+    spectroscopic clustering and their combination, with the symbolic
+    backend and all nuisance parameters marginalised in both
+    cases.<styled-content id="figU003Anautilus"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="png" xlink:href="fig3_fisher_vs_nautilus.png" />
+  </fig>
+</sec>
+<sec id="research-impact-statement">
+  <title>Research impact statement</title>
+  <p>As <monospace>cosmicfishpie</monospace>, the code has been used in
+  about ten publications. It started with the Euclid IST:F forecasts for
+  the spectroscopic and photometric probes
+  (<xref alt="Euclid Collaboration et al., 2020" rid="ref-Blanchard2020" ref-type="bibr">Euclid
+  Collaboration et al., 2020</xref>), and it was then used in several
+  Euclid papers forecasting extended models, such as
+  <inline-formula><alternatives>
+  <tex-math><![CDATA[f(R)]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mi>f</mml:mi><mml:mo stretchy="false" form="prefix">(</mml:mo><mml:mi>R</mml:mi><mml:mo stretchy="false" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+  gravity
+  (<xref alt="S. Casas et al., 2026" rid="ref-Casas2026fR" ref-type="bibr">S.
+  Casas et al., 2026</xref>) and scalar-field and other modified-gravity
+  models
+  (<xref alt="Frusciante et al., 2024" rid="ref-Frusciante2024" ref-type="bibr">Frusciante
+  et al., 2024</xref>), and models of inflation
+  (<xref alt="Ballardini et al., 2024" rid="ref-Ballardini2024" ref-type="bibr">Ballardini
+  et al., 2024</xref>) <bold>[TODO: confirm that these three are the
+  papers you mean]</bold>. It served in the paper validating the
+  MontePython likelihoods
+  (<xref alt="S. Casas et al., 2024" rid="ref-Casas2024" ref-type="bibr">S.
+  Casas et al., 2024</xref>) and in the Euclid paper on the sensitivity
+  to neutrino cosmology, which used MontePython and
+  <monospace>cosmicfishpie</monospace> together
+  (<xref alt="Euclid Collaboration, Archidiacono, et al., 2025" rid="ref-Archidiacono2025" ref-type="bibr">Euclid
+  Collaboration, Archidiacono, et al., 2025</xref>). It was also used in
+  the papers on radio <inline-formula><alternatives>
+  <tex-math><![CDATA[\times]]></tex-math>
+  <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi>×</mml:mi></mml:math></alternatives></inline-formula>
+  optical probes with SKAO
+  (<xref alt="Santiago Casas et al., 2023" rid="ref-Casas2023SKAO" ref-type="bibr">Santiago
+  Casas et al., 2023</xref>) and in a few other works <bold>[TODO: cite
+  the remaining papers]</bold>.</p>
+  <p>The Boltzmann-solver precision profiles validated in those works
+  are shipped with the package, and the validation dashboard, the
+  posterior chains and the cluster workflows are public, so that every
+  comparison quoted here can be reproduced from a recorded source
+  revision.</p>
+</sec>
+<sec id="documentation">
+  <title>Documentation</title>
+  <p>The documentation
+  (<ext-link ext-link-type="uri" xlink:href="https://www.santicasas.space/cosmicjellyfish/docs/">https://www.santicasas.space/cosmicjellyfish/docs/</ext-link>)
+  contains an installation guide, a first forecast, a user guide on
+  backends, observables, derivative methods and likelihood sampling, the
+  validation reports and an API reference. Eight tutorial notebooks in
+  the repository cover the cosmology interface, spectroscopic and
+  photometric forecasts, the CMB, Fisher post-processing, Nautilus
+  sampling, autodiff against finite differences, and forecasts in
+  intermediate parameters. A migration guide describes the change from
+  <monospace>cosmicfishpie</monospace>, whose import path keeps working
+  as a deprecated alias.</p>
+</sec>
+<sec id="availability">
+  <title>Availability</title>
+  <p><monospace>cosmicjellyfish</monospace> is released under the Apache
+  2.0 licence. The source code is hosted at
+  <ext-link ext-link-type="uri" xlink:href="https://github.com/santiagocasas/cosmicjellyfish">https://github.com/santiagocasas/cosmicjellyfish</ext-link>
+  and the package is installed with
+  <monospace>pip install cosmicjellyfish</monospace> for Python 3.10 to
+  3.12. Validation data and workflows are available at
+  <ext-link ext-link-type="uri" xlink:href="https://dagshub.com/santiagocasas/cjfp-data">https://dagshub.com/santiagocasas/cjfp-data</ext-link>.</p>
+</sec>
+<sec id="ai-usage-disclosure">
+  <title>AI usage disclosure</title>
+  <p><bold>[TODO: to be completed and confirmed by the authors. JOSS
+  asks for the tools and versions, where they were applied, and a
+  statement of human verification.]</bold></p>
+  <p><italic>Software and documentation:</italic> <bold>[TODO: state
+  which coding assistants were used for the code, tests and
+  documentation, and for which parts. The repository ships an
+  <monospace>AGENTS.md</monospace> guide for coding agents.]</bold></p>
+  <p><italic>This manuscript:</italic> the authors wrote the first draft
+  of the Summary, Statement of need, State of the field, Software
+  design, Usage examples and Validation sections. Claude (Anthropic)
+  <bold>[TODO: model version]</bold> was then used to correct the
+  language and organise that text, to propose and format references, to
+  draft the Research impact, Documentation and Availability sections
+  from the repository documentation, to test the code listings against
+  the repository, and to produce Figures 1 and 2. The authors reviewed,
+  edited and validated all of this content <bold>[TODO:
+  confirm]</bold>.</p>
+</sec>
+<sec id="acknowledgements">
+  <title>Acknowledgements</title>
+  <p><bold>[TODO: funding; computing time on JURECA at the Jülich
+  Supercomputing Centre for the Nautilus validation; acknowledgements to
+  the CosmicFish authors and to the Euclid Consortium colleagues
+  involved in the forecast validation.]</bold></p>
+</sec>
+<sec id="author-contributions">
+  <title>Author contributions</title>
+  <p>Following the all-contributors record of the repository: S. Casas
+  leads and maintains the project and contributed to research,
+  validation data, tests, tutorials and documentation. S. Pamuk
+  contributed code, design, tests, examples, documentation and code
+  review. M. Martinelli contributed code and design. Sabarish V. M.
+  contributed code and documentation. <bold>[TODO: expand as
+  needed.]</bold></p>
+</sec>
+</body>
+<back>
+<ref-list>
+  <title></title>
+  <ref id="ref-Blanchard2020">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Euclid Collaboration</string-name>
+        <name><surname>Blanchard</surname><given-names>A.</given-names></name>
+        <name><surname>Camera</surname><given-names>S.</given-names></name>
+        <name><surname>Carbone</surname><given-names>C.</given-names></name>
+        <name><surname>Cardone</surname><given-names>V. F.</given-names></name>
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid preparation. VII. Forecast validation for Euclid cosmological probes</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2020">2020</year>
+      <volume>642</volume>
+      <uri>https://arxiv.org/abs/1910.09273</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202038071</pub-id>
+      <fpage>A191</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Casas2024">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>Lesgourgues</surname><given-names>J.</given-names></name>
+        <name><surname>Schöneberg</surname><given-names>N.</given-names></name>
+        <name><surname>Sabarish</surname><given-names>V. M.</given-names></name>
+        <name><surname>Rathmann</surname><given-names>L.</given-names></name>
+        <name><surname>Doerenkamp</surname><given-names>M.</given-names></name>
+        <name><surname>Archidiacono</surname><given-names>M.</given-names></name>
+        <name><surname>Bellini</surname><given-names>E.</given-names></name>
+        <name><surname>Clesse</surname><given-names>S.</given-names></name>
+        <name><surname>Frusciante</surname><given-names>N.</given-names></name>
+        <name><surname>Martinelli</surname><given-names>M.</given-names></name>
+        <name><surname>Pace</surname><given-names>F.</given-names></name>
+        <name><surname>Sapone</surname><given-names>D.</given-names></name>
+        <name><surname>Sakr</surname><given-names>Z.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid: Validation of the MontePython forecasting tools</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>682</volume>
+      <uri>https://arxiv.org/abs/2303.09451</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202346772</pub-id>
+      <fpage>A90</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Archidiacono2025">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Euclid Collaboration</string-name>
+        <name><surname>Archidiacono</surname><given-names>M.</given-names></name>
+        <name><surname>Lesgourgues</surname><given-names>J.</given-names></name>
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>Pamuk</surname><given-names>S.</given-names></name>
+        <name><surname>Schöneberg</surname><given-names>N.</given-names></name>
+        <name><surname>Sakr</surname><given-names>Z.</given-names></name>
+        <name><surname>Parimbelli</surname><given-names>G.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid preparation. LIV. Sensitivity to neutrino parameters</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2025">2025</year>
+      <volume>693</volume>
+      <uri>https://arxiv.org/abs/2405.06047</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202450859</pub-id>
+      <fpage>A58</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Casas2026fR">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>Cardone</surname><given-names>V. F.</given-names></name>
+        <name><surname>Sapone</surname><given-names>D.</given-names></name>
+        <name><surname>Frusciante</surname><given-names>N.</given-names></name>
+        <name><surname>Pace</surname><given-names>F.</given-names></name>
+        <name><surname>Parimbelli</surname><given-names>G.</given-names></name>
+        <name><surname>Archidiacono</surname><given-names>M.</given-names></name>
+        <name><surname>Koyama</surname><given-names>K.</given-names></name>
+        <name><surname>Tutusaus</surname><given-names>I.</given-names></name>
+        <name><surname>Camera</surname><given-names>S.</given-names></name>
+        <name><surname>Martinelli</surname><given-names>M.</given-names></name>
+        <name><surname>Pettorino</surname><given-names>V.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid: Constraints on f({R}) cosmologies from the spectroscopic and photometric primary probes</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2026">2026</year>
+      <volume>707</volume>
+      <uri>https://arxiv.org/abs/2306.11053</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202348713</pub-id>
+      <fpage>A176</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Frusciante2024">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Frusciante</surname><given-names>N.</given-names></name>
+        <name><surname>Pace</surname><given-names>F.</given-names></name>
+        <name><surname>Cardone</surname><given-names>V. F.</given-names></name>
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>Tutusaus</surname><given-names>I.</given-names></name>
+        <name><surname>Ballardini</surname><given-names>M.</given-names></name>
+        <name><surname>Bellini</surname><given-names>E.</given-names></name>
+        <name><surname>Benevento</surname><given-names>G.</given-names></name>
+        <name><surname>Bose</surname><given-names>B.</given-names></name>
+        <name><surname>Valageas</surname><given-names>P.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid: Constraining linearly scale-independent modifications of gravity with the spectroscopic and photometric primary probes</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>690</volume>
+      <uri>https://arxiv.org/abs/2306.12368</uri>
+      <fpage>A133</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Ballardini2024">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Ballardini</surname><given-names>M.</given-names></name>
+        <name><surname>Akrami</surname><given-names>Y.</given-names></name>
+        <name><surname>Finelli</surname><given-names>F.</given-names></name>
+        <name><surname>Karagiannis</surname><given-names>D.</given-names></name>
+        <name><surname>Li</surname><given-names>B.</given-names></name>
+        <name><surname>Li</surname><given-names>Y.</given-names></name>
+        <name><surname>Sakr</surname><given-names>Z.</given-names></name>
+        <name><surname>Sapone</surname><given-names>D.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid: The search for primordial features</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>683</volume>
+      <uri>https://arxiv.org/abs/2309.17287</uri>
+      <fpage>A220</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Casas2023SKAO">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Casas</surname><given-names>Santiago</given-names></name>
+        <name><surname>Carucci</surname><given-names>Isabella P.</given-names></name>
+        <name><surname>Pettorino</surname><given-names>Valeria</given-names></name>
+        <name><surname>Camera</surname><given-names>Stefano</given-names></name>
+        <name><surname>Martinelli</surname><given-names>Matteo</given-names></name>
+      </person-group>
+      <article-title>Constraining gravity with synergies between radio and optical cosmological surveys</article-title>
+      <source>Physics of the Dark Universe</source>
+      <year iso-8601-date="2023">2023</year>
+      <volume>39</volume>
+      <uri>https://arxiv.org/abs/2210.05705</uri>
+      <pub-id pub-id-type="doi">10.1016/j.dark.2022.101151</pub-id>
+      <fpage>101151</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bartlett2024a">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Bartlett</surname><given-names>Deaglan J.</given-names></name>
+        <name><surname>Kammerer</surname><given-names>Lukas</given-names></name>
+        <name><surname>Kronberger</surname><given-names>Gabriel</given-names></name>
+        <name><surname>Desmond</surname><given-names>Harry</given-names></name>
+        <name><surname>Ferreira</surname><given-names>Pedro G.</given-names></name>
+        <name><surname>Wandelt</surname><given-names>Benjamin D.</given-names></name>
+        <name><surname>Burlacu</surname><given-names>Bogdan</given-names></name>
+        <name><surname>Alonso</surname><given-names>David</given-names></name>
+        <name><surname>Zennaro</surname><given-names>Matteo</given-names></name>
+      </person-group>
+      <article-title>A precise symbolic emulator of the linear matter power spectrum</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>686</volume>
+      <uri>https://arxiv.org/abs/2311.15865</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202348811</pub-id>
+      <fpage>A209</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bartlett2024b">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Bartlett</surname><given-names>Deaglan J.</given-names></name>
+        <name><surname>Wandelt</surname><given-names>Benjamin D.</given-names></name>
+        <name><surname>Zennaro</surname><given-names>Matteo</given-names></name>
+        <name><surname>Ferreira</surname><given-names>Pedro G.</given-names></name>
+        <name><surname>Desmond</surname><given-names>Harry</given-names></name>
+      </person-group>
+      <article-title>Syren-halofit: A fast, interpretable, high-precision formula for the \LambdaCDM nonlinear matter power spectrum</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>686</volume>
+      <uri>https://arxiv.org/abs/2402.17492</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202449854</pub-id>
+      <fpage>A150</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Sui2025">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Sui</surname><given-names>Ce</given-names></name>
+        <name><surname>Bartlett</surname><given-names>Deaglan J.</given-names></name>
+        <name><surname>Pandey</surname><given-names>Shivam</given-names></name>
+        <name><surname>Desmond</surname><given-names>Harry</given-names></name>
+        <name><surname>Ferreira</surname><given-names>Pedro G.</given-names></name>
+        <name><surname>Wandelt</surname><given-names>Benjamin D.</given-names></name>
+      </person-group>
+      <article-title>Syren-new: Precise formulae for the linear and nonlinear matter power spectra with massive neutrinos and dynamical dark energy</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2025">2025</year>
+      <volume>698</volume>
+      <uri>https://arxiv.org/abs/2410.14623</uri>
+      <fpage>A1</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bradbury2018">
+    <element-citation publication-type="software">
+      <person-group person-group-type="author">
+        <name><surname>Bradbury</surname><given-names>James</given-names></name>
+        <name><surname>Frostig</surname><given-names>Roy</given-names></name>
+        <name><surname>Hawkins</surname><given-names>Peter</given-names></name>
+        <name><surname>Johnson</surname><given-names>Matthew James</given-names></name>
+        <name><surname>Leary</surname><given-names>Chris</given-names></name>
+        <name><surname>Maclaurin</surname><given-names>Dougal</given-names></name>
+        <name><surname>Necula</surname><given-names>George</given-names></name>
+        <name><surname>Paszke</surname><given-names>Adam</given-names></name>
+        <name><surname>VanderPlas</surname><given-names>Jake</given-names></name>
+        <name><surname>Wanderman-Milne</surname><given-names>Skye</given-names></name>
+        <name><surname>Zhang</surname><given-names>Qiao</given-names></name>
+      </person-group>
+      <article-title>JAX: Composable transformations of Python+NumPy programs</article-title>
+      <year iso-8601-date="2018">2018</year>
+      <uri>http://github.com/jax-ml/jax</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Campagne2023">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Campagne</surname><given-names>Jean-Eric</given-names></name>
+        <name><surname>Lanusse</surname><given-names>François</given-names></name>
+        <name><surname>Zuntz</surname><given-names>Joe</given-names></name>
+        <name><surname>Boucaud</surname><given-names>Alexandre</given-names></name>
+        <name><surname>Casas</surname><given-names>Santiago</given-names></name>
+        <name><surname>Karamanis</surname><given-names>Minas</given-names></name>
+        <name><surname>Kirkby</surname><given-names>David</given-names></name>
+        <name><surname>Lanzieri</surname><given-names>Denise</given-names></name>
+        <name><surname>Peel</surname><given-names>Austin</given-names></name>
+        <name><surname>Li</surname><given-names>Yin</given-names></name>
+      </person-group>
+      <article-title>JAX-COSMO: An end-to-end differentiable and GPU accelerated cosmology library</article-title>
+      <source>The Open Journal of Astrophysics</source>
+      <year iso-8601-date="2023">2023</year>
+      <volume>6</volume>
+      <uri>https://arxiv.org/abs/2302.05163</uri>
+      <pub-id pub-id-type="doi">10.21105/astro.2302.05163</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-Wilkinson2016">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Wilkinson</surname><given-names>Mark D.</given-names></name>
+        <name><surname>Dumontier</surname><given-names>Michel</given-names></name>
+        <name><surname>Aalbersberg</surname><given-names>IJsbrand Jan</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>The FAIR Guiding Principles for scientific data management and stewardship</article-title>
+      <source>Scientific Data</source>
+      <year iso-8601-date="2016">2016</year>
+      <volume>3</volume>
+      <pub-id pub-id-type="doi">10.1038/sdata.2016.18</pub-id>
+      <fpage>160018</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Mellier2025">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Euclid Collaboration</string-name>
+        <name><surname>Mellier</surname><given-names>Y.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid. I. Overview of the Euclid mission</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2025">2025</year>
+      <volume>697</volume>
+      <uri>https://arxiv.org/abs/2405.13491</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202450810</pub-id>
+      <fpage>A1</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bacon2020">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Square Kilometre Array Cosmology Science Working Group</string-name>
+        <name><surname>Bacon</surname><given-names>David J.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Cosmology with Phase 1 of the Square Kilometre Array: Red Book 2018: Technical specifications and performance forecasts</article-title>
+      <source>Publications of the Astronomical Society of Australia</source>
+      <year iso-8601-date="2020">2020</year>
+      <volume>37</volume>
+      <uri>https://arxiv.org/abs/1811.02743</uri>
+      <pub-id pub-id-type="doi">10.1017/pasa.2019.51</pub-id>
+      <fpage>e007</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Planck2018">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Planck Collaboration</string-name>
+        <name><surname>Aghanim</surname><given-names>N.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Planck 2018 results. VI. Cosmological parameters</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2020">2020</year>
+      <volume>641</volume>
+      <uri>https://arxiv.org/abs/1807.06209</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/201833910</pub-id>
+      <fpage>A6</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-DESI2016">
+    <element-citation>
+      <person-group person-group-type="author">
+        <string-name>DESI Collaboration</string-name>
+        <name><surname>Aghamousa</surname><given-names>A.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>The DESI Experiment Part I: Science, targeting, and survey design</article-title>
+      <year iso-8601-date="2016">2016</year>
+      <uri>https://arxiv.org/abs/1611.00036</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Ivezic2019">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Ivezić</surname><given-names>Željko</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>LSST: From science drivers to reference design and anticipated data products</article-title>
+      <source>The Astrophysical Journal</source>
+      <year iso-8601-date="2019">2019</year>
+      <volume>873</volume>
+      <uri>https://arxiv.org/abs/0805.2366</uri>
+      <pub-id pub-id-type="doi">10.3847/1538-4357/ab042c</pub-id>
+      <fpage>111</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Dore2014">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Doré</surname><given-names>Olivier</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Cosmology with the SPHEREx all-sky spectral survey</article-title>
+      <year iso-8601-date="2014">2014</year>
+      <uri>https://arxiv.org/abs/1412.4872</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Mainieri2024">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Mainieri</surname><given-names>Vincenzo</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>The Wide-field Spectroscopic Telescope (WST) science white paper</article-title>
+      <year iso-8601-date="2024">2024</year>
+      <uri>https://arxiv.org/abs/2403.05398</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-YahiaCherif2021">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Yahia-Cherif</surname><given-names>S.</given-names></name>
+        <name><surname>Blanchard</surname><given-names>A.</given-names></name>
+        <name><surname>Camera</surname><given-names>S.</given-names></name>
+        <name><surname>Casas</surname><given-names>S.</given-names></name>
+        <name><surname>Ilić</surname><given-names>S.</given-names></name>
+        <name><surname>Markovič</surname><given-names>K.</given-names></name>
+        <name><surname>Pourtsidou</surname><given-names>A.</given-names></name>
+        <name><surname>Sakr</surname><given-names>Z.</given-names></name>
+        <name><surname>Sapone</surname><given-names>D.</given-names></name>
+        <name><surname>Tutusaus</surname><given-names>I.</given-names></name>
+      </person-group>
+      <article-title>Validating the Fisher approach for stage IV spectroscopic surveys</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2021">2021</year>
+      <volume>649</volume>
+      <uri>https://arxiv.org/abs/2007.01812</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/201937312</pub-id>
+      <fpage>A52</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bhandari2021">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Bhandari</surname><given-names>Naren</given-names></name>
+        <name><surname>Leonard</surname><given-names>C. Danielle</given-names></name>
+        <name><surname>Rau</surname><given-names>Markus Michael</given-names></name>
+        <name><surname>Mandelbaum</surname><given-names>Rachel</given-names></name>
+      </person-group>
+      <article-title>Fisher matrix stability</article-title>
+      <year iso-8601-date="2021">2021</year>
+      <uri>https://arxiv.org/abs/2101.00298</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Ilic2022">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <string-name>Euclid Collaboration</string-name>
+        <name><surname>Ilić</surname><given-names>S.</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Euclid preparation. XV. Forecasting cosmological constraints for the Euclid and CMB joint analysis</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2022">2022</year>
+      <volume>657</volume>
+      <uri>https://arxiv.org/abs/2106.08346</uri>
+      <pub-id pub-id-type="doi">10.1051/0004-6361/202141556</pub-id>
+      <fpage>A91</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Rogozenski2026">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Rogozenski</surname><given-names>Paul</given-names></name>
+        <name><surname>Srinivasan</surname><given-names>Sankarshana</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Fisher forecasting for the DESC with Augur</article-title>
+      <year iso-8601-date="2026">2026</year>
+      <uri>https://arxiv.org/abs/2608.03876</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Sarcevic2026">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Šarčević</surname><given-names>Nikolina</given-names></name>
+        <name><surname>Wild</surname><given-names>Matthijs van der</given-names></name>
+        <name><surname>Trendafilova</surname><given-names>Cynthia</given-names></name>
+      </person-group>
+      <article-title>DerivKit: Stable numerical derivatives bridging Fisher forecasts and MCMC</article-title>
+      <year iso-8601-date="2026">2026</year>
+      <uri>https://arxiv.org/abs/2602.08078</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Chisari2019">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Chisari</surname><given-names>Nora Elisa</given-names></name>
+        <name><surname>Alonso</surname><given-names>David</given-names></name>
+        <name><surname>Krause</surname><given-names>Elisabeth</given-names></name>
+        <name><surname>Leonard</surname><given-names>C. Danielle</given-names></name>
+        <name><surname>Bull</surname><given-names>Philip</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Core Cosmology Library: Precision cosmological predictions for LSST</article-title>
+      <source>The Astrophysical Journal Supplement Series</source>
+      <year iso-8601-date="2019">2019</year>
+      <volume>242</volume>
+      <uri>https://arxiv.org/abs/1812.05995</uri>
+      <pub-id pub-id-type="doi">10.3847/1538-4365/ab1658</pub-id>
+      <fpage>2</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Zuntz2015">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Zuntz</surname><given-names>J.</given-names></name>
+        <name><surname>Paterno</surname><given-names>M.</given-names></name>
+        <name><surname>Jennings</surname><given-names>E.</given-names></name>
+        <name><surname>Rudd</surname><given-names>D.</given-names></name>
+        <name><surname>Manzotti</surname><given-names>A.</given-names></name>
+        <name><surname>Dodelson</surname><given-names>S.</given-names></name>
+        <name><surname>Bridle</surname><given-names>S.</given-names></name>
+        <name><surname>Sehrish</surname><given-names>S.</given-names></name>
+        <name><surname>Kowalkowski</surname><given-names>J.</given-names></name>
+      </person-group>
+      <article-title>CosmoSIS: Modular cosmological parameter estimation</article-title>
+      <source>Astronomy and Computing</source>
+      <year iso-8601-date="2015">2015</year>
+      <volume>12</volume>
+      <uri>https://arxiv.org/abs/1409.3409</uri>
+      <pub-id pub-id-type="doi">10.1016/j.ascom.2015.05.005</pub-id>
+      <fpage>45</fpage>
+      <lpage>59</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Audren2013">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Audren</surname><given-names>Benjamin</given-names></name>
+        <name><surname>Lesgourgues</surname><given-names>Julien</given-names></name>
+        <name><surname>Benabed</surname><given-names>Karim</given-names></name>
+        <name><surname>Prunet</surname><given-names>Simon</given-names></name>
+      </person-group>
+      <article-title>Conservative constraints on early cosmology with MONTE PYTHON</article-title>
+      <source>Journal of Cosmology and Astroparticle Physics</source>
+      <year iso-8601-date="2013">2013</year>
+      <volume>2013</volume>
+      <issue>02</issue>
+      <uri>https://arxiv.org/abs/1210.7183</uri>
+      <pub-id pub-id-type="doi">10.1088/1475-7516/2013/02/001</pub-id>
+      <fpage>001</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Brinckmann2019">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Brinckmann</surname><given-names>Thejs</given-names></name>
+        <name><surname>Lesgourgues</surname><given-names>Julien</given-names></name>
+      </person-group>
+      <article-title>MontePython 3: Boosted MCMC sampler and other features</article-title>
+      <source>Physics of the Dark Universe</source>
+      <year iso-8601-date="2019">2019</year>
+      <volume>24</volume>
+      <uri>https://arxiv.org/abs/1804.07261</uri>
+      <pub-id pub-id-type="doi">10.1016/j.dark.2018.100260</pub-id>
+      <fpage>100260</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Torrado2021">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Torrado</surname><given-names>Jesús</given-names></name>
+        <name><surname>Lewis</surname><given-names>Antony</given-names></name>
+      </person-group>
+      <article-title>Cobaya: Code for Bayesian analysis of hierarchical physical models</article-title>
+      <source>Journal of Cosmology and Astroparticle Physics</source>
+      <year iso-8601-date="2021">2021</year>
+      <volume>2021</volume>
+      <issue>05</issue>
+      <uri>https://arxiv.org/abs/2005.05290</uri>
+      <pub-id pub-id-type="doi">10.1088/1475-7516/2021/05/057</pub-id>
+      <fpage>057</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Lesgourgues2011">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Lesgourgues</surname><given-names>Julien</given-names></name>
+      </person-group>
+      <article-title>The Cosmic Linear Anisotropy Solving System (CLASS) III: Comparision with CAMB for \LambdaCDM</article-title>
+      <year iso-8601-date="2011">2011</year>
+      <uri>https://arxiv.org/abs/1104.2934</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-LesgourguesTram2011">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Lesgourgues</surname><given-names>Julien</given-names></name>
+        <name><surname>Tram</surname><given-names>Thomas</given-names></name>
+      </person-group>
+      <article-title>The Cosmic Linear Anisotropy Solving System (CLASS) IV: Efficient implementation of non-cold relics</article-title>
+      <source>Journal of Cosmology and Astroparticle Physics</source>
+      <year iso-8601-date="2011">2011</year>
+      <volume>2011</volume>
+      <issue>09</issue>
+      <uri>https://arxiv.org/abs/1104.2935</uri>
+      <pub-id pub-id-type="doi">10.1088/1475-7516/2011/09/032</pub-id>
+      <fpage>032</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Lewis2000">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Lewis</surname><given-names>Antony</given-names></name>
+        <name><surname>Challinor</surname><given-names>Anthony</given-names></name>
+        <name><surname>Lasenby</surname><given-names>Anthony</given-names></name>
+      </person-group>
+      <article-title>Efficient computation of cosmic microwave background anisotropies in closed Friedmann-Robertson-Walker models</article-title>
+      <source>The Astrophysical Journal</source>
+      <year iso-8601-date="2000">2000</year>
+      <volume>538</volume>
+      <uri>https://arxiv.org/abs/astro-ph/9911177</uri>
+      <pub-id pub-id-type="doi">10.1086/309179</pub-id>
+      <fpage>473</fpage>
+      <lpage>476</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Blas2011">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Blas</surname><given-names>Diego</given-names></name>
+        <name><surname>Lesgourgues</surname><given-names>Julien</given-names></name>
+        <name><surname>Tram</surname><given-names>Thomas</given-names></name>
+      </person-group>
+      <article-title>The Cosmic Linear Anisotropy Solving System (CLASS). Part II: Approximation schemes</article-title>
+      <source>Journal of Cosmology and Astroparticle Physics</source>
+      <year iso-8601-date="2011">2011</year>
+      <volume>2011</volume>
+      <issue>07</issue>
+      <uri>https://arxiv.org/abs/1104.2933</uri>
+      <pub-id pub-id-type="doi">10.1088/1475-7516/2011/07/034</pub-id>
+      <fpage>034</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Piras2023">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Piras</surname><given-names>Davide</given-names></name>
+        <name><surname>Spurio Mancini</surname><given-names>Alessio</given-names></name>
+      </person-group>
+      <article-title>CosmoPower-JAX: High-dimensional Bayesian inference with differentiable cosmological emulators</article-title>
+      <source>The Open Journal of Astrophysics</source>
+      <year iso-8601-date="2023">2023</year>
+      <volume>6</volume>
+      <uri>https://arxiv.org/abs/2305.06347</uri>
+      <pub-id pub-id-type="doi">10.21105/astro.2305.06347</pub-id>
+    </element-citation>
+  </ref>
+  <ref id="ref-cloelike2026">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Bonici</surname><given-names>Marco</given-names></name>
+        <name><surname>Cañas-Herrera</surname><given-names>Guadalupe</given-names></name>
+        <name><surname>Carrilho</surname><given-names>Pedro</given-names></name>
+        <name><surname>Casas</surname><given-names>Santiago</given-names></name>
+        <name><surname>Moretti</surname><given-names>Chiara</given-names></name>
+        <name><surname>Pezzotta</surname><given-names>Andrea</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Cloelike: A Python library for cosmological likelihood inference in the Euclid era</article-title>
+      <year iso-8601-date="2026">2026</year>
+      <uri>https://arxiv.org/abs/2605.23841</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Bonici2026">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Bonici</surname><given-names>Marco</given-names></name>
+        <name><surname>Cañas-Herrera</surname><given-names>Guadalupe</given-names></name>
+        <name><surname>Carrilho</surname><given-names>Pedro</given-names></name>
+        <name><surname>Casas</surname><given-names>Santiago</given-names></name>
+        <name><surname>Moretti</surname><given-names>Chiara</given-names></name>
+        <name><surname>Pezzotta</surname><given-names>Andrea</given-names></name>
+        <name><surname>others</surname></name>
+      </person-group>
+      <article-title>Cloelib: A flexible Python library for computing cosmological observables in the Euclid era</article-title>
+      <year iso-8601-date="2026">2026</year>
+      <uri>https://arxiv.org/abs/2605.23839</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-Hahn2024">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Hahn</surname><given-names>Oliver</given-names></name>
+        <name><surname>List</surname><given-names>Florian</given-names></name>
+        <name><surname>Porqueres</surname><given-names>Natalia</given-names></name>
+      </person-group>
+      <article-title>DISCO-DJ I: A differentiable Einstein-Boltzmann solver for cosmology</article-title>
+      <source>Journal of Cosmology and Astroparticle Physics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>2024</volume>
+      <issue>06</issue>
+      <uri>https://arxiv.org/abs/2311.03291</uri>
+      <fpage>063</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Balkenhol2024">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Balkenhol</surname><given-names>L.</given-names></name>
+        <name><surname>Trendafilova</surname><given-names>C.</given-names></name>
+        <name><surname>Benabed</surname><given-names>K.</given-names></name>
+        <name><surname>Galli</surname><given-names>S.</given-names></name>
+      </person-group>
+      <article-title>Candl: Cosmic microwave background analysis with a differentiable likelihood</article-title>
+      <source>Astronomy &amp; Astrophysics</source>
+      <year iso-8601-date="2024">2024</year>
+      <volume>686</volume>
+      <uri>https://arxiv.org/abs/2401.13433</uri>
+      <fpage>A10</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Lange2023">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Lange</surname><given-names>Johannes U.</given-names></name>
+      </person-group>
+      <article-title>nautilus: Boosting Bayesian importance nested sampling with deep learning</article-title>
+      <source>Monthly Notices of the Royal Astronomical Society</source>
+      <year iso-8601-date="2023">2023</year>
+      <volume>525</volume>
+      <uri>https://arxiv.org/abs/2306.16923</uri>
+      <pub-id pub-id-type="doi">10.1093/mnras/stad2441</pub-id>
+      <fpage>3181</fpage>
+      <lpage>3194</lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Karamanis2022">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Karamanis</surname><given-names>Minas</given-names></name>
+        <name><surname>Nabergoj</surname><given-names>David</given-names></name>
+        <name><surname>Beutler</surname><given-names>Florian</given-names></name>
+        <name><surname>Peacock</surname><given-names>John A.</given-names></name>
+        <name><surname>Seljak</surname><given-names>Uroš</given-names></name>
+      </person-group>
+      <article-title>pocoMC: A Python package for accelerated Bayesian inference in astronomy and cosmology</article-title>
+      <source>Journal of Open Source Software</source>
+      <year iso-8601-date="2022">2022</year>
+      <volume>7</volume>
+      <issue>79</issue>
+      <pub-id pub-id-type="doi">10.21105/joss.04634</pub-id>
+      <fpage>4634</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+  <ref id="ref-Hinton2016">
+    <element-citation publication-type="article-journal">
+      <person-group person-group-type="author">
+        <name><surname>Hinton</surname><given-names>Samuel R.</given-names></name>
+      </person-group>
+      <article-title>ChainConsumer</article-title>
+      <source>Journal of Open Source Software</source>
+      <year iso-8601-date="2016">2016</year>
+      <volume>1</volume>
+      <issue>4</issue>
+      <pub-id pub-id-type="doi">10.21105/joss.00045</pub-id>
+      <fpage>45</fpage>
+      <lpage></lpage>
+    </element-citation>
+  </ref>
+</ref-list>
+</back>
+</article>
