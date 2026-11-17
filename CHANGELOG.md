@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Survey validation roadmap `docs/SURVEY_VALIDATION_ROADMAP.md` for the non-Euclid
+  configurations (DESI, Rubin/LSST, SKAO and Planck), including the provenance map
+  that traces each historical input to the current specification schema.
+- Historical `-SKAOPaper` survey specifications transcribed from the SKAO forecast
+  project of Casas et al. (2023): `DESI-BGS-SKAOPaper`, `DESI-ELG-SKAOPaper`,
+  `Rubin-Photometric-SKAOPaper`, `SKAO-Photometric-SKAOPaper`,
+  `SKAO-Spectroscopic-SKAOPaper` and `SKAO-IM-Redbook-DESI-ELG`. They are opt-in
+  files under `other_survey_specifications/` and do not change any existing default.
+- Survey observable validation harness: `scripts/validation/survey_observable_reference.py`
+  (independent transcription of the historical galaxy-clustering, intensity-mapping and
+  photometric recipes) and `scripts/validation/validate_survey_observables.py`, which
+  compares the package against it for every migrated configuration and writes a JSON
+  report plus the SKAO Fig. 1 diagnostic. Results are recorded in
+  `docs/SURVEY_VALIDATION_ROADMAP.md`.
+- Fast guard tests `tests/survey_observables_validation_test.py` for the reference formulas
+  and the historical Fig. 1 table.
+- Survey forecast comparison harness `scripts/validation/run_survey_forecasts.py`, which runs
+  Euclid, Rubin/LSST, DESI, SKAO (photometric, HI galaxies, intensity mapping and the
+  IM x DESI-ELG cross-spectrum) and a Planck-like CMB forecast on a common GR fiducial in
+  both LCDM and w0waCDM, reports marginalised errors and dark-energy figures of merit, and
+  writes Markdown/JSON summaries. Results are recorded in `docs/SURVEY_VALIDATION_ROADMAP.md`.
+- `scripts/validation/plot_survey_validation.py` and the resulting figures (survey inputs,
+  marginalised-error panels, paired `w0`-`wa` Fisher ellipses and the SKAO Fig. 1
+  diagnostic), plus the documentation page `docs/source/survey_validation.md` and the
+  executed tutorial `notebooks/09-Survey-validation.ipynb`.
+
+### Changed
+
+- The survey forecast harness uses a relative finite-difference step of `0.002` for the
+  galaxy-clustering and intensity-mapping probes. At the previous `0.01` their `sigma8`
+  errors were under-converged by 20-38%; the photometric probes are unchanged.
+
+### Fixed
+
+- Survey validation review follow-ups: combinations sum the full nuisance-marginalised
+  Fisher blocks (and the harness now refuses to combine a report that lacks them, keeping
+  the summed block for reuse), the IM volume uses `fsky_IM` and the cross-spectrum marks its
+  nested-footprint default (optional `fsky_cross` override), the paper ellipses are centred
+  on `(w0, wa) = (-1, 0)`, the fixed `mnu = 0.06` eV is explicit, and the validation claims
+  were narrowed to what is actually checked.
+- The cross-spectrum covariance test now exercises `veff_Ig`, and the `w0`-`wa` figure is
+  regrouped into four paired panels without the much weaker Planck-like run, with missing
+  inputs raising instead of being silently skipped.
+
 ## [v2.0.0](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0) - 2026-11-12
 
 ### Fixed
@@ -50,6 +96,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Survey forecast comparison tables, figures and the SKAO cross-check now use a 0.2%
+  relative finite-difference step. A step scan showed that the spectroscopic (GCsp)
+  Fisher matrix is not converged at the 1% step used in the first pass: the
+  three-dimensional clustering `sigma(sigma8)` moves by 20-38% between 1% and 0.2%
+  (Euclid GCsp 25%, DESI ELG 37%, SKAO HI 38%, SKAO IM 20%), while 0.2% and 0.05%
+  agree to better than 0.1%. The photometric probes are stable at 0.03%.
 - Package version bumped to `2.0.0rc1` (first PyPI release candidate of the 2.0 series, which
   covers the `cosmicfishpie` to `cosmicjellyfish` rename, the JAX backend and the symbolic
   backend overhaul). The legacy `1.3.1` heading now uses the `## [vX.Y.Z]` format that
@@ -64,6 +116,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Survey validation review follow-up. `SpectroCov` now uses the probe-appropriate sky
+  fraction for the survey volume (`fsky_IM` for intensity mapping, the overlap for a
+  cross-spectrum) instead of always using `fsky_spectro`; survey forecast combinations add
+  the full nuisance-marginalised Fisher blocks rather than rebuilding them from diagonal
+  errors, so parameter correlations are retained; the w0-wa ellipses are drawn at the
+  actual fiducial `(w0, wa) = (-1, 0)`; the reports record the resolved settings per case
+  and the package versions; the fiducial is explicit about the fixed `mnu = 0.06` eV; and
+  the observable-validation claims are narrowed (photometric angular spectra are not
+  re-compared, and the Fig. 1 amplitude offset is no longer attributed solely to the
+  modified-gravity fiducial).
 - Review fixes for the PyPI preparation: the publish jobs check out with
   `persist-credentials: false`; the legacy symbolic backend only shows the `symbolic_pofk`
   install hint when `symbolic_pofk` itself is missing (a missing `colossus` is reported as

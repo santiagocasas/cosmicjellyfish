@@ -1,0 +1,70 @@
+specifications:
+  # DESI Bright Galaxy Survey, transcribed from the historical SKAO project
+  # (`survey_specifications/DESI_BGS_GCsp.dat`, area = 14000 deg^2).
+  # The `dn3` column of that table is dN/dz per deg^2 and maps directly onto
+  # `dndOmegadz`; see docs/SURVEY_VALIDATION_ROADMAP.md for the provenance.
+  'spec_sigma_dz': 0.001
+  'spec_sigma_dz_type': 'constant'
+  'area_survey_spectro': 14000
+  'kmax_GCsp': 0.30
+  'kmin_GCsp': 0.001
+  'z_bins_sp':
+    1: [0.00, 0.10]
+    2: [0.10, 0.20]
+    3: [0.20, 0.30]
+    4: [0.30, 0.40]
+    5: [0.40, 0.50]
+  'dndOmegadz':
+    1: 1165.0
+    2: 3074.0
+    3: 1909.0
+    4: 732.0
+    5: 120.0
+  sp_bias_sample: 'g'
+  sp_bias_model: 'linear'
+  sp_bias_root: 'b'
+  sp_bias_parametrization:
+    linear:
+      bg_1: 1.36436355
+      bg_2: 1.38771958
+      bg_3: 1.41026411
+      bg_4: 1.43218750
+      bg_5: 1.45366915
+    linear_log:
+      lnbg_1: 0.31068806
+      lnbg_2: 0.32766181
+      lnbg_3: 0.34377700
+      lnbg_4: 0.35920300
+      lnbg_5: 0.37409081
+    linear_Qbias:
+      bg_1: 1.36436355
+      bg_2: 1.38771958
+      bg_3: 1.41026411
+      bg_4: 1.43218750
+      bg_5: 1.45366915
+      A1: 0.02
+      A2: -2.0
+  shot_noise_model: 'constant'
+  shot_noise_parametrization:
+    constant:
+      Ps_1: 0.0
+      Ps_2: 0.0
+      Ps_3: 0.0
+      Ps_4: 0.0
+      Ps_5: 0.0
+  nonlinear_model: 'default'
+  nonlinear_parametrization:
+    vary_sigmap: True
+    vary_sigmav: True
+    rescale_sigma_pv:
+      sigmap_1: 1.0
+      sigmap_2: 1.0
+      sigmap_3: 1.0
+      sigmap_4: 1.0
+      sigmap_5: 1.0
+      sigmav_1: 1.0
+      sigmav_2: 1.0
+      sigmav_3: 1.0
+      sigmav_4: 1.0
+      sigmav_5: 1.0
+    default:

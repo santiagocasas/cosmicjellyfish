@@ -6,8 +6,8 @@ This folder goes into the repository root as `paper/`:
 paper/
   paper.md        the manuscript (Markdown with a YAML header, JOSS format)
   paper.bib       the bibliography (BibTeX); keys are cited as [@Key] in paper.md
-  figures/        the three PNG figures referenced by paper.md
-  scripts/        scripts that regenerate Figures 1 and 2
+  figures/        the four PNG figures referenced by paper.md
+  scripts/        scripts that regenerate Figures 1, 2 and 4
   github-workflow/draft-pdf.yml   move to .github/workflows/draft-pdf.yml
 ```
 
@@ -58,6 +58,7 @@ uv sync --extra jaxcosmo
 cd paper/figures
 uv run python ../scripts/fig1_euclid_probes.py   # about 10 s
 uv run --extra jaxcosmo python ../scripts/fig2_autodiff.py   # about 1 min
+uv run python ../scripts/fig4_survey_comparison.py   # about 3 min (needs the symbolic backend)
 ```
 
 The scripts write PNG and PDF files and a `results/` folder into the current directory.

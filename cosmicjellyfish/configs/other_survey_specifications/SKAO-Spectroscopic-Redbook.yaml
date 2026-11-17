@@ -41,6 +41,7 @@ specifications:
       Ps_2: 0.0
       Ps_3: 0.0
       Ps_4: 0.0
+      Ps_5: 0.0
   nonlinear_model: 'default' #'rescale_sigma_pv' # 'default' or 'rescale_sigma_pv'
   nonlinear_parametrization:
     vary_sigmap: True

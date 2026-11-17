@@ -14,8 +14,12 @@ it is and what is wrong. Items marked (docs) are already worked around in the do
   `"external"`.
 - `memorize_cosmo` is documented as general, but only the external backend uses it
   (`cosmology.py` near line 1718).
-- `Rubin` and `DESI` have survey-name branches, but no spec YAML is shipped for either.
-  `surveyName="DESI"` fails with a missing-file error (docs).
+- `Rubin` and `DESI` have survey-name branches, but the survey name alone does not
+  select a specification file: the branch loads whatever `survey_name_photo` or
+  `survey_name_spectro` names. Historical inputs are now shipped as
+  `Rubin-Photometric-SKAOPaper`, `DESI-BGS-SKAOPaper` and `DESI-ELG-SKAOPaper`, so
+  `surveyName="DESI"` must still be paired with
+  `options={"survey_name_spectro": ...}` (docs).
 - Only `Planck.yaml` is ever loaded by `surveyName`. The Simons Observatory and
   CMB-Stage4 YAMLs are never selected that way; pass them via `--spec-yaml` or
   `specifications` (docs).

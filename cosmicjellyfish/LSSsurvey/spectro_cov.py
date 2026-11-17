@@ -48,6 +48,17 @@ class SpectroCov:
                                     Size of the survey sky coverage in square arc minutes
         fsky_spectro              : float
                                     Survey coverage fraction of the total sky
+        fsky_volume               : float
+                                    Sky fraction entering ``volume_survey``: ``fsky_spectro``
+                                    for galaxy clustering, ``fsky_IM`` for intensity mapping
+                                    and, for a cross-spectrum, the explicit ``fsky_cross``
+                                    specification key when present. Otherwise the smaller of
+                                    the two footprints is used, which assumes that the smaller
+                                    footprint is fully contained in the larger one.
+        fsky_cross_assumed_nested : bool
+                                    True when a cross-spectrum volume used the
+                                    nested-footprint default instead of an explicit
+                                    ``fsky_cross``.
         dnz                       : float, list
                                     Galaxies per square arc minute per redshift bin
         z_bins                    : list
@@ -115,6 +126,33 @@ class SpectroCov:
             self.inter_z_bin_mids = np.intersect1d(self.z_bin_mids, self.IM_z_bin_mids)
             self.inter_z_bins = np.intersect1d(self.z_bins, self.IM_z_bins)
 
+        # The comoving volume is set by the probe that bounds it. For an
+        # intensity-mapping-only forecast that is the IM footprint, not the spectroscopic
+        # one that may also be loaded by the survey block; for a cross-spectrum it is the
+        # sky observed by both probes. The cross-spectrum sky fraction can be given
+        # explicitly with ``fsky_cross``; without it we use min(fsky_spectro, fsky_IM),
+        # which is only exact when the smaller footprint is contained in the larger one.
+        fsky_im = float(self.config.specs.get("fsky_IM", 0.0) or 0.0)
+        self.fsky_cross_assumed_nested = False
+        if "IM" in self.pk_obs.observables and "GCsp" in self.pk_obs.observables:
+            nested = min(self.fsky_spectro, fsky_im) if fsky_im > 0 else self.fsky_spectro
+            fsky_cross = self.config.specs.get("fsky_cross")
+            if fsky_cross is None:
+                self.fsky_volume = nested
+                self.fsky_cross_assumed_nested = True
+            else:
+                fsky_cross = float(fsky_cross)
+                if not 0.0 < fsky_cross <= nested * (1.0 + 1.0e-12):
+                    raise ValueError(
+                        "fsky_cross must be positive and no larger than the nested "
+                        f"footprint min(fsky_spectro, fsky_IM) = {nested}, got {fsky_cross}"
+                    )
+                self.fsky_volume = fsky_cross
+        elif "IM" in self.pk_obs.observables:
+            self.fsky_volume = fsky_im if fsky_im > 0 else self.fsky_spectro
+        else:
+            self.fsky_volume = self.fsky_spectro
+
     def Tsys_func(self, z):
         """Calculates Tsys in mK
 
@@ -180,7 +218,7 @@ class SpectroCov:
         float
             survey volume of the redshift bin
         """
-        vol = self.fsky_spectro * self.d_volume(ibin)
+        vol = self.fsky_volume * self.d_volume(ibin)
         return vol
 
     def n_density(self, zi):
