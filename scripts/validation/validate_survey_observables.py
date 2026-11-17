@@ -127,7 +127,7 @@ CASES: dict[str, SurveyCase] = {
     "skao-im-desi": SurveyCase(
         name="skao-im-desi",
         survey="SKAO",
-        observables=("GCsp", "IM"),
+        observables=("GCspxIM",),
         kind="im-cross",
         reference_table="DESI_ELG_GCsp.dat",
         options={
@@ -152,7 +152,7 @@ CASES: dict[str, SurveyCase] = {
     "fig1": SurveyCase(
         name="fig1",
         survey="SKAO",
-        observables=("GCsp", "IM"),
+        observables=("GCspxIM",),
         kind="fig1",
         options={
             "survey_name_spectro": "SKAO-Spectroscopic-SKAOPaper",

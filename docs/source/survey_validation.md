@@ -121,7 +121,20 @@ Everything runs on the `symbolic` backend except the Planck-like case, which use
 Combinations sum the full nuisance-marginalised Fisher blocks of the two probes, so the
 parameter correlations between the probes' contributions are retained; the harness refuses
 to combine a report that does not store those blocks rather than falling back to the
-diagonal errors. The IM x DESI-ELG row is the cross-spectrum only.
+diagonal errors. The "IM x ELG" rows with the cross-spectrum only use
+`observables=["GCspxIM"]`; the "auto + cross" rows analyse the DESI ELG auto-spectrum, the
+IM auto-spectrum and their cross-spectrum together (see the next paragraph).
+
+The spectroscopic observables are `GCsp` (galaxy auto-spectrum), `IM` (intensity-mapping
+auto-spectrum) and `GCspxIM` (their cross-spectrum). The old spelling `["GCsp", "IM"]` meant
+the cross-spectrum only; it still works and emits a `FutureWarning`. To analyse all three
+spectra at once, list them (`["GCsp", "GCspxIM", "IM"]`) or pass `GCspxIM` together with the
+option `spectro_joint=True`. In that joint mode the galaxy and IM fields at each
+`(k, mu)` are treated as a pair with a full 2x2 Gaussian covariance, so the modes they share
+are counted once instead of adding three Fisher matrices by hand. The joint analysis lives
+on the redshift bins where both probes overlap, needs the standard finite-difference
+derivatives (the JAX providers do not support it) and the shot-noise parameters `Ps_i`
+enter the galaxy auto-spectrum only.
 
 For intensity mapping the survey volume uses the IM sky fraction (`fsky_IM = 0.48`),
 matching the footprint already used by the 21-cm noise term. For the cross-spectrum the
@@ -163,7 +176,8 @@ that follow give the numbers.
 | SKAO | GCph+WL | 0.00556561 | 0.00621195 | 0.0465785 | 0.0269691 | 0.00738337 |
 | SKAO HI | GCsp | 0.0243804 | 0.00861922 | 0.0446646 | 0.0580188 | 0.0373749 |
 | SKAO | IM | 0.00692111 | 0.00225796 | 0.0156393 | 0.00749774 | 0.00644563 |
-| SKAO x DESI | IM x ELG | 0.0129225 | 0.00336428 | 0.0283735 | 0.0176025 | 0.042502 |
+| SKAO x DESI | IM x ELG, cross only | 0.0129225 | 0.00336428 | 0.0283735 | 0.0176025 | 0.042502 |
+| SKAO x DESI | IM x ELG, auto + cross | 0.00418514 | 0.00135812 | 0.00719769 | 0.00610167 | 0.00454342 |
 | Planck-like | CMB TT+TE+EE | 0.016075 | 0.0012949 | 0.0115754 | 0.00693771 | 0.00942461 |
 | Euclid | GCph+WL+GCsp | 0.00189726 | 0.00085189 | 0.00654836 | 0.00426305 | 0.00218619 |
 
@@ -183,7 +197,8 @@ Here `w0 = -1`, `wa = 0`, and the figure of merit is
 | SKAO | GCph+WL | 0.01689 | 0.00684925 | 0.0521334 | 0.0275988 | 0.0135739 | 0.193051 | 0.568189 | 25.9 |
 | SKAO HI | GCsp | 0.037852 | 0.00910093 | 0.0551461 | 0.0647451 | 0.0563283 | 0.469886 | 2.44807 | 2.92 |
 | SKAO | IM | 0.0148634 | 0.00285215 | 0.0220399 | 0.0137836 | 0.0112163 | 0.0969339 | 0.322458 | 72.5 |
-| SKAO x DESI | IM x ELG | 0.0272612 | 0.00476902 | 0.0438979 | 0.02617 | 0.0536757 | 0.240052 | 0.733385 | 17.2 |
+| SKAO x DESI | IM x ELG, cross only | 0.0272612 | 0.00476902 | 0.0438979 | 0.02617 | 0.0536757 | 0.240052 | 0.733385 | 17.2 |
+| SKAO x DESI | IM x ELG, auto + cross | 0.0104559 | 0.00166182 | 0.0132039 | 0.010836 | 0.00959269 | 0.0724279 | 0.254649 | 147 |
 | Planck-like | CMB TT+TE+EE | 0.476852 | 0.0750947 | 0.501387 | 0.00799934 | 0.478239 | 4.61783 | 14.0196 | 0.0429 |
 | Euclid | GCph+WL+GCsp | 0.00336613 | 0.00111382 | 0.00783857 | 0.00579484 | 0.00329397 | 0.0350528 | 0.120817 | 638 |
 
@@ -215,8 +230,8 @@ consistency check of the pipeline, not as a survey ranking.
 The SKAO continuum photometric configuration is weak because the paper-era file covers
 only `fsky = 0.1166`. Its HI-galaxy and intensity-mapping probes are comparable to each
 other but much weaker than the optical spectroscopic surveys on shape parameters. The
-SKAO IM x DESI-ELG row uses the cross-spectrum only, so it is not comparable to the
-IM auto-spectrum row.
+SKAO IM x DESI-ELG cross-spectrum row discards the auto-spectra, so it is not comparable
+to the IM auto-spectrum row; the auto + cross row is.
 
 The Planck-like row is the shipped single-channel approximation (`lmax = 1500`, no
 lensing), run with CAMB because the symbolic backend cannot produce CMB spectra. It is

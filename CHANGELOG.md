@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `GCspxIM` observable for the galaxy x intensity-mapping cross-spectrum. Listing all three
+  of `GCsp`, `GCspxIM` and `IM` (or `GCspxIM` with the option `spectro_joint=True`) runs a
+  joint auto + cross analysis per redshift bin with the full 2x2 Gaussian covariance of the
+  two fields, so the three spectra no longer have to be added by hand (new module
+  `cosmicjellyfish.LSSsurvey.spectro_modes`, setting `spectro_mode`). The joint analysis
+  uses the standard finite-difference derivatives and the overlapping redshift bins.
+- `skao-im-desi-joint` case in `scripts/validation/run_survey_forecasts.py` and new tests
+  in `tests/spectro_modes_test.py`.
 - Survey validation roadmap `docs/SURVEY_VALIDATION_ROADMAP.md` for the non-Euclid
   configurations (DESI, Rubin/LSST, SKAO and Planck), including the provenance map
   that traces each historical input to the current specification schema.
@@ -37,6 +45,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The observables `["GCsp", "IM"]` used to select the cross-spectrum only. They keep doing
+  so, now with a `FutureWarning`; use `["GCspxIM"]` instead. The survey scripts use the new name.
+- Fig. 4 of the paper compares Euclid and Rubin/LSST photometry with Euclid GCsp, DESI ELG+BGS
+  and SKAO IM + DESI ELG (auto + cross) in separate photometric and spectroscopic `w0`-`wa`
+  panels with explicit axis limits.
 - The survey forecast harness uses a relative finite-difference step of `0.002` for the
   galaxy-clustering and intensity-mapping probes. At the previous `0.01` their `sigma8`
   errors were under-converged by 20-38%; the photometric probes are unchanged.

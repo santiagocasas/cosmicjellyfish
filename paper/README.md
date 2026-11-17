@@ -58,7 +58,7 @@ uv sync --extra jaxcosmo
 cd paper/figures
 uv run python ../scripts/fig1_euclid_probes.py   # about 10 s
 uv run --extra jaxcosmo python ../scripts/fig2_autodiff.py   # about 1 min
-uv run python ../scripts/fig4_survey_comparison.py   # about 3 min (needs the symbolic backend)
+uv run python ../scripts/fig4_survey_comparison.py   # about 2-3 min (needs the symbolic backend)
 ```
 
 The scripts write PNG and PDF files and a `results/` folder into the current directory.

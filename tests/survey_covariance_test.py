@@ -76,7 +76,7 @@ def test_skao_im_volume_uses_the_im_sky_fraction():
 def test_skao_im_desi_cross_covariance_matches_the_overlap():
     cov, _ = _covariance(
         "SKAO",
-        ["GCsp", "IM"],
+        ["GCspxIM"],
         {
             "survey_name_spectro": "DESI-ELG-SKAOPaper",
             "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",
@@ -99,7 +99,7 @@ def test_skao_im_desi_cross_covariance_matches_the_overlap():
 def test_cross_footprint_can_be_set_explicitly():
     cov, _ = _covariance(
         "SKAO",
-        ["GCsp", "IM"],
+        ["GCspxIM"],
         {
             "survey_name_spectro": "DESI-ELG-SKAOPaper",
             "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",
@@ -114,7 +114,7 @@ def test_cross_footprint_larger_than_the_nested_one_is_rejected():
     with pytest.raises(ValueError, match="fsky_cross"):
         _covariance(
             "SKAO",
-            ["GCsp", "IM"],
+            ["GCspxIM"],
             {
                 "survey_name_spectro": "DESI-ELG-SKAOPaper",
                 "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",

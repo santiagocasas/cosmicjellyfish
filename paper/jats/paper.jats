@@ -647,9 +647,9 @@ print(fisher_ad.get_confidence_bounds() / fisher_fd.get_confidence_bounds())</co
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>w</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>–<inline-formula><alternatives>
     <tex-math><![CDATA[w_a]]></tex-math>
     <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>w</mml:mi><mml:mi>a</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
-    Fisher ellipses (right) for Euclid, Rubin/LSST, DESI ELG and SKAO
-    intensity mapping, all on the same GR fiducial and with all nuisance
-    parameters marginalised. The figure is produced by
+    Fisher ellipses (centre: photometric probes; right: Euclid GCsp, DESI
+    ELG+BGS and SKAO intensity mapping analysed jointly with DESI ELG), all
+    on the same GR fiducial and with all nuisance parameters marginalised. The figure is produced by
     <monospace>paper/scripts/fig4_survey_comparison.py</monospace>.<styled-content id="figU003Asurveys"></styled-content></p></caption>
     <graphic mimetype="image" mime-subtype="png" xlink:href="fig4_survey_comparison.png" />
   </fig>

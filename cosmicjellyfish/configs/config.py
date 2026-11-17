@@ -12,6 +12,7 @@ import numpy as np
 import yaml
 
 import cosmicjellyfish.cosmology.cosmology as cosmology
+from cosmicjellyfish.LSSsurvey.spectro_modes import resolve_spectro_observables
 from cosmicjellyfish.utilities.utils import misc as ums
 from cosmicjellyfish.utilities.utils import physmath as upm
 from cosmicjellyfish.utilities.utils import printing as upt
@@ -272,6 +273,7 @@ def init(
     settings.setdefault("nonlinear", True)
     settings.setdefault("nonlinear_photo", True)
     settings.setdefault("bfs8terms", False)
+    settings.setdefault("spectro_joint", False)
     settings.setdefault("vary_bias_str", "lnb")
     settings.setdefault("AP_effect", True)
     settings.setdefault("FoG_switch", True)
@@ -651,6 +653,11 @@ def init(
 
     if observables is None:
         observables = ["GCph", "WL"]
+    # 'GCspxIM' is the galaxy x IM cross-spectrum; with spectro_joint (or all three of
+    # GCsp, GCspxIM, IM) the auto- and cross-spectra are combined with their full covariance.
+    observables, settings["spectro_mode"] = resolve_spectro_observables(
+        observables, joint=bool(settings.get("spectro_joint", False))
+    )
     global obs
     obs = observables
 

@@ -391,10 +391,16 @@ surveys in that comparison reflects the adopted specifications---sky area, redsh
 binning and scale cuts---rather than the telescopes themselves, which is exactly the
 behaviour expected from a specification-driven code.
 
-![Marginalised $1\sigma$ errors on $\Omega_m$ and $\sigma_8$ in $\Lambda$CDM (left)
-and $w_0$--$w_a$ Fisher ellipses (right) for Euclid, Rubin/LSST, DESI ELG and SKAO
-intensity mapping, all on the same GR fiducial and with all nuisance parameters
-marginalised. The figure is produced by `paper/scripts/fig4_survey_comparison.py`.\label{fig:surveys}](figures/fig4_survey_comparison.png){ width=100% }
+![Left: marginalised $1\sigma$ errors on $\Omega_m$ and $\sigma_8$ in $\Lambda$CDM. Centre
+and right: $w_0$--$w_a$ Fisher ellipses ($1\sigma$) of the photometric probes (Euclid,
+Rubin/LSST) and of the spectroscopic probes (Euclid GCsp, DESI ELG+BGS, and SKAO intensity
+mapping analysed jointly with the DESI ELG sample). Everything uses the same GR fiducial
+and all nuisance parameters are marginalised. DESI ELG and BGS cover different redshifts
+and are added as independent Fisher matrices; for SKAO IM and DESI ELG the auto- and
+cross-spectra are analysed together with their full Gaussian covariance
+(\texttt{observables=["GCsp","GCspxIM","IM"]}). The DESI specifications are those of the
+SKAO paper and will be updated. The figure is produced by
+`paper/scripts/fig4_survey_comparison.py`.\label{fig:surveys}](figures/fig4_survey_comparison.png){ width=100% }
 
 **Chains against Fisher matrices.** We have also validated our chains against our own
 Fisher matrices and shown that they agree (\autoref{fig:nautilus}). For Euclid WL, GCsp

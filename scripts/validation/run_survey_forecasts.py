@@ -141,12 +141,23 @@ CASES: dict[str, ForecastCase] = {
         name="skao-im-desi",
         label="SKAO IM x DESI ELG cross",
         survey="SKAO",
-        observables=("GCsp", "IM"),
+        observables=("GCspxIM",),
         options={
             "survey_name_spectro": "DESI-ELG-SKAOPaper",
             "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",
         },
         note="cross-spectrum only, aligned bins, no auto-spectra",
+    ),
+    "skao-im-desi-joint": ForecastCase(
+        name="skao-im-desi-joint",
+        label="SKAO IM x DESI ELG (auto + cross)",
+        survey="SKAO",
+        observables=("GCsp", "GCspxIM", "IM"),
+        options={
+            "survey_name_spectro": "DESI-ELG-SKAOPaper",
+            "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",
+        },
+        note="DESI ELG auto + IM auto + cross with the full 2x2 covariance, aligned bins",
     ),
     "planck": ForecastCase(
         name="planck",
