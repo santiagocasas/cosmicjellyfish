@@ -28,7 +28,7 @@ affiliations:
     index: 1
   - name: TODO affiliation of M. Martinelli
     index: 3
-  - name: Universidad de Cantabria, Spain
+  - name: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     index: 4
   - name: TODO affiliation of Sabarish V. M.
     index: 5

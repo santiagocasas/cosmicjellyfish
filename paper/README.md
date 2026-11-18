@@ -6,14 +6,19 @@ This folder goes into the repository root as `paper/`:
 paper/
   paper.md        the manuscript (Markdown with a YAML header, JOSS format)
   paper.bib       the bibliography (BibTeX); keys are cited as [@Key] in paper.md
-  figures/        the three PNG figures referenced by paper.md
+  figures/        the PNG figures referenced by paper.md (versioned, see below)
   scripts/        scripts that regenerate Figures 1 and 2
-  github-workflow/draft-pdf.yml   move to .github/workflows/draft-pdf.yml
 ```
+
+The GitHub workflow that builds the draft lives in `.github/workflows/draft-pdf.yml`.
 
 There is no JOSS template to copy into the repository. The template (LaTeX class, logo,
 citation style) lives inside the `openjournals/inara` Docker image, which both routes
 below use. The repository only needs `paper.md`, `paper.bib` and the figures.
+
+The three PNG figures referenced by the paper are committed (a narrow exception in
+`.gitignore`), so the CI build can find them. The PDF copies, the `fig2_*` extras and the
+`results/`, `cache/` and `memory_cache/` folders written by the scripts stay ignored.
 
 ## Compile locally with Docker
 
@@ -31,22 +36,17 @@ This writes `paper/paper.pdf` (draft mode: watermark and line numbers) and
 a JATS folder next to it. Paths inside `paper.md` are relative to `paper.md`, so the figures
 resolve as `figures/...`. To build only the PDF, append `-o pdf paper.md` to the command.
 
-Add the build products to `.gitignore`:
-
-```text
-paper/paper.pdf
-paper/paper.jats/
-paper/jats/
-```
+The build products (`paper/paper.pdf`, `paper/jats/`) are already ignored by git.
 
 ## Compile with GitHub Actions
 
-1. Move `paper/github-workflow/draft-pdf.yml` to `.github/workflows/draft-pdf.yml` and
-   delete the `github-workflow` folder.
-2. Commit and push. The workflow runs on every push that touches `paper/**`, and it can
-   be started by hand from the Actions tab ("Draft PDF" -> "Run workflow").
-3. Download the PDF from the run page: Actions -> the run -> Artifacts -> `paper`.
-   With the `gh` CLI: `gh run download --name paper`.
+The "Draft PDF" workflow (`.github/workflows/draft-pdf.yml`) runs on every push to any
+branch, so each commit of a paper PR gets a draft PDF. It can also be started by hand
+from the Actions tab ("Draft PDF" -> "Run workflow").
+
+To get the PDF of the latest push: Actions -> the run -> Artifacts -> `paper`.
+With the `gh` CLI: `gh run download --name paper` (add `--dir paper-draft` to choose
+the target folder).
 
 The workflow uses `openjournals/openjournals-draft-action`, which runs the same Docker
 image as above.
