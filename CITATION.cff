@@ -14,8 +14,10 @@ authors:
     given-names: Sefa
     affiliation: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     orcid: https://orcid.org/0009-0004-0852-8624
-  - family-names: V. M.
-    given-names: Sabarish
+  - family-names: Sabarish
+    given-names: V. M.
+    affiliation: RWTH Aachen University, Hamburger Sternwarte
+    orcid: https://orcid.org/0000-0001-5677-0838
 keywords:
   - cosmology
   - fishermatrix

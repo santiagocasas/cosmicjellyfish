@@ -19,8 +19,9 @@ authors:
   - name: Sefa Pamuk
     orcid: 0009-0004-0852-8624
     affiliation: 4
-  - name: Sabarish V. M.
-    affiliation: 5  # TODO: ORCID, name format
+  - name: V. M. Sabarish
+    orcid: 0000-0001-5677-0838
+    affiliation: "2, 5"
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -30,7 +31,7 @@ affiliations:
     index: 3
   - name: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     index: 4
-  - name: TODO affiliation of Sabarish V. M.
+  - name: Hamburger Sternwarte, Universität Hamburg, Germany
     index: 5
 date: 13 November 2026
 bibliography: paper.bib
