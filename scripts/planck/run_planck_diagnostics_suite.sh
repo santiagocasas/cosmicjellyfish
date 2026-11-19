@@ -107,22 +107,29 @@ import os
 from pathlib import Path
 
 from cosmicjellyfish.analysis import fisher_matrix as fm
+from cosmicjellyfish.version import VERSION
 
 root = Path(os.environ["CFP_ROOT"])
 base = root / "tmp/planck_bestfit_theta_knox_3part"
 
 high = fm.fisher_matrix(
-    file_name=str(base / "high_te/CosmicFish_v1.3.0_planck_bestfit_theta_primary__CMB_TCMB_E_FM.txt")
+    file_name=str(
+        base / f"high_te/CosmicFish_v{VERSION}_planck_bestfit_theta_primary__CMB_TCMB_E_FM.txt"
+    )
 )
 low_t = fm.fisher_matrix(
-    file_name=str(base / "low_t/CosmicFish_v1.3.0_planck_bestfit_theta_primary__CMB_T_FM.txt")
+    file_name=str(
+        base / f"low_t/CosmicFish_v{VERSION}_planck_bestfit_theta_primary__CMB_T_FM.txt"
+    )
 )
 low_e = fm.fisher_matrix(
-    file_name=str(base / "low_e/CosmicFish_v1.3.0_planck_bestfit_theta_primary__CMB_E_FM.txt")
+    file_name=str(
+        base / f"low_e/CosmicFish_v{VERSION}_planck_bestfit_theta_primary__CMB_E_FM.txt"
+    )
 )
 
 combined = high + low_t + low_e
-combined.name = "CosmicFish_v1.3.0_planck_bestfit_theta_knox_3part_FM"
+combined.name = f"CosmicFish_v{VERSION}_planck_bestfit_theta_knox_3part_FM"
 
 outdir = base / "combined"
 outdir.mkdir(parents=True, exist_ok=True)
