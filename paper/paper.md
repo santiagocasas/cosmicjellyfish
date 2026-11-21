@@ -21,6 +21,13 @@ authors:
     affiliation: 4
   - name: Sabarish V. M.
     affiliation: 5  # TODO: ORCID, name format
+  - name: Noemi Frusciante
+    orcid: 0000-0002-7375-1230
+    affiliation: "6, 7"
+  - name:Francesco Pace
+    orcid: 0000-0001-8039-0480
+    affiliation: "8, 9, 10, 11"  
+    
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -32,6 +39,19 @@ affiliations:
     index: 4
   - name: TODO affiliation of Sabarish V. M.
     index: 5
+  - name: Dipartimento di Fisica ``E. Pancini", Universit\`a degli Studi  di Napoli  ``Federico II", Compl. Univ. di Monte S. Angelo, Edificio G,      Via Cinthia, I-80126, Napoli, Italy
+    index: 6
+  - name: INFN Sezione di Napoli, Universit\`a degli Studi di Napoli “Federico II”,\\Complesso Universitario di Monte Sant'Angelo, Edificio G,        Via Cinthia, I-80126, Napoli, Italy
+    index: 7
+  - name: Dipartimento di Fisica, Universit\`a degli Studi di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+    index: 8
+  - name: INFN-Sezione di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+    index: 9
+  - name: INAF-Istituto Nazionale di Astrofisica, Osservatorio Astrofisico di Torino,
+    strada Osservatorio 20, 10025, Pino Torinese, Italy
+    index: 10
+  - name: Instituto de Astrof\'{i}sica e Ci\^{e}ncias do Espa\c{c}o, Faculdade de Ci\^{e}ncias da Universidade de Lisboa, Edif\'{i}cio C8, Campo      Grande, P-1749-016 Lisbon, Portugal
+    index: 11
 date: 13 November 2026
 bibliography: paper.bib
 ---
