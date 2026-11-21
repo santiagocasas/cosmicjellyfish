@@ -69,6 +69,25 @@
         "doc"
       ]
     }
+   {
+      "login": "noefrusciante",
+      "name": "Noemi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/358231658?v=4",
+      "profile": "https://github.com/noefrusciante",
+      "contributions": [
+        "Software"
+      ]
+    }
+   {
+      "login": "fpace",
+      "name": "Francesco",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11464556?v=4",
+      "profile": "https://github.com/fpace",
+      "contributions": [
+        "Software",
+        "Methodology",
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
