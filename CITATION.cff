@@ -24,6 +24,11 @@ authors:
     given-names: Francesco
     affiliation: Università degli Studi di Torino
     orcid: https://orcid.org/0000-0001-8039-0480
+  - family-names: Camera
+    given-names: Stefano
+    affiliation: Università degli Studi di Torino
+    orcid: https://orcid.org/0000-0003-3399-3574
+  
 keywords:
   - cosmology
   - fishermatrix
