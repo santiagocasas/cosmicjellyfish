@@ -21,6 +21,9 @@ authors:
     affiliation: 4
   - name: Sabarish V. M.
     affiliation: 5  # TODO: ORCID, name format
+  - name: Stefano Camera
+    affiliation: "6, 7, 8, 9"
+    orcid: 0000-0003-3399-3574
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -32,6 +35,14 @@ affiliations:
     index: 4
   - name: TODO affiliation of Sabarish V. M.
     index: 5
+  - name: Dipartimento di Fisica, Università degli Studi di Torino, Torino, Italy
+    index: 6
+  - name: INFN, Sezione di Torino, Torino, Italy
+    index: 7
+  - name: INAF, Osservatorio Astrofisico di Torino, Pino Torinese, Italy
+    index: 8
+  - name: Department of Physics & Astronomy, University of the Western Cape, Cape Town, South Africa
+    index: 9
 date: 13 November 2026
 bibliography: paper.bib
 ---
@@ -459,6 +470,6 @@ Following the all-contributors record of the repository: S. Casas leads and main
 project and contributed to research, validation data, tests, tutorials and documentation.
 S. Pamuk contributed code, design, tests, examples, documentation and code review.
 M. Martinelli contributed code and design. Sabarish V. M. contributed code and
-documentation. **[TODO: expand as needed.]**
+documentation. S. Camera contributed conceptualization and methodology. **[TODO: expand as needed.]**
 
 # References
