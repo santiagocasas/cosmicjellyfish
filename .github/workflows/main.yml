@@ -8,9 +8,17 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - "paper/**"
+      - "CITATION.cff"
+      - ".all-contributorsrc"
   push:
     branches:
       - main
+    paths-ignore:
+      - "paper/**"
+      - "CITATION.cff"
+      - ".all-contributorsrc"
     tags:
       - "v*.*.*"
   # Manual run (Actions tab): builds, then publishes the current version to TestPyPI.

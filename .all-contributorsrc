@@ -68,6 +68,72 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "koyamak",
+      "name": "koyamak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11423211?v=4",
+      "profile": "https://github.com/koyamak",
+      "contributions": [
+        "ideas",
+        "mentoring",
+        "bug",
+        "userTesting"
+      ]
+    },
+    {
+      "login": "fpace",
+      "name": "Francesco Pace",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11464556?v=4",
+      "profile": "https://github.com/fpace",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "noefrusciante",
+      "name": "noefrusciante",
+      "avatar_url": "https://avatars.githubusercontent.com/u/358231658?v=4",
+      "profile": "https://github.com/noefrusciante",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "domenicosapone",
+      "name": "domenicosapone",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11212509?v=4",
+      "profile": "https://github.com/domenicosapone",
+      "contributions": [
+        "code",
+        "ideas",
+        "mentoring",
+        "doc"
+      ]
+    },
+    {
+      "login": "matiasleize",
+      "name": "Matías Leizerovich",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37784016?v=4",
+      "profile": "https://matiasleize.github.io/",
+      "contributions": [
+        "code",
+        "ideas",
+        "test",
+        "userTesting"
+      ]
+    },
+    {
+      "login": "emiliobellini",
+      "name": "emiliobellini",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6113149?v=4",
+      "profile": "https://github.com/emiliobellini",
+      "contributions": [
+        "code",
+        "ideas",
+        "data"
+      ]
     }
   ],
   "contributorsPerLine": 7,
