@@ -89,3 +89,6 @@ docs/source/api/generated/
 # Local planning state (never commit)
 .sisyphus/
 paper/jats/
+
+# JOSS paper reproduction outputs (scripts/paper-joss/reproduce_all.sh)
+scripts/paper-joss/output/
