@@ -42,6 +42,10 @@ authors:
     given-names: Emilio
     affiliation: University of Nova Gorica
     orcid: https://orcid.org/0000-0003-4762-0795
+  - family-names: Camera
+    given-names: Stefano
+    affiliation: Università degli Studi di Torino
+    orcid: https://orcid.org/0000-0003-3399-3574
 keywords:
   - cosmology
   - fishermatrix
