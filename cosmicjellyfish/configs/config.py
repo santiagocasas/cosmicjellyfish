@@ -817,6 +817,20 @@ def init(
             # sanity check
             if bias_sample not in list(Spectrobiasparams.keys())[0]:
                 print("Warning: bias_sample not found in bias_parameter keys")
+            # sp_bias_root is the key prefix of the active model ('b' for linear, 'lnb' for
+            # linear_log). Changing only the model leaves the lookup keys pointing at the
+            # other table, which would otherwise surface as a bare KeyError mid-forecast.
+            if "GCsp" in obs and "linear" in bias_model:
+                root = specs["sp_bias_root"]
+                wanted = [f"{root}{bias_sample}_{ibin}" for ibin in specs.get("z_bins_sp", {})]
+                missing = [key for key in wanted if key not in Spectrobiasparams]
+                if missing:
+                    raise ValueError(
+                        f"sp_bias_model '{bias_model}' provides the keys "
+                        f"{list(bias_prmod)[:2]}..., but sp_bias_root '{root}' looks up "
+                        f"{missing[:2]}... Set sp_bias_root together with sp_bias_model "
+                        "(for example sp_bias_model='linear_log' with sp_bias_root='lnb')."
+                    )
             shot_noise_model = specs["shot_noise_model"]
             shot_noise_prtz = specs["shot_noise_parametrization"]
             try:

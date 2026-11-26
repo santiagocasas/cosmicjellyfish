@@ -121,3 +121,26 @@ def test_cross_footprint_larger_than_the_nested_one_is_rejected():
             },
             specifications={"fsky_cross": 0.9},
         )
+
+
+def test_changing_the_bias_model_needs_the_matching_bias_root():
+    # the root is the key prefix of the active model, so 'linear_log' (keys lnbg_i) needs 'lnb'
+    def build(specifications):
+        return FisherMatrix(
+            options={
+                "code": "symbolic",
+                "feedback": 0,
+                "survey_name_spectro": "DESI-BGS-SKAOPaper",
+            },
+            specifications=specifications,
+            observables=["GCsp"],
+            freepars={"Omegam": 0.01},
+            fiducialpars=FIDUCIAL,
+            surveyName="DESI",
+            cosmoModel="LCDM",
+        )
+
+    with pytest.raises(ValueError, match="sp_bias_root"):
+        build({"sp_bias_model": "linear_log"})
+    fisher = build({"sp_bias_model": "linear_log", "sp_bias_root": "lnb"})
+    assert "lnbg_1" in fisher.Spectrobiaspars

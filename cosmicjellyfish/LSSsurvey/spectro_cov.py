@@ -125,6 +125,8 @@ class SpectroCov:
             ## overlapping z bins
             self.inter_z_bin_mids = np.intersect1d(self.z_bin_mids, self.IM_z_bin_mids)
             self.inter_z_bins = np.intersect1d(self.z_bins, self.IM_z_bins)
+        if hasattr(self, "inter_z_bin_mids"):
+            self._set_shared_bins()
 
         # The comoving volume is set by the probe that bounds it. For an
         # intensity-mapping-only forecast that is the IM footprint, not the spectroscopic
@@ -152,6 +154,50 @@ class SpectroCov:
             self.fsky_volume = fsky_im if fsky_im > 0 else self.fsky_spectro
         else:
             self.fsky_volume = self.fsky_spectro
+
+    def _set_shared_bins(self):
+        """Resolve every bin of ``inter_z_bin_mids`` to its own edges and galaxy-array index.
+
+        ``inter_z_bin_mids`` holds the bins that both probes share. When the galaxy and the
+        intensity-mapping grids differ in extent, the position of a shared bin in that array is
+        not its position in the union of the edges (``global_z_bins``) or in the galaxy arrays
+        (``dnz``, ``dz_bins``). Looking each shared bin up by its midpoint gives the volume and
+        the galaxy density of the right redshift interval. For identical grids the lookup is
+        the identity, so the results do not change.
+
+        Sets ``inter_bin_edges`` (the ``(lo, hi)`` edges of each shared bin) and
+        ``inter_gal_index`` (its index in the galaxy arrays, ``None`` without ``GCsp``).
+
+        Raises
+        ------
+        ValueError
+            If the galaxy and intensity-mapping bins that share a midpoint do not share their
+            edges. Combining different intervals would need a rebinning that is not implemented.
+        """
+        has_gc = "GCsp" in self.pk_obs.observables
+        has_im = "IM" in self.pk_obs.observables
+        if has_gc:
+            edges, mids = np.asarray(self.z_bins), np.asarray(self.z_bin_mids)
+        else:
+            edges, mids = np.asarray(self.IM_z_bins), np.asarray(self.IM_z_bin_mids)
+        self.inter_bin_edges = []
+        self.inter_gal_index = []
+        for zmid in self.inter_z_bin_mids:
+            index = int(np.argmin(np.abs(mids - zmid)))
+            lo, hi = float(edges[index]), float(edges[index + 1])
+            if has_gc and has_im:
+                im_mids = np.asarray(self.IM_z_bin_mids)
+                im_index = int(np.argmin(np.abs(im_mids - zmid)))
+                im_lo, im_hi = self.IM_z_bins[im_index], self.IM_z_bins[im_index + 1]
+                if not (np.isclose(lo, im_lo) and np.isclose(hi, im_hi)):
+                    raise ValueError(
+                        f"galaxy bin [{lo:g}, {hi:g}] and intensity-mapping bin "
+                        f"[{im_lo:g}, {im_hi:g}] share the midpoint {zmid:g} but not their "
+                        "edges; the cross and joint analyses need identical bins where the "
+                        "two surveys overlap"
+                    )
+            self.inter_bin_edges.append((lo, hi))
+            self.inter_gal_index.append(index if has_gc else None)
 
     def Tsys_func(self, z):
         """Calculates Tsys in mK
@@ -195,15 +241,16 @@ class SpectroCov:
 
         Parameters
         ----------
-        i : int
-            Index of the survey redshift bin
+        ibin : int
+            Index of the bin in ``inter_z_bin_mids`` (the bins shared by the probes in use)
 
         Returns
         -------
         float
             Comoving volume of the redshift bin
         """
-        return self.volume_bin(self.global_z_bins[ibin], self.global_z_bins[ibin + 1])
+        lo, hi = self.inter_bin_edges[ibin]
+        return self.volume_bin(lo, hi)
 
     def volume_survey(self, ibin):
         """Calculates the survey volume of a redshift bin
@@ -239,7 +286,8 @@ class SpectroCov:
         except IndexError:
             print(f"Warning: zi = {zi} not in global_z_bin_mids")
             return 0
-        ndens = self.dnz[ibin] * self.dz_bins[ibin] / self.d_volume(ibin)
+        gal = self.inter_gal_index[ibin]  # galaxy-array index of this shared bin
+        ndens = self.dnz[gal] * self.dz_bins[gal] / self.d_volume(ibin)
         ndens = upm.areasky() * ndens  ## multiply with the full sky area in degrees
         return ndens
 
