@@ -528,6 +528,9 @@ validated all of this content **[TODO: confirm]**.
 Nautilus validation; acknowledgements to the CosmicFish authors and to the Euclid
 Consortium colleagues involved in the forecast validation.]**
 
+We thank Valeria Pettorino, Julien Lesgourgues, Nils Schöneberg and Maria Archidiacono for
+scientific ideas, validation and discussions.
+
 DS acknowledges support from the Fondecyt Regular project N.1251339 (ANID)
 
 M.L. is supported by grant PIP 11220200100729CO CONICET and grant 20020170100129BA UBACYT.
