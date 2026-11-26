@@ -1,0 +1,102 @@
+session:
+  id: 2026-11-13_001
+  date: '2026-11-13'
+  started: '2026-11-13T00:00'
+  last_turn: '2026-11-13T16:55'
+  turn_count: 2
+  summary: >-
+    Survey validation workstream landed on feature/survey-validation; external review
+    findings fixed in cec6b6a (full Fisher combination, IM sky fraction, explicit mnu,
+    ellipse centring, narrowed claims, settings/versions recorded). Second review pass
+    fixed in 95f62cd (strict block combination, cross-footprint assumption, paired
+    ellipse panels, veff_Ig test).
+events_logged:
+  - turn: 1
+    type: experiment
+    id: N108
+    routing: direct
+    provenance: ai-executed
+    summary: Six -SKAOPaper specs, observable harness, LCDM/w0waCDM forecast tables, figures, notebook, docs and paper paragraph; 30 targeted tests and sphinx -W green.
+  - turn: 1
+    type: decision
+    id: N109
+    routing: direct
+    provenance: user-revised
+    summary: Accept review correctness fixes; sum full Fisher blocks, probe-consistent IM volume, keep inherited IM k-cuts and document them.
+  - turn: 1
+    type: pivot
+    id: N110
+    routing: direct
+    provenance: user-revised
+    summary: Narrow observable-validation claims to algebra-level checks plus photo dN/dz/counts.
+  - turn: 1
+    type: question
+    id: N111
+    routing: direct
+    provenance: ai-suggested
+    summary: Open question on IM k-cuts and photometric angular kernels lacking reference targets.
+  - turn: 2
+    type: decision
+    id: N112
+    routing: direct
+    provenance: user-revised
+    summary: Second review pass; require stored Fisher blocks, expose fsky_cross with a nested-footprint default, regroup w0-wa ellipses into paired panels without the Planck-like run.
+  - turn: 2
+    type: observation
+    id: O17
+    routing: staged
+    provenance: ai-executed
+    summary: The 2x2 block of inv(F) is marginalised w0-wa covariance; inverting the 2x2 F sub-block gives conditional errors and was caught by a new unit test.
+  - turn: 1
+    type: observation
+    id: O15
+    routing: staged
+    provenance: ai-executed
+    summary: Machine-precision agreement is algebra-level because the reference shares the cosmology object.
+  - turn: 1
+    type: observation
+    id: O16
+    routing: staged
+    provenance: ai-executed
+    summary: GCsp/IM derivatives need step ~0.002; photometric probes stable.
+ai_actions:
+  - turn: 1
+    action: Fixed Fisher combination, IM volume, ellipse centring, report provenance and claims; regenerated reports, tables, figures and notebook.
+    provenance: ai-executed
+    files_changed:
+      - cosmicjellyfish/LSSsurvey/spectro_cov.py
+      - scripts/validation/run_survey_forecasts.py
+      - paper/scripts/fig4_survey_comparison.py
+      - docs/SURVEY_VALIDATION_ROADMAP.md
+      - docs/source/survey_validation.md
+      - paper/paper.md
+      - notebooks/09-Survey-validation.ipynb
+      - tests/survey_forecast_script_test.py
+      - tests/survey_covariance_test.py
+      - CHANGELOG.md
+  - turn: 2
+    action: Committed 95f62cd and reran both forecast reports, figures and the notebook.
+    provenance: ai-executed
+    files_changed:
+      - cosmicjellyfish/LSSsurvey/spectro_cov.py
+      - scripts/validation/run_survey_forecasts.py
+      - scripts/validation/plot_survey_validation.py
+      - tests/survey_covariance_test.py
+      - tests/survey_forecast_script_test.py
+      - tests/survey_plot_test.py
+      - docs/source/survey_validation.md
+      - docs/SURVEY_VALIDATION_ROADMAP.md
+      - notebooks/09-Survey-validation.ipynb
+      - CHANGELOG.md
+claims_touched: []
+key_context:
+  - turn: 1
+    excerpt: >-
+      User asked to check and correct the external review findings while keeping the ARA
+      trace. Two claims were narrowed rather than fixed in code; two behaviours were
+      documented instead of changed to preserve comparability with the historical recipe.
+open_threads:
+  - IM k-cuts (kmax_IM/kmin_IM) are unused; no reference target for the inherited range.
+  - Photometric angular spectra are not re-compared against the historical project.
+ai_suggestions_pending:
+  - Add a photometric angular-spectrum comparison if the historical kernels can be driven.

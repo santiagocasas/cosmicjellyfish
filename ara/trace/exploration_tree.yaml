@@ -2221,3 +2221,219 @@ tree:
   - /tmp/opencode/dist_rename
   status: resolved
   also_depends_on: [N105, N106]
+
+- id: N108
+  type: experiment
+  title: Validate DESI, Rubin/LSST, SKAO and Planck configurations against the historical SKAO project
+  provenance: ai-executed
+  timestamp: '2026-11-13'
+  result: >-
+    Migrated six opt-in -SKAOPaper specifications, added an independent transcription of
+    the historical galaxy-clustering/intensity-mapping/photo recipe (33 algebra checks at
+    machine precision), ran all probe configurations on a common GR fiducial in LCDM and
+    w0waCDM, and shipped scripts, figures, a notebook, a docs page and a JOSS paragraph.
+    The 3D-clustering finite-difference step had to shrink from 1% to 0.2% (sigma8 errors
+    move 20-38%). Photometric angular spectra were not re-compared; Fig. 1 agrees in shape
+    to <=1.5% with a 0.5-6.8% amplitude offset that is consistent with, but not isolated
+    to, the MG fiducial. Branch feature/survey-validation, 9 commits, no push.
+  evidence:
+  - docs/SURVEY_VALIDATION_ROADMAP.md
+  - docs/source/survey_validation.md
+  - scripts/validation/run_survey_forecasts.py
+  - scripts/validation/validate_survey_observables.py
+  - tests/survey_specs_test.py
+  - notebooks/09-Survey-validation.ipynb
+  status: resolved
+- id: N109
+  type: decision
+  title: Combine probes with full Fisher blocks and use probe-consistent survey volumes
+  provenance: user-revised
+  timestamp: '2026-11-13'
+  choice: >-
+    Accept the external review findings that matter for correctness. Combinations now add
+    the full nuisance-marginalised Fisher matrices (correlations retained) instead of
+    diagonal inverse-variance; SpectroCov takes the survey volume from fsky_IM for
+    intensity mapping and from the smaller sky fraction for a cross-spectrum; the IM
+    k-range stays inherited from kmin_GCsp/kmax_GCsp because the historical project did
+    the same, and is documented rather than changed; the w0-wa ellipses are centred at
+    (-1, 0); the fiducial records mnu = 0.06 eV explicitly.
+  alternatives:
+  - Keep the diagonal combination (rejected: discards correlations, FoM below the better single probe)
+  - Switch IM to kmax_IM (rejected: would silently deviate from the historical recipe without a validation target)
+  evidence:
+  - cec6b6a
+  - cosmicjellyfish/LSSsurvey/spectro_cov.py
+  - scripts/validation/run_survey_forecasts.py
+  - tests/survey_forecast_script_test.py
+  - tests/survey_covariance_test.py
+  status: resolved
+- id: N110
+  type: pivot
+  title: Narrow the observable-validation claims to what the harness actually checks
+  provenance: user-revised
+  timestamp: '2026-11-13'
+  from: All observables including photometric angular spectra agree at machine precision
+  to: Algebra-level observables and photo dN/dz/counts agree; photo spectra are exercised by existing tests
+  trigger: >-
+    External review noted that the photometric validator only compares dN/dz and bin
+    counts and that the reference shares the cosmology object, so the original wording
+    overstated the check.
+  evidence:
+  - docs/source/survey_validation.md
+  - paper/paper.md
+  - notebooks/09-Survey-validation.ipynb
+  status: resolved
+- id: N111
+  type: question
+  title: Do the IM k-cuts and photometric angular kernels need their own validation targets?
+  provenance: ai-suggested
+  timestamp: '2026-11-13'
+  description: >-
+    kmax_IM/kmin_IM in the SKAO specifications are never consumed and the IM forecasts
+    inherit the GCsp range; photometric angular spectra are not compared against the
+    historical implementation. Both are documented, but neither has a reference target
+    that would detect a genuine modelling error.
+  status: open
+- id: N112
+  type: decision
+  title: Tighten combination and cross-footprint handling; regroup the w0-wa figure
+  provenance: user-revised
+  timestamp: '2026-11-13'
+  choice: >-
+    Require stored nuisance-marginalised blocks to combine and keep the summed block;
+    make min(fsky_spectro, fsky_IM) an explicit nested-footprint default with an optional
+    fsky_cross override; test the cross covariance through veff_Ig; replace the six-curve
+    w0-wa plot with four paired panels excluding the Planck-like run.
+  alternatives:
+    - Keep the diagonal fallback when a report lacks blocks (rejected: reintroduces the correlation loss silently).
+    - Treat min(fsky) as the true overlap (rejected: only valid for nested footprints).
+  evidence:
+    - scripts/validation/run_survey_forecasts.py
+    - cosmicjellyfish/LSSsurvey/spectro_cov.py
+    - scripts/validation/plot_survey_validation.py
+    - tests/survey_plot_test.py
+    - commit 95f62cd
+  status: resolved
+- id: N113
+  type: decision
+  title: Merge every authorship PR into paper/joss-draft and keep that branch paper-only
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Retarget the authorship PRs (#264 Sapone, #266 Leizerovich, #257 Frusciante+Pace,
+    #263 Koyama) to paper/joss-draft and merge each with the GitHub button so contributors
+    are credited; merge paper/joss-draft into each contributor branch locally first,
+    the user pushes. From now on only paper content goes on paper/joss-draft. Paper-relevant
+    survey changes are cherry-picked paper-only from feature/survey-validation.
+  alternatives:
+    - Close the PRs and copy the changes (rejected: contributor credit would be lost).
+    - Keep the PRs against main (rejected: they conflict with each other on the author and affiliation lists).
+  evidence:
+    - gh pr list (PRs #252, #257, #263, #264, #266)
+    - paper/joss-draft merge commits 6a2304d, 07d2ea9, ecf43e5
+  status: resolved
+- id: N114
+  type: experiment
+  title: Authorship merges resolved; paper.md and CITATION.cff carry nine authors and fifteen affiliations
+  provenance: ai-executed
+  timestamp: '2026-11-26'
+  result: >-
+    All four authorship PRs merged. Affiliations renumbered 1-15 (Sapone 6, Leizerovich 7-8,
+    Frusciante 9-10, Pace 11-14, Koyama 15); the invalid-YAML INAF affiliation from #257 was
+    joined into one line; author and affiliation YAML validated (all affiliations used).
+    Four paper-only survey cherry-picks (from e773e70, 66a2fd9, cec6b6a, 35d43fd) sit on
+    paper/joss-draft; the paper text describes the still-unpushed 35d43fd joint analysis.
+  evidence:
+    - paper/paper.md
+    - CITATION.cff
+  also_depends_on: [N113]
+  status: resolved
+- id: N115
+  type: decision
+  title: Skip paths for paper-only changes in CI and accept no PDF check on fork PRs
+  provenance: user-revised
+  timestamp: '2026-11-26'
+  choice: >-
+    ci.yml now ignores paper/** branches and paper/**, CITATION.cff and .all-contributorsrc
+    paths; main.yml got the same paths-ignore (commit 5d1acf6 on main). The Draft PDF workflow
+    stays push-only in this repo, so fork PRs get no PDF check; the user builds the paper himself.
+  alternatives:
+    - Add a pull_request trigger to draft-pdf.yml (not done).
+  evidence:
+    - .github/workflows/ci.yml
+    - .github/workflows/main.yml
+    - .github/workflows/draft-pdf.yml
+  status: resolved
+- id: N116
+  type: experiment
+  title: Repair malformed metadata on main (.all-contributorsrc, CITATION.cff)
+  provenance: ai-executed
+  timestamp: '2026-11-26'
+  result: >-
+    .all-contributorsrc was invalid JSON (missing brace, bad indentation); fixed in 90133c2.
+    GitHub could not parse CITATION.cff: Frusciante and Pace entries were mis-indented and the
+    Sabarish name was swapped; fixed in e11889e and validated with PyYAML. e11889e is 1 commit
+    ahead of origin/main, not yet pushed.
+  evidence:
+    - .all-contributorsrc
+    - CITATION.cff
+    - commits 90133c2, e11889e
+  status: resolved
+- id: N117
+  type: experiment
+  title: Unit tests for the f(R) boosts raise PR #265 patch coverage without frahi_class or emantis
+  provenance: ai-executed
+  timestamp: '2026-11-26'
+  result: >-
+    tests/modified_gravity_test.py (21 tests) uses regression values plus fake emantis and
+    fake CLASS objects; MGfit_Winther.py and modified_gravity.py reach 100% coverage, covering
+    73 of the 79 lines Codecov flagged. The 6 cosmology.py lines (ValueError without HuSawicki,
+    class_results 'non linear': 'none' branch) remain. emantis added to the emulators extra
+    (dc719fa, unpushed); real emantis boost not run locally.
+  evidence:
+    - tests/modified_gravity_test.py
+    - commits 867b259, 88ab1df, dc719fa
+  status: open
+- id: N118
+  type: experiment
+  title: PR #255 review comments on notebooks 05 and 06 addressed
+  provenance: ai-executed
+  timestamp: '2026-11-26'
+  result: >-
+    Notebook 05 now requires at least two Fisher files (MIN_FISHERS = 2) and its missing-partner
+    error names notebooks 02/03/06 (commit 1497baa, pushed). Notebook 06 comment answered:
+    run_chain used to receive FisherMatrix computation objects without param_names, now it
+    gets the computed results; Kaz's exact run was not reproduced. Only that nb06 thread is
+    unresolved and the PR remains CHANGES_REQUESTED until Sefa76 re-reviews.
+  evidence:
+    - notebooks/05-Fishers_contours-add-marginalize.ipynb
+    - notebooks/06 (run_chain call)
+    - commit 1497baa
+  status: open
+- id: N119
+  type: question
+  title: When do Matias's fixes for #265 land, and can the fix-dependent tests be added?
+  provenance: ai-suggested
+  timestamp: '2026-11-26'
+  description: >-
+    Three tests wait on fixes in the PR: z clamp before the scale factor in MGfit_Winther
+    (kept an exact upstream copy until the end), integer lgfR0 base in np.power, and
+    parameters_smg read from bc.classcosmopars in fr_boost_nonlinear. Also pending: f(R) flags
+    docs page, CHANGELOG bump to at least 2.1, deterministic LCDM*boost test.
+  status: open
+- id: N120
+  type: decision
+  title: Make the ARA epilogue and the per-worktree symlink mandatory in AGENTS.md
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Edit the ARA section of AGENTS.md so the research-manager epilogue runs at the end of every
+    turn, new worktrees get the ara symlink, and a sync note links the tracked repo copy with an
+    untracked copy at cosmicfish_release/AGENTS.md (identical content, to be synced from time to time).
+  alternatives:
+    - Only add the rule to the global ~/.config/opencode/AGENTS.md (not chosen).
+  evidence:
+    - cosmicjellyfish/AGENTS.md
+    - cosmicfish_release/AGENTS.md
+  also_depends_on: [N113]
+  status: resolved

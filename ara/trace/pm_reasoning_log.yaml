@@ -571,3 +571,32 @@ entries:
     - "Logged the commit as a second event on the same node N107 rather than a new node: committing does not change the experimental result, only its durability."
     - "Refused to let 'commit' imply 'push'; publication stays with the researcher per the standing rule."
     - "Kept the decision about the legacy-import window open; the shim exists but its removal date is uncontracted."
+- turn: '2026-11-13_001#1'
+  notes:
+    - "Logged the survey validation workstream as one resolved experiment (N108): the branch, the measured tables and the step-convergence finding are journey facts, not new physics."
+    - "Routed the review fixes as a decision (N109) because the meaningful content is the choice to accept some findings and document others rather than change them."
+    - "Routed the claims correction as a pivot (N110), since it changes what the artifact asserts rather than adding evidence."
+    - "Kept the IM k-cuts and photo spectra as an open question (N111) and two staged observations instead of claims: no closure signal yet."
+- turn: '2026-11-13_001#2'
+  notes:
+    - "Routed the second review as a decision (N112) because the substance is a set of methodological choices (strict blocks, explicit overlap key, paired figures)."
+    - "Staged the conditional-vs-marginalised covariance bug as O17 rather than a claim: it was an implementation error caught by a unit test, not a research finding."
+    - "Kept N111 open; the IM k-cuts and photo kernels still lack a reference target."
+- turn: '2026-11-26_001#1'
+  notes:
+    - "Backfilled 14-26 Nov as one catch-up session because the epilogue stopped after 2026-11-13; per-event timestamps are not reconstructed."
+    - "Routed the authorship strategy as a user decision (N113) and the merges as one experiment (N114) instead of one node per PR."
+    - "Staged O25-O27 as constraint/heuristic observations, no claim promoted: no closure signal."
+    - "Noticed O15 and O16 are used twice in observations.yaml (Oct and 2026-11-13); left them untouched, adjudication is the researcher's."
+- turn: '2026-11-26_001#2'
+  notes:
+    - "Logged the AGENTS.md change as a user decision (N120); the cause of the lapse (skip-if-missing wording, no cadence, parent dir not a repo) is in the node, not a separate observation."
+    - "Appended N120 to the existing 2026-11-26 session as turn 2 without a new session file."
+- turn: '2026-11-26_001#3'
+  notes:
+    - "Committed AGENTS.md on main as 5568668 at the maintainer's request; uv.lock left out. Main is now 2 commits ahead of origin (e11889e, 5568668), not pushed."
+    - "Deferred syncing cfp-dev/AGENTS.md and committing the ara files on dev until the maintainer has pushed main and merged it into dev."
+- turn: '2026-11-26_001#4'
+  notes:
+    - "Maintainer merged main into dev (4744a7f); cfp-dev/AGENTS.md is now identical to main, so no separate sync was needed."
+    - "Committing the pending ara files on dev with git add -f; push stays with the maintainer."

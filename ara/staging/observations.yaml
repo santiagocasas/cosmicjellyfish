@@ -472,3 +472,73 @@ observations:
   promoted_to: null
   crystallized_via: null
   stale: false
+- id: O15
+  timestamp: '2026-11-13'
+  provenance: ai-executed
+  content: >-
+    Machine-precision agreement in the survey observable harness is an algebra-level
+    check, not an independent numerical validation: the transcription is independent but
+    shares the cosmology object with the code under test.
+  context: Review of the survey validation PR.
+  potential_type: claim
+  bound_to: [N108, N110]
+  promoted: false
+  promoted_to: null
+  crystallized_via: null
+  stale: false
+- id: O16
+  timestamp: '2026-11-13'
+  provenance: ai-executed
+  content: >-
+    GCsp and IM Fisher derivatives need a relative finite-difference step of about 0.002;
+    at 0.01 sigma(sigma8) is biased low by 20-38%, while photometric probes are stable at
+    0.03% between 0.01 and 0.002.
+  context: Step and resolution scan during survey validation.
+  potential_type: heuristic
+  bound_to: [N108]
+  promoted: false
+  promoted_to: null
+  crystallized_via: null
+  stale: false
+- id: O25
+  timestamp: '2026-11-26'
+  provenance: ai-executed
+  content: >-
+    MGfit_Winther computes the scale factor a = 1/(1+z) before clamping z, so z = -1 gives NaN
+    in the nonlinear version and ZeroDivisionError in the linear one. The file is meant to stay
+    an exact copy of the upstream (Sefa76/MontePython) version, so the fix goes in last.
+  context: Reproduced while writing the #265 coverage tests; the z clamp is excluded from the tests for now.
+  potential_type: constraint
+  bound_to: [N117, N119]
+  promoted: false
+  promoted_to: null
+  crystallized_via: null
+  stale: false
+- id: O26
+  timestamp: '2026-11-26'
+  provenance: ai-executed
+  content: >-
+    The public PyPI hiclassy 3.4.0.1 is hi_class without f(R); the Hu-Sawicki path needs the
+    private frahi_class providing module hiclassy.HiClass, so it must not be pip-installed and
+    the f(R) tests skip without it. emantis is on PyPI and now ships in the emulators extra.
+  context: Wrote the installation docs section for #265.
+  potential_type: constraint
+  bound_to: [N117]
+  promoted: false
+  promoted_to: null
+  crystallized_via: null
+  stale: false
+- id: O27
+  timestamp: '2026-11-26'
+  provenance: ai-executed
+  content: >-
+    List-indentation errors in CITATION.cff and unfinished JSON in .all-contributorsrc came in
+    through contributor PRs and bot merges without any check failing; validating both with
+    PyYAML/json before merging would catch them.
+  context: Two metadata files found malformed after merges.
+  potential_type: heuristic
+  bound_to: [N116]
+  promoted: false
+  promoted_to: null
+  crystallized_via: null
+  stale: false

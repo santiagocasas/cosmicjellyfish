@@ -214,3 +214,22 @@ sessions:
   events_count: 6
   claims_touched: []
   open_threads: 2
+- id: 2026-11-13_001
+  date: '2026-11-13'
+  summary: >-
+    Validated DESI, Rubin/LSST, SKAO and Planck configurations against the historical
+    SKAO project, ran GR forecast comparisons, and fixed the correctness findings from
+    the external review (Fisher combination, IM volume, claims).
+  turn_count: 1
+  events_count: 5
+  claims_touched: []
+  open_threads: 2
+- id: 2026-11-26_001
+  date: '2026-11-26'
+  summary: >-
+    Catch-up record for 14-26 Nov: authorship PRs merged into paper/joss-draft, CI path rules,
+    metadata fixes, f(R) tests for #265, #255 review fixes.
+  turn_count: 2
+  events_count: 11
+  claims_touched: []
+  open_threads: 5

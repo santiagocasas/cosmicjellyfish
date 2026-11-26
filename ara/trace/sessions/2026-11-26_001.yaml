@@ -1,0 +1,106 @@
+session:
+  id: 2026-11-26_001
+  date: '2026-11-26'
+  started: '2026-11-26T00:00'
+  last_turn: '2026-11-26T00:00'
+  turn_count: 2
+  summary: >-
+    Catch-up record for 14-26 Nov (backfilled, the epilogue had not been running): PR triage of
+    cosmicjellyfish, four authorship PRs merged into paper/joss-draft, CI path rules, metadata
+    fixes, f(R) test coverage for #265, review fixes for #255.
+events_logged:
+  - turn: 1
+    type: decision
+    id: N113
+    routing: direct
+    provenance: user
+    summary: "Authorship PRs merge into paper/joss-draft; branch stays paper-only."
+  - turn: 1
+    type: experiment
+    id: N114
+    routing: direct
+    provenance: ai-executed
+    summary: "#264, #266, #257, #263 merged; 9 authors, 15 affiliations."
+  - turn: 1
+    type: decision
+    id: N115
+    routing: direct
+    provenance: user-revised
+    summary: "CI skips paper-only changes; no PDF check on fork PRs."
+  - turn: 1
+    type: experiment
+    id: N116
+    routing: direct
+    provenance: ai-executed
+    summary: "Fixed .all-contributorsrc and CITATION.cff on main."
+  - turn: 1
+    type: experiment
+    id: N117
+    routing: direct
+    provenance: ai-executed
+    summary: "21 f(R) unit tests, two modules at 100%, emantis added to the emulators extra."
+  - turn: 1
+    type: experiment
+    id: N118
+    routing: direct
+    provenance: ai-executed
+    summary: "#255 notebook 05 guard fixed; nb06 reply drafted."
+  - turn: 1
+    type: question
+    id: N119
+    routing: direct
+    provenance: ai-suggested
+    summary: "Fix-dependent #265 tests wait for Matias's fixes."
+  - turn: 1
+    type: observation
+    id: O25
+    routing: staged
+    provenance: ai-executed
+    summary: "MGfit_Winther scale factor computed before z clamp."
+  - turn: 1
+    type: observation
+    id: O26
+    routing: staged
+    provenance: ai-executed
+    summary: "frahi_class is private; PyPI hiclassy lacks f(R)."
+  - turn: 1
+    type: observation
+    id: O27
+    routing: staged
+    provenance: ai-executed
+    summary: "Validate CITATION.cff and .all-contributorsrc before merging."
+  - turn: 2
+    type: decision
+    id: N120
+    routing: direct
+    provenance: user
+    summary: "AGENTS.md now requires the ARA epilogue every turn and the ara symlink in every worktree; synced copy in cosmicfish_release."
+ai_actions:
+  - turn: 1
+    action: Merged paper/joss-draft into contributor branches, resolved conflicts, wrote the #265 tests, docs and extra, fixed #255 notebook 05, fixed CITATION.cff and .all-contributorsrc; the user pushed and merged.
+    provenance: ai-executed
+    files_changed:
+      - paper/paper.md
+      - CITATION.cff
+      - .all-contributorsrc
+      - .github/workflows/ci.yml
+      - .github/workflows/main.yml
+      - tests/modified_gravity_test.py
+      - docs/source/installation.md
+      - pyproject.toml
+      - uv.lock
+      - notebooks/05-Fishers_contours-add-marginalize.ipynb
+claims_touched: []
+key_context:
+  - turn: 1
+    excerpt: >-
+      User wanted every authorship PR counted as merged so contributors keep credit, and
+      paper/joss-draft changed only for paper content from then on.
+open_threads:
+  - "#255 waits for Sefa76 re-review (nb06 comment) and CI."
+  - "#265 needs Matias's fixes, 6 cosmology.py test lines, f(R) flags docs page and CHANGELOG bump."
+  - "#253 has an unpushed local commit 35d43fd and uncommitted notebook edits in cfp-survey."
+  - "#252 paper to main, then dependabot PRs."
+  - "e11889e (CITATION.cff) and dc719fa (emantis extra) are not pushed."
+ai_suggestions_pending:
+  - Add a pull_request trigger to draft-pdf.yml so fork PRs get a PDF build (user chose to skip).
