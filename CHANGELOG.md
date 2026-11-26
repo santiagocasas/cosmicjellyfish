@@ -76,8 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     volume and galaxy density from its own redshift interval (identical grids are unchanged).
     Bins that share a midpoint but not their edges are rejected with a clear error, where they
     used to run with the volume of a different interval.
-  - Changing `sp_bias_model` without the matching `sp_bias_root` (for example `linear_log`
-    needs `lnb`) raises a `ValueError` that names the fix, instead of a `KeyError` mid-forecast.
+  - Selecting `sp_bias_model: linear_log` defaults the bias root to `lnb`. An explicitly
+    incompatible `sp_bias_root` raises a clear `ValueError` before the forecast.
   - The validation scripts reject non-finite per-bin differences instead of recording them as
     agreement, accept array-valued velocity dispersions, and label the temperature units of the
     plotted spectra and of the normalised 21 cm noise. The Fisher ellipses of the survey figures

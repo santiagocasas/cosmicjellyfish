@@ -648,6 +648,9 @@ def init(
     )
     # ums.deepupdate(specs, specifications)  # deep update keys if passed by users
     specs.update(specifications)
+    # A runtime model override should not inherit the root of the survey file's default model.
+    if specifications.get("sp_bias_model") == "linear_log" and "sp_bias_root" not in specifications:
+        specs["sp_bias_root"] = "lnb"
     specs["survey_name"] = surveyName
     specs["specs_dir"] = settings["specs_dir"]  # Path for additional files like luminosity
 
@@ -817,9 +820,7 @@ def init(
             # sanity check
             if bias_sample not in list(Spectrobiasparams.keys())[0]:
                 print("Warning: bias_sample not found in bias_parameter keys")
-            # sp_bias_root is the key prefix of the active model ('b' for linear, 'lnb' for
-            # linear_log). Changing only the model leaves the lookup keys pointing at the
-            # other table, which would otherwise surface as a bare KeyError mid-forecast.
+            # Check that the selected root matches the active table before evaluating the bias.
             if "GCsp" in obs and "linear" in bias_model:
                 root = specs["sp_bias_root"]
                 wanted = [f"{root}{bias_sample}_{ibin}" for ibin in specs.get("z_bins_sp", {})]

@@ -123,8 +123,7 @@ def test_cross_footprint_larger_than_the_nested_one_is_rejected():
         )
 
 
-def test_changing_the_bias_model_needs_the_matching_bias_root():
-    # the root is the key prefix of the active model, so 'linear_log' (keys lnbg_i) needs 'lnb'
+def test_logarithmic_bias_defaults_to_matching_root_and_validates_overrides():
     def build(specifications):
         return FisherMatrix(
             options={
@@ -140,7 +139,8 @@ def test_changing_the_bias_model_needs_the_matching_bias_root():
             cosmoModel="LCDM",
         )
 
-    with pytest.raises(ValueError, match="sp_bias_root"):
-        build({"sp_bias_model": "linear_log"})
-    fisher = build({"sp_bias_model": "linear_log", "sp_bias_root": "lnb"})
+    fisher = build({"sp_bias_model": "linear_log"})
     assert "lnbg_1" in fisher.Spectrobiaspars
+    assert fisher.specs["sp_bias_root"] == "lnb"
+    with pytest.raises(ValueError, match="sp_bias_root"):
+        build({"sp_bias_model": "linear_log", "sp_bias_root": "b"})
