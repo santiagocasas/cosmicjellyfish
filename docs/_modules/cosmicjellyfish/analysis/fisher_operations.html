@@ -756,7 +756,7 @@
 
 <div class="viewcode-block" id="information_gain">
 <a class="viewcode-back" href="../../../api/generated/cosmicjellyfish.analysis.fisher_operations.information_gain.html#cosmicjellyfish.analysis.fisher_operations.information_gain">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">information_gain</span><span class="p">(</span><span class="n">fisher_1</span><span class="p">,</span> <span class="n">fisher_2</span><span class="p">,</span> <span class="n">fisher_prior</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">stat</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">information_gain</span><span class="p">(</span><span class="n">fisher_1</span><span class="p">,</span> <span class="n">fisher_2</span><span class="p">,</span> <span class="n">fisher_prior</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span> <span class="n">stat</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function computes the Fisher approximation of Kullback-Leibler information gain.</span>
 <span class="sd">    For the details of the formula we refer to the CosmicFish notes.</span>
@@ -765,8 +765,9 @@
 <span class="sd">    :type fisher_1: :class:`cosmicfish_pylib.fisher_matrix.fisher_matrix`</span>
 <span class="sd">    :param fisher_2: second input Fisher matrix</span>
 <span class="sd">    :type fisher_2: :class:`cosmicfish_pylib.fisher_matrix.fisher_matrix`</span>
-<span class="sd">    :param fisher_prior: input Fisher matrix with the prior information.</span>
-<span class="sd">    :type fisher_prior: :class:`cosmicfish_pylib.fisher_matrix.fisher_matrix`</span>
+<span class="sd">    :param fisher_prior: input Fisher matrix with the prior information. If ``None``</span>
+<span class="sd">        (default) no prior information is added to either Fisher matrix.</span>
+<span class="sd">    :type fisher_prior: :class:`cosmicfish_pylib.fisher_matrix.fisher_matrix` or None</span>
 <span class="sd">    :param units: Units of information gain. Optional by default in Bits.</span>
 <span class="sd">    :type units: :class:`float`</span>
 <span class="sd">    :param stat: wether to output the expected value and variance</span>
@@ -776,22 +777,33 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">info_gain</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="c1"># first computations:</span>
-    <span class="n">F1p</span> <span class="o">=</span> <span class="n">fisher_1</span> <span class="o">+</span> <span class="n">fisher_prior</span>
-    <span class="n">F2p</span> <span class="o">=</span> <span class="n">fisher_2</span> <span class="o">+</span> <span class="n">fisher_prior</span>
+    <span class="k">if</span> <span class="n">fisher_prior</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">F1p</span> <span class="o">=</span> <span class="n">fisher_1</span>
+        <span class="n">F2p</span> <span class="o">=</span> <span class="n">fisher_2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">F1p</span> <span class="o">=</span> <span class="n">fisher_1</span> <span class="o">+</span> <span class="n">fisher_prior</span>
+        <span class="n">F2p</span> <span class="o">=</span> <span class="n">fisher_2</span> <span class="o">+</span> <span class="n">fisher_prior</span>
     <span class="c1"># get common parameter names:</span>
     <span class="n">param_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">F1p</span><span class="o">.</span><span class="n">get_param_names</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">F2p</span><span class="o">.</span><span class="n">get_param_names</span><span class="p">()]</span>
     <span class="c1"># reshuffle the second matrix:</span>
     <span class="n">F1p</span> <span class="o">=</span> <span class="n">reshuffle</span><span class="p">(</span><span class="n">F1p</span><span class="p">,</span> <span class="n">param_names</span><span class="p">)</span>
     <span class="n">F2p</span> <span class="o">=</span> <span class="n">reshuffle</span><span class="p">(</span><span class="n">F2p</span><span class="p">,</span> <span class="n">param_names</span><span class="p">)</span>
-    <span class="c1"># define a dummy Fisher matrix with empty entrances and with the same</span>
-    <span class="c1"># parameters as the others:</span>
-    <span class="n">fisher_temp</span> <span class="o">=</span> <span class="n">fm</span><span class="o">.</span><span class="n">fisher_matrix</span><span class="p">(</span>
-        <span class="n">fisher_matrix</span><span class="o">=</span><span class="mf">0.0</span> <span class="o">*</span> <span class="n">F2p</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">(),</span>
-        <span class="n">param_names</span><span class="o">=</span><span class="n">F2p</span><span class="o">.</span><span class="n">get_param_names</span><span class="p">(),</span>
-        <span class="n">param_names_latex</span><span class="o">=</span><span class="n">F2p</span><span class="o">.</span><span class="n">get_param_names_latex</span><span class="p">(),</span>
-        <span class="n">fiducial</span><span class="o">=</span><span class="n">F2p</span><span class="o">.</span><span class="n">get_param_fiducial</span><span class="p">(),</span>
-    <span class="p">)</span>
-    <span class="n">fisher_temp</span> <span class="o">=</span> <span class="n">fisher_2</span> <span class="o">+</span> <span class="n">fisher_temp</span>
+    <span class="c1"># The statistical-average term needs fisher_2 without the prior, on the same</span>
+    <span class="c1"># parameters. A parameter can belong to both prior-added matrices only because the</span>
+    <span class="c1"># prior supplies it, so it may be absent from fisher_2 itself. Zero-pad those entries</span>
+    <span class="c1"># instead of reshuffling, which would raise. The alignment is only needed when the</span>
+    <span class="c1"># statistical average is requested.</span>
+    <span class="k">if</span> <span class="n">stat</span><span class="p">:</span>
+        <span class="n">names_2</span> <span class="o">=</span> <span class="n">fisher_2</span><span class="o">.</span><span class="n">get_param_names</span><span class="p">()</span>
+        <span class="n">matrix_2</span> <span class="o">=</span> <span class="n">fisher_2</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">()</span>
+        <span class="n">index_2</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names_2</span><span class="p">)}</span>
+        <span class="n">aligned_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">param_names</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_names</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">first</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">param_names</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">index_2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">second</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">param_names</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">second</span> <span class="ow">in</span> <span class="n">index_2</span><span class="p">:</span>
+                    <span class="n">aligned_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix_2</span><span class="p">[</span><span class="n">index_2</span><span class="p">[</span><span class="n">first</span><span class="p">],</span> <span class="n">index_2</span><span class="p">[</span><span class="n">second</span><span class="p">]]</span>
     <span class="c1"># the first term:</span>
     <span class="n">info_gain</span> <span class="o">=</span> <span class="n">info_gain</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">F1p</span><span class="o">.</span><span class="n">determinant</span><span class="p">()</span> <span class="o">/</span> <span class="n">F2p</span><span class="o">.</span><span class="n">determinant</span><span class="p">())</span>
     <span class="n">info_gain</span> <span class="o">=</span> <span class="n">info_gain</span> <span class="o">-</span> <span class="n">F1p</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -802,14 +814,12 @@
         <span class="c1"># we break down the third term into two pieces:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">fisher_temp</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">(),</span> <span class="n">F2p</span><span class="o">.</span><span class="n">get_fisher_inverse</span><span class="p">()),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">aligned_2</span><span class="p">,</span> <span class="n">F2p</span><span class="o">.</span><span class="n">get_fisher_inverse</span><span class="p">()),</span>
                 <span class="n">F1p</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">(),</span>
             <span class="p">),</span>
             <span class="n">F2p</span><span class="o">.</span><span class="n">get_fisher_inverse</span><span class="p">(),</span>
         <span class="p">)</span>
-        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">fisher_temp</span><span class="o">.</span><span class="n">get_fisher_matrix</span><span class="p">()),</span> <span class="n">F1p</span><span class="o">.</span><span class="n">get_fisher_inverse</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">aligned_2</span><span class="p">),</span> <span class="n">F1p</span><span class="o">.</span><span class="n">get_fisher_inverse</span><span class="p">())</span>
         <span class="n">info_gain</span> <span class="o">=</span> <span class="n">info_gain</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
         <span class="c1"># compute variance:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span>
