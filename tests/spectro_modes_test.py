@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import warnings
 
 import numpy as np
@@ -104,6 +105,8 @@ _FREE = dict.fromkeys(("Omegam", "h", "sigma8"), 0.002)
 
 
 def _forecast(observables, tmp_path, **options):
+    # "symbolic" needs the optional symbolic_pofk package; skip only the tests that build it
+    pytest.importorskip("symbolic_pofk")
     settings = {
         "code": "symbolic",
         "nonlinear": True,
@@ -156,3 +159,100 @@ def test_joint_analysis_is_symmetric_and_beats_each_auto_spectrum(tmp_path):
     assert np.all(np.linalg.eigvalsh(matrix) > 0)
     assert np.all(_sigma(joint) < _sigma(galaxies))
     assert np.all(_sigma(joint) < _sigma(intensity))
+
+
+# ---------------------------------------------------------------------------
+# output files and snapshot replay (no Fisher computation, only the exporter)
+# ---------------------------------------------------------------------------
+def test_output_tag_and_replay_observables_are_pure_functions_of_the_mode():
+    assert [modes.output_tag(m) for m in ("Ig", "joint", "gg", "II", None)] == [
+        "_Ig",
+        "_joint",
+        "",
+        "",
+        "",
+    ]
+    triplet = ["WL", "GCsp", "IM", "GCspxIM"]
+    assert modes.replay_observables(triplet, "Ig") == ["WL", "GCspxIM"]
+    # the replayed request resolves to the recorded list and mode again
+    assert modes.resolve_spectro_observables(modes.replay_observables(triplet, "Ig")) == (
+        triplet,
+        "Ig",
+    )
+    assert modes.replay_observables(triplet, "joint") == triplet
+    assert modes.replay_observables(["GCsp"], "gg") == ["GCsp"]
+    assert modes.replay_observables(["WL", "GCph"], None) == ["WL", "GCph"]
+
+
+def _export(observables, tmp_path, **options):
+    """Build a real FisherMatrix and export a placeholder matrix without computing anything."""
+    pytest.importorskip("symbolic_pofk")
+    settings = {
+        "code": "symbolic",
+        "feedback": 0,
+        "results_dir": str(tmp_path),
+        "outroot": "same_root",
+        "survey_name_spectro": "DESI-ELG-SKAOPaper",
+        "survey_name_radio_IM": "SKAO-IM-Redbook-DESI-ELG",
+    }
+    settings.update(options)
+    fisher = FisherMatrix(
+        options=settings,
+        observables=list(observables),
+        freepars=dict(_FREE),
+        fiducialpars=dict(_FIDUCIAL),
+        surveyName="SKAO",
+        cosmoModel="LCDM",
+    )
+    fisher.export_fisher(np.eye(len(fisher.freeparams)))
+    return fisher
+
+
+def test_cross_and_joint_exports_do_not_share_an_output_root(tmp_path):
+    cross = _export(("GCspxIM",), tmp_path)
+    joint = _export(("GCsp", "GCspxIM", "IM"), tmp_path)
+    # both resolve to the same observables, so the spectrum mode has to separate the files
+    assert cross.observables == joint.observables
+    names = sorted(path.name for path in tmp_path.glob("*_FM.txt"))
+    assert len(names) == 2
+    assert any(name.endswith("GCspIMGCspxIM_Ig_FM.txt") for name in names)
+    assert any(name.endswith("GCspIMGCspxIM_joint_FM.txt") for name in names)
+    recorded = {
+        path.name: json.loads(path.read_text())["options"]["spectro_mode"]
+        for path in tmp_path.glob("*_FM_specs.json")
+    }
+    assert sorted(recorded.values()) == ["Ig", "joint"]
+
+
+def test_exports_without_a_spectrum_mode_keep_their_names(tmp_path):
+    # no spectroscopic probe: self.spectro_mode never exists, and no suffix is added
+    photo = _export(("WL", "GCph"), tmp_path, survey_name_spectro=False)
+    assert not hasattr(photo, "spectro_mode")
+    _export(("GCsp",), tmp_path)
+    names = sorted(path.name for path in tmp_path.glob("*_FM.txt"))
+    assert [name.split("same_root_")[1] for name in names] == ["GCsp_FM.txt", "WLGCph_FM.txt"]
+
+
+@pytest.mark.parametrize(
+    "observables, mode, joint",
+    [
+        (("GCspxIM",), "Ig", False),
+        (("GCsp", "GCspxIM", "IM"), "joint", False),
+        pytest.param(
+            ("GCsp", "IM"),
+            "Ig",
+            True,
+            marks=pytest.mark.filterwarnings("ignore:observables .*:FutureWarning"),
+        ),
+    ],
+)
+def test_snapshot_replay_keeps_the_recorded_spectrum_mode(tmp_path, observables, mode, joint):
+    from cosmicjellyfish.utilities.utils import load_fisher_from_json
+
+    original = _export(observables, tmp_path, spectro_joint=joint)
+    assert original.settings["spectro_mode"] == mode
+    snapshot = next(tmp_path.glob("*_FM_specs.json"))
+    replayed, recorded = load_fisher_from_json(str(snapshot))
+    assert replayed.settings["spectro_mode"] == mode
+    assert replayed.observables == original.observables
+    assert recorded["options"]["spectro_joint"] is joint

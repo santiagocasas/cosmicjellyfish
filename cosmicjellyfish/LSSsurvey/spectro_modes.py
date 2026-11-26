@@ -119,6 +119,34 @@ def spectro_mode(observables: Sequence[str], settings: Mapping | None = None) ->
     return None
 
 
+def replay_observables(observables: Sequence[str], mode: str | None) -> list[str]:
+    """Return an observables request that resolves again to the recorded ``mode``.
+
+    A forecast records its *resolved* observables. For a cross-only run that is the same
+    three-name list a user passes to ask for the joint analysis, so resolving it again would
+    turn ``"Ig"`` into ``"joint"``. A recorded ``"Ig"`` is therefore mapped back to the
+    unambiguous request ``GCspxIM``; every other mode, and any list that is not a resolved
+    cross/joint triplet, is returned unchanged. Explicit user requests are never altered:
+    only snapshot replay calls this.
+    """
+    names = list(observables)
+    if mode == "Ig" and set(SPECTRO_OBSERVABLES) <= set(names):
+        return [name for name in names if name not in SPECTRO_OBSERVABLES] + ["GCspxIM"]
+    return names
+
+
+def output_tag(mode: str | None) -> str:
+    """Return the file-name suffix that keeps cross-only and joint forecasts apart.
+
+    A cross-only (``"Ig"``) and a joint forecast both resolve to the observables
+    ``["GCsp", "IM", "GCspxIM"]``, so the observables alone cannot tell their output files
+    apart. Those two modes get ``"_Ig"`` and ``"_joint"``. The auto-spectrum modes (``"gg"``,
+    ``"II"``) are already unique through their observables and, like forecasts without
+    spectroscopic probes (``None``), get no suffix, so their file names do not change.
+    """
+    return f"_{mode}" if mode in ("Ig", "joint") else ""
+
+
 def spectrum_pair(mode: str | None) -> list[str] | None:
     """Return the ``[si, sj]`` pair that labels the (first) spectrum of a mode."""
     return {"gg": ["g", "g"], "II": ["I", "I"], "Ig": ["I", "g"], "joint": ["I", "g"]}.get(mode)

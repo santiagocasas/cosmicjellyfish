@@ -988,12 +988,19 @@ class FisherMatrix:
         # If an output root is provided, we write the Fisher matrix on file
         if self.settings["outroot"] != "":
             obstring = "".join(self.observables)
+            # Cross-only and joint forecasts share the same observables list, so the spectrum
+            # mode is part of the root. It is read from the settings or the observables rather
+            # than from self.spectro_mode, which only exists after a spectroscopic compute.
+            mode_tag = spectro_modes.output_tag(
+                spectro_modes.spectro_mode(self.observables, self.settings)
+            )
             cols = [key for key in self.freeparams]
             header = "#" + " ".join(["", *cols])
             FM = pd.DataFrame(fishmat, columns=cols, index=cols)
             if not os.path.exists(self.settings["results_dir"]):
                 os.makedirs(self.settings["results_dir"])
-            # Root naming (without extension): <results>/<cf_version>_<outroot>_<obstring>_FM
+            # Root naming (without extension):
+            # <results>/<cf_version>_<outroot>_<obstring>[_<Ig|joint>]_FM
             root = (
                 self.settings["results_dir"]
                 + "/"
@@ -1002,6 +1009,7 @@ class FisherMatrix:
                 + self.settings["outroot"]
                 + "_"
                 + obstring
+                + mode_tag
                 + "_FM"
             )
             extension = self.settings["fishermatrix_file_extension"]
