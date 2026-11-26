@@ -255,9 +255,10 @@ def test_fofR_winther_boost_matches_fitting_formula_and_likelihood_bounds():
 def test_fofR_emantis_boost_clips_inputs_and_interpolates_emulator(monkeypatch):
     class FakeFofrBoost:
         kbins = np.array([0.03, 5.0])
+        emulation_range = {"omega_m": (0.2365, 0.3941), "sigma8_lcdm": (0.6083, 1.0140)}
 
         def predict_boost(self, omega_m, sigma8_lcdm, logfR0, aexp, k):
-            assert (omega_m, sigma8_lcdm, logfR0) == (0.39, 0.60, 5.301)
+            assert (omega_m, sigma8_lcdm, logfR0) == (0.39, 0.6083, 5.301)
             return np.broadcast_to(1.0 + 0.01 * k, (len(aexp), 1, len(k)))
 
     monkeypatch.setattr(modified_gravity, "_emantis", lambda: FakeFofrBoost())

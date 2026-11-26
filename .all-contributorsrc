@@ -77,9 +77,11 @@
       "contributions": [
         "ideas",
         "mentoring",
-        "bug"
-        ]
+        "bug",
+        "userTesting"
+      ]
     },
+    {
       "login": "fpace",
       "name": "Francesco Pace",
       "avatar_url": "https://avatars.githubusercontent.com/u/11464556?v=4",
@@ -87,7 +89,7 @@
       "contributions": [
         "code",
         "design"
-        ]
+      ]
     },
     {
       "login": "noefrusciante",
@@ -96,6 +98,53 @@
       "profile": "https://github.com/noefrusciante",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "domenicosapone",
+      "name": "domenicosapone",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11212509?v=4",
+      "profile": "https://github.com/domenicosapone",
+      "contributions": [
+        "code",
+        "ideas",
+        "mentoring",
+        "doc"
+      ]
+    },
+    {
+      "login": "matiasleize",
+      "name": "Matías Leizerovich",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37784016?v=4",
+      "profile": "https://matiasleize.github.io/",
+      "contributions": [
+        "code",
+        "ideas",
+        "test",
+        "userTesting"
+      ]
+    },
+    {
+      "login": "emiliobellini",
+      "name": "emiliobellini",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6113149?v=4",
+      "profile": "https://github.com/emiliobellini",
+      "contributions": [
+        "code",
+        "ideas",
+        "data"
+      ]
+    },
+    {
+      "login": "scamera",
+      "name": "Stefano Camera",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12611238?v=4",
+      "profile": "http://www.ph.unito.it/~camera",
+      "contributions": [
+        "data",
+        "design",
+        "ideas",
+        "research"
       ]
     }
   ],

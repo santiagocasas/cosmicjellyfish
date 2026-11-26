@@ -80,8 +80,9 @@ same `A_s` as the f(R) run, and B(k, z) is the f(R) boost. The implementation
 `euclid_photometric_z_fofr` (Sefa76/photometric_fofR, used in Koyama et al. 2024):
 
 - `winther2019`: the Winther et al. 2019 fitting formula (arXiv:1903.08798), with `hasBug = False`.
-- `emantis`: the e-MANTIS emulator, with Omega_m and the LCDM sigma8 clipped to the emulator range
-  [0.24, 0.39] and [0.60, 1.00].
+- `emantis`: the e-MANTIS emulator, with Omega_m and the LCDM sigma8 clipped to the overlap of the
+  likelihood bounds ([0.24, 0.39] and [0.60, 1.00]) and the installed emulator's bounds.
+  With e-MANTIS 1.4.0, this sets the lower LCDM sigma8 bound to 0.6083.
 - Beyond the range of each boost: power-law extrapolation above k_max (10 h/Mpc for Winther, the
   last e-MANTIS bin for e-MANTIS) and above z = 2; B is clipped to [1, 2], and B = 1 outside
   0.001 < k < 50 h/Mpc.

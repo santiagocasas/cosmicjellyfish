@@ -1,6 +1,7 @@
 # frahi_class Hu-Sawicki f(R) with a simulation-calibrated nonlinear boost (cosmicjellyfish/cosmology/modified_gravity.py):
 #   P_NL^f(R)(k, z) = P_NL^LCDM(k, z) x B(k, z),  B from e-MANTIS FofrBoost(Omega_m, sigma8_LCDM, -log10|f_R0|) (package emantis),
-#   as in the MontePython likelihood euclid_photometric_z_fofr (Koyama+2024): Omega_m, sigma8_LCDM clipped to [0.24, 0.39], [0.60, 1.00].
+#   Omega_m and sigma8_LCDM are clipped to the overlap of the emulator bounds and the MontePython likelihood bounds
+#   [0.24, 0.39] and [0.60, 1.00] (euclid_photometric_z_fofr, Koyama+2024).
 #   Extrapolation as in the likelihood: power law above k_max (10 h/Mpc Winther, e-MANTIS k_max) and z = 2, B clipped to [1, 2],
 #   B = 1 outside 0.001 < k < 50 h/Mpc (settings: NONLINEAR['fofR_settings'], keys of modified_gravity.LKL_DEFAULTS).
 # frahi_class gives only the linear spectra (and A_s, if sigma8 is the input); P_NL^LCDM comes from official classy

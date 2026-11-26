@@ -73,10 +73,11 @@ def fofR_boost_function(model, lgfR0, h, Omega_m=None, sigma8_lcdm=None, setting
 
     elif model == "emantis":
         emantis = _emantis()
-        # Doing constant extrapolation outside of emmulaor bounds
-        emantis_bounds = {"Omegam": [0.24, 0.39], "sigma8": [0.60, 1.00]}
-        emantis_Omm = np.clip(Omega_m, emantis_bounds["Omegam"][0], emantis_bounds["Omegam"][1])
-        emantis_s8 = np.clip(sigma8_lcdm, emantis_bounds["sigma8"][0], emantis_bounds["sigma8"][1])
+        # Keep the likelihood's bounds where the installed emulator supports them.
+        omega_min, omega_max = emantis.emulation_range["omega_m"]
+        sigma8_min, sigma8_max = emantis.emulation_range["sigma8_lcdm"]
+        emantis_Omm = np.clip(Omega_m, max(0.24, omega_min), min(0.39, omega_max))
+        emantis_s8 = np.clip(sigma8_lcdm, max(0.60, sigma8_min), min(1.00, sigma8_max))
 
         # Get e-mantis predictions for all z and k within emulator bounds
         fofR_kmax = emantis.kbins[-1] * h
