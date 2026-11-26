@@ -194,3 +194,60 @@ def test_fig1_reference_table_layout():
     assert np.all(table[:, 1:7] >= 0)
     assert np.all(table[:, 7] > 0)  # constant brightness temperature
     assert np.all(table[:, 8] > 0)  # thermal noise power
+
+
+class _WigglyCosmo(_DummyCosmo):
+    """Stub whose no-wiggle spectrum differs from the full one, so de-wiggling has an effect."""
+
+    @staticmethod
+    def nonwiggle_pow(z, k):
+        return 0.5 * (np.asarray(k, dtype=float) + 1.0)
+
+
+def _pgg(sigma_p, sigma_v):
+    cosmo = _WigglyCosmo()
+    k = np.array([0.05, 0.1, 0.2])
+    return reference.reference_pgg(
+        0.5,
+        k,
+        0.5,
+        cosmo=cosmo,
+        fiducial_cosmo=cosmo,
+        bias=1.4,
+        sigma_p=sigma_p,
+        sigma_v=sigma_v,
+        dz_err=0.001,
+    )
+
+
+def test_reference_pgg_accepts_array_valued_dispersions():
+    scalar_zero = _pgg(0, 0)
+    # all-zero arrays take the same shortcut as scalar zeros instead of raising
+    np.testing.assert_allclose(_pgg(np.zeros(3), np.zeros(3)), scalar_zero)
+    # a zero sigma_p with an array-valued sigma_v used to fail on the truth value of the array
+    damped = _pgg(0, np.array([1.0, 2.0, 3.0]))
+    assert damped.shape == scalar_zero.shape and np.all(np.isfinite(damped))
+    assert not np.allclose(damped, scalar_zero)
+    # array-valued sigma_p alone
+    assert np.all(np.isfinite(_pgg(np.array([1.0, 2.0, 3.0]), 0)))
+
+
+def _load_validator():
+    path = REPO_ROOT / "scripts" / "validation" / "validate_survey_observables.py"
+    spec = importlib.util.spec_from_file_location("validate_survey_observables", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module  # the module defines dataclasses
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_a_nonfinite_bin_cannot_be_reported_as_agreement():
+    validator = _load_validator()
+    # built-in max([0.0, nan]) is 0.0, which would be recorded as "ok"
+    assert max([0.0, float("nan")]) == 0.0
+    for differences in ([0.0, float("nan")], [float("nan"), 0.0], [0.0, float("inf")]):
+        worst = validator._worst_difference(differences)
+        assert not np.isfinite(worst)
+        assert validator._row("case", "GCsp", "P_gg", worst)["status"] == "check"
+    assert validator._worst_difference([1e-12, 3e-12]) == 3e-12
+    assert validator._row("case", "GCsp", "P_gg", 3e-12)["status"] == "ok"

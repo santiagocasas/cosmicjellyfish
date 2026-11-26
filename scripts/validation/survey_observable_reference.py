@@ -224,7 +224,8 @@ def reference_pgg(
         norm = 1.0
 
     p_dd = np.asarray(cosmo.matpow(z, k_ap)) / norm
-    if sigma_p == 0 and sigma_v == 0:
+    # all-zero reductions, so that array-valued dispersions do not raise on truth-value tests
+    if np.all(np.asarray(sigma_p) == 0) and np.all(np.asarray(sigma_v) == 0):
         p_dw = p_dd
         fog = np.ones_like(k_ap)
     else:

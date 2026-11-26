@@ -376,7 +376,7 @@ Filled in during Phase 0. One row per historical input or convention.
 | Shot noise | old configs | - | `shot_noise_parametrization` | **matched** | `Ps_*` all `0.0` in the saved matrices; still add every key for every bin (see issue 2). |
 | FoG / `sigmap` | old configs | - | `nonlinear_parametrization` | **different by design** | Old defaults had `bfs8terms: True`; the JAX GCsp observable requires `False`. The two are algebraically identical at the fiducial (see `docs/source/gcsp_intermediate.md`), so this does not change the Fisher. |
 | AP effect | old configs | - | `AP_effect` | **matched** | `True` in both. |
-| Fig. 1 spectra | `data-for-fig1.dat` | Mpc^3 | new `P_gg`, `P_II`, `P_Ig` at `z=0.6` | **investigated** | Shapes agree to <= 1.5% over `0.005 <= k <= 0.05` 1/Mpc; the 0.5%-6.8% amplitude offset and the `Tbar`/noise residuals are the MG fiducial (`E11`, `E22`) used in the reference. Above `k ~ 0.05` the exponential FoG/beam damping amplifies the MG difference in the velocity moments. |
+| Fig. 1 spectra | `data-for-fig1.dat` | Mpc^3 | new `P_gg`, `P_II`, `P_Ig` at `z=0.6` | **investigated** | Shapes agree to <= 1.5% over `0.005 <= k <= 0.05` 1/Mpc; the 0.5%-6.8% amplitude offset and the `Tbar`/noise residuals are quantified but their cause is not uniquely identified: they are consistent with the MG fiducial (`E11`, `E22`) used in the reference, but backend, table-extrapolation and modelling differences were not isolated. Above `k ~ 0.05` the exponential FoG/beam damping is expected to amplify any difference in the velocity moments. |
 | Old MG parameter basis | `vfinal/*.paramnames` | - | - | **out of scope** | `E11`/`E22`/`mu`/`eta` cannot be reproduced; GR runs only. |
 
 ---
@@ -412,7 +412,7 @@ fiducial `Omegam=0.32, Omegab=0.05, h=0.67, ns=0.96, sigma8=0.822`.
 | dN/dz shape | Rubin, SKAO | analytic | 0.0 | matched | `z0 = zm/sqrt(2)` |
 | galaxies per bin | Rubin, SKAO | `ngal_sqarmin` | 0.0 | matched | GCph and WL |
 | Fig. 1 shape (`P_gg`, `P_II`, `P_Ig`) | SKAO IM x HI | `data-for-fig1.dat` | <= 1.5e-2 | quantified | p10-p90 spread over `0.005 <= k <= 0.05` 1/Mpc |
-| Fig. 1 amplitude (`P_gg`, `P_II`, `P_Ig`) | SKAO IM x HI | `data-for-fig1.dat` | 0.5% - 6.8% | expected | reference used the MG fiducial (`E11`, `E22`); the offset is the GR-vs-MG growth/damping difference |
+| Fig. 1 amplitude (`P_gg`, `P_II`, `P_Ig`) | SKAO IM x HI | `data-for-fig1.dat` | 0.5% - 6.8% | expected | offset quantified, cause not uniquely identified: consistent with the MG fiducial (`E11`, `E22`) of the reference, not isolated from backend, table-extrapolation and modelling differences |
 | Fig. 1 Tbar_b(0.6) | SKAO IM | `data-for-fig1.dat` | 1.1e-3 | expected | `Tbar` depends on `H(z)`; MG background |
 | Fig. 1 P_noise_21 | SKAO IM | `data-for-fig1.dat` | 9.9e-5 | expected | same `H(z)` dependence |
 
@@ -494,8 +494,9 @@ How to read these tables:
   Planck likelihood and is included for completeness. Comparing against the published
   Planck covariance remains open (see Phase 3).
 * All runs used `code = "symbolic"` except Planck (`code = "camb"`). The comparison is
-  therefore *not* a backend comparison; the Phase 1/2 checks show the observables agree
-  across backends.
+  therefore *not* a backend comparison. The Phase 1/2 checks validate the transcribed
+  formulas and the bin bookkeeping: the reference shares the cosmology object with the
+  code under test, so they do not show agreement between cosmology libraries.
 
 ### 7.3 SKAO paper cross-check (GR-only)
 
@@ -506,7 +507,7 @@ numbers are MG constraints and are **not** targets here.
 | --- | --- | --- | --- | --- |
 | sigma(mu) from SKAO radio | 2.7 % | n/a | no | MG parameter |
 | sigma(Sigma) from SKAO radio | 1.8 % | n/a | no | MG parameter |
-| Fig. 1 spectra | yes | <= 1.5% shape | quantified | shape matches; amplitude offset is the MG fiducial |
+| Fig. 1 spectra | yes | <= 1.5% shape | quantified | shape matches; amplitude offset quantified, cause not uniquely identified (consistent with the MG fiducial) |
 
 ---
 
@@ -538,7 +539,7 @@ is next.
 | 2026-11-13 | Wrote this roadmap | Plan recorded; next is Phase 0 provenance audit |
 | 2026-11-13 | Phase 0: read historical `Nuisance`, `GalaxyPhotoDist`, `SpectroCov`, `config.py`, `.dat` tables and old YAMLs | `dn3` identified as dN/dz per deg^2; old and new `n_density`, `volume_survey`, `ngal_per_bin`, photo `dNdz` and photo bias all shown equivalent; assumptions table filled. Remaining Phase 0 item: per-figure mapping of `vfinal/` matrices |
 | 2026-11-13 | Phase 1: migrated DESI BGS/ELG, Rubin, SKAO photo/spectro and IM x DESI-ELG specs; fixed the missing `Ps_5`; added `tests/survey_specs_test.py` | Six YAMLs parse, are per-bin consistent, load through `FisherMatrix`, and a DESI BGS `GCsp` forecast runs end-to-end. Next: Phase 2 observable validation |
-| 2026-11-13 | Phase 2: added `scripts/validation/survey_observable_reference.py`, `scripts/validation/validate_survey_observables.py` and `tests/survey_observables_validation_test.py` | 33 machinery checks agree at machine precision (density, volume, bias, `P_gg`, IM thermodynamics, beam, noise, `P_II`, `P_Ig`, photo `dNdz` and bin counts). Fig. 1 diagnostic: shape agrees to <= 1.5% over `0.005 <= k <= 0.05` 1/Mpc with a 0.5%-6.8% amplitude offset from the MG fiducial. Next: Phase 3 forecast comparisons |
+| 2026-11-13 | Phase 2: added `scripts/validation/survey_observable_reference.py`, `scripts/validation/validate_survey_observables.py` and `tests/survey_observables_validation_test.py` | 33 machinery checks agree at machine precision (density, volume, bias, `P_gg`, IM thermodynamics, beam, noise, `P_II`, `P_Ig`, photo `dNdz` and bin counts). Fig. 1 diagnostic: shape agrees to <= 1.5% over `0.005 <= k <= 0.05` 1/Mpc with a 0.5%-6.8% amplitude offset (consistent with the MG fiducial of the reference, cause not isolated). Next: Phase 3 forecast comparisons |
 | 2026-11-13 | Phase 3: added `scripts/validation/run_survey_forecasts.py`; ran all 10 probe configurations at a common GR fiducial in LCDM and w0waCDM | Tab. 7.2 filled. Full LCDM set takes ~2 min, w0waCDM ~3 min (Planck/CAMB dominates). Rubin 3x2pt is stronger than the shipped Euclid photometric configuration because of its wider WL scale cuts; SKAO IM x DESI-ELG is cross-only. Next: Phase 4 scripts/plots/notebook/docs |
 | 2026-11-13 | Phase 4 (docs half): added `scripts/validation/plot_survey_validation.py`, `docs/source/survey_validation.md`, `notebooks/09-Survey-validation.ipynb` and the four committed figures under `docs/source/_static/survey_validation/` | Figures regenerate from the JSON reports; the notebook executes top-to-bottom (three quick cases + observable validation, ~2 min). Strict docs build still to run. Next: paper figure/paragraph, then Phase 5 checks |
 | 2026-11-13 | Phase 4 (paper half) + Phase 5: paper figure/paragraph, strict docs build, covariance tests, derivative-step and resolution scan | `paper/figures/fig4_survey_comparison.png` and the JOSS paragraph added; `sphinx -W` passes. New `tests/survey_covariance_test.py` covers the DESI-ELG and SKAO x DESI covariance paths. The step scan showed the GCsp derivatives were under-converged at 1%; Tab. 7.2 was regenerated at 0.2% and the docs updated. Next: final review and PR |

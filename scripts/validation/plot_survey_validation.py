@@ -459,6 +459,8 @@ def plot_fig1(results_dir: Path, output_dir: Path) -> Path:
     window = np.asarray(report["k_window"])
     keys = ("P_gg(k, mu=0)", "P_II(k, mu=0)", "P_Ig(k, mu=0)", "P_gg(k, mu=1)")
     styles = ("-", "-.", ":", "--")
+    # One brightness-temperature factor per intensity-mapping leg (ComputeGalSpectro.observed_P_ij)
+    units = {"P_gg": r"Mpc$^3$", "P_Ig": r"mK Mpc$^3$", "P_II": r"mK$^2$ Mpc$^3$"}
     window_index = np.searchsorted(k, window)
 
     figure, (left, right) = plt.subplots(1, 2, figsize=(12.5, 4.8))
@@ -466,12 +468,15 @@ def plot_fig1(results_dir: Path, output_dir: Path) -> Path:
         reference = np.asarray(report["reference"][key], dtype=float)
         current = np.asarray(report["current"][key], dtype=float)
         left.plot(k, reference, style, color="black", alpha=0.5)
-        left.plot(window, current, marker="o", linestyle="none", markersize=3, label=key)
+        unit = units[key.split("(")[0]]
+        left.plot(
+            window, current, marker="o", linestyle="none", markersize=3, label=f"{key} [{unit}]"
+        )
         right.plot(window, current / reference[window_index], style, marker="o", markersize=3)
     left.set_xscale("log")
     left.set_yscale("log")
     left.set_xlabel(r"$k$ [$1/\mathrm{Mpc}$]")
-    left.set_ylabel(r"$P(k)$ [$(\mathrm{Mpc})^3$]")
+    left.set_ylabel(r"$P(k)$ [units of each curve in the legend]")
     left.set_title("Historical (lines) and current (markers)")
     left.legend(fontsize=8)
 

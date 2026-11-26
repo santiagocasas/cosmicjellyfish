@@ -16,9 +16,13 @@ it is and what is wrong. Items marked (docs) are already worked around in the do
   (`cosmology.py` near line 1718).
 - `Rubin` and `DESI` have survey-name branches, but the survey name alone does not
   select a specification file: the branch loads whatever `survey_name_photo` or
-  `survey_name_spectro` names. Historical inputs are now shipped as
-  `Rubin-Photometric-SKAOPaper`, `DESI-BGS-SKAOPaper` and `DESI-ELG-SKAOPaper`, so
-  `surveyName="DESI"` must still be paired with
+  `survey_name_spectro` names. **Without that option the Euclid default is loaded
+  silently**: `surveyName="DESI"` uses `Euclid-Spectroscopic-ISTF-Pessimistic` and
+  `surveyName="Rubin"` uses `Euclid-Photometric-ISTF-Pessimistic`, and the forecast
+  still completes, so a finished run does not show that DESI or Rubin inputs were used.
+  Historical inputs are now shipped as `Rubin-Photometric-SKAOPaper`,
+  `DESI-BGS-SKAOPaper` and `DESI-ELG-SKAOPaper` (updated DESI tracers as
+  `DESI-*-Validation2023`), so `surveyName="DESI"` must still be paired with
   `options={"survey_name_spectro": ...}` (docs).
 - Only `Planck.yaml` is ever loaded by `surveyName`. The Simons Observatory and
   CMB-Stage4 YAMLs are never selected that way; pass them via `--spec-yaml` or

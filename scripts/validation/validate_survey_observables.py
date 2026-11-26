@@ -186,6 +186,18 @@ def _relative_difference(current, reference) -> float:
     return float(np.max(np.abs(current - reference) / scale))
 
 
+def _worst_difference(differences) -> float:
+    """Largest of several differences; NaN if any is not finite.
+
+    The built-in ``max`` ignores a NaN that follows a smaller value, so ``[0.0, nan]`` would
+    give ``0.0`` and the row would be recorded as agreeing.
+    """
+    values = np.asarray(differences, dtype=float)
+    if not np.all(np.isfinite(values)):
+        return float("nan")
+    return float(np.max(values))
+
+
 def _row(survey, observable, quantity, difference, note="", status=None) -> dict:
     tolerance = 1e-9
     if status is None:
@@ -282,7 +294,13 @@ def validate_gcsp(case: SurveyCase, fisher: FisherMatrix, results_dir: Path) -> 
             )
         differences.append(_relative_difference(current, reference))
     rows.append(
-        _row(case.name, "GCsp", "P_gg(k, mu, z)", max(differences), "s8-normalised paper form")
+        _row(
+            case.name,
+            "GCsp",
+            "P_gg(k, mu, z)",
+            _worst_difference(differences),
+            "s8-normalised paper form",
+        )
     )
     return rows
 
@@ -572,7 +590,7 @@ def diagnose_fig1(case: SurveyCase, fisher: FisherMatrix, results_dir: Path) -> 
         _row(
             case.name,
             "SKAO Fig. 1",
-            "P_noise_21(k) [mK^2 Mpc^3]",
+            "P_noise_21(k)/Tbar_b^2 [Mpc^3]",  # temp_dim=False: normalised by Tbar_b(z)^2
             _relative_difference(noise_current, reference[window, 8]),
             note="depends on H(z); MG background in reference",
             status="expected",

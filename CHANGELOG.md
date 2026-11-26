@@ -65,6 +65,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Review fixes for the cross-spectrum and joint spectroscopic analyses:
+  - Fisher output files carry the spectrum mode (`..._GCspIMGCspxIM_Ig_FM.txt` and
+    `..._joint_FM.txt`), because a cross-only and a joint forecast resolve to the same
+    observables and used to overwrite each other. Auto-spectrum and photometric file names are
+    unchanged.
+  - `load_fisher_from_json` replays a cross-only snapshot as cross-only instead of re-resolving
+    its observables as a joint analysis.
+  - When the galaxy and intensity-mapping grids differ in extent, every shared bin now takes its
+    volume and galaxy density from its own redshift interval (identical grids are unchanged).
+    Bins that share a midpoint but not their edges are rejected with a clear error, where they
+    used to run with the volume of a different interval.
+  - Changing `sp_bias_model` without the matching `sp_bias_root` (for example `linear_log`
+    needs `lnb`) raises a `ValueError` that names the fix, instead of a `KeyError` mid-forecast.
+  - The validation scripts reject non-finite per-bin differences instead of recording them as
+    agreement, accept array-valued velocity dispersions, and label the temperature units of the
+    plotted spectra and of the normalised 21 cm noise. The Fisher ellipses of the survey figures
+    use the 68.27% and 95.45% joint levels of `fishconsumer`.
+  - The docs and `docs/KNOWN_ISSUES.md` state that `DESI` and `Rubin` without an explicit
+    specification silently load the Euclid default, and the roadmap no longer presents the cause
+    of the SKAO Fig. 1 amplitude offset or a cross-backend agreement as established.
 - Survey validation review follow-ups: combinations sum the full nuisance-marginalised
   Fisher blocks (and the harness now refuses to combine a report that lacks them, keeping
   the summed block for reuse), the IM volume uses `fsky_IM` and the cross-spectrum marks its

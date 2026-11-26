@@ -98,6 +98,7 @@ can be selected by name alone.
 | `MeerKlass-IM-Ze` | MeerKLASS `IM`: 7500 deg², 60 dishes. |
 | `DESI-BGS-SKAOPaper` | DESI Bright Galaxy Survey `GCsp`: 14000 deg², 5 bins 0.0-0.5. |
 | `DESI-ELG-SKAOPaper` | DESI Emission Line Galaxies `GCsp`: 14000 deg², 11 bins 0.6-1.7. |
+| `DESI-BGS-Validation2023`, `DESI-LRG-Validation2023`, `DESI-ELG-Validation2023`, `DESI-QSO-Validation2023` | Updated DESI `GCsp` tracers from Table 7 of the DESI validation paper (arXiv:2306.06307): BGS 0.0-0.4, LRG 0.4-1.1, ELG 1.1-1.6, quasars 1.6-2.1, bias `A/D(z)`. See [Survey validation](survey_validation.md). |
 | `Rubin-Photometric-SKAOPaper` | Rubin/LSST photometric: `lmax` 1500/5000, `fsky` 0.33/0.35. |
 | `SKAO-Photometric-SKAOPaper` | SKAO photometric with the paper-era `lmax` 1500/5000. |
 | `SKAO-Spectroscopic-SKAOPaper` | SKAO HI `GCsp` with the full set of five shot-noise keys. |
@@ -120,10 +121,15 @@ options = {
 forecast = cff.FisherMatrix(..., options=options, observables=["IM"], surveyName="SKAO")
 ```
 
-```{note}
+```{warning}
 The `Rubin` and `DESI` branches in `config.py` only load whatever file you name in
 `survey_name_photo` or `survey_name_spectro`; the survey name alone does not select
-a file. Use, for example, `surveyName="DESI"` with
+a file. **If you leave the option out, the Euclid default is loaded silently:**
+`surveyName="DESI"` without `survey_name_spectro` uses
+`Euclid-Spectroscopic-ISTF-Pessimistic`, and `surveyName="Rubin"` without
+`survey_name_photo` uses `Euclid-Photometric-ISTF-Pessimistic`. The forecast still
+completes, so a finished run does not show that DESI or Rubin inputs were used. Always
+name the file, for example `surveyName="DESI"` with
 `options={"survey_name_spectro": "DESI-ELG-SKAOPaper"}`, or `surveyName="Rubin"`
 with `options={"survey_name_photo": "Rubin-Photometric-SKAOPaper"}`.
 ```
