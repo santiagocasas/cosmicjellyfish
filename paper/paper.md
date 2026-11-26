@@ -37,6 +37,9 @@ authors:
   - name: Kazuya Koyama
     orcid: 0000-0001-6727-6915
     affiliation: 15
+  - name: Emilio Bellini
+    orcid: 0000-0003-4762-0795
+    affiliation: 16
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -68,6 +71,8 @@ affiliations:
     index: 14
   - name: Institute of Cosmology and Gravitation, University of Portsmouth, UK
     index: 15
+  - name: Center for Astrophysics and Cosmology, University of Nova Gorica, Nova Gorica, Slovenia
+    index: 16
 date: 23 November 2026
 bibliography: paper.bib
 ---
