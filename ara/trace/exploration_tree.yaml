@@ -2702,3 +2702,22 @@ tree:
   evidence: [cfp-survey/tests/survey_specs_test.py, cfp-survey/docs/source/survey_validation.md]
   also_depends_on: [N138]
   status: resolved
+
+- id: N140
+  type: decision
+  title: "Fisher ellipses use fishconsumer confidence levels (68.27% / 95.45%, 2D)"
+  provenance: user
+  timestamp: "2026-11-26T23:00"
+  choice: >
+    User: "the plots should use standard 1sigma and 2sigma from fishconsumer". Review of the
+    committed DESI 2023 work found plot_survey_validation._draw_ellipse drew radii of exactly 1
+    and 2 sigma, which enclose only 39% and 86% in 2D. Now uses
+    analysis.utilities.confidence_coefficient(level, dimensions=2) with levels 0.6827/0.9545
+    (1.515 and 2.486 sigma), axis limits follow; titles and docs say 68.27%/95.45%. Regenerated
+    desi2023_w0wa.png and w0wa_comparisons.png, re-executed notebook 09 (no errors). Tabulated
+    marginal errors and FoM unchanged. Uncommitted in cfp-survey on top of 8c963ad.
+    Review also confirmed Table 7 densities and bias amplitudes match the DESI paper HTML.
+  alternatives: ["keep 1/2 sigma radii and relabel them"]
+  evidence: [cfp-survey/scripts/validation/plot_survey_validation.py, cfp-survey/docs/source/survey_validation.md]
+  also_depends_on: [N139]
+  status: resolved

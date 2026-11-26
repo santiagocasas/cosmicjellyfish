@@ -660,3 +660,7 @@ entries:
   notes:
     - "N139: user-directed decision, routed direct. Table 7 chosen over the GoFish file since the two disagree; flagged in docs."
     - "Derivative-step scan not run, recorded as open rather than claimed validated."
+- turn: '2026-11-26_001#24'
+  notes:
+    - "N140: user-directed fix, routed direct. Reused package confidence_coefficient so scripts and fishconsumer cannot drift."
+    - "Open: plotting script has no test; DESI w0wa figure needs legacy+Euclid cases present, not only the four new tracers."

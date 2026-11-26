@@ -229,7 +229,7 @@ sessions:
   summary: >-
     Catch-up record for 14-26 Nov: authorship PRs merged into paper/joss-draft, CI path rules,
     metadata fixes, f(R) tests for #265, #255 review fixes.
-  turn_count: 21
-  events_count: 30
+  turn_count: 22
+  events_count: 31
   claims_touched: []
   open_threads: 5
