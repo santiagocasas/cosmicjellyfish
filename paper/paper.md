@@ -43,6 +43,9 @@ authors:
   - name: Stefano Camera
     orcid: 0000-0003-3399-3574
     affiliation: "11, 12, 13, 17"
+  - name: Marco Raveri
+    orcid: 0000-0002-7354-3802
+    affiliation: 18
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -78,6 +81,8 @@ affiliations:
     index: 16
   - name: Department of Physics & Astronomy, University of the Western Cape, Cape Town, South Africa
     index: 17
+  - name: Department of Physics and INFN, University of Genova, Via Dodecaneso 33, 16146 Genova, Italy
+    index: 18
 date: 23 November 2026
 bibliography: paper.bib
 ---
@@ -544,6 +549,7 @@ M. Martinelli contributed code and design. Sabarish V. M. contributed code and
 documentation. M. Leizerovich contributed the Hu-Sawicki $f(R)$ interface to hi_class-based
 codes (frahi_class) and the Winther and e-MANTIS nonlinear boosts (software, validation).
 K. Koyama contributed to conceptualization and methodology. S. Camera contributed
-conceptualization and methodology. **[TODO: expand as needed.]**
+conceptualization and methodology. M. Raveri contributed conceptualization and software
+(the original IST:Forecast code, started with M. Martinelli). **[TODO: expand as needed.]**
 
 # References
