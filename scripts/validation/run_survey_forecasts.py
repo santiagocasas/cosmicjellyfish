@@ -114,6 +114,38 @@ CASES: dict[str, ForecastCase] = {
         options={"survey_name_spectro": "DESI-ELG-SKAOPaper"},
         note="emission-line galaxies, 0.6 < z < 1.7",
     ),
+    "desi2023-bgs": ForecastCase(
+        name="desi2023-bgs",
+        label="DESI 2023 BGS (GCsp)",
+        survey="DESI",
+        observables=("GCsp",),
+        options={"survey_name_spectro": "DESI-BGS-Validation2023"},
+        note="arXiv:2306.06307 Table 7, BGS Bright, 0 < z < 0.4",
+    ),
+    "desi2023-lrg": ForecastCase(
+        name="desi2023-lrg",
+        label="DESI 2023 LRG (GCsp)",
+        survey="DESI",
+        observables=("GCsp",),
+        options={"survey_name_spectro": "DESI-LRG-Validation2023"},
+        note="arXiv:2306.06307 Table 7, luminous red galaxies, 0.4 < z < 1.1",
+    ),
+    "desi2023-elg": ForecastCase(
+        name="desi2023-elg",
+        label="DESI 2023 ELG (GCsp)",
+        survey="DESI",
+        observables=("GCsp",),
+        options={"survey_name_spectro": "DESI-ELG-Validation2023"},
+        note="arXiv:2306.06307 Table 7, ELG_LOP, 1.1 < z < 1.6",
+    ),
+    "desi2023-qso": ForecastCase(
+        name="desi2023-qso",
+        label="DESI 2023 QSO (GCsp)",
+        survey="DESI",
+        observables=("GCsp",),
+        options={"survey_name_spectro": "DESI-QSO-Validation2023"},
+        note="arXiv:2306.06307 Table 7, clustering quasars, 1.6 < z < 2.1",
+    ),
     "skao-photo": ForecastCase(
         name="skao-photo",
         label="SKAO continuum photometric (GCph+WL)",
@@ -171,6 +203,7 @@ CASES: dict[str, ForecastCase] = {
 
 COMBINATIONS: dict[str, tuple[str, ...]] = {
     "desi-combined": ("desi-bgs", "desi-elg"),
+    "desi2023-combined": ("desi2023-bgs", "desi2023-lrg", "desi2023-elg", "desi2023-qso"),
     "euclid-combined": ("euclid-photo", "euclid-spectro"),
 }
 

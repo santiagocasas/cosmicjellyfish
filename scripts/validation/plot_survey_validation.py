@@ -22,6 +22,11 @@ Figures
     Four small ``w0``-``wa`` Fisher-ellipse panels, each holding two comparable probes.
     The Planck-like case is deliberately absent: its single-channel approximation is far
     weaker than every LSS probe and would set the axis scale for all of them.
+``desi2023_inputs.png``, ``desi2023_w0wa.png``
+    Written only when the report holds the ``desi2023-*`` cases: densities and biases of
+    the 2023 DESI tracers (Table 7 of arXiv:2306.06307) against the legacy BGS and ELG, and
+    their ``w0``-``wa`` ellipses (single tracers with the quasars on top, a zoom without
+    them, and the full set against the legacy DESI files and Euclid GCsp).
 ``fig1_diagnostic.png``
     Historical-versus-current SKAO Fig. 1 spectra, shown as a ratio to make the residual
     shape agreement visible. The amplitude offset is not attributed to a single cause:
@@ -42,6 +47,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import yaml
+from matplotlib.colors import to_rgba
 from matplotlib.patches import Ellipse
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -238,8 +244,18 @@ def _w0wa_covariance(report: dict, members: tuple[str, ...]) -> np.ndarray:
     return np.linalg.inv(total)[np.ix_(indices, indices)]
 
 
-def _draw_ellipse(axis, covariance: np.ndarray, colour: str, label: str) -> None:
-    """Draw the 1-sigma (solid) and 2-sigma (dashed) ellipse at the fiducial point."""
+def _draw_ellipse(
+    axis,
+    covariance: np.ndarray,
+    colour: str,
+    label: str,
+    fill_alpha: float = 0.0,
+    zorder: int = 2,
+) -> None:
+    """Draw the 1-sigma (solid) and 2-sigma (dashed) ellipse at the fiducial point.
+
+    ``fill_alpha > 0`` shades the 1-sigma ellipse, and ``zorder`` lets a curve sit on top.
+    """
     eigenvalues, eigenvectors = np.linalg.eigh(covariance)
     order = np.argsort(eigenvalues)[::-1]
     eigenvalues = eigenvalues[order]
@@ -252,11 +268,13 @@ def _draw_ellipse(axis, covariance: np.ndarray, colour: str, label: str) -> None
                 width=scale * float(np.sqrt(eigenvalues[0])),
                 height=scale * float(np.sqrt(eigenvalues[1])),
                 angle=angle,
-                facecolor="none",
-                edgecolor=colour,
+                facecolor=(
+                    to_rgba(colour, fill_alpha) if (fill_alpha and scale == 2.0) else "none"
+                ),
+                edgecolor=to_rgba(colour, alpha),
                 linestyle=linestyle,
-                alpha=alpha,
                 linewidth=1.8,
+                zorder=zorder,
                 label=label if scale == 2.0 else None,
             )
         )
@@ -296,6 +314,125 @@ def plot_w0wa_comparisons(results_dir: Path, output_dir: Path) -> Path:
     figure.suptitle(r"$w_0w_a$CDM, marginalised $1\sigma$ (solid) and $2\sigma$ (dashed)")
     figure.tight_layout()
     path = output_dir / "w0wa_comparisons.png"
+    figure.savefig(path, dpi=150)
+    plt.close(figure)
+    return path
+
+
+# --- DESI 2023 validation-paper specifications (arXiv:2306.06307, Table 7) -----------------
+DESI2023_TRACERS = (
+    ("DESI-BGS-Validation2023.yaml", "desi2023-bgs", "BGS", "#1f77b4"),
+    ("DESI-LRG-Validation2023.yaml", "desi2023-lrg", "LRG", "#d62728"),
+    ("DESI-ELG-Validation2023.yaml", "desi2023-elg", "ELG", "#2ca02c"),
+    ("DESI-QSO-Validation2023.yaml", "desi2023-qso", "QSO", "#9467bd"),
+)
+DESI2023_COMBINED = tuple(case for _, case, _, _ in DESI2023_TRACERS)
+DESI_LEGACY = (
+    ("DESI-BGS-SKAOPaper.yaml", "BGS legacy", "#1f77b4"),
+    ("DESI-ELG-SKAOPaper.yaml", "ELG legacy", "#2ca02c"),
+)
+
+
+def spectro_bias(spec: dict) -> np.ndarray:
+    """Return the fiducial linear bias of each bin of a spectroscopic spec."""
+    table = spec["sp_bias_parametrization"][spec["sp_bias_model"]]
+    return np.asarray([table[f"bg_{i}"] for i in range(1, len(spec["z_bins_sp"]) + 1)])
+
+
+def plot_desi2023_inputs(output_dir: Path) -> Path:
+    """Densities and biases of the 2023 DESI tracers, with the legacy BGS and ELG for reference."""
+    figure, (left, right) = plt.subplots(1, 2, figsize=(12, 4.5))
+    for name, label, colour in DESI_LEGACY:
+        spec = load_specification(name)
+        z, density = spectro_inputs(spec)
+        left.plot(z, density, linestyle="--", marker=".", color=colour, alpha=0.5, label=label)
+        right.plot(z, spectro_bias(spec), linestyle="--", marker=".", color=colour, alpha=0.5)
+    for name, _, label, colour in DESI2023_TRACERS:
+        spec = load_specification(name)
+        z, density = spectro_inputs(spec)
+        left.plot(z, density, marker="o", color=colour, label=f"{label} 2023")
+        right.plot(z, spectro_bias(spec), marker="o", color=colour, label=f"{label} 2023")
+    left.set_yscale("log")
+    left.set_xlabel("redshift")
+    left.set_ylabel(r"$dN/dz$ [deg$^{-2}$]")
+    left.set_title("Number density (Table 7)")
+    left.legend(fontsize=8, ncol=2)
+    right.set_xlabel("redshift")
+    right.set_ylabel(r"fiducial bias $b_i = A/D(z_i)$")
+    right.set_title("Linear bias per bin")
+    right.legend(fontsize=8)
+    figure.tight_layout()
+    path = output_dir / "desi2023_inputs.png"
+    figure.savefig(path, dpi=150)
+    plt.close(figure)
+    return path
+
+
+def _set_w0wa_limits(axis, covariances: list[np.ndarray]) -> None:
+    sigmas = [np.sqrt(np.diag(covariance)) for covariance in covariances]
+    axis.set_xlim(
+        -1.0 - 1.15 * 2.0 * max(s[0] for s in sigmas), -1.0 + 1.15 * 2.0 * max(s[0] for s in sigmas)
+    )
+    axis.set_ylim(-1.15 * 2.0 * max(s[1] for s in sigmas), 1.15 * 2.0 * max(s[1] for s in sigmas))
+    axis.axvline(-1.0, color="grey", linewidth=0.8)
+    axis.axhline(0.0, color="grey", linewidth=0.8)
+    axis.set_xlabel(r"$w_0$")
+    axis.set_ylabel(r"$w_a$")
+    axis.grid(alpha=0.2)
+
+
+def plot_desi2023_w0wa(results_dir: Path, output_dir: Path) -> Path:
+    """Per-tracer ``w0``-``wa`` ellipses (QSO on top), a zoom without QSO, and the full set."""
+    report = load_json(results_dir / "survey_forecasts_w0waCDM.json")
+    covariance = {case: _w0wa_covariance(report, (case,)) for _, case, _, _ in DESI2023_TRACERS}
+    figure, axes = plt.subplots(1, 3, figsize=(16, 5.2))
+
+    # Panel 1: every tracer; the quasars are drawn last, shaded, so they sit on top.
+    ordered = [t for t in DESI2023_TRACERS if t[2] != "QSO"] + [
+        t for t in DESI2023_TRACERS if t[2] == "QSO"
+    ]
+    for _, case, label, colour in ordered:
+        is_qso = label == "QSO"
+        _draw_ellipse(
+            axes[0],
+            covariance[case],
+            colour,
+            label,
+            fill_alpha=0.15 if is_qso else 0.0,
+            zorder=10 if is_qso else 2,
+        )
+    _set_w0wa_limits(axes[0], list(covariance.values()))
+    axes[0].set_title("DESI 2023, single tracers (QSO on top)")
+    axes[0].legend(fontsize=8)
+
+    # Panel 2: zoom on the three galaxy tracers.
+    galaxies = [t for t in DESI2023_TRACERS if t[2] != "QSO"]
+    for _, case, label, colour in galaxies:
+        _draw_ellipse(axes[1], covariance[case], colour, label)
+    _set_w0wa_limits(axes[1], [covariance[case] for _, case, _, _ in galaxies])
+    axes[1].set_title("Zoom: BGS, LRG and ELG")
+    axes[1].legend(fontsize=8)
+
+    # Panel 3: full DESI 2023 against the legacy BGS+ELG and Euclid GCsp.
+    curves = (
+        (DESI2023_COMBINED, "DESI 2023 BGS+LRG+ELG+QSO", "#d62728"),
+        (("desi-bgs", "desi-elg"), "DESI legacy BGS+ELG", "#ff7f0e"),
+        (("euclid-spectro",), "Euclid GCsp", "#1f77b4"),
+    )
+    covariances = []
+    for members, label, colour in curves:
+        cov = _w0wa_covariance(report, members)
+        covariances.append(cov)
+        _draw_ellipse(axes[2], cov, colour, label)
+    _set_w0wa_limits(axes[2], covariances)
+    axes[2].set_title("Full DESI 2023 vs legacy vs Euclid (GCsp)")
+    axes[2].legend(fontsize=8)
+
+    figure.suptitle(
+        r"$w_0w_a$CDM, GCsp only, marginalised $1\sigma$ (solid) and $2\sigma$ (dashed)"
+    )
+    figure.tight_layout()
+    path = output_dir / "desi2023_w0wa.png"
     figure.savefig(path, dpi=150)
     plt.close(figure)
     return path
@@ -361,6 +498,10 @@ def main() -> None:
         plot_w0wa_comparisons(args.results_dir, args.output_dir),
         plot_fig1(args.results_dir, args.output_dir),
     ]
+    report = load_json(args.results_dir / "survey_forecasts_w0waCDM.json")
+    if {result["name"] for result in report["results"]} >= set(DESI2023_COMBINED):
+        figures.append(plot_desi2023_inputs(args.output_dir))
+        figures.append(plot_desi2023_w0wa(args.results_dir, args.output_dir))
     for figure in figures:
         print(f"Wrote {figure}")
 
