@@ -20,6 +20,8 @@ Figures
     Marginalised 1-sigma errors on the shared cosmological parameters, LCDM and w0waCDM.
 ``w0wa_comparisons.png``
     Four small ``w0``-``wa`` Fisher-ellipse panels, each holding two comparable probes.
+    All ellipses are the joint 68.27% and 95.45% contours (``confidence_coefficient`` with two
+    dimensions, as in ``fishconsumer``), not circles of radius 1 and 2 sigma.
     The Planck-like case is deliberately absent: its single-channel approximation is far
     weaker than every LSS probe and would set the axis scale for all of them.
 ``desi2023_inputs.png``, ``desi2023_w0wa.png``
@@ -49,6 +51,13 @@ import numpy as np
 import yaml
 from matplotlib.colors import to_rgba
 from matplotlib.patches import Ellipse
+
+from cosmicjellyfish.analysis.utilities import confidence_coefficient
+
+# Joint confidence levels of the contours, as in fishconsumer (default 68.27%; 95.45% for the
+# outer contour). ``ELLIPSE_EXTENT`` is the largest semi-axis in sigma units, for axis limits.
+CONTOUR_LEVELS = (0.6827, 0.9545)
+ELLIPSE_EXTENT = confidence_coefficient(CONTOUR_LEVELS[-1], dimensions=2)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SPEC_DIRECTORIES = (
@@ -252,30 +261,35 @@ def _draw_ellipse(
     fill_alpha: float = 0.0,
     zorder: int = 2,
 ) -> None:
-    """Draw the 1-sigma (solid) and 2-sigma (dashed) ellipse at the fiducial point.
+    """Draw the 68.27% (solid) and 95.45% (dashed) joint contours at the fiducial point.
 
-    ``fill_alpha > 0`` shades the 1-sigma ellipse, and ``zorder`` lets a curve sit on top.
+    The semi-axes are ``confidence_coefficient(level, dimensions=2) * sqrt(eigenvalue)``, the
+    same convention as ``fishconsumer`` and ``fisher_plot_analysis.compute_ellipse``
+    (1.515 and 2.486 sigma, i.e. Delta chi^2 = 2.30 and 6.18). Plain 1 and 2 sigma radii would
+    enclose only 39% and 86% in two dimensions.
+
+    ``fill_alpha > 0`` shades the inner contour, and ``zorder`` lets a curve sit on top.
     """
     eigenvalues, eigenvectors = np.linalg.eigh(covariance)
     order = np.argsort(eigenvalues)[::-1]
     eigenvalues = eigenvalues[order]
     eigenvectors = eigenvectors[:, order]
     angle = float(np.degrees(np.arctan2(eigenvectors[1, 0], eigenvectors[0, 0])))
-    for scale, linestyle, alpha in ((2.0, "-", 1.0), (4.0, "--", 0.55)):
+    for level, linestyle, alpha in zip(CONTOUR_LEVELS, ("-", "--"), (1.0, 0.55)):
+        radius = confidence_coefficient(level, dimensions=2)
+        inner = level == CONTOUR_LEVELS[0]
         axis.add_patch(
             Ellipse(
                 (-1.0, 0.0),
-                width=scale * float(np.sqrt(eigenvalues[0])),
-                height=scale * float(np.sqrt(eigenvalues[1])),
+                width=2.0 * radius * float(np.sqrt(eigenvalues[0])),
+                height=2.0 * radius * float(np.sqrt(eigenvalues[1])),
                 angle=angle,
-                facecolor=(
-                    to_rgba(colour, fill_alpha) if (fill_alpha and scale == 2.0) else "none"
-                ),
+                facecolor=to_rgba(colour, fill_alpha) if (fill_alpha and inner) else "none",
                 edgecolor=to_rgba(colour, alpha),
                 linestyle=linestyle,
                 linewidth=1.8,
                 zorder=zorder,
-                label=label if scale == 2.0 else None,
+                label=label if inner else None,
             )
         )
 
@@ -295,8 +309,8 @@ def plot_w0wa_comparisons(results_dir: Path, output_dir: Path) -> Path:
             covariance = _w0wa_covariance(report, members)
             _draw_ellipse(axis, covariance, colour, label)
             sigma = np.sqrt(np.diag(covariance))
-            spans["w0"].append(2.0 * sigma[0])
-            spans["wa"].append(2.0 * sigma[1])
+            spans["w0"].append(ELLIPSE_EXTENT * sigma[0])
+            spans["wa"].append(ELLIPSE_EXTENT * sigma[1])
         axis.axvline(-1.0, color="grey", linewidth=0.8)
         axis.axhline(0.0, color="grey", linewidth=0.8)
         for parameter, values in spans.items():
@@ -311,7 +325,7 @@ def plot_w0wa_comparisons(results_dir: Path, output_dir: Path) -> Path:
         axis.legend(fontsize=8, loc="best")
         axis.grid(alpha=0.2)
 
-    figure.suptitle(r"$w_0w_a$CDM, marginalised $1\sigma$ (solid) and $2\sigma$ (dashed)")
+    figure.suptitle(r"$w_0w_a$CDM, marginalised 68.27% (solid) and 95.45% (dashed) contours")
     figure.tight_layout()
     path = output_dir / "w0wa_comparisons.png"
     figure.savefig(path, dpi=150)
@@ -370,10 +384,10 @@ def plot_desi2023_inputs(output_dir: Path) -> Path:
 
 def _set_w0wa_limits(axis, covariances: list[np.ndarray]) -> None:
     sigmas = [np.sqrt(np.diag(covariance)) for covariance in covariances]
-    axis.set_xlim(
-        -1.0 - 1.15 * 2.0 * max(s[0] for s in sigmas), -1.0 + 1.15 * 2.0 * max(s[0] for s in sigmas)
-    )
-    axis.set_ylim(-1.15 * 2.0 * max(s[1] for s in sigmas), 1.15 * 2.0 * max(s[1] for s in sigmas))
+    half_w0 = 1.15 * ELLIPSE_EXTENT * max(s[0] for s in sigmas)
+    half_wa = 1.15 * ELLIPSE_EXTENT * max(s[1] for s in sigmas)
+    axis.set_xlim(-1.0 - half_w0, -1.0 + half_w0)
+    axis.set_ylim(-half_wa, half_wa)
     axis.axvline(-1.0, color="grey", linewidth=0.8)
     axis.axhline(0.0, color="grey", linewidth=0.8)
     axis.set_xlabel(r"$w_0$")
@@ -429,7 +443,7 @@ def plot_desi2023_w0wa(results_dir: Path, output_dir: Path) -> Path:
     axes[2].legend(fontsize=8)
 
     figure.suptitle(
-        r"$w_0w_a$CDM, GCsp only, marginalised $1\sigma$ (solid) and $2\sigma$ (dashed)"
+        r"$w_0w_a$CDM, GCsp only, marginalised 68.27% (solid) and 95.45% (dashed) contours"
     )
     figure.tight_layout()
     path = output_dir / "desi2023_w0wa.png"

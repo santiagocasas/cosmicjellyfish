@@ -289,6 +289,11 @@ from the legacy files (for example the ELG bias is `0.84 / D(z) = 1.48-1.73` aga
 `1.02-1.36`), but since they are free nuisance parameters their effect on the errors is
 partly marginalised. Derivative-step sensitivity of these new runs has not been scanned.
 
+All `w0`-`wa` ellipses in this page are the joint 68.27% (solid) and 95.45% (dashed)
+contours, drawn with `confidence_coefficient(level, dimensions=2)` as in `fishconsumer`
+(1.515 and 2.486 sigma, i.e. `Delta chi^2 = 2.30` and `6.18`). The tabulated errors are
+marginalised 1-sigma values.
+
 ```{image} _static/survey_validation/desi2023_inputs.png
 :alt: DESI 2023 densities and bias versus redshift, with the legacy BGS and ELG files dashed
 :width: 90%
