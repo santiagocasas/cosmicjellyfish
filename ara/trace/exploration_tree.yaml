@@ -2437,3 +2437,268 @@ tree:
     - cosmicfish_release/AGENTS.md
   also_depends_on: [N113]
   status: resolved
+- id: N121
+  type: decision
+  title: Merge main into paper/joss-draft, then retarget #273/#270/#271 and prepare Bellini PR
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Merge origin/main into paper/joss-draft (CITATION.cff conflict: kept Sabarish affiliation of the
+    paper branch), retarget PRs #273, #270, #271 to paper/joss-draft, and merge paper/joss-draft into
+    Bellini's fork head locally (84e457b). Bellini affiliation Nova Gorica renumbered to 16;
+    Camera is planned to reuse Torino 11-13 and get UWC as 17. Pushes stay with the maintainer.
+  alternatives:
+    - Merge #273 against main (not chosen, the maintainer wants the author PRs to land on paper/joss-draft).
+  evidence:
+    - cfp-paper 03ddab5
+    - cfp-bellini 84e457b
+  also_depends_on: [N120]
+  status: resolved
+- id: N122
+  type: decision
+  title: Resolve #272 (scamera all-contributors) conflict by merging origin/main into the bot branch
+  provenance: ai-executed
+  timestamp: '2026-11-26'
+  choice: >-
+    #273 Bellini merged (12a9308) and its all-contributors PR #274 merged into main, which made #272
+    conflict in .all-contributorsrc and README.md. Merged origin/main into all-contributors/add-scamera
+    locally (24fc658), keeping both entries (Bellini first, Camera last). Push by the maintainer.
+  evidence:
+    - cfp-allc 24fc658
+  also_depends_on: [N121]
+  status: resolved
+- id: N123
+  type: decision
+  title: Acknowledge Pettorino, Lesgourgues, Schöneberg and Archidiacono in the paper
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Added a sentence to the Acknowledgements of paper/paper.md on paper/joss-draft thanking the four
+    for scientific ideas, validation and discussions. Uncommitted in cfp-paper at the time of logging.
+  evidence:
+    - cfp-paper/paper/paper.md
+  status: resolved
+- id: N124
+  type: decision
+  title: Prepare Camera PRs #270 and #271 against paper/joss-draft
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    #272 merged; removed cfp-allc and scamera-272. Merged paper/joss-draft into scamera:patch-2 (#270, CITATION.cff, 3e4e833)
+    and scamera:patch-3 (#271, paper.md). Camera reuses Torino affiliations 11-13 (same as Pace), UWC becomes 17;
+    contribution sentence kept. Camera is last author after Bellini. Pushes by the maintainer.
+  alternatives:
+    - Keep Camera's own Torino affiliations 6-8 as duplicates (not chosen).
+  evidence:
+    - cfp-camera270 3e4e833
+    - cfp-camera271 merge commit
+  also_depends_on: [N122, N121]
+  status: resolved
+- id: N125
+  type: decision
+  title: Authorship PRs #270, #271, #272, #273 merged; authorship worktrees and branches removed
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Camera #270/#271 merged into paper/joss-draft (pushed by the maintainer; first push attempt of patch-3 from the wrong worktree
+    was rejected, no harm). Removed cfp-camera270/271 and local branches camera-pr270/271. cfp-paper fast-forwarded to 57f4994
+    with the acknowledgement edit (N123) kept uncommitted via stash/pop. paper.md has 11 authors, 17 affiliations, all used.
+  also_depends_on: [N124, N123]
+  status: resolved
+- id: N126
+  type: decision
+  title: Commit acknowledgement on paper/joss-draft
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Maintainer asked to commit the acknowledgement (Pettorino, Lesgourgues, Schoneberg, Archidiacono) right away. Committed as
+    fabfc26 on paper/joss-draft (cfp-paper), 1 ahead of origin, not pushed.
+  also_depends_on: [N123]
+  status: resolved
+- id: N127
+  type: decision
+  title: Add Marco Raveri as 12th author on paper/joss-draft
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Maintainer supplied name, ORCID 0000-0002-7354-3802, affiliation (Univ. of Genova and INFN) and CRediT role
+    (conceptualization, software: original IST:Forecast code, started with Matteo). Added to paper/paper.md (author, new
+    affiliation 18, contribution sentence) and CITATION.cff, last after Camera. Left uncommitted in cfp-paper.
+  also_depends_on: [N126]
+  status: open
+- id: N128
+  type: decision
+  title: Commit Raveri author addition
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Maintainer asked for a single commit. Committed paper/paper.md + CITATION.cff as 56284f6 on paper/joss-draft (2 ahead of origin with fabfc26), not pushed.
+  also_depends_on: [N127]
+  status: resolved
+- id: N129
+  type: decision
+  title: Machine-readable CRediT roles via YAML front matter (JATS) plus prose list and consistency check
+  provenance: user-revised
+  timestamp: '2026-11-26'
+  choice: >-
+    Maintainer asked for CRediT in the contributions section, derived from all-contributors keys where authors wrote
+    nothing, machine-readable via JATS. Added roles list per author in paper.md front matter (credit slug + credit-name,
+    39 roles, Bellini empty), prose bullets in Author contributions, Brand2015 in paper.bib, paper/scripts/check_credit_roles.py
+    (validates slugs/names, compares YAML vs prose) and a README section. Verified with openjournals/inara docker: JATS
+    contains 39 <role vocab=credit> elements. Roles are a proposal; each author must confirm. Left uncommitted.
+  alternatives: ["prose only (not machine-readable)"]
+  evidence: ["inara JATS build in /tmp/opencode/papertest", "check_credit_roles.py passes, catches drift"]
+  status: open
+- id: N130
+  type: decision
+  title: Commit CRediT roles (paper) and README badges (main)
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Maintainer supplied CRediT badge and the dynamic all-contributors badge (img.shields.io/github/all-contributors, replaces
+    hard-coded count 3; renders 11). Committed README badges on main as 0b540ef (uv.lock left out) and CRediT roles on
+    paper/joss-draft as 77fcc63 (paper.md, paper.bib, paper/README.md, check_credit_roles.py). Not pushed; paper/jats still tracked.
+  also_depends_on: [N129]
+  status: resolved
+- id: N131
+  type: decision
+  title: Matteo Martinelli declines authorship, moved to acknowledgements
+  provenance: user
+  timestamp: '2026-11-26'
+  choice: >-
+    Martinelli replied by email that he prefers an acknowledgement (employer reasons). Removed him from paper.md authors
+    (front matter, TODO affiliation 3, CRediT roles, prose bullet) and CITATION.cff, renumbered affiliations to 1-17,
+    added him to the acknowledgements sentence. pyproject authors, docs BibTeX, README all-contributors left as is.
+    Uncommitted in cfp-paper. Open: what the 'sample split' he asks about refers to (no commits by him in git).
+  also_depends_on: [N129]
+  status: open
+- id: N132
+  type: decision
+  title: "Merge reworded paper-v2.md body into paper.md, keeping current authors/CRediT/acks"
+  provenance: user
+  timestamp: "2026-11-26T18:00"
+  choice: >
+    Spliced current front matter (11 authors, 17 affiliations, CRediT roles) + v2 narrative
+    (Summary..AI disclosure, [C1]-[C25] comments) + current Acknowledgements/Author contributions.
+    Dropped Fig 2 autodiff and old Usage/Validation/Documentation/Availability sections (per v2).
+    Listings fixed to run on branch code (options need feedback; sampler needs survey_name);
+    Fisher listing run OK (12 s); Nautilus listing NOT run (user forbade sampler runs).
+    Community counts updated to 11 contributors/11 authors/9 countries; cross-survey claim
+    restored to 'algebra-level ingredients ... SKAO spectra shapes <1.5%'. Added Raveri2016 bib.
+    inara build OK (9 pages, 36 JATS roles). Prose ~1992 words > JOSS 1750 limit. Uncommitted.
+  evidence: [cfp-paper/paper/paper.md, cfp-paper/paper/paper.bib]
+  also_depends_on: [N129, N131]
+  status: open
+- id: N133
+  type: decision
+  title: "Paper keeps a single ellipse figure: Fisher vs Nautilus for Euclid"
+  provenance: user
+  timestamp: "2026-11-26T21:15"
+  choice: >
+    Dropped Euclid-probes figure (fig1_euclid_probes) and survey-comparison figure (fig4);
+    only fig3_fisher_vs_nautilus remains (now Figure 1). Text now says explicitly that the
+    Fisher matrices were validated in earlier works (Blanchard2020 code comparison;
+    Casas2024, Archidiacono2025 vs MCMC; citations to be checked by user) and that the
+    dashboard keeps tracking them. fig4 reproducibility blocker removed. Uncommitted.
+  evidence: [cfp-paper/paper/paper.md]
+  also_depends_on: [N132]
+  status: open
+- id: N134
+  type: decision
+  title: "JOSS reproduction scripts in scripts/paper-joss/"
+  provenance: user
+  timestamp: "2026-11-26T23:00"
+  choice: >
+    New scripts/paper-joss/ on paper/joss-draft: reproduce_all.sh (steps listings,
+    autodiff, nautilus wl/gcsp/joint 64 workers n_live 500 n_eff 2000, render, compare),
+    check_listings.py (runs python blocks extracted from paper.md), autodiff_numbers.py
+    (0.05%/0.4% claims), compare_with_paper.py (table vs paper and published stats), README;
+    outputs in ignored scripts/paper-joss/output/. Listing 1 and compare tested locally;
+    no Nautilus run locally. Intended overnight run on freyja after open PRs merged and
+    main merged into paper branch; freyja not resolvable from this machine. Uncommitted.
+  evidence: [cfp-paper/scripts/paper-joss/]
+  also_depends_on: [N133]
+  status: open
+- id: N135
+  type: experiment
+  title: "CodeRabbit CLI review of PR #253 (uncommitted notebook)"
+  provenance: ai-executed
+  timestamp: "2026-11-26T22:05"
+  hypothesis: >
+    Local CodeRabbit CLI review of the uncommitted notebooks/09 edits would surface
+    notebook hygiene issues before pushing PR #253.
+  result: >
+    Full --base main review (5.9k added lines, 39 files) exceeded 4 min and was aborted;
+    the --uncommitted review completed in ~2 min with 1 minor finding: cell idx9
+    (execution_count None) retains outputs 'ok 39 / expected 8' from an earlier run
+    while the preceding validation cell failed. Root cause found: the notebook was
+    executed with cfp-gcsp/.venv/bin/python, so imports and specs resolved to another
+    worktree lacking DESI-BGS-SKAOPaper.yaml -> RuntimeError; hence stale outputs are
+    not reproducible from this branch.
+  evidence: [/tmp/opencode/cr253u.ndjson, cfp-survey/notebooks/09-Survey-validation.ipynb]
+  status: open
+- id: N136
+  type: decision
+  title: "Rerun notebook 09 with the worktree kernel and add an interpreter guard"
+  provenance: user
+  timestamp: "2026-11-26T22:20"
+  choice: >
+    Fix CodeRabbit finding on cfp-survey/notebooks/09 by rerunning with cfp-survey/.venv
+    (nbconvert --execute --inplace, 35 s, all 7 code cells exec 1-7, no errors), and add a
+    setup-cell assertion that cosmicjellyfish.__file__ resolves inside REPO_ROOT, plus a
+    printed interpreter path, so a foreign kernel fails loudly instead of silently using
+    another worktree's package and specs. Outputs regenerated in this worktree; docs static
+    figures unchanged (deterministic). Left uncommitted.
+  alternatives: ["clear stale outputs only", "keep the wrong-kernel run and note it"]
+  evidence: [cfp-survey/notebooks/09-Survey-validation.ipynb, /tmp/opencode/nb09-before.ipynb]
+  also_depends_on: [N135]
+  status: resolved
+- id: N137
+  type: decision
+  title: "Commit notebook 09 fix; move CodeRabbit config to main"
+  provenance: user
+  timestamp: "2026-11-26T22:35"
+  choice: >
+    cfp-survey: committed 8900278 (notebook 09 rerun + interpreter guard). CodeRabbit
+    config committed once at repo root on main, not per branch, because the CLI and
+    hosted reviews discover .coderabbit.yaml at the repository root whatever the branch;
+    the untracked copy in cfp-survey was deleted to avoid an untracked-file collision
+    when main is merged in. Local main fast-forwarded to origin/main 1ade26c (PR #255
+    merged upstream) and the config committed as dd632a9. Nothing pushed.
+  alternatives: ["commit the config in dev (only affects dev-based reviews)", "keep per-branch copies"]
+  evidence: [cfp-survey/8900278, cosmicjellyfish/dd632a9]
+  also_depends_on: [N136]
+  status: resolved
+- id: N138
+  type: decision
+  title: "Merge main into feature/survey-validation to unlock PR #253"
+  provenance: user
+  timestamp: "2026-11-26T23:10"
+  choice: >
+    User asked to merge origin/main locally into cfp-survey to clear the CONFLICTING state of
+    PR #253. Only CHANGELOG.md conflicted (both sides added an Unreleased section); resolution
+    keeps the survey Added/Changed/Fixed entries and appends main's Fixed bullets (notebooks
+    04-06, information_gain prior, planck VERSION). Merge committed as 88aa1a0, unpushed.
+  alternatives: ["rebase the two survey commits onto main", "resolve on GitHub"]
+  evidence: [cfp-survey/88aa1a0]
+  also_depends_on: [N137]
+  status: resolved
+- id: N139
+  type: decision
+  title: "Add updated DESI specs (2023 validation paper) next to legacy files"
+  provenance: user
+  timestamp: "2026-11-26T23:55"
+  choice: >
+    Keep DESI-BGS/ELG-SKAOPaper as legacy (they reproduce earlier papers). New files
+    DESI-{BGS,LRG,ELG,QSO}-Validation2023 transcribed from Table 7 of arXiv:2306.06307
+    (density per 0.1 bin / 0.1, b = A/D(z_mid), A = 1.34/1.7/0.84/1.2), generated by
+    scripts/validation/generate_desi_validation_specs.py. Table 7 is the authority because
+    GoFish's DESI_All_nbar.txt differs from it. Harness cases desi2023-*, tests (26 pass),
+    notebook 09 section, docs page, roadmap, CHANGELOG. LCDM/w0wa GCsp: LRG strongest single
+    tracer, QSO weakest, full 2023 set (w0 0.046, wa 0.17, FoM 295) tighter than legacy
+    BGS+ELG (FoM 161) and Euclid GCsp (FoM 84). Derivative-step sensitivity not scanned.
+    Uncommitted in cfp-survey.
+  alternatives: ["overwrite legacy files", "use GoFish input file as source"]
+  evidence: [cfp-survey/tests/survey_specs_test.py, cfp-survey/docs/source/survey_validation.md]
+  also_depends_on: [N138]
+  status: resolved

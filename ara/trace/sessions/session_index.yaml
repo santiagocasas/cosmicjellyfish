@@ -15,13 +15,13 @@ sessions:
     then fixed the third CodeRabbit round, made a rootless Halofit bracket return NaN, and
     collapsed the CI coverage upload to a single job to stop transient Codecov failures.
   turn_count: 15
-  events_count: 15
+  events_count: 16
   claims_touched: []
   open_threads: 4
 - id: 2026-10-31_001
   date: '2026-10-31'
   summary: Prioritize CosmicJellyfish release and rename; defer JAX-SYREN distribution work.
-  turn_count: 2
+  turn_count: 7
   events_count: 2
   claims_touched: []
   open_threads: 2
@@ -179,7 +179,7 @@ sessions:
   date: '2026-09-29'
   summary: SYREN ns-response diagnosis documented, then notebooks reorganized into eight root files plus archive with new Fisher and Nautilus notebooks smoke-tested.
   turn_count: 5
-  events_count: 11
+  events_count: 15
   claims_touched:
   - C02
   - C03
@@ -229,7 +229,7 @@ sessions:
   summary: >-
     Catch-up record for 14-26 Nov: authorship PRs merged into paper/joss-draft, CI path rules,
     metadata fixes, f(R) tests for #265, #255 review fixes.
-  turn_count: 2
-  events_count: 11
+  turn_count: 21
+  events_count: 30
   claims_touched: []
   open_threads: 5

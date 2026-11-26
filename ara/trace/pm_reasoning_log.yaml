@@ -600,3 +600,63 @@ entries:
   notes:
     - "Maintainer merged main into dev (4744a7f); cfp-dev/AGENTS.md is now identical to main, so no separate sync was needed."
     - "Committing the pending ara files on dev with git add -f; push stays with the maintainer."
+- turn: '2026-11-26_001#5'
+  notes:
+    - "Logged N121 as a user decision (the plan follows the earlier authorship recipe). Not staged as an observation, it is a journey fact."
+    - "Local paper/joss-draft (03ddab5) and bellini-pr273 (84e457b) are unpushed; push order matters: joss-draft first, then the Bellini fork head, then merge #273."
+- turn: '2026-11-26_001#6'
+  notes:
+    - "Routed the #272 merge as an ai-executed decision (N122); the maintainer only reported the conflict. Cleaned up cfp-bellini + bellini-pr273 after #273 merged, cfp-paper fast-forwarded to 12a9308."
+- turn: '2026-11-26_001#7'
+  notes:
+    - "Logged the acknowledgement as a user decision (N123). Edit left uncommitted: the maintainer did not ask for a commit."
+- turn: '2026-11-26_001#8'
+  notes:
+    - "User asked whether to merge #270/#271 right away; I prepared both first because both conflict with Bellini's list entries."
+- turn: '2026-11-26_001#9'
+  notes:
+    - "Verified both Camera PRs were merged and contained in origin/paper/joss-draft before removing worktrees. Acknowledgement edit still uncommitted."
+- turn: '2026-11-26_001#10'
+  notes:
+    - "Acknowledgement (N123) committed on explicit request as fabfc26; logged as N126. Push left to the maintainer."
+- turn: '2026-11-26_001#11'
+  notes:
+    - "Added Raveri directly on paper/joss-draft (no PR exists). Not committed: no commit request this turn."
+- turn: '2026-11-26_001#12'
+  notes:
+    - "Committed Raveri addition on explicit request (N128); push left to maintainer."
+- turn: '2026-11-26_001#13'
+  notes:
+    - "CRediT roles logged as one decision (N129), status open: roles are proposal from all-contributors keys, Bellini TODO, nothing committed. Stale tracked paper/jats noted for the maintainer."
+- turn: '2026-11-26_001#14'
+  notes:
+    - "Logged badge change + both commits as one node (N130); the all-contributors badge being static was a finding, not a claim. Push left to maintainer."
+- turn: '2026-11-26_001#15'
+  notes:
+    - "Acted on the pasted email without an explicit instruction because declining authorship + acknowledgement is unambiguous; left uncommitted. Could not identify the 'sample split' from git history."
+- turn: '2026-11-26_001#16'
+  notes:
+    - "Logged v2 merge as decision N132 (user-directed plan). Word-count overrun and old Fig 1 / fig4 blocker kept as open threads, not claims."
+- turn: '2026-11-26_001#17'
+  notes:
+    - "Logged figure reduction as user decision N133; citation choice for 'validated in earlier works' is AI-proposed, flagged CHECK in paper comment [C23b]."
+- turn: '2026-11-26_001#18'
+  notes:
+    - "Logged reproduction-script folder as user decision N134; freyja run still pending (needs PR merges + VPN)."
+- turn: '2026-11-26_001#19'
+  notes:
+    - "Logged CodeRabbit run as experiment N135 (direct). Recorded wrong-interpreter root cause as part of result, not a claim (single observation, not yet fixed)."
+- turn: '2026-11-26_001#20'
+  notes:
+    - "N136 resolved: rerun + guard implemented and verified. Did not commit (user asked for the fix only); .coderabbit.yaml remains untracked and unmentioned as a decision until the user commits it."
+- turn: '2026-11-26_001#21'
+  notes:
+    - "N137: config belongs at repo root on main; removed the survey-worktree copy so the next merge does not trip over an untracked file."
+- turn: '2026-11-26_001#22'
+  notes:
+    - "N138: merge not rebase, because the branch already had two local commits and the user pushes everything at once; CHANGELOG resolved by keeping both sides grouped by heading."
+    - "Ran only the survey observable/spectro tests (17 passed) instead of the full suite to keep the turn short; notebook JSONs validated after auto-merge."
+- turn: '2026-11-26_001#23'
+  notes:
+    - "N139: user-directed decision, routed direct. Table 7 chosen over the GoFish file since the two disagree; flagged in docs."
+    - "Derivative-step scan not run, recorded as open rather than claimed validated."

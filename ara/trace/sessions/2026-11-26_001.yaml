@@ -3,7 +3,7 @@ session:
   date: '2026-11-26'
   started: '2026-11-26T00:00'
   last_turn: '2026-11-26T00:00'
-  turn_count: 2
+  turn_count: 21
   summary: >-
     Catch-up record for 14-26 Nov (backfilled, the epilogue had not been running): PR triage of
     cosmicjellyfish, four authorship PRs merged into paper/joss-draft, CI path rules, metadata
@@ -75,6 +75,19 @@ events_logged:
     routing: direct
     provenance: user
     summary: "AGENTS.md now requires the ARA epilogue every turn and the ara symlink in every worktree; synced copy in cosmicfish_release."
+  - turn: 20
+    type: decision
+    id: N138
+    routing: direct
+    provenance: user
+    summary: "origin/main merged into feature/survey-validation (88aa1a0); CHANGELOG conflict resolved, 17 survey tests pass."
+  - turn: 21
+    type: decision
+    id: "N139"
+    routing: direct
+    provenance: user
+    summary: "new DESI specs (Table 7, arXiv:2306.06307) added beside legacy; harness, tests, notebook 09, docs"
+
 ai_actions:
   - turn: 1
     action: Merged paper/joss-draft into contributor branches, resolved conflicts, wrote the #265 tests, docs and extra, fixed #255 notebook 05, fixed CITATION.cff and .all-contributorsrc; the user pushed and merged.
@@ -99,7 +112,7 @@ key_context:
 open_threads:
   - "#255 waits for Sefa76 re-review (nb06 comment) and CI."
   - "#265 needs Matias's fixes, 6 cosmology.py test lines, f(R) flags docs page and CHANGELOG bump."
-  - "#253 has an unpushed local commit 35d43fd and uncommitted notebook edits in cfp-survey."
+  - "#253 is merged with main locally (88aa1a0, unpushed) and waits for the user push."
   - "#252 paper to main, then dependabot PRs."
   - "e11889e (CITATION.cff) and dc719fa (emantis extra) are not pushed."
 ai_suggestions_pending:
