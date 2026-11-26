@@ -54,16 +54,16 @@ for cosmological surveys in Python and JAX</article-title>
 </name>
 <xref ref-type="aff" rid="aff-5"/>
 </contrib>
+<aff id="aff-2">
+<institution-wrap>
+<institution>Theoretische Teilchenphysik und Kosmologie, RWTH Aachen
+University, Germany</institution>
+</institution-wrap>
+</aff>
 <aff id="aff-1">
 <institution-wrap>
 <institution>Scientific Information, German Aerospace Center (DLR),
 Germany</institution>
-</institution-wrap>
-</aff>
-<aff id="aff-2">
-<institution-wrap>
-<institution>Institute of Cosmology and Gravitation, University of
-Portsmouth, United Kingdom</institution>
 </institution-wrap>
 </aff>
 <aff id="aff-3">
@@ -179,17 +179,18 @@ a Creative Commons Attribution 4.0 International License (CC BY
   Kilometre Array Cosmology Science Working Group et al., 2020</xref>)
   and Planck-like CMB experiments
   (<xref alt="Planck Collaboration et al., 2020" rid="ref-Planck2018" ref-type="bibr">Planck
-  Collaboration et al., 2020</xref>), and it can load user
-  specifications for DESI
+  Collaboration et al., 2020</xref>), together with validated, opt-in
+  transcriptions of the historical specifications for DESI
   (<xref alt="DESI Collaboration et al., 2016" rid="ref-DESI2016" ref-type="bibr">DESI
-  Collaboration et al., 2016</xref>) and LSST
+  Collaboration et al., 2016</xref>) and Rubin/LSST
   (<xref alt="Ivezić &amp; others, 2019" rid="ref-Ivezic2019" ref-type="bibr">Ivezić
-  &amp; others, 2019</xref>). These surveys are far from over: Euclid
-  still has about six years of observations ahead and LSST ten, and
-  their cross-correlations have barely been studied so far. A
-  forecasting code of this kind will therefore remain useful for a long
-  time. Moreover, the step from here into real-data analysis is no
-  longer a large one.</p>
+  &amp; others, 2019</xref>); any other survey can be added through a
+  user specification file. These surveys are far from over: Euclid still
+  has about six years of observations ahead and LSST ten, and their
+  cross-correlations have barely been studied so far. A forecasting code
+  of this kind will therefore remain useful for a long time. Moreover,
+  the step from here into real-data analysis is no longer a large
+  one.</p>
   <p>The plan for the future is twofold:</p>
   <list list-type="bullet">
     <list-item>
@@ -610,6 +611,48 @@ print(fisher_ad.get_confidence_bounds() / fisher_fd.get_confidence_bounds())</co
   cloud VM; replace by your own hardware]</bold>. With CAMB and CLASS we
   provide several levels of accuracy and precision, and the Fisher
   matrices take less or more time depending on that.</p>
+  <p><bold>Cross-survey validation.</bold> To check that the pipeline is
+  not tied to Euclid, we transcribed the DESI, Rubin/LSST and SKAO
+  specifications of Santiago Casas et al.
+  (<xref alt="2023" rid="ref-Casas2023SKAO" ref-type="bibr">2023</xref>)
+  into the current schema and compared the resulting observables—bin
+  densities, biases, survey volumes, the galaxy, intensity-mapping and
+  photometric spectra, the beam and the thermal noise—against an
+  independent re-implementation of the historical recipes. Every
+  ingredient agrees at machine precision. The only visible difference is
+  the amplitude of the SKAO Fig. 1 spectra, which traces the
+  modified-gravity fiducial used in the original runs and not the
+  forecast code. Running all configurations on a common GR fiducial then
+  produces a consistent set of constraints
+  (<xref alt="[fig:surveys]" rid="figU003Asurveys">[fig:surveys]</xref>).
+  The ranking between surveys in that comparison reflects the adopted
+  specifications—sky area, redshift binning and scale cuts—rather than
+  the telescopes themselves, which is exactly the behaviour expected
+  from a specification-driven code.</p>
+  <fig>
+    <caption><p>Marginalised <inline-formula><alternatives>
+    <tex-math><![CDATA[1\sigma]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mrow><mml:mn>1</mml:mn><mml:mi>σ</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    errors on <inline-formula><alternatives>
+    <tex-math><![CDATA[\Omega_m]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi mathvariant="normal">Ω</mml:mi><mml:mi>m</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives>
+    <tex-math><![CDATA[\sigma_8]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>σ</mml:mi><mml:mn>8</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+    in <inline-formula><alternatives>
+    <tex-math><![CDATA[\Lambda]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:mi mathvariant="normal">Λ</mml:mi></mml:math></alternatives></inline-formula>CDM
+    (left) and <inline-formula><alternatives>
+    <tex-math><![CDATA[w_0]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>w</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:math></alternatives></inline-formula>–<inline-formula><alternatives>
+    <tex-math><![CDATA[w_a]]></tex-math>
+    <mml:math display="inline" xmlns:mml="http://www.w3.org/1998/Math/MathML"><mml:msub><mml:mi>w</mml:mi><mml:mi>a</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    Fisher ellipses (centre: photometric probes; right: Euclid GCsp, DESI
+    ELG+BGS and SKAO intensity mapping analysed jointly with DESI ELG), all
+    on the same GR fiducial and with all nuisance parameters marginalised. The figure is produced by
+    <monospace>paper/scripts/fig4_survey_comparison.py</monospace>.<styled-content id="figU003Asurveys"></styled-content></p></caption>
+    <graphic mimetype="image" mime-subtype="png" xlink:href="fig4_survey_comparison.png" />
+  </fig>
   <p><bold>Chains against Fisher matrices.</bold> We have also validated
   our chains against our own Fisher matrices and shown that they agree
   (<xref alt="[fig:nautilus]" rid="figU003Anautilus">[fig:nautilus]</xref>).

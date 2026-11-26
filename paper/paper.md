@@ -19,8 +19,27 @@ authors:
   - name: Sefa Pamuk
     orcid: 0009-0004-0852-8624
     affiliation: 4
-  - name: Sabarish V. M.
-    affiliation: 5  # TODO: ORCID, name format
+  - name: V. M. Sabarish
+    orcid: 0000-0001-5677-0838
+    affiliation: "2, 5"
+  - name: Domenico Sapone
+    orcid: 0000-0001-7089-4503
+    affiliation: 6
+  - name: Matías Leizerovich
+    orcid: 0000-0002-6438-2285
+    affiliation: "7, 8"
+  - name: Noemi Frusciante
+    orcid: 0000-0002-7375-1230
+    affiliation: "9, 10"
+  - name: Francesco Pace
+    orcid: 0000-0001-8039-0480
+    affiliation: "11, 12, 13, 14"
+  - name: Kazuya Koyama
+    orcid: 0000-0001-6727-6915
+    affiliation: 15
+  - name: Emilio Bellini
+    orcid: 0000-0003-4762-0795
+    affiliation: 16
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -28,11 +47,33 @@ affiliations:
     index: 1
   - name: TODO affiliation of M. Martinelli
     index: 3
-  - name: Universidad de Cantabria, Spain
+  - name: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     index: 4
-  - name: TODO affiliation of Sabarish V. M.
+  - name: Hamburger Sternwarte, Universität Hamburg, Germany
     index: 5
-date: 13 November 2026
+  - name: Departamento de Física, FCFM, Universidad de Chile, Blanco Encalada 2008, Santiago, Chile 
+    index: 6
+  - name: Universidad de Buenos Aires, Facultad de Ciencias Exactas y Naturales, Departamento de Física, Buenos Aires, Argentina
+    index: 7
+  - name: CONICET - Universidad de Buenos Aires, Instituto de Física de Buenos Aires (IFIBA), Buenos Aires, Argentina
+    index: 8
+  - name: Dipartimento di Fisica ``E. Pancini", Università degli Studi  di Napoli  ``Federico II", Compl. Univ. di Monte S. Angelo, Edificio G, Via Cinthia, I-80126, Napoli, Italy
+    index: 9
+  - name: INFN Sezione di Napoli, Università degli Studi di Napoli “Federico II”,\\Complesso Universitario di Monte Sant'Angelo, Edificio G, Via Cinthia, I-80126, Napoli, Italy
+    index: 10
+  - name: Dipartimento di Fisica, Università degli Studi di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+    index: 11
+  - name: INFN-Sezione di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+    index: 12
+  - name: INAF-Istituto Nazionale di Astrofisica, Osservatorio Astrofisico di Torino, strada Osservatorio 20, 10025, Pino Torinese, Italy
+    index: 13
+  - name: Instituto de Astrof\'{i}sica e Ci\^{e}ncias do Espa\c{c}o, Faculdade de Ci\^{e}ncias da Universidade de Lisboa, Edif\'{i}cio C8, Campo      Grande, P-1749-016 Lisbon, Portugal
+    index: 14
+  - name: Institute of Cosmology and Gravitation, University of Portsmouth, UK
+    index: 15
+  - name: Center for Astrophysics and Cosmology, University of Nova Gorica, Nova Gorica, Slovenia
+    index: 16
+date: 23 November 2026
 bibliography: paper.bib
 ---
 
@@ -71,8 +112,9 @@ stands for the new JAX compatibility.
 especially for their combinations, in an efficient, validated and reproducible way.
 
 The code ships survey specifications for Euclid [@Mellier2025], SKAO [@Bacon2020] and
-Planck-like CMB experiments [@Planck2018], and it can load user specifications for DESI
-[@DESI2016] and LSST [@Ivezic2019]. These surveys are far from over: Euclid still has
+Planck-like CMB experiments [@Planck2018], together with validated, opt-in transcriptions
+of the historical specifications for DESI [@DESI2016] and Rubin/LSST [@Ivezic2019]; any
+other survey can be added through a user specification file. These surveys are far from over: Euclid still has
 about six years of observations ahead and LSST ten, and their cross-correlations have
 barely been studied so far. A forecasting code of this kind will therefore remain useful
 for a long time. Moreover, the step from here into real-data analysis is no longer a
@@ -373,6 +415,34 @@ Fisher matrix (20 parameters) takes about 8 s and the GCsp one (15 parameters) a
 CAMB and CLASS we provide several levels of accuracy and precision, and the Fisher
 matrices take less or more time depending on that.
 
+**Cross-survey validation.** To check that the pipeline is not tied to Euclid, we
+transcribed the DESI, Rubin/LSST and SKAO specifications of @Casas2023SKAO into the
+current schema and compared the resulting observables---bin densities, biases, survey
+volumes, the galaxy and intensity-mapping spectra, the beam, the thermal noise, and the
+photometric redshift distributions and bin counts---against an independent
+re-implementation of the historical recipes. All algebra-level ingredients agree at
+machine precision. The photometric angular spectra are not re-compared against the
+historical project here; they are covered by the existing observable tests. The residual
+shape difference in the SKAO Fig. 1 spectra is below 1.5 per cent over the calibrated
+range, with an amplitude offset consistent with (but not uniquely attributable to) the
+modified-gravity fiducial used in the original runs. Running all configurations on a
+common GR fiducial then
+produces a consistent set of constraints (\autoref{fig:surveys}). The ranking between
+surveys in that comparison reflects the adopted specifications---sky area, redshift
+binning and scale cuts---rather than the telescopes themselves, which is exactly the
+behaviour expected from a specification-driven code.
+
+![Left: marginalised $1\sigma$ errors on $\Omega_m$ and $\sigma_8$ in $\Lambda$CDM. Centre
+and right: $w_0$--$w_a$ Fisher ellipses ($1\sigma$) of the photometric probes (Euclid,
+Rubin/LSST) and of the spectroscopic probes (Euclid GCsp, DESI ELG+BGS, and SKAO intensity
+mapping analysed jointly with the DESI ELG sample). Everything uses the same GR fiducial
+and all nuisance parameters are marginalised. DESI ELG and BGS cover different redshifts
+and are added as independent Fisher matrices; for SKAO IM and DESI ELG the auto- and
+cross-spectra are analysed together with their full Gaussian covariance
+(\texttt{observables=["GCsp","GCspxIM","IM"]}). The DESI specifications are those of the
+SKAO paper and will be updated. The figure is produced by
+`paper/scripts/fig4_survey_comparison.py`.\label{fig:surveys}](figures/fig4_survey_comparison.png){ width=100% }
+
 **Chains against Fisher matrices.** We have also validated our chains against our own
 Fisher matrices and shown that they agree (\autoref{fig:nautilus}). For Euclid WL, GCsp
 and their combination, with all nuisance parameters sampled, the marginalised Nautilus
@@ -453,12 +523,18 @@ validated all of this content **[TODO: confirm]**.
 Nautilus validation; acknowledgements to the CosmicFish authors and to the Euclid
 Consortium colleagues involved in the forecast validation.]**
 
+DS acknowledges support from the Fondecyt Regular project N.1251339 (ANID)
+
+M.L. is supported by grant PIP 11220200100729CO CONICET and grant 20020170100129BA UBACYT.
+
 # Author contributions
 
 Following the all-contributors record of the repository: S. Casas leads and maintains the
 project and contributed to research, validation data, tests, tutorials and documentation.
 S. Pamuk contributed code, design, tests, examples, documentation and code review.
 M. Martinelli contributed code and design. Sabarish V. M. contributed code and
-documentation. **[TODO: expand as needed.]**
+documentation. M. Leizerovich contributed the Hu-Sawicki $f(R)$ interface to hi_class-based
+codes (frahi_class) and the Winther and e-MANTIS nonlinear boosts (software, validation).
+K. Koyama contributed to conceptualization and methodology. **[TODO: expand as needed.]**
 
 # References

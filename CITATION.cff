@@ -12,23 +12,40 @@ authors:
     given-names: Matteo
   - family-names: Pamuk
     given-names: Sefa
-    affiliation: Universidad de Cantabria
+    affiliation: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     orcid: https://orcid.org/0009-0004-0852-8624
-  - family-names: V. M.
-    given-names: Sabarish
- - family-names: Frusciante
+  - family-names: Sabarish
+    given-names: V. M.
+    affiliation: RWTH Aachen University, Hamburger Sternwarte
+    orcid: https://orcid.org/0000-0001-5677-0838
+  - family-names: Frusciante
     given-names: Noemi
-    affiliation:  Università degli Studi di Napoli “Federico II”
+    affiliation: Università degli Studi di Napoli “Federico II”
     orcid: https://orcid.org/0000-0002-7375-1230
-- family-names: Pace
+  - family-names: Pace
     given-names: Francesco
     affiliation: Università degli Studi di Torino
     orcid: https://orcid.org/0000-0001-8039-0480
+  - family-names: Sapone
+    given-names: Domenico
+    affiliation: Departamento de Física, FCFM, Universidad de Chile, Blanco Encalada 2008, Santiago, Chile
+    orcid: https://orcid.org/0000-0001-7089-4503
+  - family-names: Leizerovich
+    given-names: Matías
+    affiliation: Universidad de Buenos Aires, FCEN, Departamento de Física; CONICET - Universidad de Buenos Aires, Instituto de Física de Buenos Aires (IFIBA), Argentina
+    orcid: https://orcid.org/0000-0002-6438-2285
+  - family-names: Koyama
+    given-names: Kazuya
+    affiliation: Institute of Cosmology and Gravitation, University of Portsmouth, UK
+    orcid: https://orcid.org/0000-0001-6727-6915
+  - family-names: Bellini
+    given-names: Emilio
+    affiliation: University of Nova Gorica
+    orcid: https://orcid.org/0000-0003-4762-0795
   - family-names: Camera
     given-names: Stefano
     affiliation: Università degli Studi di Torino
     orcid: https://orcid.org/0000-0003-3399-3574
-  
 keywords:
   - cosmology
   - fishermatrix
