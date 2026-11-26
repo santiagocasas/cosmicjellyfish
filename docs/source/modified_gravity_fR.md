@@ -75,7 +75,11 @@ spectra and `A_s`. The nonlinear spectrum is
 P_NL^f(R)(k, z) = P_NL^LCDM(k, z) x B(k, z),
 
 where P_NL^LCDM is computed with the official `classy` for LCDM with the same parameters and the
-same `A_s` as the f(R) run, and B(k, z) is the f(R) boost. The implementation
+same `A_s` as the f(R) run, and B(k, z) is the f(R) boost. "Same parameters" means the resolved
+inputs of the f(R) run, including overrides that only appear in the `HuSawicki` section (for
+example `T_cmb`). Gravity-specific settings (`gravity_model`, `parameters_smg`, the `*_smg` keys
+and `hubble_evolution`) are removed, and the dark-energy closure (`Omega_Lambda`, `Omega_fld`) is
+taken from the `LCDM` section. The implementation
 (`cosmicjellyfish/cosmology/modified_gravity.py`) reproduces the MontePython likelihood
 `euclid_photometric_z_fofr` (Sefa76/photometric_fofR, used in Koyama et al. 2024):
 

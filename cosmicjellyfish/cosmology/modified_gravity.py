@@ -20,7 +20,6 @@ Defaults are those of ``euclid_photometric_z_fofr.data``: ``use_bug = False``,
 ``k_min_h_by_Mpc = 0.001``, ``k_max_h_by_Mpc = 50``, ``z = linspace(0.001, 2.5, 200)``.
 """
 
-from copy import deepcopy
 from functools import lru_cache
 
 import numpy as np
@@ -35,6 +34,9 @@ from cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther import (
 )
 
 FR_BOOST_MODELS = ("winther2019", "emantis")
+
+# hi_class parameters that describe the f(R) model; the reference LCDM run must not receive them.
+_FR_ONLY_CLASS_PARAMETERS = ("gravity_model", "hubble_evolution")
 
 LKL_DEFAULTS = {
     "use_bug": False,
@@ -218,17 +220,19 @@ def fr_boost_nonlinear(bc, classres, k, z):
     )
 
     nl_conf = bc.boltzmann_classpars.get("NONLINEAR", {})
-    cosmopars = deepcopy(bc.cosmopars)
-    lcdmpars = {
-        **bc.boltzmann_classpars["ACCURACY"],
-        **bc.boltzmann_classpars["COSMO_SETTINGS"],
-        **bc.boltzmann_classpars.get("LCDM", {}),
-    }
-    lcdmpars.update(bc.changebasis_class(cosmopars))
-    # parameters_smg may come from cosmopars (log10fR0) or from the HuSawicki YAML section: read it
-    # from the merged parameters of the f(R) run; the LCDM run must not get it.
+    lcdm_defaults = bc.boltzmann_classpars.get("LCDM", {})
     log10fR0 = float(str(bc.classcosmopars["parameters_smg"]).split(",")[0])
-    lcdmpars.pop("parameters_smg", None)
+    # Shared inputs come from the resolved f(R) run, including HuSawicki overrides.
+    lcdmpars = {**lcdm_defaults, **bc.classcosmopars}
+    for key in tuple(lcdmpars):
+        if key.startswith("hs_") or key.endswith("_smg") or key in _FR_ONLY_CLASS_PARAMETERS:
+            del lcdmpars[key]
+    # The HuSawicki closure makes room for the scalar field. Use the LCDM section's
+    # closure instead, or let CLASS infer it if the section does not specify one.
+    for key in ("Omega_Lambda", "Omega_fld"):
+        lcdmpars.pop(key, None)
+        if key in lcdm_defaults:
+            lcdmpars[key] = lcdm_defaults[key]
     for key in ("sigma8", "A_s", "ln10^{10}A_s", "ln_A_s_1e10"):
         lcdmpars.pop(key, None)
     lcdmpars["A_s"] = classres.get_current_derived_parameters(["A_s"])["A_s"]

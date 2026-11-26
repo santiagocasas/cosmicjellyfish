@@ -218,16 +218,19 @@ def _fake_bc(
     cb_prescription="neutrino_subtraction",
     with_lcdm_section=True,
     smg_in_yaml=False,
+    husawicki_overrides=None,
+    lcdm_overrides=None,
 ):
     """Fake boltzmann_code. With ``smg_in_yaml``, ``parameters_smg`` is fixed in the HuSawicki
-    YAML section instead of coming from ``log10fR0`` in the cosmological parameters."""
+    YAML section instead of coming from ``log10fR0`` in the cosmological parameters. The
+    ``*_overrides`` arguments add inputs to the corresponding YAML section."""
     classpars = {
         "ACCURACY": {"accuracy_key": 1},
         "COSMO_SETTINGS": {"setting_key": 2},
-        "HuSawicki": {"gravity_model": "hu_sawicki"},
+        "HuSawicki": {"gravity_model": "hu_sawicki", **(husawicki_overrides or {})},
     }
     if with_lcdm_section:
-        classpars["LCDM"] = {"lcdm_only_key": 3}
+        classpars["LCDM"] = {"lcdm_only_key": 3, **(lcdm_overrides or {})}
     if nonlinear_conf is not None:
         classpars["NONLINEAR"] = nonlinear_conf
     if smg_in_yaml:
@@ -352,6 +355,46 @@ def test_fr_boost_nonlinear_reads_parameters_smg_from_the_husawicki_yaml_section
     assert call["lgfR0"] == pytest.approx(5.301)
     (lcdm,) = _FakeLcdm.instances
     assert "parameters_smg" not in lcdm.params
+
+
+def test_fr_boost_nonlinear_preserves_shared_husawicki_inputs(fr_fakes):
+    # T_cmb and Omega_fld exist only in the HuSawicki section: the f(R) run uses them, so the
+    # reference LCDM run must too. Its closure, however, comes from the LCDM section.
+    bc = _fake_bc(
+        husawicki_overrides={
+            "T_cmb": 2.8,
+            "N_ncdm": 3,
+            "Omega_Lambda": 0.0,
+            "Omega_fld": 0.0,
+            "hs_field": "u",
+            "qsa_only_smg": "yes",
+            "kineticity_safe_smg": 0,
+            "hubble_evolution": "no",
+            "skip_stability_tests_smg": "yes",
+            "hs_handoff_ic_smg": "slow",
+        },
+        lcdm_overrides={"Omega_Lambda": 0.7},
+    )
+
+    modified_gravity.fr_boost_nonlinear(
+        bc, _FakeFrRun(), np.array([0.01, 1.0]), np.array([0.0, 1.0])
+    )
+
+    (lcdm,) = _FakeLcdm.instances
+    params = lcdm.params
+    assert params["T_cmb"] == pytest.approx(2.8)
+    assert params["N_ncdm"] == 3
+    assert params["Omega_Lambda"] == pytest.approx(0.7)
+    assert "Omega_fld" not in params
+    for key in (
+        "gravity_model",
+        "parameters_smg",
+        "Omega_smg",
+        "qsa_only_smg",
+        "kineticity_safe_smg",
+        "hubble_evolution",
+    ):
+        assert key not in params
 
 
 def test_fr_boost_nonlinear_stores_derived_sigma8_values(fr_fakes):

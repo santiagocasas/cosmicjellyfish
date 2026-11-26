@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The reference LCDM spectrum used by the f(R) boosts keeps the shared inputs of the resolved
+  f(R) run, including parameters set only in the `HuSawicki` CLASS section (for example
+  `T_cmb`); gravity-specific flags and the scalar-field closure are still excluded.
 - The e-MANTIS boost clips to the overlap of the likelihood and emulator ranges, avoiding
   an out-of-range error near the lower LCDM sigma8 bound.
 - Example notebooks 04, 05 and 06 now run top to bottom (reported by Kazuya): notebook 04
