@@ -91,39 +91,39 @@ authors:
       - {credit: conceptualization, credit-name: "Conceptualization"}
       - {credit: software, credit-name: "Software"}
 affiliations:
-  - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
-    index: 2
-  - name: Scientific Information, German Aerospace Center (DLR), Germany
+  - name: Institute for Theoretical Particle Physics and Cosmology (TTK), RWTH Aachen University, Germany
     index: 1
-  - name: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
+  - name: Scientific Information, German Aerospace Center (DLR), Germany
+    index: 2
+  - name: Instituto de Física de Cantabria (IFCA), Spain
     index: 3
   - name: Hamburger Sternwarte, Universität Hamburg, Germany
     index: 4
-  - name: Departamento de Física, FCFM, Universidad de Chile, Blanco Encalada 2008, Santiago, Chile 
+  - name: Departamento de Física, FCFM, Universidad de Chile, Chile
     index: 5
-  - name: Universidad de Buenos Aires, Facultad de Ciencias Exactas y Naturales, Departamento de Física, Buenos Aires, Argentina
+  - name: Departamento de Física, Facultad de Ciencias Exactas y Naturales, Universidad de Buenos Aires, Argentina
     index: 6
-  - name: CONICET - Universidad de Buenos Aires, Instituto de Física de Buenos Aires (IFIBA), Buenos Aires, Argentina
+  - name: Instituto de Física de Buenos Aires (IFIBA), CONICET – Universidad de Buenos Aires, Argentina
     index: 7
-  - name: Dipartimento di Fisica ``E. Pancini", Università degli Studi  di Napoli  ``Federico II", Compl. Univ. di Monte S. Angelo, Edificio G, Via Cinthia, I-80126, Napoli, Italy
+  - name: 'Dipartimento di Fisica "E. Pancini", Università degli Studi di Napoli "Federico II", Italy'
     index: 8
-  - name: INFN Sezione di Napoli, Università degli Studi di Napoli “Federico II”,\\Complesso Universitario di Monte Sant'Angelo, Edificio G, Via Cinthia, I-80126, Napoli, Italy
+  - name: INFN – Sezione di Napoli, Italy
     index: 9
-  - name: Dipartimento di Fisica, Università degli Studi di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+  - name: Dipartimento di Fisica, Università degli Studi di Torino, Italy
     index: 10
-  - name: INFN-Sezione di Torino, Via P. Giuria 1, I-10125 Torino, Italy
+  - name: INFN – Sezione di Torino, Italy
     index: 11
-  - name: INAF-Istituto Nazionale di Astrofisica, Osservatorio Astrofisico di Torino, strada Osservatorio 20, 10025, Pino Torinese, Italy
+  - name: INAF – Osservatorio Astrofisico di Torino, Italy
     index: 12
-  - name: Instituto de Astrof\'{i}sica e Ci\^{e}ncias do Espa\c{c}o, Faculdade de Ci\^{e}ncias da Universidade de Lisboa, Edif\'{i}cio C8, Campo      Grande, P-1749-016 Lisbon, Portugal
+  - name: Instituto de Astrofísica e Ciências do Espaço, Faculdade de Ciências, Universidade de Lisboa, Portugal
     index: 13
-  - name: Institute of Cosmology and Gravitation, University of Portsmouth, UK
+  - name: Institute of Cosmology and Gravitation, University of Portsmouth, United Kingdom
     index: 14
-  - name: Center for Astrophysics and Cosmology, University of Nova Gorica, Nova Gorica, Slovenia
+  - name: Center for Astrophysics and Cosmology, University of Nova Gorica, Slovenia
     index: 15
-  - name: Department of Physics & Astronomy, University of the Western Cape, Cape Town, South Africa
+  - name: Department of Physics and Astronomy, University of the Western Cape, South Africa
     index: 16
-  - name: Department of Physics and INFN, University of Genova, Via Dodecaneso 33, 16146 Genova, Italy
+  - name: Department of Physics, University of Genova, and INFN – Sezione di Genova, Italy
     index: 17
 date: 23 November 2026
 bibliography: paper.bib
