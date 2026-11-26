@@ -88,3 +88,4 @@ docs/source/api/generated/
 
 # Local planning state (never commit)
 .sisyphus/
+paper/jats/
