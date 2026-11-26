@@ -38,6 +38,24 @@ resolve as `figures/...`. To build only the PDF, append `-o pdf paper.md` to the
 
 The build products (`paper/paper.pdf`, `paper/jats/`) are already ignored by git.
 
+## Author roles (CRediT)
+
+[![CRediT](https://img.shields.io/badge/contributions-CRediT-using?color=%23cd2653)](https://credit.niso.org/implementing-credit/)
+
+Contributor roles follow the [CRediT taxonomy](https://credit.niso.org/). The source of truth
+is the `roles:` list of each author in the YAML front matter of `paper.md`, e.g.
+`- {credit: software, credit-name: "Software"}`. The Open Journals build (pandoc's JATS
+template) turns these into machine-readable `<role vocab="credit" ...>` elements in
+`paper/jats/paper.jats`; they do not appear in the PDF, so the "Author contributions" section
+repeats them in prose. To keep both in sync, run from the repository root:
+
+```bash
+python paper/scripts/check_credit_roles.py
+```
+
+It checks every role against the 14 official CRediT roles and compares the YAML with the prose
+bullets (needs PyYAML).
+
 ## Compile with GitHub Actions
 
 The "Draft PDF" workflow (`.github/workflows/draft-pdf.yml`) runs on every push to any

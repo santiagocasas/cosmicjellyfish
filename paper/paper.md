@@ -14,38 +14,88 @@ authors:
     orcid: 0000-0002-4751-5138
     corresponding: true
     affiliation: "1, 2"  # TODO: confirm affiliations
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: project-administration, credit-name: "Project administration"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: supervision, credit-name: "Supervision"}
+      - {credit: validation, credit-name: "Validation"}
+      - {credit: visualization, credit-name: "Visualization"}
+      - {credit: writing-original-draft, credit-name: "Writing – original draft"}
+      - {credit: writing-review-editing, credit-name: "Writing – review & editing"}
   - name: Matteo Martinelli
     affiliation: 3  # TODO: ORCID
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
   - name: Sefa Pamuk
     orcid: 0009-0004-0852-8624
     affiliation: 4
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
+      - {credit: writing-original-draft, credit-name: "Writing – original draft"}
   - name: V. M. Sabarish
     orcid: 0000-0001-5677-0838
     affiliation: "2, 5"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
   - name: Domenico Sapone
     orcid: 0000-0001-7089-4503
     affiliation: 6
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: supervision, credit-name: "Supervision"}
   - name: Matías Leizerovich
     orcid: 0000-0002-6438-2285
     affiliation: "7, 8"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
   - name: Noemi Frusciante
     orcid: 0000-0002-7375-1230
     affiliation: "9, 10"
+    roles:
+      - {credit: software, credit-name: "Software"}
   - name: Francesco Pace
     orcid: 0000-0001-8039-0480
     affiliation: "11, 12, 13, 14"
+    roles:
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
   - name: Kazuya Koyama
     orcid: 0000-0001-6727-6915
     affiliation: 15
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: supervision, credit-name: "Supervision"}
+      - {credit: validation, credit-name: "Validation"}
   - name: Emilio Bellini
     orcid: 0000-0003-4762-0795
     affiliation: 16
   - name: Stefano Camera
     orcid: 0000-0003-3399-3574
     affiliation: "11, 12, 13, 17"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
   - name: Marco Raveri
     orcid: 0000-0002-7354-3802
     affiliation: 18
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
 affiliations:
   - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
     index: 2
@@ -542,14 +592,33 @@ M.L. is supported by grant PIP 11220200100729CO CONICET and grant 20020170100129
 
 # Author contributions
 
-Following the all-contributors record of the repository: S. Casas leads and maintains the
-project and contributed to research, validation data, tests, tutorials and documentation.
-S. Pamuk contributed code, design, tests, examples, documentation and code review.
-M. Martinelli contributed code and design. Sabarish V. M. contributed code and
-documentation. M. Leizerovich contributed the Hu-Sawicki $f(R)$ interface to hi_class-based
-codes (frahi_class) and the Winther and e-MANTIS nonlinear boosts (software, validation).
-K. Koyama contributed to conceptualization and methodology. S. Camera contributed
-conceptualization and methodology. M. Raveri contributed conceptualization and software
-(the original IST:Forecast code, started with M. Martinelli). **[TODO: expand as needed.]**
+Author contributions follow the CRediT (Contributor Roles Taxonomy) [@Brand2015]. For
+the authors who had not specified their roles, we derived a first proposal from the
+all-contributors record of the repository (`code` as Software, `ideas` as Conceptualization,
+`design` as Methodology, `research` as Investigation, `test`, `bug`, `review` and
+`userTesting` as Validation, `data` as Data curation, `projectManagement` and `maintenance`
+as Project administration, `mentoring` as Supervision, `doc`, `example` and `tutorial` as
+Software, and `content` as Writing -- original draft).
+
+- **S. Casas**: Conceptualization, Data curation, Investigation, Methodology, Project
+  administration, Software, Supervision, Validation, Visualization, Writing -- original
+  draft, Writing -- review & editing.
+- **M. Martinelli**: Conceptualization, Methodology, Software.
+- **S. Pamuk**: Conceptualization, Investigation, Methodology, Software, Validation,
+  Writing -- original draft.
+- **V. M. Sabarish**: Conceptualization, Software.
+- **D. Sapone**: Conceptualization, Software, Supervision.
+- **M. Leizerovich**: Conceptualization, Software (Hu-Sawicki $f(R)$ interface to
+  hi_class-based codes, frahi_class, and the Winther and e-MANTIS nonlinear boosts),
+  Validation.
+- **N. Frusciante**: Software.
+- **F. Pace**: Methodology, Software.
+- **K. Koyama**: Conceptualization, Methodology, Supervision, Validation.
+- **E. Bellini**: **[TODO: roles]**.
+- **S. Camera**: Conceptualization, Methodology.
+- **M. Raveri**: Conceptualization, Software (the original IST:Forecast code, started with
+  M. Martinelli).
+
+**[TODO: each author to confirm or correct their roles.]**
 
 # References
