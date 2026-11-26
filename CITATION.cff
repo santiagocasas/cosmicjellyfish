@@ -1,17 +1,30 @@
 cff-version: 1.2.0
 message: Please cite this project if you use it.
 title: CosmicJellyFish
-version: 0.1.0
-repository-code: https://github.com/santiagocasas/cosmicfishpie
+version: 2.0.0
+repository-code: https://github.com/santiagocasas/cosmicjellyfish
 authors:
   - family-names: Casas Castro
     given-names: Santiago
     affiliation: RWTH Aachen University, DLR
     orcid: https://orcid.org/0000-0002-4751-5138
+  - family-names: Martinelli
+    given-names: Matteo
   - family-names: Pamuk
     given-names: Sefa
     affiliation: Universidad de Cantabria
     orcid: https://orcid.org/0009-0004-0852-8624
+  - family-names: Sabarish
+    given-names: V. M.
+    orcid: https://orcid.org/0000-0001-5677-0838
+  - family-names: Frusciante
+    given-names: Noemi
+    affiliation: Università degli Studi di Napoli “Federico II”
+    orcid: https://orcid.org/0000-0002-7375-1230
+  - family-names: Pace
+    given-names: Francesco
+    affiliation: Università degli Studi di Torino
+    orcid: https://orcid.org/0000-0001-8039-0480
 keywords:
   - cosmology
   - fishermatrix

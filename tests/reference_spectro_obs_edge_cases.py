@@ -2,7 +2,7 @@
 """
 REFERENCE TEST SUITE - NOT RUN IN CI PIPELINE
 
-Test suite for edge cases, performance, and numerical stability 
+Test suite for edge cases, performance, and numerical stability
 of the spectro_obs module.
 
 This file contains comprehensive tests for boundary conditions, numerical edge cases,
@@ -25,7 +25,7 @@ import warnings
 import numpy as np
 import pytest
 
-from cosmicfishpie.LSSsurvey.spectro_obs import ComputeGalSpectro
+from cosmicjellyfish.LSSsurvey.spectro_obs import ComputeGalSpectro
 
 
 class TestNumericalStability:

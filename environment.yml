@@ -1,0 +1,48 @@
+# Conda/mamba environment for cosmicjellyfish (conda-forge only).
+#
+#   mamba env create -f environment.yml
+#   mamba activate cosmicjellyfish
+#
+# Binary-heavy dependencies come from conda-forge, with versions matching
+# ``pyproject.toml``. Packages that conda-forge does not provide (classy,
+# chainconsumer, colossus, symbolic_pofk) and cosmicjellyfish itself are installed
+# by pip at the end; classy is compiled from source, hence conda-forge gcc/gxx/make.
+# On macOS the compiler still needs an SDK: install the Xcode Command Line Tools
+# (``xcode-select --install``) or point ``SDKROOT`` at an SDK before creating the env.
+# Keep the pins below in sync with ``pyproject.toml``.
+name: cosmicjellyfish
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - pip
+  # classy is built from source by pip and its build calls ``gcc``, ``g++`` and ``make`` by
+  # name; the conda-forge ``gcc``/``gxx`` packages provide those commands on Linux and macOS.
+  - gcc
+  - gxx
+  - make
+  - astropy=6.1.7
+  - camb=2.0.4
+  - cython=3.3.0
+  - getdist=1.7.7
+  - h5py=3.16.0
+  - ipython>=8.37,<9  # conda-forge stops at 8.37; pip moves it to the pyproject pin
+  - joblib=1.6.0
+  - jupyter=1.1.1
+  - matplotlib=3.10.9
+  - nautilus-sampler=1.0.6
+  - numpy>=2.1,<2.3
+  - pandas
+  - pyyaml=6.0.3
+  - scikit-learn=1.7.2
+  - scipy>=1.15.3
+  - seaborn
+  - pip:
+      - classy==3.3.4.0
+      - chainconsumer>=1.3.0,<2.0.0
+      - colossus
+      # Optional: needed only for code="symbolic" (not on PyPI).
+      - git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+      # cosmicjellyfish from this checkout (run the command from the repo root).
+      - -e .

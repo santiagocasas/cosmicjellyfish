@@ -1,6 +1,6 @@
 import numpy as np
 
-from cosmicfishpie.LSSsurvey.photo_obs import ComputeCls
+from cosmicjellyfish.LSSsurvey.photo_obs import ComputeCls
 
 
 def test_compute_cls_initialization(computecls_fid):
@@ -22,7 +22,7 @@ def test_wl_kernel_fast_kernel_equivalence(computecls_fid, monkeypatch):
     ComputeCls instance to compare both the WL and IA components.
     """
     # Import module to toggle the flag reliably
-    import cosmicfishpie.LSSsurvey.photo_obs as photo_obs
+    import cosmicjellyfish.LSSsurvey.photo_obs as photo_obs
 
     _, cls, _ = computecls_fid
 
@@ -48,7 +48,7 @@ def test_wl_kernel_fast_kernel_equivalence(computecls_fid, monkeypatch):
 
 def test_wl_efficiency_fast_eff_equivalence(computecls_fid, monkeypatch):
     """Check that enabling/disabling _USE_FAST_EFF yields the same lensing efficiency."""
-    import cosmicfishpie.LSSsurvey.photo_obs as photo_obs
+    import cosmicjellyfish.LSSsurvey.photo_obs as photo_obs
 
     _, cls, _ = computecls_fid
 
@@ -74,7 +74,7 @@ def test_wl_efficiency_fast_eff_equivalence(computecls_fid, monkeypatch):
 
 def test_P_limber_fast_P_equivalence(computecls_fid, monkeypatch):
     """Check that enabling/disabling _USE_FAST_P yields identical Pell."""
-    import cosmicfishpie.LSSsurvey.photo_obs as photo_obs
+    import cosmicjellyfish.LSSsurvey.photo_obs as photo_obs
 
     _, cls, _ = computecls_fid
 
@@ -89,3 +89,48 @@ def test_P_limber_fast_P_equivalence(computecls_fid, monkeypatch):
     pell_slow = cls.Pell.copy()
 
     assert np.allclose(pell_fast, pell_slow, rtol=1e-10, atol=0.0)
+
+
+def test_sqrtP_limber_skips_rows_above_kmax(computecls_fid, monkeypatch):
+    _, cls, _ = computecls_fid
+    saved_sqrtPell = cls.sqrtPell
+    try:
+        monkeypatch.setitem(cls.specs, "kmax", 1e-9)
+        cls.sqrtP_limber()
+        for obs in ("WL", "WL_IA", "GCph", "GCph_IA"):
+            assert np.all(cls.sqrtPell[obs] == 0.0)
+    finally:
+        cls.sqrtPell = saved_sqrtPell
+
+
+def test_sqrtP_limber_non_matter_tracer(computecls_fid, monkeypatch):
+    _, cls, _ = computecls_fid
+    tracers_called = []
+
+    def fake_matpow(z, k, nonlinear=False, tracer="matter"):
+        tracers_called.append(tracer)
+        value = 2.0 if tracer == "clustering" else 1.0
+        return np.full(np.shape(k), value)
+
+    saved_sqrtPell = cls.sqrtPell
+    try:
+        monkeypatch.setattr(cls.cosmo, "matpow", fake_matpow)
+        monkeypatch.setattr(cls, "tracer", "clustering")
+        cls.sqrtP_limber()
+        assert "clustering" in tracers_called
+        assert np.any(cls.sqrtPell["GCph"] != 0.0)
+        assert not np.allclose(cls.sqrtPell["GCph"], cls.sqrtPell["WL"])
+    finally:
+        cls.sqrtPell = saved_sqrtPell
+
+
+def test_window_matrix_cold_cache(computecls_fid):
+    _, cls, _ = computecls_fid
+    if hasattr(cls, "_win_cache"):
+        delattr(cls, "_win_cache")
+
+    window = cls._window_matrix("GCph", 1)
+
+    assert hasattr(cls, "_win_cache")
+    assert ("GCph", 1) in cls._win_cache
+    np.testing.assert_array_equal(cls._window_matrix("GCph", 1), window)

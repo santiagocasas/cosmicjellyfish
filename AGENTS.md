@@ -1,4 +1,4 @@
-# Agent Guide for CosmicFishPie
+# Agent Guide for CosmicJellyfish
 
 This file is for coding agents working in this repository.
 Follow existing patterns and keep changes minimal and focused.
@@ -21,7 +21,7 @@ Follow existing patterns and keep changes minimal and focused.
 - Lint (apply fixes): `uv run ruff check --fix .`
 - Type check: `uv run mypy .`
 - Run tests (CI baseline): `uv run pytest`
-- Run tests + doctests (local full): `CUDA_VISIBLE_DEVICES='' uv run pytest -v --color=yes --doctest-modules tests/ cosmicfishpie/`
+- Run tests + doctests (local full): `CUDA_VISIBLE_DEVICES='' uv run pytest -v --color=yes --doctest-modules tests/ cosmicjellyfish/`
 - Build package: `make build` (or `uv run python -m build`)
 
 ## Run a single test
@@ -31,24 +31,29 @@ Follow existing patterns and keep changes minimal and focused.
 - Tests live in `tests/` and are typically named `*_test.py`.
 
 ## Docs
+- Install docs dependencies: `uv sync --extra docs`
 - Live docs build (autobuild): `make docs`
-- Standard Sphinx build: `make -C docs html`
-- API docs are built from module docstrings; keep them clean and complete.
+- Docs are published by `.github/workflows/docs.yml` to the `docs/` folder of `gh-pages`
+  (https://www.santicasas.space/cosmicjellyfish/docs/) on pushes to `main` and version tags.
+- Strict build (as in CI and the publishing workflow): `uv run --extra docs sphinx-build -W --keep-going -b html docs/source docs/build/html`
+- Link check: `uv run --extra docs sphinx-build -b linkcheck docs/source docs/build/linkcheck`
+- API docs are built from module docstrings with autosummary (`docs/source/api/`); keep them clean and complete.
+- Use raw docstrings (`r"""`) when a docstring contains LaTeX backslashes.
 
 ## Repository layout
-- `cosmicfishpie/` is the main package.
-- `cosmicfishpie/analysis/` contains Fisher post-processing and plotting.
-- `cosmicfishpie/cosmology/` handles cosmology calculations and nuisance models.
-- `cosmicfishpie/fishermatrix/` contains Fisher matrix computation and derivatives.
-- `cosmicfishpie/LSSsurvey/` and `cosmicfishpie/CMBsurvey/` hold probe-specific logic.
-- `cosmicfishpie/utilities/` has shared helpers (printing, numerics, filesystem).
-- `cosmicfishpie/configs/` stores YAML specs and external data definitions.
+- `cosmicjellyfish/` is the main package.
+- `cosmicjellyfish/analysis/` contains Fisher post-processing and plotting.
+- `cosmicjellyfish/cosmology/` handles cosmology calculations and nuisance models.
+- `cosmicjellyfish/fishermatrix/` contains Fisher matrix computation and derivatives.
+- `cosmicjellyfish/LSSsurvey/` and `cosmicjellyfish/CMBsurvey/` hold probe-specific logic.
+- `cosmicjellyfish/utilities/` has shared helpers (printing, numerics, filesystem).
+- `cosmicjellyfish/configs/` stores YAML specs and external data definitions.
 - `scripts/` holds runnable workflows and benchmarks (not imported by the library).
 - `tests/` contains pytest tests and fixtures.
 
 ## Configuration and inputs
-- Global options live in `cosmicfishpie.configs.config` and `cfg.settings`.
-- Prefer adding new survey and solver configs under `cosmicfishpie/configs/`.
+- Global options live in `cosmicjellyfish.configs.config` and `cfg.settings`.
+- Prefer adding new survey and solver configs under `cosmicjellyfish/configs/`.
 - Keep YAML inputs in `configs/default_*` or `configs/other_*` folders.
 - Avoid hard-coded paths; use config defaults (e.g., specs_dir, results_dir).
 - When adding new external datasets, update configs and tests accordingly.
@@ -64,7 +69,7 @@ Follow existing patterns and keep changes minimal and focused.
 ## Code style and conventions
 - Formatting is enforced by Black (line length 100). Keep new code under 100 chars.
 - Ruff uses line length 115; Black is the formatter of record.
-- Import order: stdlib, third-party, local (`cosmicfishpie.*`).
+- Import order: stdlib, third-party, local (`cosmicjellyfish.*`).
 - isort profile is "black"; do not hand-tune import ordering.
 - Prefer absolute imports within the package (see existing modules).
 - Prefer `from __future__ import annotations` in new modules with type hints.
@@ -73,7 +78,7 @@ Follow existing patterns and keep changes minimal and focused.
 - Avoid `Any` unless unavoidable; use `Optional` or unions explicitly.
 - Naming: use snake_case for functions/variables and CapWords for classes.
 - Legacy modules use snake_case class names (e.g., `fisher_matrix`); match file style.
-- Constants are UPPER_CASE; module-level config is in `cosmicfishpie.configs.config`.
+- Constants are UPPER_CASE; module-level config is in `cosmicjellyfish.configs.config`.
 - Prefer small, composable functions and avoid large monoliths when adding new code.
 - Keep public APIs stable; avoid renaming exported symbols without deprecation.
 
@@ -115,10 +120,10 @@ Follow existing patterns and keep changes minimal and focused.
 - Scripts often create `scripts/benchmark_results/` and `chains/` folders.
 
 ## Scripts and benchmarks
-- `scripts/photometric_benchmark.py` runs photometric benchmarks and FAST vs SLOW checks.
-- `scripts/run_fisher_compare_backends.py` compares Fisher matrices across backends.
+- `scripts/archive/benchmarks/photometric_benchmark.py` retains the historical photometric benchmark.
+- `scripts/validation/run_fisher_compare_backends.py` compares Fisher matrices across backends.
 - Scripts are not imported by the library; keep them CLI-friendly.
-- Prefer `uv run python scripts/<name>.py` to ensure the right environment.
+- Prefer `uv run python scripts/<category>/<name>.py` to ensure the right environment.
 - Benchmark outputs are stored under `scripts/benchmark_results/`.
 
 ## Environment variables
@@ -129,7 +134,7 @@ Follow existing patterns and keep changes minimal and focused.
 ## Tests and data hygiene
 - Add or update tests for new behavior in `tests/`.
 - Do not commit generated outputs (results, caches, benchmarks) unless requested.
-- Keep configuration and YAML inputs under `cosmicfishpie/configs/`.
+- Keep configuration and YAML inputs under `cosmicjellyfish/configs/`.
 - Use `pytest` fixtures in `tests/conftest.py` when adding shared setup.
 - Keep tests deterministic; avoid reliance on external services.
 - If a test needs optional backends, mark or guard it accordingly.
@@ -141,9 +146,39 @@ Follow existing patterns and keep changes minimal and focused.
 - You can run `pre-commit run --all-files` if pre-commit is installed.
 
 ## Versioning and metadata
-- Package version lives in `cosmicfishpie/version.py`.
+- Package version lives in `cosmicjellyfish/version.py`.
 - Citation metadata is in `CITATION.cff`.
 - Update `CHANGELOG.md` for user-facing changes.
+
+## ARA research trace (maintainer workflow)
+- The ARA provenance trace (`ara/`) is NOT part of `main` or feature branches. It lives on the
+  `dev` branch, checked out as the sibling worktree `../cfp-dev`.
+- In `../cfp-dev`, `ara/` is a real, tracked directory. In every OTHER worktree (main,
+  perf-v2, symbolic_overhaul, ...), `ara` is a symlink to `../cfp-dev/ara`, listed in the shared
+  `.git/info/exclude`, so every branch writes to the same single trace.
+- **Run the `research-manager` epilogue at the end of EVERY turn** that contains research-significant
+  activity (decisions, experiments, PR/merge work, review findings), writing through the `ara`
+  symlink. Do not wait to be asked. If a long conversation is compressed, keep doing it.
+- **Every worktree must have the symlink.** When you create a new worktree, immediately run
+  `ln -s ../cfp-dev/ara ara` inside it (the shared `.git/info/exclude` already ignores `ara`).
+  If `ara` is missing in a worktree, create the symlink; if it is dangling (`../cfp-dev` does not
+  exist), skip the epilogue and tell the maintainer. Never create a real `ara/` directory
+  outside `../cfp-dev`.
+- Never `git add` or commit `ara` outside `../cfp-dev`. Do not add it to `.gitignore`.
+- To sync the trace, commit inside `../cfp-dev` with `git add -f ara` (the exclude rule hides
+  new files from a plain `git add`), then `git commit`. Commit only when the maintainer asks.
+  Pushing is done by the maintainer.
+- When the session starts from the parent directory `cosmicfish_release/` (not a git repo), there
+  is no `ara` link there: write to `cfp-dev/ara` directly.
+
+## Keeping this file in sync
+- This file exists in two places: the tracked `AGENTS.md` in the repo (this section is the same on
+  every branch that has it) and an untracked copy at `cosmicfish_release/AGENTS.md`, which is what
+  agents read when started from the parent directory.
+- Sync them once in a while (e.g. after changing this section, or when starting a new round of
+  PRs): `diff cosmicfish_release/AGENTS.md cosmicjellyfish/AGENTS.md`, then copy the newer one
+  over the older. Branches other than `main` pick up the tracked file when they merge `main`.
+- `cfp-dev/AGENTS.md` is an older version without the ARA section; update it when convenient.
 
 ## Cursor and Copilot rules
 - No `.cursor/rules/`, `.cursorrules`, or `.github/copilot-instructions.md` found.

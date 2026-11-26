@@ -1,31 +1,139 @@
-```{toctree}
-:maxdepth: 2
-:hidden:
-:caption: Getting started
-
-installation
-overview
-comprehensive_guide
-derivatives
-cmb_benchmarks
-cosmicfishpie
-```
+---
+title: cosmicjellyfish
+html_theme.sidebar_primary.remove: true
+---
 
 ```{toctree}
 :hidden:
-:caption: Development
-CHANGELOG
-CONTRIBUTING
-License <https://raw.githubusercontent.com/santiagocasas/cosmicfishpie/main/LICENSE>
-GitHub Repository <https://github.com/santiagocasas/cosmicfishpie>
-Validation Dashboard <https://santiagocasas.github.io/cosmicfishpie/dashboard/>
+
+getting_started
+migration_cosmicjellyfish
+validation_data
+user_guide
+tutorials
+api/index
+development
 ```
 
-```{include} overview.md
+# cosmicjellyfish
+
+::::{div} cfp-hero
+
+```{image} _static/logo/banner-light.svg
+:alt: CosmicJellyfish: Fisher and Monte Carlo cosmological forecasts with Python and JAX
+:class: only-light cfp-logo-banner
 ```
 
-## Indices and tables
+```{image} _static/logo/banner-dark.svg
+:alt: CosmicJellyfish: Fisher and Monte Carlo cosmological forecasts with Python and JAX
+:class: only-dark cfp-logo-banner
+```
 
-```{eval-rst}
-* :ref:`modindex`
+:::{div} cfp-tagline
+Fisher-matrix forecasts for galaxy clustering, weak lensing and CMB surveys,
+with CAMB, CLASS, a built-in symbolic backend or optional JAXcosmo.
+:::
+
+```bash
+pip install cosmicjellyfish
+```
+
+:::{div} cfp-buttons
+```{button-ref} getting_started
+:ref-type: doc
+:color: primary
+:class: sd-rounded-pill
+
+Get started
+```
+
+```{button-ref} api/index
+:ref-type: doc
+:color: secondary
+:outline:
+:class: sd-rounded-pill
+
+API reference
+```
+:::
+
+::::
+
+:::::{grid} 1 2 2 3
+:gutter: 3
+:class-container: cfp-cards
+
+::::{grid-item-card} {octicon}`download;1.5em;sd-mr-1` Installation
+:link: installation
+:link-type: doc
+
+Install from PyPI or from source, choose optional extras, and check the installation.
+::::
+
+::::{grid-item-card} {octicon}`rocket;1.5em;sd-mr-1` A verified first forecast
+:link: first-forecast
+:link-type: ref
+
+Run a compact photometric forecast end to end with the built-in `symbolic` backend.
+::::
+
+::::{grid-item-card} {octicon}`book;1.5em;sd-mr-1` User guide
+:link: user_guide
+:link-type: doc
+
+Core concepts, derivative schemes, likelihood sampling with Nautilus, and backend background.
+::::
+
+::::{grid-item-card} {octicon}`telescope;1.5em;sd-mr-1` Observables and probes
+:link: observables
+:link-type: ref
+
+Euclid photometric and spectroscopic clustering, weak lensing, CMB and intensity mapping.
+::::
+
+::::{grid-item-card} {octicon}`code;1.5em;sd-mr-1` API reference
+:link: api/index
+:link-type: doc
+
+Modules, classes and functions generated from the package docstrings.
+::::
+
+::::{grid-item-card} {octicon}`git-pull-request;1.5em;sd-mr-1` Contributing and citing
+:link: development
+:link-type: doc
+
+Contribution guidelines, changelog, validation reports and the scripts reference.
+::::
+
+:::::
+
+## Features
+
+- **Multiple backends.** Use CAMB, CLASS, the built-in `symbolic` backend that needs no
+  external Einstein--Boltzmann solver, or precomputed `external` tables.
+- **Surveys and observables.** Photometric (`GCph`, `WL`) and spectroscopic (`GCsp`) Euclid
+  forecasts, CMB (`CMB_T`, `CMB_E`, `CMB_B`) and intensity mapping (`IM`).
+- **Finite-difference derivatives.** `3PT`, `STEM`, `POLY` and `4PT_FWD` schemes, selected with
+  a single option.
+- **Automatic differentiation.** Optional JAXcosmo theory and JAX-native photometric and
+  spectroscopic observables, with matched AD/FD comparisons ({doc}`jaxcosmo`).
+- **Analysis and plotting.** Marginalise, reshuffle and combine Fisher matrices, and draw
+  triangle plots to compare surveys and settings.
+- **Likelihood sampling.** Run Nautilus posterior sampling with the same observables and
+  compare chains with Fisher forecasts ({doc}`likelihood_sampling`).
+- **Validated.** CAMB-versus-CLASS Fisher comparisons and likelihood checks are documented and
+  reproducible from the repository scripts.
+
+## Cite us
+
+Please cite the software if you use it. The repository's
+[`CITATION.cff`](https://github.com/santiagocasas/cosmicjellyfish/blob/main/CITATION.cff) is the
+maintained source of citation metadata; a minimal BibTeX entry is:
+
+```bibtex
+@software{cosmicjellyfish,
+  author = {Casas, Santiago and Martinelli, Matteo and Pamuk, Sefa and Sabarish, V. M.},
+  title  = {cosmicjellyfish: Fisher-matrix forecasts for cosmological surveys},
+  url    = {https://github.com/santiagocasas/cosmicjellyfish}
+}
 ```

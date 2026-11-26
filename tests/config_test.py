@@ -1,5 +1,5 @@
 """
-Test suite for cosmicfishpie.configs.config module.
+Test suite for cosmicjellyfish.configs.config module.
 
 This module tests configuration utilities, YAML loading,
 and parameter validation functions to improve coverage from ~30% to 48%.
@@ -13,7 +13,7 @@ import numpy as np
 import yaml
 
 # Import the config module
-from cosmicfishpie.configs import config
+from cosmicjellyfish.configs import config
 
 
 class TestModuleImports:
@@ -53,6 +53,31 @@ class TestYAMLOperations:
         assert len(loaded_yaml["specifications"]["z_bins"]) == 3
 
 
+def test_resolve_spec_path_falls_back_to_packaged_survey_specs(tmp_path):
+    other_specs = tmp_path / "packaged"
+    other_specs.mkdir()
+    fallback = other_specs / "SKAO-IM-Redbook.yaml"
+    fallback.write_text("specifications: {}\n")
+
+    resolved = config._resolve_spec_path(tmp_path, "SKAO-IM-Redbook", other_specs)
+
+    assert resolved == str(fallback)
+
+
+def test_resolve_spec_path_prefers_custom_specs_dir(tmp_path):
+    custom_specs = tmp_path / "custom"
+    packaged_specs = tmp_path / "packaged"
+    custom_specs.mkdir()
+    packaged_specs.mkdir()
+    custom = custom_specs / "SKAO-IM-Redbook.yaml"
+    (packaged_specs / custom.name).write_text("specifications: {source: packaged}\n")
+    custom.write_text("specifications: {source: custom}\n")
+
+    resolved = config._resolve_spec_path(custom_specs, "SKAO-IM-Redbook", packaged_specs)
+
+    assert resolved == str(custom)
+
+
 class TestConfigInitFunction:
     """Test the main config.init() function with various parameters."""
 
@@ -60,10 +85,10 @@ class TestConfigInitFunction:
         """Test config.init() with default parameters."""
         # Mock the complex dependencies to focus on testing the init function itself
         with (
-            patch("cosmicfishpie.configs.config.cosmology"),
-            patch("cosmicfishpie.configs.config.upt") as mock_upt,
-            patch("cosmicfishpie.configs.config.ums"),
-            patch("cosmicfishpie.configs.config.upm"),
+            patch("cosmicjellyfish.configs.config.cosmology"),
+            patch("cosmicjellyfish.configs.config.upt") as mock_upt,
+            patch("cosmicjellyfish.configs.config.ums"),
+            patch("cosmicjellyfish.configs.config.upm"),
             patch("os.path.exists", return_value=True),
             patch("os.path.isfile", return_value=False),
             patch("builtins.__import__", side_effect=ImportError("Mocked CAMB import error")),
@@ -96,10 +121,10 @@ class TestConfigInitFunction:
         custom_options = {"derivatives": "3PT", "nonlinear": True, "AP_effect": False}
 
         with (
-            patch("cosmicfishpie.configs.config.cosmology"),
-            patch("cosmicfishpie.configs.config.upt"),
-            patch("cosmicfishpie.configs.config.ums"),
-            patch("cosmicfishpie.configs.config.upm"),
+            patch("cosmicjellyfish.configs.config.cosmology"),
+            patch("cosmicjellyfish.configs.config.upt"),
+            patch("cosmicjellyfish.configs.config.ums"),
+            patch("cosmicjellyfish.configs.config.upm"),
         ):
             try:
                 config.init(options=custom_options)
@@ -114,10 +139,10 @@ class TestConfigInitFunction:
 
         for survey in survey_names:
             with (
-                patch("cosmicfishpie.configs.config.cosmology"),
-                patch("cosmicfishpie.configs.config.upt"),
-                patch("cosmicfishpie.configs.config.ums"),
-                patch("cosmicfishpie.configs.config.upm"),
+                patch("cosmicjellyfish.configs.config.cosmology"),
+                patch("cosmicjellyfish.configs.config.upt"),
+                patch("cosmicjellyfish.configs.config.ums"),
+                patch("cosmicjellyfish.configs.config.upm"),
             ):
                 try:
                     config.init(surveyName=survey)
@@ -131,10 +156,10 @@ class TestConfigInitFunction:
 
         for model in cosmo_models:
             with (
-                patch("cosmicfishpie.configs.config.cosmology"),
-                patch("cosmicfishpie.configs.config.upt"),
-                patch("cosmicfishpie.configs.config.ums"),
-                patch("cosmicfishpie.configs.config.upm"),
+                patch("cosmicjellyfish.configs.config.cosmology"),
+                patch("cosmicjellyfish.configs.config.upt"),
+                patch("cosmicjellyfish.configs.config.ums"),
+                patch("cosmicjellyfish.configs.config.upm"),
             ):
                 try:
                     config.init(cosmoModel=model)

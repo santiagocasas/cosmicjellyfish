@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from cosmicfishpie.utilities import utils
+from cosmicjellyfish.utilities import utils
 
 
 def test_round_decimals_up_old_mode_branches():
@@ -12,7 +12,9 @@ def test_round_decimals_up_old_mode_branches():
         utils.numerics.old_round_decimals_up = True
         assert utils.numerics.round_decimals_up(1.21, decimals=1) == pytest.approx(1.3)
         assert utils.numerics.round_decimals_up(0.05, decimals=1) == pytest.approx(0.05)
-        assert utils.numerics.round_decimals_up(0.005, decimals=1) == pytest.approx(0.005)
+        # The legacy branch intentionally switches sub-0.01 inputs to four
+        # decimal places before rounding upward.
+        assert utils.numerics.round_decimals_up(0.005, decimals=1) == pytest.approx(0.0051)
         assert utils.numerics.round_decimals_up(1.2, decimals=0) == pytest.approx(2.0)
     finally:
         utils.numerics.old_round_decimals_up = old_flag
@@ -62,7 +64,7 @@ def test_load_fisher_from_json_uses_defaults(monkeypatch, tmp_path):
             captured.update(kwargs)
 
     monkeypatch.setattr(
-        "cosmicfishpie.fishermatrix.cosmicfish.FisherMatrix",
+        "cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix",
         DummyFM,
         raising=True,
     )

@@ -1,45 +1,94 @@
-Installation
-============
+# Installation
 
-**cosmicfishpie** supports Python >= 3.10.
+`cosmicjellyfish` supports Python `>=3.10,<3.13`.
 
-## Requirements
-
-**cosmicfishpie** uses preexisting Einstein-Boltzmann solvers to obtain cosmological functions. To use the code you need to install either `CAMB` or `Class` within your python environment.  
-
-## Installing with `pip`
-
-**cosmicfishpie** is available [on PyPI](https://pypi.org/project/cosmicfishpie/). Just run
+## Install from PyPI
 
 ```bash
-pip install cosmicfishpie
+pip install cosmicjellyfish
 ```
 
-## Installing from source
-
-To install **cosmicfishpie** from source, first clone [the repository](https://github.com/santiagocasas/cosmicfishpie):
+`camb` and `classy` (the CLASS Python wrapper) are required dependencies, so this already gives
+you both solvers. The `symbolic` backend (`"code": "symbolic"`) does not run a
+Boltzmann solver at runtime and is used by the {doc}`first_forecast`. It relies on the
+[`symbolic_pofk`](https://github.com/DeaglanBartlett/symbolic_pofk) package, which is not
+published on PyPI and therefore cannot be installed automatically with `cosmicjellyfish`
+(PyPI does not allow packages to depend on Git URLs). Install it once by hand:
 
 ```bash
-git clone https://github.com/santiagocasas/cosmicfishpie.git
-cd cosmicfishpie
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
 ```
 
-Then run
+Without it, `"code": "symbolic"` raises an `ImportError` with this same hint; the `camb`
+and `class` backends are unaffected.
+
+## Install from source
+
+Clone [the repository](https://github.com/santiagocasas/cosmicjellyfish) and install it
+with `uv` (recommended; CI uses it) or `pip`:
 
 ```bash
-pip install -e .
+git clone https://github.com/santiagocasas/cosmicjellyfish.git
+cd cosmicjellyfish
+uv sync --extra dev        # or: pip install -e ".[dev]"
 ```
 
-## Installing additional external data
+Leave out `--extra dev` (or `[dev]`) for a lighter install without the test and
+linting tools. With `uv`, `symbolic_pofk` is installed automatically from its upstream Git
+repository (via a default dependency group); with `pip`, add it by hand as shown above.
 
-If **cosmicfishpie** was installed using `pip` additional data files that are used for the different experiments are not downloaded by default. To download these we have provided a small script inside of the configs folder. It will download these data files directly from github repository.
+## Install with mamba or conda
 
-For this just run
+The repository ships an `environment.yml` that takes the compiled scientific packages
+(CAMB, NumPy, SciPy, h5py, ...) from `conda-forge` and installs the rest, including
+`symbolic_pofk` and cosmicjellyfish itself (editable), with `pip`:
 
 ```bash
-python install_external_data.py
+git clone https://github.com/santiagocasas/cosmicjellyfish.git
+cd cosmicjellyfish
+mamba env create -f environment.yml    # or: conda env create -f environment.yml
+mamba activate cosmicjellyfish
 ```
 
-and follow the command prompts in the terminal.
+`classy`, `chainconsumer` and `colossus` are not on conda-forge, so they come from PyPI
+inside that same step. `classy` is compiled from source and its build calls `gcc`, `g++` and `make` by name, so the
+environment also installs the conda-forge `gcc`, `gxx` and `make` packages (Linux and
+macOS), so no system compilers are needed. On macOS the compiler still needs an SDK:
+install the Xcode Command Line Tools (`xcode-select --install`) or point `SDKROOT` at
+an SDK before creating the environment. To add optional extras afterward, use
+`pip install -e ".[jaxcosmo]"` (or `emulators`, `docs`, `dev`) in the activated
+environment. The versions in `environment.yml` mirror `pyproject.toml`; `ipython` is the
+one exception, since conda-forge stops at 8.37 and `pip` moves it to the pinned 8.39.
 
-By default it will try to download the files to the configs folder but the user can specify another path
+## Optional extras
+
+| Extra | Adds |
+| --- | --- |
+| `emulators` | `euclidemu2`, for the EuclidEmulator2 nonlinear boost with CLASS |
+| `jaxcosmo` | JAX, `jax-cosmo` and compatibility dependencies for the optional differentiable backend |
+| `docs` | Sphinx and the theme needed to build this documentation |
+| `dev` | Linters, type checker, `pytest` and coverage, packaging tools |
+
+```bash
+pip install "cosmicjellyfish[emulators]"   # from PyPI
+uv sync --extra emulators                # from a source checkout
+uv sync --extra docs --extra dev         # several extras
+```
+
+For the optional differentiable backend, use `uv sync --extra jaxcosmo` from a
+checkout containing that implementation. See {doc}`jaxcosmo` for the supported
+models, derivative providers and notebook setup.
+
+## Survey data
+
+The survey specifications and the Euclid luminosity-ratio file (used for intrinsic
+alignment) ship with the package, so no extra download is needed for the Euclid examples.
+
+## Check the installation
+
+```bash
+python -c "import cosmicjellyfish; print('cosmicjellyfish import OK')"
+```
+
+Then run the {doc}`first_forecast`. From a source checkout with the `dev` extra, `uv run pytest`
+runs the test suite.

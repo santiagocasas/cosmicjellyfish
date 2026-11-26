@@ -6,10 +6,10 @@ Thanks for considering contributing! Please read this document to learn the vari
 
 ### Did you find a bug?
 
-First, do [a quick search](https://github.com/santiagocasas/cosmicfishpie/issues) to see whether your issue has already been reported.
+First, do [a quick search](https://github.com/santiagocasas/cosmicjellyfish/issues) to see whether your issue has already been reported.
 If your issue has already been reported, please comment on the existing issue.
 
-Otherwise, open [a new GitHub issue](https://github.com/santiagocasas/cosmicfishpie/issues).  Be sure to include a clear title
+Otherwise, open [a new GitHub issue](https://github.com/santiagocasas/cosmicjellyfish/issues).  Be sure to include a clear title
 and description.  The description should include as much relevant information as possible.  The description should
 explain how to reproduce the erroneous behavior as well as the behavior you expect to see.  Ideally you would include a
 code sample or an executable test case demonstrating the expected behavior.
@@ -21,7 +21,7 @@ We use GitHub issues to track feature requests. Before you create a feature requ
 * Make sure you have a clear idea of the enhancement you would like. If you have a vague idea, consider discussing
 it first on a GitHub issue.
 * Check the documentation to make sure your feature does not already exist.
-* Do [a quick search](https://github.com/santiagocasas/cosmicfishpie/issues) to see whether your feature has already been suggested.
+* Do [a quick search](https://github.com/santiagocasas/cosmicjellyfish/issues) to see whether your feature has already been suggested.
 
 When creating your request, please:
 
@@ -37,55 +37,45 @@ When you're ready to contribute code to address an open issue, please follow the
 
     <details><summary>Expand details 👇</summary><br/>
 
-    If you haven't already done so, please [fork](https://help.github.com/en/enterprise/2.13/user/articles/fork-a-repo) this repository on GitHub.
+    If you haven't already done so, please [fork](https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo) this repository on GitHub.
 
     Then clone your fork locally with
 
-        git clone https://github.com/USERNAME/cosmicfishpie.git
+        git clone https://github.com/USERNAME/cosmicjellyfish.git
 
     or 
 
-        git clone git@github.com:USERNAME/cosmicfishpie.git
+        git clone git@github.com:USERNAME/cosmicjellyfish.git
 
-    At this point the local clone of your fork only knows that it came from *your* repo, github.com/USERNAME/cosmicfishpie.git, but doesn't know anything the *main* repo, [https://github.com/santiagocasas/cosmicfishpie.git](https://github.com/santiagocasas/cosmicfishpie). You can see this by running
+    At this point the local clone of your fork only knows that it came from *your* repo, github.com/USERNAME/cosmicjellyfish.git, but doesn't know anything the *main* repo, [https://github.com/santiagocasas/cosmicjellyfish.git](https://github.com/santiagocasas/cosmicjellyfish). You can see this by running
 
         git remote -v
 
     which will output something like this:
 
-        origin https://github.com/USERNAME/cosmicfishpie.git (fetch)
-        origin https://github.com/USERNAME/cosmicfishpie.git (push)
+        origin https://github.com/USERNAME/cosmicjellyfish.git (fetch)
+        origin https://github.com/USERNAME/cosmicjellyfish.git (push)
 
-    This means that your local clone can only track changes from your fork, but not from the main repo, and so you won't be able to keep your fork up-to-date with the main repo over time. Therefore you'll need to add another "remote" to your clone that points to [https://github.com/santiagocasas/cosmicfishpie.git](https://github.com/santiagocasas/cosmicfishpie). To do this, run the following:
+    This means that your local clone can only track changes from your fork, but not from the main repo, and so you won't be able to keep your fork up-to-date with the main repo over time. Therefore you'll need to add another "remote" to your clone that points to [https://github.com/santiagocasas/cosmicjellyfish.git](https://github.com/santiagocasas/cosmicjellyfish). To do this, run the following:
 
-        git remote add upstream https://github.com/santiagocasas/cosmicfishpie.git
+        git remote add upstream https://github.com/santiagocasas/cosmicjellyfish.git
 
     Now if you do `git remote -v` again, you'll see
 
-        origin https://github.com/USERNAME/cosmicfishpie.git (fetch)
-        origin https://github.com/USERNAME/cosmicfishpie.git (push)
-        upstream https://github.com/santiagocasas/cosmicfishpie.git (fetch)
-        upstream https://github.com/santiagocasas/cosmicfishpie.git (push)
+        origin https://github.com/USERNAME/cosmicjellyfish.git (fetch)
+        origin https://github.com/USERNAME/cosmicjellyfish.git (push)
+        upstream https://github.com/santiagocasas/cosmicjellyfish.git (fetch)
+        upstream https://github.com/santiagocasas/cosmicjellyfish.git (push)
 
-    Finally, you'll need to create a Python 3 virtual environment suitable for working on this project. There a number of tools out there that making working with virtual environments easier.
-    The most direct way is with the [`venv` module](https://docs.python.org/3.7/library/venv.html) in the standard library, but if you're new to Python or you don't already have a recent Python 3 version installed on your machine,
-    we recommend [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+    Finally, set up the project environment (Python 3.10-3.12). We use [uv](https://docs.astral.sh/uv/) to match CI and the rest of the tooling:
 
-    On Mac, for example, you can install Miniconda with [Homebrew](https://brew.sh/):
+        uv sync --extra dev
 
-        brew install miniconda
+    This creates a `.venv` with the package installed in editable mode plus the dev dependencies (ruff, black, isort, mypy, pytest). Prefix commands with `uv run` (e.g. `uv run pytest`) or activate `.venv` directly.
 
-    Then you can create and activate a new Python environment by running:
+    Without `uv`, the equivalent is `pip install -e .[dev]`.
 
-        conda create -n cosmicfishpie python=3.9
-        conda activate cosmicfishpie
-
-    Once your virtual environment is activated, you can install your local clone in "editable mode" with
-
-        pip install -U pip setuptools wheel
-        pip install -e .[dev]
-
-    The "editable mode" comes from the `-e` argument to `pip`, and essential just creates a symbolic link from the site-packages directory of your virtual environment to the source code in your local clone. That way any changes you make will be immediately reflected in your virtual environment.
+    See [`AGENTS.md`](https://github.com/santiagocasas/cosmicjellyfish/blob/main/AGENTS.md) in the repository root for the full list of setup, build, lint, and test commands.
 
     </details>
 
@@ -93,7 +83,7 @@ When you're ready to contribute code to address an open issue, please follow the
 
     <details><summary>Expand details 👇</summary><br/>
 
-    Once you've added an "upstream" remote pointing to [https://github.com/allenai/python-package-temlate.git](https://github.com/santiagocasas/cosmicfishpie), keeping your fork up-to-date is easy:
+    Once you've added an "upstream" remote pointing to [https://github.com/santiagocasas/cosmicjellyfish.git](https://github.com/santiagocasas/cosmicjellyfish), keeping your fork up-to-date is easy:
 
         git checkout main  # if not already on main
         git pull --rebase upstream main
@@ -119,42 +109,40 @@ When you're ready to contribute code to address an open issue, please follow the
 
     <details><summary>Expand details 👇</summary><br/>
 
-    Our continuous integration (CI) testing runs [a number of checks](https://github.com/santiagocasas/cosmicfishpie/actions) for each pull request on [GitHub Actions](https://github.com/features/actions). You can run most of these tests locally, which is something you should do *before* opening a PR to help speed up the review process and make it easier for us.
+    Our continuous integration (CI) runs on every pull request: style (`isort`/`black` check), lint (`ruff`), the test suite (`pytest`), a package build, and a docs build-check. Run the same checks locally *before* opening a PR:
 
-    First, you should run [`isort`](https://github.com/PyCQA/isort) and [`black`](https://github.com/psf/black) to make sure you code is formatted consistently.
-    Many IDEs support code formatters as plugins, so you may be able to setup isort and black to run automatically everytime you save.
-    For example, [`black.vim`](https://github.com/psf/black/tree/master/plugin) will give you this functionality in Vim. But both `isort` and `black` are also easy to run directly from the command line.
-    Just run this from the root of your clone:
+        make run-checks
 
-        isort .
-        black .
+    This runs `isort --check`, `black --check --diff`, `ruff check`, and `pytest` with doctests, exactly as CI does. To auto-fix formatting instead of just checking it, run `uv run isort .`, `uv run black .`, and `uv run ruff check --fix .`.
 
-    Our CI also uses [`ruff`](https://github.com/astral-sh/ruff) to lint the code base and [`mypy`](http://mypy-lang.org/) for type-checking. You should run both of these next with
+    [`pre-commit`](https://pre-commit.com/) hooks (ruff, black, isort) are configured in `.pre-commit-config.yaml`; install them once with `pre-commit install` to catch formatting issues automatically on each commit, or run them on demand with `pre-commit run --all-files`.
 
-        ruff check .
+    `mypy` is available (`uv run mypy .`) but is not currently enforced in CI; run it locally if you're touching typed code.
 
-    and
+    We also strive to maintain high test coverage, so most contributions should include additions to [the unit tests](https://github.com/santiagocasas/cosmicjellyfish/tree/main/tests). Tests live in `tests/` and are named `*_test.py`.
 
-        mypy .
+    For example, if you've fixed a bug in `cosmicjellyfish/LSSsurvey/photo_obs.py`, you can run the tests specific to that module with
 
-    We also strive to maintain high test coverage, so most contributions should include additions to [the unit tests](https://github.com/santiagocasas/cosmicfishpie/tree/main/tests). These tests are run with [`pytest`](https://docs.pytest.org/en/latest/), which you can use to locally run any test modules that you've added or changed.
+        uv run pytest tests/photo_obs_test.py
 
-    For example, if you've fixed a bug in `cosmicfishpie/a/b.py`, you can run the tests specific to that module with
-
-        pytest -v tests/a/b_test.py
+    See [`AGENTS.md`](https://github.com/santiagocasas/cosmicjellyfish/blob/main/AGENTS.md) for the exhaustive command reference (single-test invocations, doctests, environment variables, code style conventions).
 
     If your contribution involves additions to any public part of the API, we require that you write docstrings
     for each function, method, class, or module that you add.
     See the [Writing docstrings](#writing-docstrings) section below for details on the syntax.
     You should test to make sure the API documentation can build without errors by running
 
+        uv sync --extra docs
         make docs
+
+    CI and the docs publishing workflow treat warnings as errors, so you can reproduce them with
+    `uv run --extra docs sphinx-build -W --keep-going -b html docs/source docs/build/html`.
 
     If the build fails, it's most likely due to small formatting issues. If the error message isn't clear, feel free to comment on this in your pull request.
 
-    And finally, please update the [CHANGELOG](https://github.com/santiagocasas/cosmicfishpie/blob/main/CHANGELOG.md) with notes on your contribution in the "Unreleased" section at the top.
+    And finally, please update the [CHANGELOG](https://github.com/santiagocasas/cosmicjellyfish/blob/main/CHANGELOG.md) with notes on your contribution in the "Unreleased" section at the top.
 
-    After all of the above checks have passed, you can now open [a new GitHub pull request](https://github.com/santiagocasas/cosmicfishpie/pulls).
+    After all of the above checks have passed, you can now open [a new GitHub pull request](https://github.com/santiagocasas/cosmicjellyfish/pulls).
     Make sure you have a clear description of the problem and the solution, and include a link to relevant issues.
 
     We look forward to reviewing your PR!
@@ -165,4 +153,4 @@ When you're ready to contribute code to address an open issue, please follow the
 
 We use [Sphinx](https://www.sphinx-doc.org/en/master/index.html) to build our API docs, which automatically parses all docstrings
 of public classes and methods using the [autodoc](https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html) extension.
-Please refer to autoc's documentation to learn about the docstring syntax.
+Please refer to autodoc's documentation to learn about the docstring syntax.

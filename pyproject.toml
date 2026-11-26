@@ -4,18 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 # See https://setuptools.pypa.io/en/latest/userguide/quickstart.html for more project configuration options.
-name = "cosmicfishpie"
+name = "cosmicjellyfish"
 dynamic = ["version"]
 readme = "README.md"
 classifiers = [
     "Intended Audience :: Science/Research",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering :: Cosmology",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Typing :: Typed",
 ]
 authors = [
     {name = "Santiago Casas, Matteo Martinelli, Sefa Pamuk, Sabarish V.M.", email = "s.casas@protonmail.com"}
@@ -25,56 +32,93 @@ license = {file = "LICENSE"}
 
 dependencies = [
     "astropy==6.1.7",
-    "camb==2.0.3",
+    "camb==2.0.4",
     "classy==3.3.4.0",
-    "Cython==3.1.4",
-    "getdist==1.7.5",
-    "h5py==3.14.0",
+    "Cython==3.3.0",
+    "getdist==1.7.7",
+    "h5py==3.16.0",
     "ipython==8.39.0",
-    "joblib==1.5.3",
+    "joblib==1.6.0",
     "jupyter==1.1.1",
     "matplotlib==3.10.9",
     "nautilus-sampler==1.0.6",
     "chainconsumer>=1.3.0,<2.0.0",
-    "numpy",
+    "numpy>=2.1,<2.3",
     "pandas",
     "PyYAML==6.0.3",
     "scikit-learn==1.7.2",
-    "SciPy>=1.8.0",
+    "SciPy>=1.15.3",
     "seaborn",
     "colossus",
-    "symbolic-pofk @ https://github.com/DeaglanBartlett/symbolic_pofk/archive/cb4d2bb5a759d0c682dc1499cf3aad1c496436ac.tar.gz",
 ]
+# ``symbolic-pofk`` (SYREN emulators, ``code="symbolic"``) is not on PyPI and PyPI
+# rejects direct-URL dependencies, so it is NOT a runtime requirement. Install it
+# manually with ``pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git``.
+# Source checkouts get it through the ``symbolic`` dependency group below.
 
 [project.urls]
-Homepage = "https://github.com/santiagocasas/cosmicfishpie"
-Repository = "https://github.com/santiagocasas/cosmicfishpie"
-Changelog = "https://github.com/santiagocasas/cosmicfishpie/blob/main/CHANGELOG.md"
-# Documentation = "https://cosmicfishpie.readthedocs.io/"
+Homepage = "https://github.com/santiagocasas/cosmicjellyfish"
+Repository = "https://github.com/santiagocasas/cosmicjellyfish"
+Changelog = "https://github.com/santiagocasas/cosmicjellyfish/blob/main/CHANGELOG.md"
+Documentation = "https://www.santicasas.space/cosmicjellyfish/docs/"
 
 [project.optional-dependencies]
+emulators = [
+    "euclidemu2==1.4.3",
+]
+# Differentiable (JAX) theory backend, selected with options["code"] = "jaxcosmo".
+# jax-cosmo 0.1.0 imports ``pkg_resources``, which setuptools>=81 no longer ships.
+jaxcosmo = [
+    "jax>=0.4.30",
+    "jaxlib>=0.4.30",
+    "jax-cosmo==0.1.0",
+    "setuptools<81",
+]
+docs = [
+    "Sphinx>=8.1.3,<8.2.0",
+    "pydata-sphinx-theme>=0.16.1",
+    "sphinx-design>=0.6.1",
+    "sphinx-copybutton>=0.5.2",
+    "myst-parser>=4.0.1,<4.1",
+    "sphinx-autodoc-typehints>=1.23.3",
+    "sphinx-autobuild>=2024.10.3",
+    "packaging",
+]
 dev = [
     "ruff",
     "mypy>=2.3.0,<2.4",
-    "black>=24.4.2,<27.0",
+    "black>=26.10.1,<27.0",
     "isort>=5.12,<7.1",
+    "line-profiler==5.0.2",
+    "py-spy==0.4.2",
     "pytest",
     "pytest-sphinx",
     "pytest-cov",
-    "twine>=1.11.0",
+    "twine>=7.0.0",
     "build",
     "setuptools",
     "wheel",
-    "Sphinx>=4.3.0,<8.2.0",
-    "furo==2024.1.29",
+    "Sphinx>=8.1.3,<8.2.0",
+    "furo==2025.12.19",
     "myst-parser>=4.0.1,<4.1",
-    "myst_parser",
     "sphinx-copybutton==0.5.2",
     "sphinx-autobuild==2024.10.3",
     "sphinx-autodoc-typehints==1.23.3",
-    "sphinx_rtd_theme>=3.1.0",
     "packaging",
 ]
+
+# PEP 735 dependency group: local/CI only, never written to the published metadata.
+[dependency-groups]
+symbolic = [
+    "symbolic-pofk",
+]
+
+[tool.uv]
+# ``uv sync`` installs these groups by default, so source checkouts and CI keep SYREN.
+default-groups = ["symbolic"]
+
+[tool.uv.sources]
+symbolic-pofk = { git = "https://github.com/DeaglanBartlett/symbolic_pofk" }
 
 [tool.setuptools.packages.find]
 exclude = [
@@ -83,14 +127,15 @@ exclude = [
     "tests.*",
     "tests",
     "docs*",
-    "scripts*"
+    "scripts*",
+    "chains*"
 ]
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.package-data]
-cosmicfishpie = [
+cosmicjellyfish = [
     "py.typed",
     "configs/default_boltzmann_yaml_files/*.md",
     "configs/default_boltzmann_yaml_files/*.yaml",
@@ -101,10 +146,11 @@ cosmicfishpie = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "cosmicfishpie.version.VERSION"}
+version = {attr = "cosmicjellyfish.version.VERSION"}
 
 [tool.black]
 line-length = 100
+target-version = ['py310']
 include = '\.pyi?$'
 exclude = '''
 (

@@ -1,0 +1,28 @@
+# Default CLASS settings (photometric probe) used automatically when no
+# class_config_yaml is given. These are fast, relaxed-precision settings
+# meant for exploration and development, not for publication-grade Fisher
+# forecasts. For the paper-validated high-precision photo profile used in
+# the neutrino-sector validation (arXiv:2405.06047v1), use
+# class/nuvalidation_hp.yaml instead.
+ACCURACY:
+  'k_per_decade_for_bao': 70
+  'k_per_decade_for_pk': 10
+COSMO_SETTINGS:
+  'P_k_max_1/Mpc': 50.
+  'output': 'mPk,mTk'
+  'non linear': 'hmcode_2020'
+  # The photometric lensing kernels request P(k,z) through z=5. CLASS samples
+  # internally through z_max_pk + 1, so HMcode needs this range to remain valid
+  # through the padded z=6 endpoint.
+  'z_max_pk': 5.0
+  'N_ncdm': 1
+  'T_cmb': 2.7255
+  'nonlinear_min_k_max': 150.
+  'k_pivot': 0.05
+  'YHe': 0.2454006
+LCDM:
+  'Omega_k': 0
+w0waCDM:
+  'Omega_Lambda': 0.0
+  'Omega_k': 0
+  'use_ppf': 'yes'

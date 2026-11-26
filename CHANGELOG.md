@@ -7,44 +7,291 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Add explicit analysis context runtime isolation and refresh the comprehensive guide.
+## [v2.0.0](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0) - 2026-11-12
 
-## 1.3.1
+### Fixed
+
+- The `Release` job in the `Main` workflow now generates the release notes through `uv run`,
+  so `release_notes.py` finds the `packaging` module installed in the project environment.
+  Previously it used the system Python and failed after the `v2.0.0rc2` publish.
+
+## [v2.0.0rc2](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc2) - 2026-11-11
+
+### Fixed
+
+- Replaced the invalid `Topic :: Scientific/Engineering :: Cosmology` trove classifier, which
+  made TestPyPI reject the `v2.0.0rc1` upload, with valid Astronomy, Physics, Information
+  Analysis and Mathematics topics, and added `Operating System`, `Python 3 :: Only` and
+  `Typing :: Typed` classifiers. The development status classifier is raised from Alpha to
+  Beta. The version is bumped to `2.0.0rc2` because the failed
+  `v2.0.0rc1` tag cannot be reused.
+
+## [v2.0.0rc1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0rc1) - 2026-11-11
+
+### Added
+
+- `scripts/maintenance/release/release.sh` rewritten as a guarded, step-by-step release helper:
+  it requires a clean, up-to-date `main`, checks that the tag does not exist and that
+  `version.py` and `CITATION.cff` agree, explains and confirms each step, commits only
+  `CHANGELOG.md`, creates the tag, supports `--dry-run` and `--yes`, and never pushes (it
+  prints the push commands and the post-release checks instead).
+- Release guide `docs/source/releasing.md` (TestPyPI and PyPI flow, one-time setup, recovery),
+  replacing the outdated `docs/RELEASE_PROCESS.md`.
+- `scripts/maintenance/release/check_version_consistency.py` and a `Metadata` CI task that fail
+  when the `version:` entry of `CITATION.cff` differs from `cosmicjellyfish/version.py`.
+- `environment.yml` for `mamba`/`conda` users (`conda-forge` channel, versions mirroring
+  `pyproject.toml`), documented in the installation guide and README.
+
+### Removed
+
+- `requirements.txt`. It had drifted from `pyproject.toml` (unpinned NumPy, a pinned `uv`,
+  no JAX extras) and nothing used it; `pyproject.toml` is the single source of truth for
+  `pip`/`uv`, and `environment.yml` covers conda.
+
+### Changed
+
+- Package version bumped to `2.0.0rc1` (first PyPI release candidate of the 2.0 series, which
+  covers the `cosmicfishpie` to `cosmicjellyfish` rename, the JAX backend and the symbolic
+  backend overhaul). The legacy `1.3.1` heading now uses the `## [vX.Y.Z]` format that
+  `release_notes.py` expects.
+- Prepare PyPI publishing. `symbolic-pofk` is no longer a direct-URL dependency of the
+  package (PyPI rejects those); `code="symbolic"` now raises an `ImportError` with
+  install instructions (`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`)
+  when it is missing. Source checkouts keep installing it through `uv` (default
+  dependency group, unpinned upstream repository). The release workflow now uses PyPI
+  Trusted Publishing: `rc` tags and manual runs go to TestPyPI, final `vX.Y.Z` tags to
+  PyPI, replacing the stored-password `twine upload`.
+
+### Fixed
+
+- Review fixes for the PyPI preparation: the publish jobs check out with
+  `persist-credentials: false`; the legacy symbolic backend only shows the `symbolic_pofk`
+  install hint when `symbolic_pofk` itself is missing (a missing `colossus` is reported as
+  such); `environment.yml` uses `nodefaults` and provides conda-forge `gcc`, `gxx` and `make`
+  (the commands the source-built `classy` calls by name); `release.sh` accepts multi-word
+  `PYTHON` values such as `PYTHON="uv run python"` and keeps an executable path with spaces as
+  one argument; the macOS SDK prerequisite for the source-built `classy` is documented.
+  Tests cover the import-error paths.
+- Align metadata and docs: `CITATION.cff` now carries version 1.3.1 and all four authors
+  (matching `pyproject.toml` and the docs BibTeX entry), the comprehensive guide no longer
+  says JAX is not implemented, and the README feature list mentions JAX autodiff.
+- Normalise GCsp Fisher parameter axes before covariance inversion and nuisance
+  marginalisation so physical `As` units do not suppress other uncertainties; use a
+  purely relative finite-difference step for physical `As` in the final Jacobian; make
+  `jacobian_from_function` raise on non-finite finite-difference columns. Recommend
+  `10^9As` for forecasts.
+- Harden Fisher Jacobian inputs and aliases, preserve numeric-string cosmology fiducials,
+  report infinite uncertainties for unconstrained redshift bins and null combinations,
+  and map `As`/`10^9As` aliases in direct comparisons without changing relative steps.
+- Respect explicit `omch2` fiducials without conflicting default `Omegam` values.
+
+- Add a two-stage GCsp forecast in intermediate parameters, following Euclid
+  preparation VII, section 4.2.1 (`cosmicjellyfish.LSSsurvey.gcsp_intermediate`).
+  Shape parameters `(omegab, h, omegam, ns)` and per-bin `ln D_A`, `ln H`, `ln fsigma8`,
+  `ln bsigma8` and `P_s` are differentiated with JAX autodiff or paper-style finite
+  differences, nuisances are marginalised, and the result is projected onto the final
+  cosmological parameters with `F = J^T F J`. Matches the direct Fisher forecast to
+  about 1e-12. `TheoryTables` now exposes an optional `sigma8(z)`.
+- Add `reparametrise` and `jacobian_from_function` to
+  `cosmicjellyfish.analysis.fisher_operations` for general Fisher-space Jacobian
+  reparametrisations (in contrast to the covariance pull-back of `fisher_derived`).
+- Add the `gcsp_intermediate` documentation page with figures and the notebook
+  `08-GCsp-intermediate-parameters.ipynb`. Fix a doctest directive in
+  `jaxcosmo_derivatives` that newer Python versions reject.
+
+- Add the CosmicJellyfish logo, theme-aware README and documentation banners,
+  navbar icons, landing-page wordmark and updated favicons.
+
+- Move the YAML sampler examples to `scripts/likelihood/sampler/`, remove the
+  bundled chain samples, and document cjfp-data downloads and validation workflows
+  with a real chain-metadata example. The default sampler output remains `./chains/`.
+
+- Rename the distribution and import package from `cosmicfishpie` to `cosmicjellyfish`.
+  `import cosmicfishpie` keeps working through a deprecated compatibility alias that
+  resolves to the same module objects, so configuration state, class identities and old
+  pickles are preserved. The `neutrino_scheme: cosmicfishpie` setting is still accepted.
+- Reject non-finite `jaxcosmo` densities and dark-energy parameters, detect conflicting
+  `ns`/`n_s` aliases, normalize integral sample counts to integers, and check array-valued
+  `sigmap_*`/`sigmav_*` fiducials for unsupported rescaling.
+- Tighten `jaxcosmo` input validation for conflicting density, expansion-rate, and dark-energy aliases; reject invalid `h` and fractional sample counts. Permit unchanged unit `sigmap_*`/`sigmav_*` fiducials while rejecting unsupported non-unit rescaling.
+- Tighten the `jaxcosmo` guards after review: check every neutrino alias, reject
+  density keys the backend ignores, require a positive finite primordial amplitude, enforce
+  minimum `NUMERICS` grid sizes, validate `distance_steps` before truncation, refuse a
+  conflicting `w0`/`wa` under `cosmo_model="LCDM"`, compare fiducial overrides to
+  near-machine precision, take the spectroscopic fiducial `h` from the resolved cosmology,
+  reject the unimplemented `rescale_sigma_pv` parameters, and require a finite non-zero
+  `--fd-step`. A Halofit bracket with no root now returns `NaN` so the provider rejects it.
+- Upgrade the development Black requirement to `>=26.5.1,<27.0`, apply its formatting
+  with an explicit Python 3.10 target, and refresh the development dependency lockfile.
+- Validate `jaxcosmo` inputs further: reject theta-like expansion parameters, conflicting
+  amplitude aliases and non-positive `sigma8`; fail when the Halofit nonlinear scale has no
+  root instead of returning a spurious spectrum; keep the wavenumber axis in the Halofit
+  output; accept only GCph+WL or GCsp per derivative request, and differentiate `Ps_*`
+  shot-noise parameters with the JAX Jacobian rather than the legacy analytic formulas.
+- Harden the `jaxcosmo` backend in response to review: reject the unsupported
+  `clustering` tracer, non-integer `distance_steps` and non-zero neutrino densities;
+  validate only the probes each observable was asked for; keep the WL kernel finite at a
+  zero bin edge; parse `Ps_*` shot-noise bins from their names; honour
+  `settings["nonlinear"]`; and make the photometric comparison report reference spectra
+  that the candidate is missing.
+
+- Test the JAX photometric observable against the legacy `ComputeCls`: the fiducial `C_ell`,
+  a shifted cosmology and shifted bias / intrinsic-alignment amplitudes agree to
+  `max |dC|/max|C| < 1e-3` (observed ~2e-5), and the autodiff derivatives match central
+  differences of the same observable. This takes `jaxcosmo_photo` from 16% to 92% coverage.
+
+- CI and docs for the `jaxcosmo` backend: add a `test (jaxcosmo)` job that installs the
+  `jaxcosmo` extra and runs the JAX tests (they skip themselves in the default job, where
+  JAX is not installed), uploading coverage with the `jaxcosmo` Codecov flag; mock `jax`
+  and `jax_cosmo` in the Sphinx build (`autodoc_mock_imports`) so the strict API docs build
+  succeeds without the extra.
+
+- Document that the roughly 10% difference in the marginalized `10^9As` error between
+  SYREN-NEW and JAXcosmo is a matter-power-model difference, not an implementation or
+  differentiation artefact: unmarginalized errors agree to 2.6%, the gap appears through
+  galaxy-bias marginalization, and putting the SYREN-NEW power spectrum inside the JAX
+  observable reproduces the SYREN result to 0.08% (`scripts/validation/compare_theory_amplitude_response.py`).
+  Also document why two "Eisenstein-Hu" models still differ: SYREN-NEW is the no-wiggle
+  fit times a fitted correction to the true linear spectrum, and feeding Halofit with that
+  linear shape reproduces the sign and most of the size of the gap.
+
+- Document the JAXcosmo backend, AD/FD providers and configuration in the user guide,
+  with a downloadable photometric comparison notebook against SYREN-NEW. Its Fisher
+  comparison keeps `ns` fixed while retaining the spectral-index response diagnostic.
+
+- Add the optional, differentiable `jaxcosmo` backend (`options["code"] = "jaxcosmo"`,
+  install with `pip install 'cosmicjellyfish[jaxcosmo]'`): `jax-cosmo` background,
+  Eisenstein-Hu + Halofit total-matter power (flat, massless neutrinos), and a JAX port
+  of the `symbolic_pofk` `10^9As -> sigma8` fit. A backend-neutral differentiable theory
+  interface (`cosmology/jax_theory.py`) lets JAX observables stay independent of the
+  selected backend. JAX-native photometric (`GCph`+`WL`, `LSSsurvey/jaxcosmo_photo.py`)
+  and spectroscopic (`GCsp`, `LSSsurvey/jaxcosmo_spectro.py`) observables reproduce the
+  standard Limber and P(k, mu) calculations, with `fishermatrix.jaxcosmo_derivatives`
+  providers: `JaxAutodiffProvider` gives exact forward-mode derivatives and
+  `JaxFiniteDifferenceProvider` applies the standard finite-difference engine to the same
+  observable, so autodiff and finite differences can be validated against each other and
+  against the legacy pipeline (`scripts/validation/compare_jax_*_fishers.py`).
+  Both are wired through `FisherMatrix(derivative_provider=...)`. CMB, clustering/CB
+  tracers and massive neutrinos are explicitly rejected.
+
+- Use a smooth Halofit root find in the `jaxcosmo` theory layer: `jax-cosmo` locates the
+  nonlinear scale by interpolating `sigma(R) = 1` on a fixed 256-node grid, which makes the
+  derivative of the power spectrum jump between nodes and spoils finite differences even at
+  small steps. The
+  replacement integrates `sigma^2(R)` on a fine grid and solves it with a fixed-count Newton
+  iteration, which converges to machine precision. The values stay within 5e-4 of `jax-cosmo`
+  at the fiducial point and within 0.6% over the validation parameter box (the difference is
+  `jax-cosmo`'s own interpolation error in the nonlinear scale), while being differentiable.
+
+- Review fixes for the `jaxcosmo` branch (see `docs/source/jaxcosmo_review.md`): correct
+  orientation of the Savitzky-Golay operator in the JAX spectroscopic observable (fiducial
+  `ln P` agreement with the legacy code improves from 8e-5 to 2e-6); observable cache of
+  the derivative providers keyed on the full analysis configuration; `kh_rescaling_bug`
+  options and `AP_effect=False` handled like the legacy `observed_Pgg`; new
+  `NUMERICS.legacy_pk_clamp` option reproducing the table-edge clamp of the legacy power
+  spline; tests for the theory layer, option branches and providers.
+
+- Support NumPy 2: replace the `numpy<2` pin with `numpy>=2.1,<2.3` (NumPy 1.x installs must upgrade to 2.1 or newer)
+  (2.2.x is the newest series supporting Python 3.10), relock, and compute the
+  legacy `round_decimals_up` branch in float64 to keep results identical under
+  NEP 50 promotion rules. Full Fisher backend validation against the NumPy 1
+  results is run separately.
+
+- Add `fishconsumer.make_fisher_chain_plot` for paired Fisher/posterior overlays,
+  with marginalization to plotted parameters, matched colors for missing-chain
+  cases, independent `show_fisher`/`show_chains` switches, and per-call limits
+  using Gaussian-equivalent weighted posterior quantiles (3 sigma by default).
+
+- Build sampler analysis and worker contexts with the configured prior parameters,
+  preventing nondefault coordinates such as `10^9As` from being dropped.
+
+- Translate public dimensionless `As` to CLASS `A_s` and order-one `10^9As`
+  to CAMB `As` (CLASS/SYREN-NEW already support it), label amplitude coordinates
+  consistently, and preserve small fiducials in Fisher parameter-file exports.
+  EE2 now reads the exact computed CLASS amplitude instead of interpolating
+  primordial-grid values near its hard amplitude bounds.
+
+- Restore matched CAMB/CLASS nonlinear cb subtraction and the shared default
+  neutrino-density factor, retaining nonlinear-grid hardening. Native CLASS cb
+  remains opt-in; see `docs/source/neutrino_cb_regression.md` for local evidence.
+
+- Migrate the documentation to the PyData Sphinx Theme with a card-based landing
+  page, Getting started / User guide / Tutorials / API / Development sections,
+  autosummary-generated per-module API pages, a new `docs` extra
+  (`uv sync --extra docs`), a build-only docs CI job, and warnings-as-errors
+  builds. Fix docstrings that broke the API build.
+- Publish the documentation to the `docs/` folder of `gh-pages` with a new
+  `docs.yml` GitHub Actions workflow (on pushes to `main` and version tags) and
+  retire Read the Docs (`.readthedocs.yaml` removed).
+- Vectorize the photometric Cl pipeline (row-wise `sqrtP_limber`, cached kernels
+  and window factors) for up to ~6x faster Fisher matrix computation with the
+  symbolic backend; see `docs/source/photometric_optimization_results.md`.
+- Generalize the Nautilus sampler to a registered-likelihood-component
+  architecture, fix spawn-safety for multiprocessing worker pools, and add
+  Slurm launch scripts for HPC runs.
+- Validate WL/GCsp/joint Nautilus likelihoods against Fisher forecasts; see
+  `docs/source/likelihood_validation.md`.
+- Fix a CLASS/HMcode nonlinear power spectrum error at z=6, normalize CAMB
+  input paths, and various spectro/base likelihood and job-handling fixes.
+- Remove the unused Ray options `parallel` and `parallel_cpus` of `FisherMatrix`
+  and the `ray_session` helper.
+- Default `survey_name_radio_IM` to the shipped `SKAO-IM-Redbook`, and look up
+  survey specification files in `other_survey_specifications` when they are not
+  found in `specs_dir`.
+- Use the standard `Neff = 3.044` for CAMB when the fiducial cosmology has no `Neff`.
+- Warn when the `POLY` or `STEM` derivative methods are used with non-photometric
+  probes, or `4PT_FWD` with CMB probes.
+- Nautilus sampler: do not modify the caller's config, write the real package
+  version to the metadata, store an evidence of 0.0, warn about priors that are
+  ignored, raise a clear error with fewer than two sampled parameters, add an
+  `overwrite` option to resample an existing run, and export `load_chain_metadata`.
+- Parse MontePython parameter files with `ast.literal_eval` instead of `eval` and
+  fix the `FishConsumer` chain-loading docstrings.
+- Point the validation dashboard links to `https://www.santicasas.space/cosmicjellyfish/dashboard/`.
+- Add explicit analysis context runtime isolation and refresh the comprehensive guide.
+- Symbolic backend overhaul to the new syren emulators, pinning the `symbolic-pofk`
+  GitHub tarball in CI instead of a local editable path.
+- Expose derivatives on `FisherMatrix`, add CLASS EE2 profiles, and harden nonlinear
+  spectra handling.
+- Reorganize `scripts/` into category subfolders and notebooks into a numbered workflow
+  (legacy notebooks archived); add backend validation and symbolic provenance docs pages.
+
+## [v1.3.1](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v1.3.1)
 
 - Add the CAMB/CLASS validation suite, threshold-aware dashboard, and manual
   GitHub Pages publication workflow.
 
-1.0.1 : Bugfix for external file reading for release notebooks.
-        Change `is False` statements with a normal `not` to catch False-equivalents.
+1.3.0 : Performance optimization in Photo module and benchmarking scripts
+1.2.8 : Added compehensive test catalogue.
+1.2.7 : Added test for analysis module
+1.2.6 : New demo notebook GCsp
+1.2.5 : Likelihood modules tested for photo and spectro
+1.2.4 : Discontinued support for python3.8. Fixed the style for likelihood scripts.
+1.2.3 : Added a new likelihood function for photometric and spectroscopic surveys.
+1.2.2 : Galaxy sample split for sources and lenses. Feedback prints more consistent.
+1.2.1 : Updating configs of other surveys: SKAO, DESI, LSST to work in new config file structure
+1.2.0 : Big update of configuration, specification yamls and nuisance parameter interface. No backwards compatibility of yamls!
+1.1.4 : Coverage reports with Codecov
+1.1.3 : New split up demonstration notebooks
+1.1.2 : Coverage badge
+1.1.1 : Resolved gcsp bias bug, new test suite.
+1.1.0 : Implemented symbolic as a new boltzmann solver class. Fixes of feedback prints. More docstrings.
+1.0.8 : Overview documentation and initial tests
+1.0.7 : Added a new installation script to download external data from the github
 
-1.0.2 : Added documentation for the cosmicfishpie.LSSsurvey submodule
+1.0.6 : Restructured default parameters for EBS and Survey Specifications
 
-1.0.3 : Added documentation for the cosmicfishpie.fishermatrix submodule
+1.0.5 : Removed a backwards compatibility issue with older version of numpy.
+        Switched Integration to use scipy now
 
 1.0.4 : Merged changes from the old repo to the release repo.
         Mainly changes to the plotting routine
         Added new external file for nonlinear power spectra
         New options for spectroscopic error. Removed infamous h-bug
 
-1.0.5 : Removed a backwards compatibility issue with older version of numpy.
-        Switched Integration to use scipy now
+1.0.3 : Added documentation for the cosmicjellyfish.fishermatrix submodule
 
-1.0.6 : Restructured default parameters for EBS and Survey Specifications
+1.0.2 : Added documentation for the cosmicjellyfish.LSSsurvey submodule
 
-1.0.7 : Added a new installation script to download external data from the github
-1.0.8 : Overview documentation and initial tests
-1.1.0 : Implemented symbolic as a new boltzmann solver class. Fixes of feedback prints. More docstrings.
-1.1.1 : Resolved gcsp bias bug, new test suite. 
-1.1.2 : Coverage badge
-1.1.3 : New split up demonstration notebooks
-1.1.4 : Coverage reports with Codecov
-1.2.0 : Big update of configuration, specification yamls and nuisance parameter interface. No backwards compatibility of yamls!
-1.2.1 : Updating configs of other surveys: SKAO, DESI, LSST to work in new config file structure
-1.2.2 : Galaxy sample split for sources and lenses. Feedback prints more consistent.
-1.2.3 : Added a new likelihood function for photometric and spectroscopic surveys.
-1.2.4 : Discontinued support for python3.8. Fixed the style for likelihood scripts.
-1.2.5 : Likelihood modules tested for photo and spectro
-1.2.6 : New demo notebook GCsp
-1.2.7 : Added test for analysis module
-1.2.8 : Added compehensive test catalogue. 
-1.3.0 : Performance optimization in Photo module and benchmarking scripts
+1.0.1 : Bugfix for external file reading for release notebooks.
+        Change `is False` statements with a normal `not` to catch False-equivalents.
