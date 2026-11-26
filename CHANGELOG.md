@@ -65,6 +65,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The cross-spectrum covariance test now exercises `veff_Ig`, and the `w0`-`wa` figure is
   regrouped into four paired panels without the much weaker Planck-like run, with missing
   inputs raising instead of being silently skipped.
+- Example notebooks 04, 05 and 06 now run top to bottom (reported by Kazuya): notebook 04
+  defines the Planck parameter list and skips the covariance comparison when its Part-2 inputs are
+  missing, 05 combines Fishers with matching fiducials instead of failing on the Planck-like ones
+  produced by 03, 06 passes the Fisher result (not the `FisherMatrix` object) to the nuisance
+  prior helper and writes a commented chain header, and 03 writes one Fisher file per survey. The
+  kernel metadata of 04 and 07 is the generic `python3`. Notebook 04 also selects a single
+  producing package version instead of the lexicographically last Fisher file, and checks the
+  exact Planck `.covmat` and `.likestats` files before running its optional diagnostics.
+- `fisher_operations.information_gain` no longer fails: it built an all-zero Fisher matrix, which
+  the `fisher_matrix` constructor reduces to zero parameters. The prior argument is now optional,
+  and a prior may supply a parameter that is absent from the second Fisher matrix: the statistical
+  term zero-pads it instead of asking `reshuffle` for a parameter that is not there.
+- `scripts/planck/run_planck_diagnostics_suite.sh` builds its Fisher filenames from the package
+  `VERSION` instead of the hard-coded `v1.3.0`; the combine step previously read names the
+  producers no longer write and stopped before creating the combined Fisher.
 
 ## [v2.0.0](https://github.com/santiagocasas/cosmicjellyfish/releases/tag/v2.0.0) - 2026-11-12
 

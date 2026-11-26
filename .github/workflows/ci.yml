@@ -1,6 +1,22 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  # Skip the test suite for the JOSS paper branches and for text-only changes
+  # (paper, citation metadata): the paper is not code and does not need jaxcosmo etc.
+  push:
+    branches-ignore:
+      - "paper/**"
+    paths-ignore:
+      - "paper/**"
+      - "CITATION.cff"
+      - ".all-contributorsrc"
+  pull_request:
+    branches-ignore:
+      - "paper/**"   # PRs whose base is a paper branch (authorship PRs)
+    paths-ignore:
+      - "paper/**"
+      - "CITATION.cff"
+      - ".all-contributorsrc"
 
 jobs:
   test:

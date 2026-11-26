@@ -156,11 +156,29 @@ Follow existing patterns and keep changes minimal and focused.
 - In `../cfp-dev`, `ara/` is a real, tracked directory. In every OTHER worktree (main,
   perf-v2, symbolic_overhaul, ...), `ara` is a symlink to `../cfp-dev/ara`, listed in the shared
   `.git/info/exclude`, so every branch writes to the same single trace.
-- Only run the `research-manager` skill (or write to `ara/`) if the `ara` symlink exists and
-  resolves. If `ara` is missing or dangling, skip it; do NOT create a new `ara/` directory.
+- **Run the `research-manager` epilogue at the end of EVERY turn** that contains research-significant
+  activity (decisions, experiments, PR/merge work, review findings), writing through the `ara`
+  symlink. Do not wait to be asked. If a long conversation is compressed, keep doing it.
+- **Every worktree must have the symlink.** When you create a new worktree, immediately run
+  `ln -s ../cfp-dev/ara ara` inside it (the shared `.git/info/exclude` already ignores `ara`).
+  If `ara` is missing in a worktree, create the symlink; if it is dangling (`../cfp-dev` does not
+  exist), skip the epilogue and tell the maintainer. Never create a real `ara/` directory
+  outside `../cfp-dev`.
 - Never `git add` or commit `ara` outside `../cfp-dev`. Do not add it to `.gitignore`.
 - To sync the trace, commit inside `../cfp-dev` with `git add -f ara` (the exclude rule hides
-  new files from a plain `git add`), then `git commit`. Pushing is done by the maintainer.
+  new files from a plain `git add`), then `git commit`. Commit only when the maintainer asks.
+  Pushing is done by the maintainer.
+- When the session starts from the parent directory `cosmicfish_release/` (not a git repo), there
+  is no `ara` link there: write to `cfp-dev/ara` directly.
+
+## Keeping this file in sync
+- This file exists in two places: the tracked `AGENTS.md` in the repo (this section is the same on
+  every branch that has it) and an untracked copy at `cosmicfish_release/AGENTS.md`, which is what
+  agents read when started from the parent directory.
+- Sync them once in a while (e.g. after changing this section, or when starting a new round of
+  PRs): `diff cosmicfish_release/AGENTS.md cosmicjellyfish/AGENTS.md`, then copy the newer one
+  over the older. Branches other than `main` pick up the tracked file when they merge `main`.
+- `cfp-dev/AGENTS.md` is an older version without the ARA section; update it when convenient.
 
 ## Cursor and Copilot rules
 - No `.cursor/rules/`, `.cursorrules`, or `.github/copilot-instructions.md` found.
