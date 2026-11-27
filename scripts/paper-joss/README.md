@@ -6,7 +6,7 @@ Scripts that regenerate the figure and the numbers of the JOSS paper
 | Paper item | Script | Time |
 |---|---|---|
 | The two code listings (run exactly as printed) | `check_listings.py` | ~1 min + one WL Nautilus run (8 workers) |
-| Autodiff vs finite differences: 0.05% and 0.4% for 17 parameters | `autodiff_numbers.py` | a few minutes |
+| Autodiff vs finite differences: 0.05% and 0.4% for 17 parameters | `autodiff_numbers.py`, `plot_autodiff_ratios.py` | a few minutes |
 | Figure 1 (Fisher vs Nautilus) and the 1.4%, 1.2%, 0.9% agreement | `reproduce_all.sh` (steps `nautilus render`) | ~1 h on 64 workers (36 physical cores) |
 | Table of reproduced vs published numbers and timings | `compare_with_paper.py` | seconds |
 
@@ -69,7 +69,7 @@ skipped. All options are listed at the top of `reproduce_all.sh`.
 - `fig_fisher_vs_nautilus.png`: compare with `paper/figures/fig3_fisher_vs_nautilus.png`.
 - `comparison.md`: max |sigma_Nautilus / sigma_Fisher - 1| per probe for the paper, the
   published run (`scripts/likelihood_validation_results/`) and this run, plus timings.
-- `autodiff_summary.json`, `autodiff_sigma_ratios.txt`.
+- `autodiff_summary.json`, `autodiff_sigma_ratios.txt`, `fig_autodiff_ratios.png`.
 - `stats/`, `figures/` (per-probe plots), `nautilus_run/` (chains, checkpoints), `logs/`,
   `listings/`.
 

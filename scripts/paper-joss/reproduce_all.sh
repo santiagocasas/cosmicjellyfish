@@ -56,6 +56,8 @@ if has_step autodiff; then
     echo "[$(stamp)] autodiff vs finite differences (jaxcosmo)"
     "${PY[@]}" scripts/paper-joss/autodiff_numbers.py --out-dir "$OUT_DIR" \
         2>&1 | tee "$OUT_DIR/logs/autodiff.log"
+    "${PY[@]}" scripts/paper-joss/plot_autodiff_ratios.py --out-dir "$OUT_DIR" \
+        2>&1 | tee -a "$OUT_DIR/logs/autodiff.log"
 fi
 
 if has_step nautilus; then
