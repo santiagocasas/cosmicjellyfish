@@ -75,6 +75,9 @@ authors:
     roles:
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: software, credit-name: "Software"}
+  - name: Emilio Bellini
+    orcid: 0000-0003-4762-0795
+    affiliation: 15
   - name: Kazuya Koyama
     orcid: 0000-0001-6727-6915
     affiliation: 14
@@ -83,9 +86,6 @@ authors:
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: supervision, credit-name: "Supervision"}
       - {credit: validation, credit-name: "Validation"}
-  - name: Emilio Bellini
-    orcid: 0000-0003-4762-0795
-    affiliation: 15
   - name: Stefano Camera
     orcid: 0000-0003-3399-3574
     affiliation: "10, 11, 12, 16"

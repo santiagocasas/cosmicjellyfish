@@ -12,14 +12,14 @@ authors:
     given-names: Sefa
     affiliation: Instituto de Física de Cantabria, Edificio Juan Jordá, Avenida de los Castros, 39005 Santander, Spain
     orcid: https://orcid.org/0009-0004-0852-8624
-  - family-names: Sakr
-    given-names: Ziad
-    affiliation: Instituto de Física Teórica
-    orcid: https://orcid.org/0000-0002-4823-3757
   - family-names: Sabarish
     given-names: V. M.
     affiliation: RWTH Aachen University, Hamburger Sternwarte
     orcid: https://orcid.org/0000-0001-5677-0838
+  - family-names: Sakr
+    given-names: Ziad
+    affiliation: Instituto de Física Teórica
+    orcid: https://orcid.org/0000-0002-4823-3757
   - family-names: Frusciante
     given-names: Noemi
     affiliation: Università degli Studi di Napoli “Federico II”
@@ -36,14 +36,14 @@ authors:
     given-names: Matías
     affiliation: Universidad de Buenos Aires, FCEN, Departamento de Física; CONICET - Universidad de Buenos Aires, Instituto de Física de Buenos Aires (IFIBA), Argentina
     orcid: https://orcid.org/0000-0002-6438-2285
-  - family-names: Koyama
-    given-names: Kazuya
-    affiliation: Institute of Cosmology and Gravitation, University of Portsmouth, UK
-    orcid: https://orcid.org/0000-0001-6727-6915
   - family-names: Bellini
     given-names: Emilio
     affiliation: University of Nova Gorica
     orcid: https://orcid.org/0000-0003-4762-0795
+  - family-names: Koyama
+    given-names: Kazuya
+    affiliation: Institute of Cosmology and Gravitation, University of Portsmouth, UK
+    orcid: https://orcid.org/0000-0001-6727-6915
   - family-names: Camera
     given-names: Stefano
     affiliation: Università degli Studi di Torino
