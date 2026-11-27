@@ -90,7 +90,7 @@ dev = [
     "black>=26.10.1,<27.0",
     "isort>=5.12,<9.1",
     "line-profiler==5.1.0",
-    "py-spy==0.4.2",
+    "py-spy==0.4.4",
     "pytest",
     "pytest-sphinx",
     "pytest-cov",
