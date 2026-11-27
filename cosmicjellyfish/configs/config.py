@@ -12,6 +12,7 @@ import numpy as np
 import yaml
 
 import cosmicjellyfish.cosmology.cosmology as cosmology
+from cosmicjellyfish.LSSsurvey.spectro_modes import resolve_spectro_observables
 from cosmicjellyfish.utilities.utils import misc as ums
 from cosmicjellyfish.utilities.utils import physmath as upm
 from cosmicjellyfish.utilities.utils import printing as upt
@@ -177,6 +178,12 @@ def init(
                                   Path to the configurations for the Einstein-Boltzmann solvers. Defaults to the `boltzmann_yaml_files` folder in the home directory of cosmicjellyfish
     class_config_yaml           : str
                                   Path to the configurations for class. Defaults to 'boltzmann_yaml_path/class/default.yaml'
+    class_module                : str
+                                  Python module providing the CLASS wrapper for code = 'class'. Defaults to 'classy'.
+                                  Use 'hiclassy' for hi_class-based codes such as frahi_class (Hu-Sawicki f(R))
+    class_object                : str
+                                  Name of the CLASS wrapper class inside `class_module`. Defaults to 'Class'
+                                  ('HiClass' for hiclassy)
     camb_config_yaml            : str
                                   Path to the configurations for camb. Defaults to 'boltzmann_yaml_path/camb/default.yaml'
     fishermatrix_file_extension : str
@@ -272,6 +279,7 @@ def init(
     settings.setdefault("nonlinear", True)
     settings.setdefault("nonlinear_photo", True)
     settings.setdefault("bfs8terms", False)
+    settings.setdefault("spectro_joint", False)
     settings.setdefault("vary_bias_str", "lnb")
     settings.setdefault("AP_effect", True)
     settings.setdefault("FoG_switch", True)
@@ -299,6 +307,8 @@ def init(
     settings.setdefault(
         "class_config_yaml", os.path.join(settings["boltzmann_yaml_path"], "class", "default.yaml")
     )
+    settings.setdefault("class_module", "classy")
+    settings.setdefault("class_object", "Class")
     settings.setdefault(
         "camb_config_yaml", os.path.join(settings["boltzmann_yaml_path"], "camb", "default.yaml")
     )
@@ -646,11 +656,19 @@ def init(
     )
     # ums.deepupdate(specs, specifications)  # deep update keys if passed by users
     specs.update(specifications)
+    # A runtime model override should not inherit the root of the survey file's default model.
+    if specifications.get("sp_bias_model") == "linear_log" and "sp_bias_root" not in specifications:
+        specs["sp_bias_root"] = "lnb"
     specs["survey_name"] = surveyName
     specs["specs_dir"] = settings["specs_dir"]  # Path for additional files like luminosity
 
     if observables is None:
         observables = ["GCph", "WL"]
+    # 'GCspxIM' is the galaxy x IM cross-spectrum; with spectro_joint (or all three of
+    # GCsp, GCspxIM, IM) the auto- and cross-spectra are combined with their full covariance.
+    observables, settings["spectro_mode"] = resolve_spectro_observables(
+        observables, joint=bool(settings.get("spectro_joint", False))
+    )
     global obs
     obs = observables
 
@@ -810,6 +828,18 @@ def init(
             # sanity check
             if bias_sample not in list(Spectrobiasparams.keys())[0]:
                 print("Warning: bias_sample not found in bias_parameter keys")
+            # Check that the selected root matches the active table before evaluating the bias.
+            if "GCsp" in obs and "linear" in bias_model:
+                root = specs["sp_bias_root"]
+                wanted = [f"{root}{bias_sample}_{ibin}" for ibin in specs.get("z_bins_sp", {})]
+                missing = [key for key in wanted if key not in Spectrobiasparams]
+                if missing:
+                    raise ValueError(
+                        f"sp_bias_model '{bias_model}' provides the keys "
+                        f"{list(bias_prmod)[:2]}..., but sp_bias_root '{root}' looks up "
+                        f"{missing[:2]}... Set sp_bias_root together with sp_bias_model "
+                        "(for example sp_bias_model='linear_log' with sp_bias_root='lnb')."
+                    )
             shot_noise_model = specs["shot_noise_model"]
             shot_noise_prtz = specs["shot_noise_parametrization"]
             try:

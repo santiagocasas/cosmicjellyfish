@@ -1,0 +1,48 @@
+specifications:
+  # Vera C. Rubin Observatory (LSST), photometric survey, transcribed from the
+  # historical SKAO project (`survey_specifications/Rubin-Optimistic.yaml`,
+  # area = 14300 deg^2). The explicit per-probe sky fractions take precedence
+  # over the legacy single `area_survey` value.
+  # See docs/SURVEY_VALIDATION_ROADMAP.md for the provenance.
+  'z_bins_ph': [0.001, 0.418, 0.560, 0.678, 0.789, 0.900, 1.019, 1.155, 1.324, 1.576, 2.50]
+  'zm': 0.156
+  'ngamma': 0.68
+  'ngal_sqarmin': 27
+  photo_z_params:
+    'fout': 0.1
+    'co': 1
+    'cb': 1
+    'sigma_o': 0.05
+    'sigma_b': 0.05
+    'zo': 0.1
+    'zb': 0.0
+  'fsky_GCph': 0.33
+  'lmax_GCph': 1500
+  'lmin_GCph': 10
+  'ellipt_error': 0.26
+  'fsky_WL': 0.35
+  'lmax_WL': 5000
+  'lmin_WL': 10
+  'kmax': 30.
+  'vary_ph_bias': 0.06
+  'vary_IA_pars': 0.06
+  ph_bias_model: 'binned'
+  ph_bias_parametrization:
+    binned:
+      keystr: 'b'
+      generate_bias_keys: true
+    binned_constant:
+      keystr: 'b'
+      generate_bias_keys: true
+    sqrt:
+      b0: 1.0
+    flagship:
+      A: 1.0
+      B: 2.5
+      C: 2.8
+      D: 1.6
+  IA_params:
+    IA_model: 'eNLA'
+    AIA: 1.72
+    betaIA: 2.17
+    etaIA: -0.41

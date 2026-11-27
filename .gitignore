@@ -7,6 +7,7 @@
 # ...except small, versioned documentation figures.
 !docs/source/_static/likelihood_validation/*.png
 !docs/source/_static/ns_response/*.png
+!docs/source/_static/survey_validation/*.png
 # The three figures cited by the JOSS paper (the scripts in paper/scripts regenerate 1 and 2).
 !paper/figures/fig1_euclid_probes.png
 !paper/figures/fig2_autodiff_ratios.png

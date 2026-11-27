@@ -8,13 +8,14 @@
   </picture>
 </p>
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/github/all-contributors/santiagocasas/cosmicjellyfish?color=ee8449&style=flat-square)](#contributors-)
 [![Documentation](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/docs.yml/badge.svg)](https://www.santicasas.space/cosmicjellyfish/docs/)
 [![PyPI](https://img.shields.io/pypi/v/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![codecov](https://codecov.io/github/santiagocasas/cosmicjellyfish/graph/badge.svg?token=BXTVDPXPUO)](https://codecov.io/github/santiagocasas/cosmicjellyfish)
 [![CI](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+[![CRediT](https://img.shields.io/badge/contributions-CRediT-using?color=%23cd2653)](https://credit.niso.org/implementing-credit/)
 
 [![37.50 % FAIR](https://img.shields.io/badge/FAIR_assessment-37.50_%25-red)](https://fair-checker.france-bioinformatique.fr/assessment/68da9e3cc49e421b3e2cf501)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
@@ -149,6 +150,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/domenicosapone"><img src="https://avatars.githubusercontent.com/u/11212509?v=4&size=100" width="100px" height="100px" alt="domenicosapone"/><br /><sub><b>domenicosapone</b></sub></a><br /><a href="https://github.com/santiagocasas/cosmicjellyfish/commits?author=domenicosapone" title="Code">💻</a> <a href="#ideas-domenicosapone" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-domenicosapone" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/santiagocasas/cosmicjellyfish/commits?author=domenicosapone" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://matiasleize.github.io/"><img src="https://avatars.githubusercontent.com/u/37784016?v=4&size=100" width="100px" height="100px" alt="Matías Leizerovich"/><br /><sub><b>Matías Leizerovich</b></sub></a><br /><a href="https://github.com/santiagocasas/cosmicjellyfish/commits?author=matiasleize" title="Code">💻</a> <a href="#ideas-matiasleize" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/santiagocasas/cosmicjellyfish/commits?author=matiasleize" title="Tests">⚠️</a> <a href="#userTesting-matiasleize" title="User Testing">📓</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/emiliobellini"><img src="https://avatars.githubusercontent.com/u/6113149?v=4&size=100" width="100px" height="100px" alt="emiliobellini"/><br /><sub><b>emiliobellini</b></sub></a><br /><a href="https://github.com/santiagocasas/cosmicjellyfish/commits?author=emiliobellini" title="Code">💻</a> <a href="#ideas-emiliobellini" title="Ideas, Planning, & Feedback">🤔</a> <a href="#data-emiliobellini" title="Data">🔣</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.ph.unito.it/~camera"><img src="https://avatars.githubusercontent.com/u/12611238?v=4&size=100" width="100px" height="100px" alt="Stefano Camera"/><br /><sub><b>Stefano Camera</b></sub></a><br /><a href="#data-scamera" title="Data">🔣</a> <a href="#design-scamera" title="Design">🎨</a> <a href="#ideas-scamera" title="Ideas, Planning, & Feedback">🤔</a> <a href="#research-scamera" title="Research">🔬</a></td>
     </tr>
   </tbody>
 </table>

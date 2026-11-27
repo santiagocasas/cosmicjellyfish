@@ -1,0 +1,44 @@
+# frahi_class (hi_class-based, Hu-Sawicki f(R) n = 1 with the exact f(R) background) for photometric
+# forecasts. Use with
+#   options = {'code': 'class', 'class_module': 'hiclassy', 'class_object': 'HiClass',
+#              'cosmo_model': 'HuSawicki', 'class_config_yaml': '<this file>'}
+# and 'log10fR0' (log10|f_R0|, f_R0 = f_R(z=0) of the solution) among the cosmological parameters.
+# Settings as in the frahi_class MontePython chains (quasi-static mu-gamma closure, physical convention).
+# Since frahi_class 2026-11-19 these are its defaults for gravity_model = hu_sawicki (README, 'Hu-Sawicki f(R)'):
+# they are kept explicit below so that older builds give the same result.
+# non_linear = HMcode-2020 applied to the f(R) linear P(k): validated against Winther+2019 only for
+# |f_R0| <= 1e-4. Massive neutrinos: three degenerate species, as in hmcode2020_photo_kmax50.yaml.
+# Weak lensing: Sigma = 1/M*^2 = 1/(1+f_R) is NOT passed to the lensing kernel (Sigma = 1), an
+# O(|f_R(z)|) approximation.
+PARAMETER_TRANSLATION:
+  'neutrino_scheme': 'three_degenerate'
+  'N_ur': 0.00641
+  'neutrino_mass_fac': 93.14
+ACCURACY: {}
+COSMO_SETTINGS:
+  'P_k_max_1/Mpc': 50.0
+  'output': 'mPk,mTk'
+  'non linear': 'hmcode_2020'
+  'nonlinear_min_k_max': 50.0
+  'z_max_pk': 3.0
+  'N_ncdm': 3
+  'tau_reio': 0.0561
+LCDM:
+  'Omega_Lambda': 0.0
+  'Omega_k': 0.0
+HuSawicki:
+  'Omega_k': 0.0
+  'Omega_Lambda': 0.0
+  'Omega_fld': 0.0
+  'Omega_smg': -1
+  'gravity_model': 'hu_sawicki'
+  'hs_parametrization': 'log_10(fR0)'
+  'hs_convention': 'physical'
+  'hs_field': 'u'
+  'hubble_evolution': 'no'
+  'skip_stability_tests_smg': 'yes'
+  'kineticity_safe_smg': 0
+  'qsa_mu_gamma_smg': 'yes'
+  'method_qs_smg': 'automatic'
+  'qsa_only_smg': 'yes'
+  'hs_handoff_ic_smg': 'slow'

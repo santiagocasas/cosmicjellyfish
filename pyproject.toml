@@ -45,7 +45,7 @@ dependencies = [
     "chainconsumer>=1.3.0,<2.0.0",
     "numpy>=2.1,<2.3",
     "pandas",
-    "PyYAML==6.0.3",
+    "PyYAML==6.0.4",
     "scikit-learn==1.7.2",
     "SciPy>=1.15.3",
     "seaborn",
@@ -63,8 +63,17 @@ Changelog = "https://github.com/santiagocasas/cosmicjellyfish/blob/main/CHANGELO
 Documentation = "https://www.santicasas.space/cosmicjellyfish/docs/"
 
 [project.optional-dependencies]
+# Hu-Sawicki f(R) (cosmo_model: HuSawicki) is deliberately NOT an extra:
+#   - ``frahi_class`` (module ``hiclassy``, class ``HiClass``) is a private hi_class-based code, so it
+#     cannot be a dependency. Request access from its authors and build it manually. Do not
+#     ``pip install hiclassy``: the PyPI package of that name is the public hi_class, without
+#     the f(R) model.
+#   - ``emantis`` (only for NONLINEAR model 'emantis') is on PyPI and is part of the
+#     ``emulators`` extra below.
+# See docs/source/installation.md, section "Hu-Sawicki f(R) gravity".
 emulators = [
     "euclidemu2==1.4.3",
+    "emantis>=1.4.0,<2",
 ]
 # Differentiable (JAX) theory backend, selected with options["code"] = "jaxcosmo".
 # jax-cosmo 0.1.0 imports ``pkg_resources``, which setuptools>=81 no longer ships.
@@ -72,11 +81,11 @@ jaxcosmo = [
     "jax>=0.4.30",
     "jaxlib>=0.4.30",
     "jax-cosmo==0.1.0",
-    "setuptools<81",
+    "setuptools<85",
 ]
 docs = [
     "Sphinx>=8.1.3,<8.2.0",
-    "pydata-sphinx-theme>=0.16.1",
+    "pydata-sphinx-theme>=0.19.0",
     "sphinx-design>=0.6.1",
     "sphinx-copybutton>=0.5.2",
     "myst-parser>=4.0.1,<4.1",
@@ -86,11 +95,11 @@ docs = [
 ]
 dev = [
     "ruff",
-    "mypy>=2.3.0,<2.4",
+    "mypy>=2.3.0,<2.5",
     "black>=26.10.1,<27.0",
-    "isort>=5.12,<7.1",
-    "line-profiler==5.0.2",
-    "py-spy==0.4.2",
+    "isort>=5.12,<9.1",
+    "line-profiler==5.1.0",
+    "py-spy==0.4.4",
     "pytest",
     "pytest-sphinx",
     "pytest-cov",
@@ -162,12 +171,14 @@ exclude = '''
     | \.venv
     | \bdist\b
     | \bdoc\b
+    | f_r_emulators/MGfit_Winther\.py
 )
 '''
 
 [tool.isort]
 profile = "black"
 multi_line_output = 3
+extend_skip_glob = ["*/f_r_emulators/MGfit_Winther.py"]
 
 # You can override these pyright settings by adding a personal pyrightconfig.json file.
 [tool.pyright]
@@ -176,7 +187,7 @@ reportPrivateImportUsage = false
 [tool.ruff]
 line-length = 115
 target-version = "py310"
-exclude = ["**/*.ipynb"]
+exclude = ["**/*.ipynb", "**/f_r_emulators/MGfit_Winther.py"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]

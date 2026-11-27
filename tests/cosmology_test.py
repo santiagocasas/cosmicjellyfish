@@ -11,12 +11,18 @@ import numpy as np
 import pytest
 import yaml
 
+from cosmicjellyfish.cosmology import modified_gravity
 from cosmicjellyfish.cosmology.cosmology import (
     _class_pk_grid,
     _normalize_camb_import_path,
     boltzmann_code,
 )
 from cosmicjellyfish.cosmology.ee2 import class_ee2_boost, class_ee2_parameters
+from cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther import (
+    kazuya_correktion,
+    pofk_enhancement,
+)
+from cosmicjellyfish.cosmology.modified_gravity import fofR_boost_grid
 from cosmicjellyfish.fishermatrix import cosmicfish as cff
 
 
@@ -53,6 +59,15 @@ def test_class_w0wa_keeps_dark_energy_evolution_parameters():
 
     assert translated["w0_fld"] == -1.0
     assert translated["wa_fld"] == 0.0
+
+
+def test_class_husawicki_translates_log10fR0_and_drops_dark_energy_evolution_parameters():
+    translated = _translator("HuSawicki").changebasis_class({**_parameters(), "log10fR0": -5.301})
+
+    assert translated["parameters_smg"] == "-5.301, 0.0"
+    assert "log10fR0" not in translated
+    assert "w0" not in translated
+    assert "wa" not in translated
 
 
 def test_class_three_degenerate_translation_matches_syren_example():
@@ -219,6 +234,56 @@ def test_class_ee2_boost_converts_units_preserves_order_and_checks_range(monkeyp
         class_ee2_boost(classres, [1.1], [0.0])
 
 
+def test_fofR_winther_boost_matches_fitting_formula_and_likelihood_bounds():
+    h, lgfR0 = 0.67, 5.301
+    k = np.geomspace(1e-4, 60.0, 400) * h
+    z = [0.0, 0.5, 1.5]
+    boost = fofR_boost_grid("winther2019", k, z, lgfR0, h)
+
+    assert boost.shape == (k.size, len(z))
+    assert np.all((boost >= 1.0) & (boost <= 2.0))
+    outside = (k / h <= 0.001) | (k / h >= 50.0)
+    np.testing.assert_array_equal(boost[outside], 1.0)
+    fitted = (k >= 0.01) & (k / h < 10.0)
+    for iz, redshift in enumerate(z):
+        expected = pofk_enhancement(redshift, 10**-lgfR0, k[fitted] / h, hasBug=False)
+        np.testing.assert_allclose(boost[fitted, iz], expected, rtol=1e-12)
+    with pytest.raises(ValueError, match="Unknown f\\(R\\) boost model"):
+        fofR_boost_grid("forge", k, z, lgfR0, h)
+
+
+def test_fofR_emantis_boost_clips_inputs_and_interpolates_emulator(monkeypatch):
+    class FakeFofrBoost:
+        kbins = np.array([0.03, 5.0])
+        emulation_range = {"omega_m": (0.2365, 0.3941), "sigma8_lcdm": (0.6083, 1.0140)}
+
+        def predict_boost(self, omega_m, sigma8_lcdm, logfR0, aexp, k):
+            assert (omega_m, sigma8_lcdm, logfR0) == (0.39, 0.6083, 5.301)
+            return np.broadcast_to(1.0 + 0.01 * k, (len(aexp), 1, len(k)))
+
+    monkeypatch.setattr(modified_gravity, "_emantis", lambda: FakeFofrBoost())
+    h = 0.67
+    k = np.geomspace(0.02, 4.0, 50) * h
+    boost = fofR_boost_grid("emantis", k, [0.0, 1.0], 5.301, h, Omega_m=0.5, sigma8_lcdm=0.5)
+
+    for column in boost.T:
+        np.testing.assert_allclose(column, 1.0 + 0.01 * k / h, rtol=1e-10)
+
+
+def test_fofR_sigma8_applies_linear_enhancement_and_kazuya_correction(monkeypatch):
+    monkeypatch.setattr(modified_gravity, "pofk_enhancement_linear", lambda z, fR0, k: 1.0)
+    h, lgfR0 = 0.67, 5.301
+    k = np.geomspace(1e-4, 10.0, 4000)
+    pk = 2e4 * (k / 0.02) / (1.0 + (k / 0.02) ** 2.5)
+    x = 8.0 * k / h
+    window = 3.0 * (np.sin(x) - x * np.cos(x)) / x**3
+    sigma8 = np.sqrt(np.trapezoid((k * window) ** 2 * pk / (2.0 * np.pi**2), k))
+
+    result = modified_gravity.sigma8_fofR(k, pk, h, lgfR0)
+
+    assert result == pytest.approx(sigma8 * kazuya_correktion(lgfR0), rel=1e-4)
+
+
 @pytest.mark.parametrize("amplitude", [{"10^9As": 2.1}, {"sigma8": 0.81}])
 def test_class_ee2_profile_multiplies_linear_spectra(amplitude):
     pytest.importorskip("classy")
@@ -252,6 +317,49 @@ def test_class_ee2_profile_multiplies_linear_spectra(amplitude):
     )
     assert cosmo.nonlinear_model == "ee2"
     assert "NONLINEAR" not in cosmo.classcosmopars
+    for power in ("Pk", "Pk_cb"):
+        linear = getattr(cosmo.results, f"{power}_l")
+        nonlinear = getattr(cosmo.results, f"{power}_nl")
+        assert np.isfinite(nonlinear(0.5, 0.2))
+        assert nonlinear(0.5, 0.2)[0, 0] > linear(0.5, 0.2)[0, 0]
+
+
+def test_class_fofR_winther_profile_multiplies_lcdm_nonlinear_spectra():
+    pytest.importorskip("classy")
+    pytest.importorskip("hiclassy")
+    profile = Path(__file__).resolve().parents[1] / (
+        "cosmicjellyfish/configs/default_boltzmann_yaml_files/class/"
+        "frahiclass_hs_photo_winther2019.yaml"
+    )
+    with profile.open() as config_file:
+        parameters = yaml.safe_load(config_file)
+    settings = {
+        "feedback": 0,
+        "SUPPRESS_WARNINGS": False,
+        "cosmo_model": "HuSawicki",
+        "ShareDeltaNeff": True,
+        "nonlinear": True,
+        "class_module": "hiclassy",
+        "class_object": "HiClass",
+    }
+    configuration = SimpleNamespace(
+        settings=settings, input_type="class", backend_parameters=parameters
+    )
+    cosmo = boltzmann_code(
+        {
+            "h": 0.67,
+            "Omegam": 0.32,
+            "Omegab": 0.05,
+            "ns": 0.96,
+            "mnu": 0.06,
+            "sigma8": 0.853,
+            "log10fR0": -5.301,
+        },
+        code="class",
+        configuration=configuration,
+    )
+    assert cosmo.nonlinear_model == "winther2019"
+    assert cosmo.results.lcdm_sigma8 < 0.853
     for power in ("Pk", "Pk_cb"):
         linear = getattr(cosmo.results, f"{power}_l")
         nonlinear = getattr(cosmo.results, f"{power}_nl")

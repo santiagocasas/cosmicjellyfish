@@ -1,0 +1,46 @@
+# frahi_class Hu-Sawicki f(R) with a simulation-calibrated nonlinear boost (cosmicjellyfish/cosmology/modified_gravity.py):
+#   P_NL^f(R)(k, z) = P_NL^LCDM(k, z) x B(k, z),  B from the Winther+2019 fitting formula (arXiv:1903.08798), via the verbatim
+#   MGfit_Winther.py of Sefa76/photometric_fofR (cosmology/f_r_emulators/), hasBug = False, as in the MontePython likelihood
+#   euclid_photometric_z_fofr (Koyama+2024): interpolation linear in |f_R0| between the fits, |f_R0| clipped to [1e-7, 1e-4].
+#   Extrapolation as in the likelihood: power law above k_max (10 h/Mpc Winther, e-MANTIS k_max) and z = 2, B clipped to [1, 2],
+#   B = 1 outside 0.001 < k < 50 h/Mpc (settings: NONLINEAR['fofR_settings'], keys of modified_gravity.LKL_DEFAULTS).
+# frahi_class gives only the linear spectra (and A_s, if sigma8 is the input); P_NL^LCDM comes from official classy
+# (LCDM, same parameters and same A_s) with 'lcdm_nonlinear' ('halofit' = Halofit-Takahashi, as in Casas+2023;
+# or 'hmcode_2020'). The cb spectrum gets the same boost.
+# Everything else as frahiclass_hs_photo.yaml.
+NONLINEAR:
+  'model': 'winther2019'
+  'lcdm_nonlinear': 'halofit'
+  # 'boost_kmax_h': 9.73   # previous version; k and z extrapolation now as in the MontePython likelihood (modified_gravity.py)
+PARAMETER_TRANSLATION:
+  'neutrino_scheme': 'three_degenerate'
+  'N_ur': 0.00641
+  'neutrino_mass_fac': 93.14
+ACCURACY: {}
+COSMO_SETTINGS:
+  'P_k_max_1/Mpc': 50.0
+  'output': 'mPk,mTk'
+  'non linear': 'hmcode_2020'
+  'nonlinear_min_k_max': 50.0
+  'z_max_pk': 3.0
+  'N_ncdm': 3
+  'tau_reio': 0.0561
+LCDM:
+  'Omega_Lambda': 0.0
+  'Omega_k': 0.0
+HuSawicki:
+  'Omega_k': 0.0
+  'Omega_Lambda': 0.0
+  'Omega_fld': 0.0
+  'Omega_smg': -1
+  'gravity_model': 'hu_sawicki'
+  'hs_parametrization': 'log_10(fR0)'
+  'hs_convention': 'physical'
+  'hs_field': 'u'
+  'hubble_evolution': 'no'
+  'skip_stability_tests_smg': 'yes'
+  'kineticity_safe_smg': 0
+  'qsa_mu_gamma_smg': 'yes'
+  'method_qs_smg': 'automatic'
+  'qsa_only_smg': 'yes'
+  'hs_handoff_ic_smg': 'slow'
