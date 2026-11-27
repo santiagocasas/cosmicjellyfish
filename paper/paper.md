@@ -42,6 +42,14 @@ authors:
     roles:
       - {credit: conceptualization, credit-name: "Conceptualization"}
       - {credit: software, credit-name: "Software"}
+  - name: Ziad Sakr
+    orcid: 0000-0002-4823-3757
+    affiliation: "18, 19, 20"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
   - name: Domenico Sapone
     orcid: 0000-0001-7089-4503
     affiliation: 5
@@ -125,6 +133,12 @@ affiliations:
     index: 16
   - name: Department of Physics, University of Genova, and INFN – Sezione di Genova, Italy
     index: 17
+  - name: Instituto de Física Teórica, Spain
+    index: 18
+  - name: Institut de Recherche en Astrophysique et Planétologie, France
+    index: 19
+  - name: Université Saint Joseph, Lebanon
+    index: 20
 date: 23 November 2026
 bibliography: paper.bib
 ---
