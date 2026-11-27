@@ -12,6 +12,7 @@ import numpy as np
 import yaml
 
 import cosmicjellyfish.cosmology.cosmology as cosmology
+from cosmicjellyfish.LSSsurvey.spectro_modes import resolve_spectro_observables
 from cosmicjellyfish.utilities.utils import misc as ums
 from cosmicjellyfish.utilities.utils import physmath as upm
 from cosmicjellyfish.utilities.utils import printing as upt
@@ -278,6 +279,7 @@ def init(
     settings.setdefault("nonlinear", True)
     settings.setdefault("nonlinear_photo", True)
     settings.setdefault("bfs8terms", False)
+    settings.setdefault("spectro_joint", False)
     settings.setdefault("vary_bias_str", "lnb")
     settings.setdefault("AP_effect", True)
     settings.setdefault("FoG_switch", True)
@@ -654,11 +656,19 @@ def init(
     )
     # ums.deepupdate(specs, specifications)  # deep update keys if passed by users
     specs.update(specifications)
+    # A runtime model override should not inherit the root of the survey file's default model.
+    if specifications.get("sp_bias_model") == "linear_log" and "sp_bias_root" not in specifications:
+        specs["sp_bias_root"] = "lnb"
     specs["survey_name"] = surveyName
     specs["specs_dir"] = settings["specs_dir"]  # Path for additional files like luminosity
 
     if observables is None:
         observables = ["GCph", "WL"]
+    # 'GCspxIM' is the galaxy x IM cross-spectrum; with spectro_joint (or all three of
+    # GCsp, GCspxIM, IM) the auto- and cross-spectra are combined with their full covariance.
+    observables, settings["spectro_mode"] = resolve_spectro_observables(
+        observables, joint=bool(settings.get("spectro_joint", False))
+    )
     global obs
     obs = observables
 
@@ -818,6 +828,18 @@ def init(
             # sanity check
             if bias_sample not in list(Spectrobiasparams.keys())[0]:
                 print("Warning: bias_sample not found in bias_parameter keys")
+            # Check that the selected root matches the active table before evaluating the bias.
+            if "GCsp" in obs and "linear" in bias_model:
+                root = specs["sp_bias_root"]
+                wanted = [f"{root}{bias_sample}_{ibin}" for ibin in specs.get("z_bins_sp", {})]
+                missing = [key for key in wanted if key not in Spectrobiasparams]
+                if missing:
+                    raise ValueError(
+                        f"sp_bias_model '{bias_model}' provides the keys "
+                        f"{list(bias_prmod)[:2]}..., but sp_bias_root '{root}' looks up "
+                        f"{missing[:2]}... Set sp_bias_root together with sp_bias_model "
+                        "(for example sp_bias_model='linear_log' with sp_bias_root='lnb')."
+                    )
             shot_noise_model = specs["shot_noise_model"]
             shot_noise_prtz = specs["shot_noise_parametrization"]
             try:

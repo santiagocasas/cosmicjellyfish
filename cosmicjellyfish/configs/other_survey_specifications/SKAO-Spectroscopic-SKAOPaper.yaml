@@ -1,0 +1,72 @@
+specifications:
+  # SKAO HI galaxy clustering, transcribed from the historical SKAO project
+  # (`survey_specifications/SKA1_GCsp_MDB2_Redbook.dat`, area = 5000 deg^2).
+  # The `dn3` column is dN/dz per deg^2 and maps directly onto `dndOmegadz`.
+  # Unlike the shipped `SKAO-Spectroscopic-Redbook.yaml`, this file lists the
+  # fifth shot-noise key that the fifth redshift bin needs.
+  # See docs/SURVEY_VALIDATION_ROADMAP.md for the provenance.
+  'spec_sigma_dz': 0.002
+  'spec_sigma_dz_type': 'constant'
+  'area_survey_spectro': 5000
+  'kmax_GCsp': 0.30
+  'kmin_GCsp': 0.001
+  'z_bins_sp':
+    1: [0.00, 0.10]
+    2: [0.10, 0.20]
+    3: [0.20, 0.30]
+    4: [0.30, 0.40]
+    5: [0.40, 0.50]
+  'dndOmegadz':
+    1: 2714.82
+    2: 2722.37
+    3: 1264.0
+    4: 467.043
+    5: 154.353
+  sp_bias_sample: 'g'
+  sp_bias_model: 'linear'
+  sp_bias_root: 'bH'
+  sp_bias_parametrization:
+    linear:
+      bHg_1: 0.64813367
+      bHg_2: 0.71751723
+      bHg_3: 0.79432839
+      bHg_4: 0.87936228
+      bHg_5: 0.97349916
+    linear_log:
+      lnbHg_1: -0.43365832
+      lnbHg_2: -0.33195832
+      lnbHg_3: -0.23025831
+      lnbHg_4: -0.12855832
+      lnbHg_5: -0.02685832
+    linear_Qbias:
+      bHg_1: 0.64813367
+      bHg_2: 0.71751723
+      bHg_3: 0.79432839
+      bHg_4: 0.87936228
+      bHg_5: 0.97349916
+      A1: 0.02
+      A2: -2.0
+  shot_noise_model: 'constant'
+  shot_noise_parametrization:
+    constant:
+      Ps_1: 0.0
+      Ps_2: 0.0
+      Ps_3: 0.0
+      Ps_4: 0.0
+      Ps_5: 0.0
+  nonlinear_model: 'default'
+  nonlinear_parametrization:
+    vary_sigmap: True
+    vary_sigmav: True
+    rescale_sigma_pv:
+      sigmap_1: 1.0
+      sigmap_2: 1.0
+      sigmap_3: 1.0
+      sigmap_4: 1.0
+      sigmap_5: 1.0
+      sigmav_1: 1.0
+      sigmav_2: 1.0
+      sigmav_3: 1.0
+      sigmav_4: 1.0
+      sigmav_5: 1.0
+    default:

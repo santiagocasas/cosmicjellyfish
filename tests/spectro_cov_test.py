@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 
 import cosmicjellyfish.configs.config as cfg
 from cosmicjellyfish.LSSsurvey.spectro_cov import SpectroCov, SpectroDerivs
+from cosmicjellyfish.utilities.utils import physmath as upm
 
 
 def test_spectro_cov_initialization(spectro_fisher_matrix):
@@ -132,3 +134,53 @@ def test_spectro_derivatives_remain_bound_to_context_a(spectro_fisher_matrix, mo
     result = deriv_engine.compute_derivs(derivative_provider=CaptureProvider())
 
     assert result == {"spectro": "context-a"}
+
+
+# ---------------------------------------------------------------------------
+# shared galaxy / intensity-mapping bins (no cosmology needed)
+# ---------------------------------------------------------------------------
+class _BothProbes:
+    observables = ["GCsp", "IM"]
+
+
+def _two_grid_cov(gal_edges, im_edges, dnz):
+    """A SpectroCov holding only the bin bookkeeping; a cubic shell stands in for the volume."""
+    gal, im = np.asarray(gal_edges, float), np.asarray(im_edges, float)
+    cov = object.__new__(SpectroCov)
+    cov.pk_obs = _BothProbes()
+    cov.z_bins, cov.z_bin_mids = gal, 0.5 * (gal[1:] + gal[:-1])
+    cov.IM_z_bins, cov.IM_z_bin_mids = im, 0.5 * (im[1:] + im[:-1])
+    cov.dnz, cov.dz_bins = np.asarray(dnz, float), np.diff(gal)
+    cov.inter_z_bin_mids = np.intersect1d(cov.z_bin_mids, cov.IM_z_bin_mids)
+    cov.fsky_volume = 1.0
+    cov.volume_bin = lambda lo, hi: hi**3 - lo**3
+    cov._set_shared_bins()
+    return cov
+
+
+def test_shared_bin_uses_its_own_interval_when_the_grids_differ_in_extent():
+    # galaxy bins [0.8, 1.0], [1.0, 1.2]; IM bins [1.0, 1.2], [1.2, 1.4]: only [1.0, 1.2] is shared
+    cov = _two_grid_cov([0.8, 1.0, 1.2], [1.0, 1.2, 1.4], dnz=[100.0, 200.0])
+    assert list(cov.inter_z_bin_mids) == [1.1]
+    assert cov.inter_bin_edges == [(1.0, 1.2)] and cov.inter_gal_index == [1]
+    shell = 1.2**3 - 1.0**3  # not the volume of [0.8, 1.0], which the union of the edges gave
+    assert np.isclose(cov.d_volume(0), shell)
+    assert np.isclose(cov.volume_survey(0), shell)
+    # the galaxy density is that of the [1.0, 1.2] galaxy bin (200), not of the first one (100)
+    expected = upm.areasky() * 200.0 * 0.2 / shell
+    assert np.isclose(cov.n_density(1.1), expected)
+
+
+def test_identical_grids_keep_the_bin_order():
+    edges = [0.6, 0.7, 0.8, 0.9]
+    cov = _two_grid_cov(edges, edges, dnz=[1.0, 2.0, 3.0])
+    assert cov.inter_gal_index == [0, 1, 2]
+    assert cov.inter_bin_edges == [(0.6, 0.7), (0.7, 0.8), (0.8, 0.9)]
+    for index, (lo, hi) in enumerate(cov.inter_bin_edges):
+        assert np.isclose(cov.d_volume(index), hi**3 - lo**3)
+
+
+def test_bins_with_a_shared_midpoint_but_different_edges_are_rejected():
+    # [1.6, 1.7] and [1.5, 1.8] both have the midpoint 1.65 but are different intervals
+    with pytest.raises(ValueError, match="share the midpoint"):
+        _two_grid_cov([1.6, 1.7], [1.5, 1.8], dnz=[1.0])

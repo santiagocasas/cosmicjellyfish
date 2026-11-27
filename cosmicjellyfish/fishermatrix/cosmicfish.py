@@ -17,7 +17,13 @@ from scipy.integrate import simpson
 from cosmicjellyfish.analysis import fisher_matrix as fm
 from cosmicjellyfish.CMBsurvey import CMB_cov
 from cosmicjellyfish.configs import config as cfg
-from cosmicjellyfish.LSSsurvey import photo_cov, photo_obs, spectro_cov, spectro_obs
+from cosmicjellyfish.LSSsurvey import (
+    photo_cov,
+    photo_obs,
+    spectro_cov,
+    spectro_modes,
+    spectro_obs,
+)
 from cosmicjellyfish.utilities.utils import filesystem as ufs
 from cosmicjellyfish.utilities.utils import numerics as unu
 from cosmicjellyfish.utilities.utils import printing as upt
@@ -300,13 +306,9 @@ class FisherMatrix:
                 instance=self,
             )
             self.set_pk_settings()
-            if "IM" in self.observables and "GCsp" in self.observables:
-                self.obs_spectrum = ["I", "g"]
-            elif "IM" in self.observables:  # compute  in the case of IM only
-                self.obs_spectrum = ["I", "I"]
-            elif "GCsp" in self.observables:
-                self.obs_spectrum = ["g", "g"]
-            #    self.obs_spectrum = ["I", "g"]
+            # 'gg', 'II', 'Ig' (cross only) or 'joint' (gg + Ig + II with the full covariance)
+            self.spectro_mode = spectro_modes.spectro_mode(self.observables, self.settings)
+            self.obs_spectrum = spectro_modes.spectrum_pair(self.spectro_mode)
             self.pk_obs_fid = spectro_obs.ComputeGalSpectro(
                 cosmopars=self.fiducialcosmopars,
                 fiducial_cosmopars=self.fiducialcosmopars,
@@ -339,11 +341,13 @@ class FisherMatrix:
             tvi = time()
             self.fish_z_arr = np.array(self.zmids)
             for zi in self.zmids:
-                if "IM" in self.observables and "GCsp" in self.observables:
+                if self.spectro_mode == "joint":
+                    break  # the joint analysis builds its own kernel per bin
+                if self.spectro_mode == "Ig":
                     self.veff_arr.append(self.pk_cov.veff_Ig(zi, k_mesh, mu_mesh))
-                elif "IM" in self.observables:  # compute  in the case of IM only
+                elif self.spectro_mode == "II":
                     self.veff_arr.append(self.pk_cov.veff_II(zi, k_mesh, mu_mesh))
-                elif "GCsp" in self.observables:
+                else:
                     self.veff_arr.append(self.pk_cov.veff(zi, k_mesh, mu_mesh))
             tvf = time()
             upt.time_print(
@@ -433,6 +437,8 @@ class FisherMatrix:
         dict
             A dictionary containing lists of derivatives of the observed power spectrum for each redshift bin and varied parameter
         """
+        if getattr(self, "spectro_mode", None) == "joint":
+            return self._compute_joint_derivs(z_arr)
         self.pk_deriv = spectro_cov.SpectroDerivs(
             z_arr,
             self.Pk_kmesh,
@@ -446,6 +452,42 @@ class FisherMatrix:
             derivative_provider=self.derivative_provider,
         )
         return allpars_deriv
+
+    def _compute_joint_derivs(self, z_arr):
+        """Log-derivatives of the three spectra P_gg, P_Ig and P_II for the joint analysis.
+
+        The derivatives are kept in ``self.joint_derivs`` (keys ``"gg"``, ``"Ig"``, ``"II"``).
+        The additional shot noise ``Ps_i`` only enters the galaxy auto-spectrum, so its
+        derivatives in the other two spectra are set to zero. The ``gg`` derivatives are
+        returned (and stored in ``self.derivs_dict``) so that the parameter bookkeeping is the
+        same as for the single-spectrum analyses.
+        """
+        joint = {}
+        for label, pair in (("gg", ["g", "g"]), ("Ig", ["I", "g"]), ("II", ["I", "I"])):
+            engine = spectro_cov.SpectroDerivs(
+                z_arr,
+                self.Pk_kmesh,
+                self.Pk_mumesh,
+                fiducial_spectro_obj=self.pk_obs_fid,
+                bias_samples=pair,
+                configuration=self,
+            )
+            derivs = engine.compute_derivs(
+                freeparams=self.freeparams,
+                derivative_provider=self.derivative_provider,
+            )
+            if label != "gg":
+                for par, per_bin in derivs.items():
+                    if str(par).startswith("Ps"):
+                        derivs[par] = {
+                            key: (np.zeros_like(value) if key != "z_bins" else value)
+                            for key, value in per_bin.items()
+                        }
+            if label == "gg":
+                self.pk_deriv = engine
+            joint[label] = derivs
+        self.joint_derivs = joint
+        return joint["gg"]
 
     def pk_LSS_Fisher(self, nbins):
         """This computes the Fisher matrix of a spectroscopic probe for all redshift bins
@@ -482,8 +524,55 @@ class FisherMatrix:
             text="Fisher Matrix shape: {}".format(fisherMatrix.shape),
             instance=self,
         )
+        if getattr(self, "spectro_mode", None) == "joint":
+            return np.array([self.fisher_per_bin_joint(ibin) for ibin in range(nbins)])
         fisherMatrix = np.array([self.fisher_per_bin(ibin) for ibin in range(nbins)])
         return fisherMatrix
+
+    def fisher_per_bin_joint(self, ibin):
+        r"""Fisher matrix of one redshift bin from P_gg, P_Ig and P_II analysed together.
+
+        At every :math:`(k, \mu)` the galaxy and intensity-mapping fields have a
+        :math:`2\times 2` Gaussian covariance, so the three spectra are correlated and the shared
+        modes are counted once. The element is
+
+        .. math::
+            F_{pq} = \frac{V}{4\pi^2} \int k^2 \mathrm{d}k \int_0^1 \mathrm{d}\mu\,
+            \mathrm{Tr}\left[C^{-1} \partial_p C\, C^{-1} \partial_q C\right],
+
+        which for a single tracer reduces to the usual effective-volume expression.
+
+        Parameters
+        ----------
+        ibin : int
+            index of the redshift bin
+
+        Returns
+        -------
+        numpy.ndarray
+            Fisher matrix of the bin for all free parameters
+        """
+        k_mesh = self.Pk_kmesh
+        mu_mesh = self.Pk_mumesh
+        zi = self.zmids[ibin]
+        obs = self.pk_obs_fid
+        p_gg = obs.observed_Pgg(zi, k_mesh, mu_mesh)
+        p_ig = obs.observed_P_ij(zi, k_mesh, mu_mesh, si="I", sj="g")
+        p_ii = obs.observed_P_ij(zi, k_mesh, mu_mesh, si="I", sj="I")
+        cov_gg = p_gg + 1.0 / self.pk_cov.n_density(zi)
+        cov_ii = p_ii + self.pk_cov.P_noise_21(zi, k_mesh, mu_mesh, temp_dim=True)
+        derivs = []
+        for label, spectrum in (("II", p_ii), ("Ig", p_ig), ("gg", p_gg)):
+            derivs.append([spectrum * self.joint_derivs[label][par][ibin] for par in self.parslist])
+        kernel = spectro_modes.joint_gaussian_trace(cov_ii, p_ig, cov_gg, *derivs)
+        prefactor = k_mesh**2 * self.pk_cov.volume_survey(ibin) / (4.0 * np.pi**2)
+        npar = len(self.parslist)
+        fish_bi = np.zeros((npar, npar))
+        for i in range(npar):
+            for j in range(i + 1):
+                fish_bi[i, j] = self.fisher_integral(prefactor * kernel[i, j])
+                fish_bi[j, i] = fish_bi[i, j]
+        return fish_bi
 
     def fisher_per_bin(self, ibin):
         """This helper function contains the Fisher matrix of a spectroscopic probe for a single redshift bin
@@ -899,12 +988,19 @@ class FisherMatrix:
         # If an output root is provided, we write the Fisher matrix on file
         if self.settings["outroot"] != "":
             obstring = "".join(self.observables)
+            # Cross-only and joint forecasts share the same observables list, so the spectrum
+            # mode is part of the root. It is read from the settings or the observables rather
+            # than from self.spectro_mode, which only exists after a spectroscopic compute.
+            mode_tag = spectro_modes.output_tag(
+                spectro_modes.spectro_mode(self.observables, self.settings)
+            )
             cols = [key for key in self.freeparams]
             header = "#" + " ".join(["", *cols])
             FM = pd.DataFrame(fishmat, columns=cols, index=cols)
             if not os.path.exists(self.settings["results_dir"]):
                 os.makedirs(self.settings["results_dir"])
-            # Root naming (without extension): <results>/<cf_version>_<outroot>_<obstring>_FM
+            # Root naming (without extension):
+            # <results>/<cf_version>_<outroot>_<obstring>[_<Ig|joint>]_FM
             root = (
                 self.settings["results_dir"]
                 + "/"
@@ -913,6 +1009,7 @@ class FisherMatrix:
                 + self.settings["outroot"]
                 + "_"
                 + obstring
+                + mode_tag
                 + "_FM"
             )
             extension = self.settings["fishermatrix_file_extension"]
