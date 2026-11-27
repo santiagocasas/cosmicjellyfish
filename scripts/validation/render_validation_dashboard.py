@@ -521,6 +521,13 @@ def build_case_result(case: CaseDef, results_dir: Path, repo_root: Path) -> Case
         specs_path = Path(raw_path)
         if not specs_path.is_absolute():
             specs_path = outdir / specs_path
+        if not specs_path.is_file():
+            # compare_fishers_*.json stores absolute paths from whichever checkout
+            # produced the run, so they break when the tree is moved/renamed.
+            # Fall back to the same file name inside this campaign directory.
+            fallback = outdir / specs_path.name
+            if fallback.is_file():
+                specs_path = fallback
         if specs_path.is_file():
             setattr(result, attr, specs_path)
 
