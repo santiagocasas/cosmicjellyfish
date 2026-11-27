@@ -1,0 +1,6 @@
+spectro\_mode
+=============
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: spectro_mode

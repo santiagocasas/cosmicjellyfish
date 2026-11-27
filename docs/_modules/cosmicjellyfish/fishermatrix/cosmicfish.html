@@ -483,7 +483,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">fisher_matrix</span> <span class="k">as</span> <span class="n">fm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.CMBsurvey</span><span class="w"> </span><span class="kn">import</span> <span class="n">CMB_cov</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.configs</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">cfg</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.LSSsurvey</span><span class="w"> </span><span class="kn">import</span> <span class="n">photo_cov</span><span class="p">,</span> <span class="n">photo_obs</span><span class="p">,</span> <span class="n">spectro_cov</span><span class="p">,</span> <span class="n">spectro_obs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.LSSsurvey</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">photo_cov</span><span class="p">,</span>
+    <span class="n">photo_obs</span><span class="p">,</span>
+    <span class="n">spectro_cov</span><span class="p">,</span>
+    <span class="n">spectro_modes</span><span class="p">,</span>
+    <span class="n">spectro_obs</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">filesystem</span> <span class="k">as</span> <span class="n">ufs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">numerics</span> <span class="k">as</span> <span class="n">unu</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">printing</span> <span class="k">as</span> <span class="n">upt</span>
@@ -770,13 +776,9 @@
                 <span class="n">instance</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">set_pk_settings</span><span class="p">()</span>
-            <span class="k">if</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span> <span class="ow">and</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">obs_spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>  <span class="c1"># compute  in the case of IM only</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">obs_spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">obs_spectrum</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">]</span>
-            <span class="c1">#    self.obs_spectrum = [&quot;I&quot;, &quot;g&quot;]</span>
+            <span class="c1"># &#39;gg&#39;, &#39;II&#39;, &#39;Ig&#39; (cross only) or &#39;joint&#39; (gg + Ig + II with the full covariance)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spectro_mode</span> <span class="o">=</span> <span class="n">spectro_modes</span><span class="o">.</span><span class="n">spectro_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obs_spectrum</span> <span class="o">=</span> <span class="n">spectro_modes</span><span class="o">.</span><span class="n">spectrum_pair</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectro_mode</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs_fid</span> <span class="o">=</span> <span class="n">spectro_obs</span><span class="o">.</span><span class="n">ComputeGalSpectro</span><span class="p">(</span>
                 <span class="n">cosmopars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fiducialcosmopars</span><span class="p">,</span>
                 <span class="n">fiducial_cosmopars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fiducialcosmopars</span><span class="p">,</span>
@@ -809,11 +811,13 @@
             <span class="n">tvi</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fish_z_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zmids</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">zi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmids</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span> <span class="ow">and</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectro_mode</span> <span class="o">==</span> <span class="s2">&quot;joint&quot;</span><span class="p">:</span>
+                    <span class="k">break</span>  <span class="c1"># the joint analysis builds its own kernel per bin</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectro_mode</span> <span class="o">==</span> <span class="s2">&quot;Ig&quot;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">veff_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">veff_Ig</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">))</span>
-                <span class="k">elif</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>  <span class="c1"># compute  in the case of IM only</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectro_mode</span> <span class="o">==</span> <span class="s2">&quot;II&quot;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">veff_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">veff_II</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">))</span>
-                <span class="k">elif</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
+                <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">veff_arr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">veff</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">))</span>
             <span class="n">tvf</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="n">upt</span><span class="o">.</span><span class="n">time_print</span><span class="p">(</span>
@@ -909,6 +913,8 @@
 <span class="sd">        dict</span>
 <span class="sd">            A dictionary containing lists of derivatives of the observed power spectrum for each redshift bin and varied parameter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;spectro_mode&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;joint&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_joint_derivs</span><span class="p">(</span><span class="n">z_arr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pk_deriv</span> <span class="o">=</span> <span class="n">spectro_cov</span><span class="o">.</span><span class="n">SpectroDerivs</span><span class="p">(</span>
             <span class="n">z_arr</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">Pk_kmesh</span><span class="p">,</span>
@@ -923,6 +929,42 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">allpars_deriv</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_joint_derivs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z_arr</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log-derivatives of the three spectra P_gg, P_Ig and P_II for the joint analysis.</span>
+
+<span class="sd">        The derivatives are kept in ``self.joint_derivs`` (keys ``&quot;gg&quot;``, ``&quot;Ig&quot;``, ``&quot;II&quot;``).</span>
+<span class="sd">        The additional shot noise ``Ps_i`` only enters the galaxy auto-spectrum, so its</span>
+<span class="sd">        derivatives in the other two spectra are set to zero. The ``gg`` derivatives are</span>
+<span class="sd">        returned (and stored in ``self.derivs_dict``) so that the parameter bookkeeping is the</span>
+<span class="sd">        same as for the single-spectrum analyses.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">joint</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">pair</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">&quot;gg&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">]),</span> <span class="p">(</span><span class="s2">&quot;Ig&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">]),</span> <span class="p">(</span><span class="s2">&quot;II&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">])):</span>
+            <span class="n">engine</span> <span class="o">=</span> <span class="n">spectro_cov</span><span class="o">.</span><span class="n">SpectroDerivs</span><span class="p">(</span>
+                <span class="n">z_arr</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Pk_kmesh</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Pk_mumesh</span><span class="p">,</span>
+                <span class="n">fiducial_spectro_obj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_obs_fid</span><span class="p">,</span>
+                <span class="n">bias_samples</span><span class="o">=</span><span class="n">pair</span><span class="p">,</span>
+                <span class="n">configuration</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">derivs</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">compute_derivs</span><span class="p">(</span>
+                <span class="n">freeparams</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">freeparams</span><span class="p">,</span>
+                <span class="n">derivative_provider</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">derivative_provider</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="o">!=</span> <span class="s2">&quot;gg&quot;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">par</span><span class="p">,</span> <span class="n">per_bin</span> <span class="ow">in</span> <span class="n">derivs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">par</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Ps&quot;</span><span class="p">):</span>
+                        <span class="n">derivs</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;z_bins&quot;</span> <span class="k">else</span> <span class="n">value</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">per_bin</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                        <span class="p">}</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;gg&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pk_deriv</span> <span class="o">=</span> <span class="n">engine</span>
+            <span class="n">joint</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">derivs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joint_derivs</span> <span class="o">=</span> <span class="n">joint</span>
+        <span class="k">return</span> <span class="n">joint</span><span class="p">[</span><span class="s2">&quot;gg&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="FisherMatrix.pk_LSS_Fisher">
 <a class="viewcode-back" href="../../../api/generated/cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.html#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.pk_LSS_Fisher">[docs]</a>
@@ -961,8 +1003,58 @@
             <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Fisher Matrix shape: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fisherMatrix</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
             <span class="n">instance</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;spectro_mode&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;joint&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fisher_per_bin_joint</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span> <span class="k">for</span> <span class="n">ibin</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbins</span><span class="p">)])</span>
         <span class="n">fisherMatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">fisher_per_bin</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span> <span class="k">for</span> <span class="n">ibin</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbins</span><span class="p">)])</span>
         <span class="k">return</span> <span class="n">fisherMatrix</span></div>
+
+
+<div class="viewcode-block" id="FisherMatrix.fisher_per_bin_joint">
+<a class="viewcode-back" href="../../../api/generated/cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.html#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_per_bin_joint">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fisher_per_bin_joint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ibin</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Fisher matrix of one redshift bin from P_gg, P_Ig and P_II analysed together.</span>
+
+<span class="sd">        At every :math:`(k, \mu)` the galaxy and intensity-mapping fields have a</span>
+<span class="sd">        :math:`2\times 2` Gaussian covariance, so the three spectra are correlated and the shared</span>
+<span class="sd">        modes are counted once. The element is</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            F_{pq} = \frac{V}{4\pi^2} \int k^2 \mathrm{d}k \int_0^1 \mathrm{d}\mu\,</span>
+<span class="sd">            \mathrm{Tr}\left[C^{-1} \partial_p C\, C^{-1} \partial_q C\right],</span>
+
+<span class="sd">        which for a single tracer reduces to the usual effective-volume expression.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ibin : int</span>
+<span class="sd">            index of the redshift bin</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        numpy.ndarray</span>
+<span class="sd">            Fisher matrix of the bin for all free parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Pk_kmesh</span>
+        <span class="n">mu_mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Pk_mumesh</span>
+        <span class="n">zi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">zmids</span><span class="p">[</span><span class="n">ibin</span><span class="p">]</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs_fid</span>
+        <span class="n">p_gg</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">observed_Pgg</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">)</span>
+        <span class="n">p_ig</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">observed_P_ij</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">,</span> <span class="n">si</span><span class="o">=</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">sj</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+        <span class="n">p_ii</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">observed_P_ij</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">,</span> <span class="n">si</span><span class="o">=</span><span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="n">sj</span><span class="o">=</span><span class="s2">&quot;I&quot;</span><span class="p">)</span>
+        <span class="n">cov_gg</span> <span class="o">=</span> <span class="n">p_gg</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">n_density</span><span class="p">(</span><span class="n">zi</span><span class="p">)</span>
+        <span class="n">cov_ii</span> <span class="o">=</span> <span class="n">p_ii</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">P_noise_21</span><span class="p">(</span><span class="n">zi</span><span class="p">,</span> <span class="n">k_mesh</span><span class="p">,</span> <span class="n">mu_mesh</span><span class="p">,</span> <span class="n">temp_dim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">derivs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">spectrum</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">&quot;II&quot;</span><span class="p">,</span> <span class="n">p_ii</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Ig&quot;</span><span class="p">,</span> <span class="n">p_ig</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;gg&quot;</span><span class="p">,</span> <span class="n">p_gg</span><span class="p">)):</span>
+            <span class="n">derivs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">spectrum</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">joint_derivs</span><span class="p">[</span><span class="n">label</span><span class="p">][</span><span class="n">par</span><span class="p">][</span><span class="n">ibin</span><span class="p">]</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parslist</span><span class="p">])</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">spectro_modes</span><span class="o">.</span><span class="n">joint_gaussian_trace</span><span class="p">(</span><span class="n">cov_ii</span><span class="p">,</span> <span class="n">p_ig</span><span class="p">,</span> <span class="n">cov_gg</span><span class="p">,</span> <span class="o">*</span><span class="n">derivs</span><span class="p">)</span>
+        <span class="n">prefactor</span> <span class="o">=</span> <span class="n">k_mesh</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_cov</span><span class="o">.</span><span class="n">volume_survey</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">npar</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parslist</span><span class="p">)</span>
+        <span class="n">fish_bi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">npar</span><span class="p">,</span> <span class="n">npar</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npar</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">fish_bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fisher_integral</span><span class="p">(</span><span class="n">prefactor</span> <span class="o">*</span> <span class="n">kernel</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="n">fish_bi</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fish_bi</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fish_bi</span></div>
 
 
 <div class="viewcode-block" id="FisherMatrix.fisher_per_bin">
@@ -1402,12 +1494,19 @@
         <span class="c1"># If an output root is provided, we write the Fisher matrix on file</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;outroot&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="n">obstring</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">)</span>
+            <span class="c1"># Cross-only and joint forecasts share the same observables list, so the spectrum</span>
+            <span class="c1"># mode is part of the root. It is read from the settings or the observables rather</span>
+            <span class="c1"># than from self.spectro_mode, which only exists after a spectroscopic compute.</span>
+            <span class="n">mode_tag</span> <span class="o">=</span> <span class="n">spectro_modes</span><span class="o">.</span><span class="n">output_tag</span><span class="p">(</span>
+                <span class="n">spectro_modes</span><span class="o">.</span><span class="n">spectro_mode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">freeparams</span><span class="p">]</span>
             <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">cols</span><span class="p">])</span>
             <span class="n">FM</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">fishmat</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;results_dir&quot;</span><span class="p">]):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;results_dir&quot;</span><span class="p">])</span>
-            <span class="c1"># Root naming (without extension): &lt;results&gt;/&lt;cf_version&gt;_&lt;outroot&gt;_&lt;obstring&gt;_FM</span>
+            <span class="c1"># Root naming (without extension):</span>
+            <span class="c1"># &lt;results&gt;/&lt;cf_version&gt;_&lt;outroot&gt;_&lt;obstring&gt;[_&lt;Ig|joint&gt;]_FM</span>
             <span class="n">root</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;results_dir&quot;</span><span class="p">]</span>
                 <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
@@ -1416,6 +1515,7 @@
                 <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;outroot&quot;</span><span class="p">]</span>
                 <span class="o">+</span> <span class="s2">&quot;_&quot;</span>
                 <span class="o">+</span> <span class="n">obstring</span>
+                <span class="o">+</span> <span class="n">mode_tag</span>
                 <span class="o">+</span> <span class="s2">&quot;_FM&quot;</span>
             <span class="p">)</span>
             <span class="n">extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;fishermatrix_file_extension&quot;</span><span class="p">]</span>

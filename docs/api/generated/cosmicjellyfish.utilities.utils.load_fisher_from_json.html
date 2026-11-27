@@ -683,6 +683,15 @@
 <li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_cov.SpectroDerivs.html">SpectroDerivs</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.html">cosmicjellyfish.LSSsurvey.spectro_modes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.joint_gaussian_trace.html">joint_gaussian_trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.output_tag.html">output_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.replay_observables.html">replay_observables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.resolve_spectro_observables.html">resolve_spectro_observables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.spectro_mode.html">spectro_mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.spectrum_pair.html">spectrum_pair</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_obs.html">cosmicjellyfish.LSSsurvey.spectro_obs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_obs.ComputeGalSpectro.html">ComputeGalSpectro</a></li>
 </ul>
@@ -793,6 +802,8 @@
 <ul class="simple">
 <li><p>This only reconstructs the object with the same options/specifications/parameters.
 You still need to call <code class="docutils literal notranslate"><span class="pre">.compute()</span></code> on the returned FisherMatrix to perform the run.</p></li>
+<li><p>The recorded spectrum mode (<code class="docutils literal notranslate"><span class="pre">options[&quot;spectro_mode&quot;]</span></code>) is restored, so a cross-only
+forecast is not replayed as a joint one.</p></li>
 </ul>
 </dd></dl>
 

@@ -1,0 +1,42 @@
+cosmicjellyfish.LSSsurvey.spectro\_modes
+========================================
+
+.. automodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+   
+   
+   .. rubric:: Module attributes
+
+   .. autosummary::
+   
+      MODES
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      joint_gaussian_trace
+      output_tag
+      replay_observables
+      resolve_spectro_observables
+      spectro_mode
+      spectrum_pair
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

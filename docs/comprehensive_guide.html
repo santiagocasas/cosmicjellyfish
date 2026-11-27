@@ -432,6 +432,7 @@
 <li class="toctree-l1"><a class="reference internal" href="gcsp_intermediate.html">GCsp forecasts through intermediate parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="likelihood_sampling.html">Likelihood sampling with Nautilus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cmb_benchmarks.html">CMB benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="survey_validation.html">Survey validation: DESI, Rubin/LSST, SKAO and Planck</a></li>
 </ul>
 </div>
 </nav></div>
@@ -649,7 +650,7 @@ can be selected by name alone.</p>
 <td><p>IST:F <code class="docutils literal notranslate"><span class="pre">GCsp</span></code> with the <code class="docutils literal notranslate"><span class="pre">linear_Qbias</span></code> scale-dependent bias (optionally with <code class="docutils literal notranslate"><span class="pre">rescale_sigma_pv</span></code>, or with only <code class="docutils literal notranslate"><span class="pre">A2</span></code>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Photometric-Redbook</span></code></p></td>
-<td><p>SKAO photometric: <code class="docutils literal notranslate"><span class="pre">fsky</span></code> 0.1166.</p></td>
+<td><p>SKAO photometric: <code class="docutils literal notranslate"><span class="pre">fsky</span></code> 0.1166, <code class="docutils literal notranslate"><span class="pre">lmax</span></code> 750/3000.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Spectroscopic-Redbook</span></code></p></td>
 <td><p>SKAO HI <code class="docutils literal notranslate"><span class="pre">GCsp</span></code>: 5000 deg², <code class="docutils literal notranslate"><span class="pre">kmax</span></code> 0.25 h/Mpc.</p></td>
@@ -660,10 +661,36 @@ can be selected by name alone.</p>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MeerKlass-IM-Ze</span></code></p></td>
 <td><p>MeerKLASS <code class="docutils literal notranslate"><span class="pre">IM</span></code>: 7500 deg², 60 dishes.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-BGS-SKAOPaper</span></code></p></td>
+<td><p>DESI Bright Galaxy Survey <code class="docutils literal notranslate"><span class="pre">GCsp</span></code>: 14000 deg², 5 bins 0.0-0.5.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-ELG-SKAOPaper</span></code></p></td>
+<td><p>DESI Emission Line Galaxies <code class="docutils literal notranslate"><span class="pre">GCsp</span></code>: 14000 deg², 11 bins 0.6-1.7.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-BGS-Validation2023</span></code>, <code class="docutils literal notranslate"><span class="pre">DESI-LRG-Validation2023</span></code>, <code class="docutils literal notranslate"><span class="pre">DESI-ELG-Validation2023</span></code>, <code class="docutils literal notranslate"><span class="pre">DESI-QSO-Validation2023</span></code></p></td>
+<td><p>Updated DESI <code class="docutils literal notranslate"><span class="pre">GCsp</span></code> tracers from Table 7 of the DESI validation paper (arXiv:2306.06307): BGS 0.0-0.4, LRG 0.4-1.1, ELG 1.1-1.6, quasars 1.6-2.1, bias <code class="docutils literal notranslate"><span class="pre">A/D(z)</span></code>. See <a class="reference internal" href="survey_validation.html"><span class="std std-doc">Survey validation</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Rubin-Photometric-SKAOPaper</span></code></p></td>
+<td><p>Rubin/LSST photometric: <code class="docutils literal notranslate"><span class="pre">lmax</span></code> 1500/5000, <code class="docutils literal notranslate"><span class="pre">fsky</span></code> 0.33/0.35.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Photometric-SKAOPaper</span></code></p></td>
+<td><p>SKAO photometric with the paper-era <code class="docutils literal notranslate"><span class="pre">lmax</span></code> 1500/5000.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Spectroscopic-SKAOPaper</span></code></p></td>
+<td><p>SKAO HI <code class="docutils literal notranslate"><span class="pre">GCsp</span></code> with the full set of five shot-noise keys.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-IM-Redbook-DESI-ELG</span></code></p></td>
+<td><p>SKAO <code class="docutils literal notranslate"><span class="pre">IM</span></code> with bins aligned to <code class="docutils literal notranslate"><span class="pre">DESI-ELG-SKAOPaper</span></code> for the cross-correlation.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <p>For <code class="docutils literal notranslate"><span class="pre">IM</span></code> forecasts, <code class="docutils literal notranslate"><span class="pre">survey_name_radio_IM</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">SKAO-IM-Redbook</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-SKAOPaper</span></code> files transcribe the inputs of the historical radio x optical
+forecast project (Casas et al. 2023, arXiv:2210.05705); they are opt-in and are
+not the current official survey specifications. See
+<a class="reference external" href="https://github.com/santiagocasas/cosmicjellyfish/blob/main/docs/SURVEY_VALIDATION_ROADMAP.md"><code class="docutils literal notranslate"><span class="pre">docs/SURVEY_VALIDATION_ROADMAP.md</span></code></a>
+for the provenance of every number.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;survey_name_radio_IM&quot;</span><span class="p">:</span> <span class="s2">&quot;SKAO-IM-Redbook&quot;</span><span class="p">,</span>  <span class="c1"># the default</span>
     <span class="s2">&quot;survey_name_photo&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
@@ -672,11 +699,18 @@ can be selected by name alone.</p>
 <span class="n">forecast</span> <span class="o">=</span> <span class="n">cff</span><span class="o">.</span><span class="n">FisherMatrix</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">observables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;IM&quot;</span><span class="p">],</span> <span class="n">surveyName</span><span class="o">=</span><span class="s2">&quot;SKAO&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>No Rubin or DESI specification file is shipped. The <code class="docutils literal notranslate"><span class="pre">Rubin</span></code> and <code class="docutils literal notranslate"><span class="pre">DESI</span></code> branches in
-<code class="docutils literal notranslate"><span class="pre">config.py</span></code> load whatever file you name in <code class="docutils literal notranslate"><span class="pre">survey_name_photo</span></code> or
-<code class="docutils literal notranslate"><span class="pre">survey_name_spectro</span></code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Rubin</span></code> and <code class="docutils literal notranslate"><span class="pre">DESI</span></code> branches in <code class="docutils literal notranslate"><span class="pre">config.py</span></code> only load whatever file you name in
+<code class="docutils literal notranslate"><span class="pre">survey_name_photo</span></code> or <code class="docutils literal notranslate"><span class="pre">survey_name_spectro</span></code>; the survey name alone does not select
+a file. <strong>If you leave the option out, the Euclid default is loaded silently:</strong>
+<code class="docutils literal notranslate"><span class="pre">surveyName=&quot;DESI&quot;</span></code> without <code class="docutils literal notranslate"><span class="pre">survey_name_spectro</span></code> uses
+<code class="docutils literal notranslate"><span class="pre">Euclid-Spectroscopic-ISTF-Pessimistic</span></code>, and <code class="docutils literal notranslate"><span class="pre">surveyName=&quot;Rubin&quot;</span></code> without
+<code class="docutils literal notranslate"><span class="pre">survey_name_photo</span></code> uses <code class="docutils literal notranslate"><span class="pre">Euclid-Photometric-ISTF-Pessimistic</span></code>. The forecast still
+completes, so a finished run does not show that DESI or Rubin inputs were used. Always
+name the file, for example <code class="docutils literal notranslate"><span class="pre">surveyName=&quot;DESI&quot;</span></code> with
+<code class="docutils literal notranslate"><span class="pre">options={&quot;survey_name_spectro&quot;:</span> <span class="pre">&quot;DESI-ELG-SKAOPaper&quot;}</span></code>, or <code class="docutils literal notranslate"><span class="pre">surveyName=&quot;Rubin&quot;</span></code>
+with <code class="docutils literal notranslate"><span class="pre">options={&quot;survey_name_photo&quot;:</span> <span class="pre">&quot;Rubin-Photometric-SKAOPaper&quot;}</span></code>.</p>
 </div>
 </section>
 </section>

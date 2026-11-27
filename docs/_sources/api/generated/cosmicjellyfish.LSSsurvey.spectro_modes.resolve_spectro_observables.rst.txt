@@ -1,0 +1,6 @@
+resolve\_spectro\_observables
+=============================
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: resolve_spectro_observables

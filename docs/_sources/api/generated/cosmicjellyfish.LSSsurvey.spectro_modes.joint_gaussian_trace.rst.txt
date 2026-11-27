@@ -1,0 +1,6 @@
+joint\_gaussian\_trace
+======================
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: joint_gaussian_trace

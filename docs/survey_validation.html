@@ -1,0 +1,1394 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Survey validation: DESI, Rubin/LSST, SKAO and Planck &#8212; cosmicjellyfish v2.0.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=33f10437" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'survey_validation';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials.html" />
+    <link rel="prev" title="CMB benchmarks" href="cmb_benchmarks.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2.0" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="auto">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/icon-light.svg" class="logo__image only-light" alt=""/>
+    <img src="_static/icon-dark.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">cosmicjellyfish</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="comprehensive_guide.html">Comprehensive guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derivatives.html">Derivative methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jaxcosmo.html">JAXcosmo and automatic differentiation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcsp_intermediate.html">GCsp forecasts through intermediate parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihood_sampling.html">Likelihood sampling with Nautilus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmb_benchmarks.html">CMB benchmarks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Survey validation: DESI, Rubin/LSST, SKAO and Planck</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="user_guide.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Survey validation: DESI, Rubin/LSST, SKAO and Planck</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="survey-validation-desi-rubin-lsst-skao-and-planck">
+<h1>Survey validation: DESI, Rubin/LSST, SKAO and Planck<a class="headerlink" href="#survey-validation-desi-rubin-lsst-skao-and-planck" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">cosmicjellyfish</span></code> was built and validated for the Euclid forecast recipe. This page
+documents a second, deliberately conservative validation: the same machinery is applied to
+the other major Stage-IV surveys, and the result is checked in two independent ways.</p>
+<p>First, every survey-specific ingredient (number density, bias, volume, photometric
+redshift distribution, intensity-mapping thermodynamics, beam and noise) is compared
+against an independent transcription of the historical SKAO forecast project of
+Casas et al. (2023). Second, the probes are run through the Fisher pipeline on a common
+GR fiducial and the marginalised errors are compared across surveys. The accompanying
+engineering tracker, with the full provenance map, per-step checklists and progress log,
+lives in <code class="docutils literal notranslate"><span class="pre">docs/SURVEY_VALIDATION_ROADMAP.md</span></code>.</p>
+<p>The scope is intentionally narrow. The published SKAO constraints are on modified-gravity
+parameters (<code class="docutils literal notranslate"><span class="pre">mu</span></code>, <code class="docutils literal notranslate"><span class="pre">Sigma</span></code>, <code class="docutils literal notranslate"><span class="pre">E11</span></code>, <code class="docutils literal notranslate"><span class="pre">E22</span></code>), which are not part of this validation, so the
+numbers below are <em>not</em> a reproduction of the paper’s headline results. What is reproduced
+is the measurement side of the forecast and the Fisher machinery on top of it.</p>
+<section id="survey-configurations">
+<h2>Survey configurations<a class="headerlink" href="#survey-configurations" title="Link to this heading">#</a></h2>
+<p>The historical inputs are shipped as opt-in files under
+<code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/configs/other_survey_specifications/</span></code>. They are named with the
+<code class="docutils literal notranslate"><span class="pre">-SKAOPaper</span></code> suffix so that they can never be confused with a current-best
+specification, and they do not change any default.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Survey</p></th>
+<th class="head"><p>Probe</p></th>
+<th class="head"><p>Main settings</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-BGS-SKAOPaper.yaml</span></code></p></td>
+<td><p>DESI BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>5 bins, <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">0.5</span></code>, area 14000 deg², <code class="docutils literal notranslate"><span class="pre">kmax</span> <span class="pre">=</span> <span class="pre">0.30</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-ELG-SKAOPaper.yaml</span></code></p></td>
+<td><p>DESI ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>11 bins, <code class="docutils literal notranslate"><span class="pre">0.6</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">1.7</span></code>, area 14000 deg²</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-BGS-Validation2023.yaml</span></code></p></td>
+<td><p>DESI BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>4 bins, <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">0.4</span></code>, area 14000 deg², <code class="docutils literal notranslate"><span class="pre">kmax</span> <span class="pre">=</span> <span class="pre">0.30</span></code> (2023 validation paper)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-LRG-Validation2023.yaml</span></code></p></td>
+<td><p>DESI LRG</p></td>
+<td><p>GCsp</p></td>
+<td><p>7 bins, <code class="docutils literal notranslate"><span class="pre">0.4</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">1.1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-ELG-Validation2023.yaml</span></code></p></td>
+<td><p>DESI ELG (LOP)</p></td>
+<td><p>GCsp</p></td>
+<td><p>5 bins, <code class="docutils literal notranslate"><span class="pre">1.1</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">1.6</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DESI-QSO-Validation2023.yaml</span></code></p></td>
+<td><p>DESI quasars</p></td>
+<td><p>GCsp</p></td>
+<td><p>5 bins, <code class="docutils literal notranslate"><span class="pre">1.6</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">2.1</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Rubin-Photometric-SKAOPaper.yaml</span></code></p></td>
+<td><p>Rubin/LSST</p></td>
+<td><p>GCph + WL</p></td>
+<td><p>10 bins, <code class="docutils literal notranslate"><span class="pre">zm</span> <span class="pre">=</span> <span class="pre">0.156</span></code>, <code class="docutils literal notranslate"><span class="pre">lmax</span> <span class="pre">=</span> <span class="pre">1500/5000</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Photometric-SKAOPaper.yaml</span></code></p></td>
+<td><p>SKAO</p></td>
+<td><p>GCph + WL</p></td>
+<td><p>10 bins, <code class="docutils literal notranslate"><span class="pre">zm</span> <span class="pre">=</span> <span class="pre">1.1</span></code>, <code class="docutils literal notranslate"><span class="pre">fsky</span> <span class="pre">=</span> <span class="pre">0.1166</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-Spectroscopic-SKAOPaper.yaml</span></code></p></td>
+<td><p>SKAO</p></td>
+<td><p>GCsp (HI galaxies)</p></td>
+<td><p>5 bins, <code class="docutils literal notranslate"><span class="pre">0.0</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">0.5</span></code>, area 5000 deg²</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SKAO-IM-Redbook-DESI-ELG.yaml</span></code></p></td>
+<td><p>SKAO</p></td>
+<td><p>IM</p></td>
+<td><p>11 bins aligned to DESI ELG for the cross-correlation</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The DESI and Rubin branches of the configuration loader do not pick a file on their own,
+so the survey name must be combined with an explicit specification name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.fishermatrix.cosmicfish</span><span class="w"> </span><span class="kn">import</span> <span class="n">FisherMatrix</span>
+
+<span class="n">desi</span> <span class="o">=</span> <span class="n">FisherMatrix</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;symbolic&quot;</span><span class="p">,</span> <span class="s2">&quot;survey_name_spectro&quot;</span><span class="p">:</span> <span class="s2">&quot;DESI-ELG-SKAOPaper&quot;</span><span class="p">},</span>
+    <span class="n">observables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GCsp&quot;</span><span class="p">],</span>
+    <span class="n">surveyName</span><span class="o">=</span><span class="s2">&quot;DESI&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">rubin</span> <span class="o">=</span> <span class="n">FisherMatrix</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;symbolic&quot;</span><span class="p">,</span> <span class="s2">&quot;survey_name_photo&quot;</span><span class="p">:</span> <span class="s2">&quot;Rubin-Photometric-SKAOPaper&quot;</span><span class="p">},</span>
+    <span class="n">observables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GCph&quot;</span><span class="p">,</span> <span class="s2">&quot;WL&quot;</span><span class="p">],</span>
+    <span class="n">surveyName</span><span class="o">=</span><span class="s2">&quot;Rubin&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="reproducing-the-study">
+<h2>Reproducing the study<a class="headerlink" href="#reproducing-the-study" title="Link to this heading">#</a></h2>
+<p>The commands below produce everything on this page. The first two write JSON reports
+under <code class="docutils literal notranslate"><span class="pre">results/survey_validation/</span></code>; the last turns them into figures.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/validation/validate_survey_observables.py
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/validation/run_survey_forecasts.py<span class="w"> </span>--model<span class="w"> </span>LCDM
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/validation/run_survey_forecasts.py<span class="w"> </span>--model<span class="w"> </span>w0waCDM
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/validation/plot_survey_validation.py
+</pre></div>
+</div>
+<p>The observable harness takes a few seconds, the LCDM forecast set about two minutes and
+the w0waCDM set about three. <code class="docutils literal notranslate"><span class="pre">validate_survey_observables.py</span></code> needs a local checkout of
+the historical project: set <code class="docutils literal notranslate"><span class="pre">COSMICFISH_HISTORICAL_DIR</span></code> to that directory (it must contain
+<code class="docutils literal notranslate"><span class="pre">survey_specifications/</span></code> and <code class="docutils literal notranslate"><span class="pre">data-for-fig1.dat</span></code>).</p>
+</section>
+<section id="observable-validation">
+<h2>Observable validation<a class="headerlink" href="#observable-validation" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">scripts/validation/survey_observable_reference.py</span></code> re-implements the historical
+formulas from scratch rather than importing them, so that agreement is a real check
+rather than a tautology. The harness compares, for every migrated configuration:</p>
+<ul class="simple">
+<li><p>the bin number density, survey volume and fiducial bias;</p></li>
+<li><p>the full galaxy power spectrum <code class="docutils literal notranslate"><span class="pre">P_gg(k,</span> <span class="pre">mu,</span> <span class="pre">z)</span></code>, including the AP remapping, the
+Kaiser term, the de-wiggled power and the Lorentzian damping;</p></li>
+<li><p>for intensity mapping: <code class="docutils literal notranslate"><span class="pre">Omega_HI(z)</span></code>, <code class="docutils literal notranslate"><span class="pre">b_HI(z)</span></code>, the brightness temperature, the beam
+and the thermal noise power, as well as the <code class="docutils literal notranslate"><span class="pre">P_II</span></code> and <code class="docutils literal notranslate"><span class="pre">P_Ig</span></code> spectra;</p></li>
+<li><p>for the photometric surveys: the <code class="docutils literal notranslate"><span class="pre">dN/dz</span></code> shape and the galaxy counts per bin. The
+angular kernels and spectra are <em>not</em> re-compared against the historical project here;
+they are exercised by the existing photometric observable tests, so this harness alone
+should not be read as a photometric-spectra validation.</p></li>
+</ul>
+<p>These are primarily <em>algebra</em> checks. The reference implementation is written
+independently and shares only the cosmology object with the code under test, so
+agreement confirms that the transcribed formulas, units and bin bookkeeping are correct,
+not that a different cosmology library would give the same answer.</p>
+<p>The 33 machinery checks agree at machine precision (relative differences below
+<code class="docutils literal notranslate"><span class="pre">1e-15</span></code>). The only deliberate exception is the SKAO paper’s Fig. 1: its reference curves
+were computed with a modified-gravity fiducial and the external MGCAMB tables, so the
+current GR run is expected to differ. Recomputing the same spectra at <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">0.6</span></code> gives a
+residual <em>shape</em> difference of 0.4–1.5% over <code class="docutils literal notranslate"><span class="pre">0.005</span> <span class="pre">&lt;</span> <span class="pre">k</span> <span class="pre">&lt;</span> <span class="pre">0.05</span></code> 1/Mpc, and a constant
+0.5–6.8% amplitude offset. The shape agreement is what this diagnostic supports; the
+amplitude offset is consistent with the different fiducial growth, but it is not isolated
+from the other differences (backend, table extrapolation, modelling), so the figure is
+recorded as “quantified”, not “reproduced”.</p>
+<a class="reference internal image-reference" href="_images/fig1_diagnostic.png"><img alt="Historical and current SKAO Fig. 1 spectra at z=0.6, with the ratio in the amplitude window" class="align-center" src="_images/fig1_diagnostic.png" style="width: 95%;" />
+</a>
+</section>
+<section id="forecast-comparison">
+<h2>Forecast comparison<a class="headerlink" href="#forecast-comparison" title="Link to this heading">#</a></h2>
+<p>All runs use the same GR fiducial (<code class="docutils literal notranslate"><span class="pre">Omegam</span> <span class="pre">=</span> <span class="pre">0.32</span></code>, <code class="docutils literal notranslate"><span class="pre">Omegab</span> <span class="pre">=</span> <span class="pre">0.05</span></code>, <code class="docutils literal notranslate"><span class="pre">h</span> <span class="pre">=</span> <span class="pre">0.67</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ns</span> <span class="pre">=</span> <span class="pre">0.96</span></code>, <code class="docutils literal notranslate"><span class="pre">sigma8</span> <span class="pre">=</span> <span class="pre">0.822</span></code>, with <code class="docutils literal notranslate"><span class="pre">mnu</span> <span class="pre">=</span> <span class="pre">0.06</span></code> eV held fixed and not varied), flat
+LCDM, the <code class="docutils literal notranslate"><span class="pre">3PT</span></code> derivative scheme with 0.2% relative steps and the same <code class="docutils literal notranslate"><span class="pre">k</span></code>/<code class="docutils literal notranslate"><span class="pre">mu</span></code>
+sampling. The step is smaller
+than the 1% used for the photometric runs because every three-dimensional clustering
+analysis is under-converged at 1%: relative to their own error bar, <code class="docutils literal notranslate"><span class="pre">sigma(sigma8)</span></code> grows
+by 25% (Euclid GCsp), 37% (DESI ELG), 38% (SKAO HI) and 20% (SKAO IM) when going from 1%
+to 0.2%, while 0.2% and 0.05% agree to better than 0.1%. The photometric errors change by
+only 0.03% between 1% and 0.2%. Bias, shot-noise and (where
+present) <code class="docutils literal notranslate"><span class="pre">sigma_v</span></code>/<code class="docutils literal notranslate"><span class="pre">sigma_p</span></code> nuisances are marginalised before the errors are quoted.
+Everything runs on the <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> backend except the Planck-like case, which uses CAMB.
+Combinations sum the full nuisance-marginalised Fisher blocks of the two probes, so the
+parameter correlations between the probes’ contributions are retained; the harness refuses
+to combine a report that does not store those blocks rather than falling back to the
+diagonal errors. The “IM x ELG” rows with the cross-spectrum only use
+<code class="docutils literal notranslate"><span class="pre">observables=[&quot;GCspxIM&quot;]</span></code>; the “auto + cross” rows analyse the DESI ELG auto-spectrum, the
+IM auto-spectrum and their cross-spectrum together (see the next paragraph).</p>
+<p>The spectroscopic observables are <code class="docutils literal notranslate"><span class="pre">GCsp</span></code> (galaxy auto-spectrum), <code class="docutils literal notranslate"><span class="pre">IM</span></code> (intensity-mapping
+auto-spectrum) and <code class="docutils literal notranslate"><span class="pre">GCspxIM</span></code> (their cross-spectrum). The old spelling <code class="docutils literal notranslate"><span class="pre">[&quot;GCsp&quot;,</span> <span class="pre">&quot;IM&quot;]</span></code> meant
+the cross-spectrum only; it still works and emits a <code class="docutils literal notranslate"><span class="pre">FutureWarning</span></code>. To analyse all three
+spectra at once, list them (<code class="docutils literal notranslate"><span class="pre">[&quot;GCsp&quot;,</span> <span class="pre">&quot;GCspxIM&quot;,</span> <span class="pre">&quot;IM&quot;]</span></code>) or pass <code class="docutils literal notranslate"><span class="pre">GCspxIM</span></code> together with the
+option <code class="docutils literal notranslate"><span class="pre">spectro_joint=True</span></code>. In that joint mode the galaxy and IM fields at each
+<code class="docutils literal notranslate"><span class="pre">(k,</span> <span class="pre">mu)</span></code> are treated as a pair with a full 2x2 Gaussian covariance, so the modes they share
+are counted once instead of adding three Fisher matrices by hand. The joint analysis lives
+on the redshift bins where both probes overlap, needs the standard finite-difference
+derivatives (the JAX providers do not support it) and the shot-noise parameters <code class="docutils literal notranslate"><span class="pre">Ps_i</span></code>
+enter the galaxy auto-spectrum only.</p>
+<p>For intensity mapping the survey volume uses the IM sky fraction (<code class="docutils literal notranslate"><span class="pre">fsky_IM</span> <span class="pre">=</span> <span class="pre">0.48</span></code>),
+matching the footprint already used by the 21-cm noise term. For the cross-spectrum the
+sky fraction can be set explicitly with the optional <code class="docutils literal notranslate"><span class="pre">fsky_cross</span></code> key; when it is absent
+the code uses the smaller of <code class="docutils literal notranslate"><span class="pre">fsky_spectro</span></code> and <code class="docutils literal notranslate"><span class="pre">fsky_IM</span></code>, which assumes the smaller
+footprint is fully contained in the larger one. The migrated specifications do not set
+<code class="docutils literal notranslate"><span class="pre">fsky_cross</span></code>, so their cross-spectrum volume carries that nested-footprint assumption; the
+code records it in <code class="docutils literal notranslate"><span class="pre">SpectroCov.fsky_cross_assumed_nested</span></code> and rejects an explicit
+<code class="docutils literal notranslate"><span class="pre">fsky_cross</span></code> larger than the nested value. The IM <code class="docutils literal notranslate"><span class="pre">k</span></code> range is inherited
+from the galaxy-clustering settings (<code class="docutils literal notranslate"><span class="pre">kmin_GCsp</span></code>, <code class="docutils literal notranslate"><span class="pre">kmax_GCsp</span></code>), as in the historical
+project: the <code class="docutils literal notranslate"><span class="pre">kmin_IM</span></code>/<code class="docutils literal notranslate"><span class="pre">kmax_IM</span></code> entries of the specification are currently not consumed
+and are recorded as an open item in the roadmap.</p>
+<p>The two figures below summarise the survey inputs and the parameter errors. The tables
+that follow give the numbers.</p>
+<a class="reference internal image-reference" href="_images/survey_inputs.png"><img alt="Redshift distributions of the spectroscopic, intensity-mapping and photometric surveys" class="align-center" src="_images/survey_inputs.png" style="width: 100%;" />
+</a>
+<a class="reference internal image-reference" href="_images/forecast_errors.png"><img alt="Marginalised errors on Omegam, sigma8, w0 and wa for each survey" class="align-center" src="_images/forecast_errors.png" style="width: 100%;" />
+</a>
+<section id="lcdm">
+<h3>LCDM<a class="headerlink" href="#lcdm" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Survey</p></th>
+<th class="head"><p>Probe(s)</p></th>
+<th class="head"><p>sigma(Omegam)</p></th>
+<th class="head"><p>sigma(Omegab)</p></th>
+<th class="head"><p>sigma(h)</p></th>
+<th class="head"><p>sigma(ns)</p></th>
+<th class="head"><p>sigma(sigma8)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.00241449</p></td>
+<td><p>0.00218174</p></td>
+<td><p>0.0173254</p></td>
+<td><p>0.0097284</p></td>
+<td><p>0.00299523</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rubin/LSST</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.00124975</p></td>
+<td><p>0.00198969</p></td>
+<td><p>0.0118478</p></td>
+<td><p>0.00499616</p></td>
+<td><p>0.00159136</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.00478616</p></td>
+<td><p>0.00131012</p></td>
+<td><p>0.0105564</p></td>
+<td><p>0.00898969</p></td>
+<td><p>0.00626847</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.0128422</p></td>
+<td><p>0.00389834</p></td>
+<td><p>0.0169271</p></td>
+<td><p>0.0330358</p></td>
+<td><p>0.0212149</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.0050355</p></td>
+<td><p>0.0014544</p></td>
+<td><p>0.00843915</p></td>
+<td><p>0.00934154</p></td>
+<td><p>0.00535276</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS + ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.00364307</p></td>
+<td><p>0.00134059</p></td>
+<td><p>0.00624908</p></td>
+<td><p>0.00811367</p></td>
+<td><p>0.00490995</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.00556561</p></td>
+<td><p>0.00621195</p></td>
+<td><p>0.0465785</p></td>
+<td><p>0.0269691</p></td>
+<td><p>0.00738337</p></td>
+</tr>
+<tr class="row-odd"><td><p>SKAO HI</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.0243804</p></td>
+<td><p>0.00861922</p></td>
+<td><p>0.0446646</p></td>
+<td><p>0.0580188</p></td>
+<td><p>0.0373749</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO</p></td>
+<td><p>IM</p></td>
+<td><p>0.00692111</p></td>
+<td><p>0.00225796</p></td>
+<td><p>0.0156393</p></td>
+<td><p>0.00749774</p></td>
+<td><p>0.00644563</p></td>
+</tr>
+<tr class="row-odd"><td><p>SKAO x DESI</p></td>
+<td><p>IM x ELG, cross only</p></td>
+<td><p>0.0129225</p></td>
+<td><p>0.00336428</p></td>
+<td><p>0.0283735</p></td>
+<td><p>0.0176025</p></td>
+<td><p>0.042502</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO x DESI</p></td>
+<td><p>IM x ELG, auto + cross</p></td>
+<td><p>0.00418514</p></td>
+<td><p>0.00135812</p></td>
+<td><p>0.00719769</p></td>
+<td><p>0.00610167</p></td>
+<td><p>0.00454342</p></td>
+</tr>
+<tr class="row-odd"><td><p>Planck-like</p></td>
+<td><p>CMB TT+TE+EE</p></td>
+<td><p>0.016075</p></td>
+<td><p>0.0012949</p></td>
+<td><p>0.0115754</p></td>
+<td><p>0.00693771</p></td>
+<td><p>0.00942461</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCph+WL+GCsp</p></td>
+<td><p>0.00189726</p></td>
+<td><p>0.00085189</p></td>
+<td><p>0.00654836</p></td>
+<td><p>0.00426305</p></td>
+<td><p>0.00218619</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="w0wacdm">
+<h3>w0waCDM<a class="headerlink" href="#w0wacdm" title="Link to this heading">#</a></h3>
+<p>Here <code class="docutils literal notranslate"><span class="pre">w0</span> <span class="pre">=</span> <span class="pre">-1</span></code>, <code class="docutils literal notranslate"><span class="pre">wa</span> <span class="pre">=</span> <span class="pre">0</span></code>, and the figure of merit is
+<code class="docutils literal notranslate"><span class="pre">FoM</span> <span class="pre">=</span> <span class="pre">1/sqrt(det</span> <span class="pre">Cov(w0,</span> <span class="pre">wa))</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Survey</p></th>
+<th class="head"><p>Probe(s)</p></th>
+<th class="head"><p>sigma(Omegam)</p></th>
+<th class="head"><p>sigma(Omegab)</p></th>
+<th class="head"><p>sigma(h)</p></th>
+<th class="head"><p>sigma(ns)</p></th>
+<th class="head"><p>sigma(sigma8)</p></th>
+<th class="head"><p>sigma(w0)</p></th>
+<th class="head"><p>sigma(wa)</p></th>
+<th class="head"><p>FoM(w0,wa)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.0036437</p></td>
+<td><p>0.00270685</p></td>
+<td><p>0.023065</p></td>
+<td><p>0.013234</p></td>
+<td><p>0.00417464</p></td>
+<td><p>0.041499</p></td>
+<td><p>0.152296</p></td>
+<td><p>378</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rubin/LSST</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.0025377</p></td>
+<td><p>0.00225872</p></td>
+<td><p>0.0134829</p></td>
+<td><p>0.00530628</p></td>
+<td><p>0.00252884</p></td>
+<td><p>0.027936</p></td>
+<td><p>0.0915612</p></td>
+<td><p>897</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.0143087</p></td>
+<td><p>0.00229787</p></td>
+<td><p>0.0181856</p></td>
+<td><p>0.0139647</p></td>
+<td><p>0.0136481</p></td>
+<td><p>0.116831</p></td>
+<td><p>0.361461</p></td>
+<td><p>83.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.0210305</p></td>
+<td><p>0.00417824</p></td>
+<td><p>0.0275829</p></td>
+<td><p>0.0400758</p></td>
+<td><p>0.031189</p></td>
+<td><p>0.249038</p></td>
+<td><p>1.20718</p></td>
+<td><p>10.5</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.012488</p></td>
+<td><p>0.00189264</p></td>
+<td><p>0.0150732</p></td>
+<td><p>0.0152487</p></td>
+<td><p>0.0114671</p></td>
+<td><p>0.0936742</p></td>
+<td><p>0.32811</p></td>
+<td><p>99.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS + ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.00936169</p></td>
+<td><p>0.0015053</p></td>
+<td><p>0.0115328</p></td>
+<td><p>0.0138862</p></td>
+<td><p>0.00920108</p></td>
+<td><p>0.0640452</p></td>
+<td><p>0.237508</p></td>
+<td><p>161</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO</p></td>
+<td><p>GCph+WL</p></td>
+<td><p>0.01689</p></td>
+<td><p>0.00684925</p></td>
+<td><p>0.0521334</p></td>
+<td><p>0.0275988</p></td>
+<td><p>0.0135739</p></td>
+<td><p>0.193051</p></td>
+<td><p>0.568189</p></td>
+<td><p>25.9</p></td>
+</tr>
+<tr class="row-odd"><td><p>SKAO HI</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.037852</p></td>
+<td><p>0.00910093</p></td>
+<td><p>0.0551461</p></td>
+<td><p>0.0647451</p></td>
+<td><p>0.0563283</p></td>
+<td><p>0.469886</p></td>
+<td><p>2.44807</p></td>
+<td><p>2.92</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO</p></td>
+<td><p>IM</p></td>
+<td><p>0.0148634</p></td>
+<td><p>0.00285215</p></td>
+<td><p>0.0220399</p></td>
+<td><p>0.0137836</p></td>
+<td><p>0.0112163</p></td>
+<td><p>0.0969339</p></td>
+<td><p>0.322458</p></td>
+<td><p>72.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SKAO x DESI</p></td>
+<td><p>IM x ELG, cross only</p></td>
+<td><p>0.0272612</p></td>
+<td><p>0.00476902</p></td>
+<td><p>0.0438979</p></td>
+<td><p>0.02617</p></td>
+<td><p>0.0536757</p></td>
+<td><p>0.240052</p></td>
+<td><p>0.733385</p></td>
+<td><p>17.2</p></td>
+</tr>
+<tr class="row-even"><td><p>SKAO x DESI</p></td>
+<td><p>IM x ELG, auto + cross</p></td>
+<td><p>0.0104559</p></td>
+<td><p>0.00166182</p></td>
+<td><p>0.0132039</p></td>
+<td><p>0.010836</p></td>
+<td><p>0.00959269</p></td>
+<td><p>0.0724279</p></td>
+<td><p>0.254649</p></td>
+<td><p>147</p></td>
+</tr>
+<tr class="row-odd"><td><p>Planck-like</p></td>
+<td><p>CMB TT+TE+EE</p></td>
+<td><p>0.476852</p></td>
+<td><p>0.0750947</p></td>
+<td><p>0.501387</p></td>
+<td><p>0.00799934</p></td>
+<td><p>0.478239</p></td>
+<td><p>4.61783</p></td>
+<td><p>14.0196</p></td>
+<td><p>0.0429</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCph+WL+GCsp</p></td>
+<td><p>0.00336613</p></td>
+<td><p>0.00111382</p></td>
+<td><p>0.00783857</p></td>
+<td><p>0.00579484</p></td>
+<td><p>0.00329397</p></td>
+<td><p>0.0350528</p></td>
+<td><p>0.120817</p></td>
+<td><p>638</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<a class="reference internal image-reference" href="_images/w0wa_comparisons.png"><img alt="Paired w0-wa Fisher ellipses for photometric, spectroscopic, combined and intensity-mapping probes" class="align-center" src="_images/w0wa_comparisons.png" style="width: 90%;" />
+</a>
+<p>Each panel pairs probes of comparable constraining power instead of overlaying every
+survey: photometry alone (Euclid vs Rubin/LSST), spectroscopy alone (Euclid vs DESI
+BGS+ELG), the photo+spectro combinations, and the SKAO IM versus Euclid GCsp comparison
+motivated by the SKAO paper. The Planck-like run is kept in the table but left out of the
+ellipses: its single-channel approximation is an order of magnitude weaker and would set
+the axis scale for every other probe. The combined curves are sums of the stored
+nuisance-marginalised Fisher blocks, which keeps the parameter correlations; they still
+assume the probes are statistically independent and therefore do not include
+cross-covariances.</p>
+</section>
+</section>
+<section id="new-desi-specifications-2023-validation-paper">
+<h2>New DESI specifications (2023 validation paper)<a class="headerlink" href="#new-desi-specifications-2023-validation-paper" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">-SKAOPaper</span></code> BGS and ELG files above are kept as <strong>legacy</strong> inputs because they reproduce
+earlier papers. An updated set, <code class="docutils literal notranslate"><span class="pre">DESI-{BGS,LRG,ELG,QSO}-Validation2023.yaml</span></code>, follows the
+forecast recipe of DESI Collaboration, <em>Validation of the Scientific Program for the Dark
+Energy Spectroscopic Instrument</em>, <a class="reference external" href="https://arxiv.org/abs/2306.06307">arXiv:2306.06307</a>
+(Sec. VI.1 and Table 7), which is also implemented in the
+<a class="reference external" href="https://github.com/ladosamushia/GoFish">GoFish</a> Fisher code. Please cite both when using
+these files.</p>
+<ul class="simple">
+<li><p><strong>Redshift ranges and densities.</strong> The four tracers tile <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">2.1</span></code> without overlap
+(BGS, LRG, ELG-LOP, quasars), with <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">0.1</span></code> bins, an area of 14000 deg², and the
+surface density per bin from Table 7 (<code class="docutils literal notranslate"><span class="pre">dndOmegadz</span></code> is that number divided by 0.1). The
+Lyman-alpha forest (<code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">&gt;</span> <span class="pre">2.1</span></code>) is not used. The GoFish input file <code class="docutils literal notranslate"><span class="pre">DESI_All_nbar.txt</span></code> is
+not identical to Table 7 (for example its first BGS bin is 116.5 rather than 101.1 per
+0.1-wide bin); Table 7 is taken as the authority.</p></li>
+<li><p><strong>Bias.</strong> <code class="docutils literal notranslate"><span class="pre">b(z)</span> <span class="pre">=</span> <span class="pre">A</span> <span class="pre">/</span> <span class="pre">D(z)</span></code> with <code class="docutils literal notranslate"><span class="pre">D(0)</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">1.34</span></code> (BGS), <code class="docutils literal notranslate"><span class="pre">1.7</span></code> (LRG), <code class="docutils literal notranslate"><span class="pre">0.84</span></code>
+(ELG) and <code class="docutils literal notranslate"><span class="pre">1.2</span></code> (QSO). The binned value is evaluated at the bin centre for the fiducial
+flat LCDM cosmology (<code class="docutils literal notranslate"><span class="pre">Omegam</span> <span class="pre">=</span> <span class="pre">0.32</span></code>); it is a fiducial prescription, and every bin bias
+stays a free nuisance parameter in the Fisher matrix.</p></li>
+<li><p><strong>Everything else</strong> (scale cuts <code class="docutils literal notranslate"><span class="pre">kmax</span> <span class="pre">=</span> <span class="pre">0.30</span></code>, constant shot-noise and nonlinear
+nuisance parameters) is as in the legacy files, so differences in the table come from the
+tracer definitions and not from the modelling.</p></li>
+<li><p>The files are generated by <code class="docutils literal notranslate"><span class="pre">scripts/validation/generate_desi_validation_specs.py</span></code>
+(<code class="docutils literal notranslate"><span class="pre">--check</span></code> verifies they are up to date) and tested in <code class="docutils literal notranslate"><span class="pre">tests/survey_specs_test.py</span></code>.</p></li>
+</ul>
+<p>The new cases are in the forecast harness as <code class="docutils literal notranslate"><span class="pre">desi2023-bgs</span></code>, <code class="docutils literal notranslate"><span class="pre">desi2023-lrg</span></code>,
+<code class="docutils literal notranslate"><span class="pre">desi2023-elg</span></code>, <code class="docutils literal notranslate"><span class="pre">desi2023-qso</span></code> and the combination <code class="docutils literal notranslate"><span class="pre">desi2023-combined</span></code>, run with the
+symbolic backend and the same fiducial and derivative step as above. The combination adds
+the four stored Fisher blocks, assuming the redshift ranges are independent.</p>
+<section id="id1">
+<h3>LCDM<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sample</p></th>
+<th class="head"><p>Probe</p></th>
+<th class="head"><p>sigma(Omegam)</p></th>
+<th class="head"><p>sigma(Omegab)</p></th>
+<th class="head"><p>sigma(h)</p></th>
+<th class="head"><p>sigma(ns)</p></th>
+<th class="head"><p>sigma(sigma8)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DESI 2023 BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.01371</p></td>
+<td><p>0.004192</p></td>
+<td><p>0.01827</p></td>
+<td><p>0.03498</p></td>
+<td><p>0.02507</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI 2023 LRG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.00523</p></td>
+<td><p>0.001378</p></td>
+<td><p>0.007851</p></td>
+<td><p>0.01097</p></td>
+<td><p>0.01074</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI 2023 ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.007974</p></td>
+<td><p>0.001864</p></td>
+<td><p>0.01413</p></td>
+<td><p>0.01225</p></td>
+<td><p>0.008424</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI 2023 QSO</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.02405</p></td>
+<td><p>0.005086</p></td>
+<td><p>0.04889</p></td>
+<td><p>0.03282</p></td>
+<td><p>0.03163</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI 2023 BGS+LRG+ELG+QSO</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.003075</p></td>
+<td><p>0.0009745</p></td>
+<td><p>0.004854</p></td>
+<td><p>0.006863</p></td>
+<td><p>0.005556</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.01284</p></td>
+<td><p>0.003898</p></td>
+<td><p>0.01693</p></td>
+<td><p>0.03304</p></td>
+<td><p>0.02121</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI ELG (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.005035</p></td>
+<td><p>0.001454</p></td>
+<td><p>0.008439</p></td>
+<td><p>0.009342</p></td>
+<td><p>0.005353</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS+ELG (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.003643</p></td>
+<td><p>0.001341</p></td>
+<td><p>0.006249</p></td>
+<td><p>0.008114</p></td>
+<td><p>0.00491</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.004786</p></td>
+<td><p>0.00131</p></td>
+<td><p>0.01056</p></td>
+<td><p>0.00899</p></td>
+<td><p>0.006268</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id2">
+<h3>w0waCDM<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sample</p></th>
+<th class="head"><p>Probe</p></th>
+<th class="head"><p>sigma(Omegam)</p></th>
+<th class="head"><p>sigma(sigma8)</p></th>
+<th class="head"><p>sigma(w0)</p></th>
+<th class="head"><p>sigma(wa)</p></th>
+<th class="head"><p>FoM(w0,wa)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DESI 2023 BGS</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.02281</p></td>
+<td><p>0.0333</p></td>
+<td><p>0.2854</p></td>
+<td><p>1.41</p></td>
+<td><p>8.62</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI 2023 LRG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.011</p></td>
+<td><p>0.01381</p></td>
+<td><p>0.07687</p></td>
+<td><p>0.2581</p></td>
+<td><p>98.3</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI 2023 ELG</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.02957</p></td>
+<td><p>0.02768</p></td>
+<td><p>0.2566</p></td>
+<td><p>0.7286</p></td>
+<td><p>24</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI 2023 QSO</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.09366</p></td>
+<td><p>0.1026</p></td>
+<td><p>0.8063</p></td>
+<td><p>2.085</p></td>
+<td><p>2.2</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI 2023 BGS+LRG+ELG+QSO</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.007047</p></td>
+<td><p>0.007778</p></td>
+<td><p>0.04609</p></td>
+<td><p>0.1716</p></td>
+<td><p>295</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.02103</p></td>
+<td><p>0.03119</p></td>
+<td><p>0.249</p></td>
+<td><p>1.207</p></td>
+<td><p>10.5</p></td>
+</tr>
+<tr class="row-even"><td><p>DESI ELG (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.01249</p></td>
+<td><p>0.01147</p></td>
+<td><p>0.09367</p></td>
+<td><p>0.3281</p></td>
+<td><p>99.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>DESI BGS+ELG (legacy)</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.009362</p></td>
+<td><p>0.009201</p></td>
+<td><p>0.06405</p></td>
+<td><p>0.2375</p></td>
+<td><p>161</p></td>
+</tr>
+<tr class="row-even"><td><p>Euclid</p></td>
+<td><p>GCsp</p></td>
+<td><p>0.01431</p></td>
+<td><p>0.01365</p></td>
+<td><p>0.1168</p></td>
+<td><p>0.3615</p></td>
+<td><p>83.9</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The LRG sample is the strongest single tracer, the quasars the weakest, and the full 2023
+set is tighter than both the legacy BGS+ELG and the Euclid spectroscopic sample in
+galaxy clustering alone. The new ELG sample (5 bins) constrains less than the legacy ELG
+(11 bins over <code class="docutils literal notranslate"><span class="pre">0.6</span> <span class="pre">&lt;</span> <span class="pre">z</span> <span class="pre">&lt;</span> <span class="pre">1.7</span></code>) because it spans a shorter redshift range. The biases differ
+from the legacy files (for example the ELG bias is <code class="docutils literal notranslate"><span class="pre">0.84</span> <span class="pre">/</span> <span class="pre">D(z)</span> <span class="pre">=</span> <span class="pre">1.48-1.73</span></code> against
+<code class="docutils literal notranslate"><span class="pre">1.02-1.36</span></code>), but since they are free nuisance parameters their effect on the errors is
+partly marginalised. Derivative-step sensitivity of these new runs has not been scanned.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">w0</span></code>-<code class="docutils literal notranslate"><span class="pre">wa</span></code> ellipses in this page are the joint 68.27% (solid) and 95.45% (dashed)
+contours, drawn with <code class="docutils literal notranslate"><span class="pre">confidence_coefficient(level,</span> <span class="pre">dimensions=2)</span></code> as in <code class="docutils literal notranslate"><span class="pre">fishconsumer</span></code>
+(1.515 and 2.486 sigma, i.e. <code class="docutils literal notranslate"><span class="pre">Delta</span> <span class="pre">chi^2</span> <span class="pre">=</span> <span class="pre">2.30</span></code> and <code class="docutils literal notranslate"><span class="pre">6.18</span></code>). The tabulated errors are
+marginalised 1-sigma values.</p>
+<a class="reference internal image-reference" href="_images/desi2023_inputs.png"><img alt="DESI 2023 densities and bias versus redshift, with the legacy BGS and ELG files dashed" class="align-center" src="_images/desi2023_inputs.png" style="width: 90%;" />
+</a>
+<a class="reference internal image-reference" href="_images/desi2023_w0wa.png"><img alt="w0-wa Fisher ellipses for each DESI 2023 tracer with the quasars on top, and the combined DESI 2023 set against the legacy BGS+ELG and Euclid GCsp" class="align-center" src="_images/desi2023_w0wa.png" style="width: 100%;" />
+</a>
+</section>
+</section>
+<section id="reading-the-numbers">
+<h2>Reading the numbers<a class="headerlink" href="#reading-the-numbers" title="Link to this heading">#</a></h2>
+<p>The most important lesson is that “Rubin beats Euclid” and similar statements are
+statements about <em>specifications</em>, not telescopes. The historical Rubin file used in this
+study has wider weak-lensing scale cuts (<code class="docutils literal notranslate"><span class="pre">lmax_WL</span> <span class="pre">=</span> <span class="pre">5000</span></code>) than the shipped Euclid
+pessimistic file (<code class="docutils literal notranslate"><span class="pre">1500</span></code>), so its 3x2pt errors are smaller on every parameter. The same
+caveat applies to every comparison in the tables: they are useful as an internal
+consistency check of the pipeline, not as a survey ranking.</p>
+<p>The SKAO continuum photometric configuration is weak because the paper-era file covers
+only <code class="docutils literal notranslate"><span class="pre">fsky</span> <span class="pre">=</span> <span class="pre">0.1166</span></code>. Its HI-galaxy and intensity-mapping probes are comparable to each
+other but much weaker than the optical spectroscopic surveys on shape parameters. The
+SKAO IM x DESI-ELG cross-spectrum row discards the auto-spectra, so it is not comparable
+to the IM auto-spectrum row; the auto + cross row is.</p>
+<p>The Planck-like row is the shipped single-channel approximation (<code class="docutils literal notranslate"><span class="pre">lmax</span> <span class="pre">=</span> <span class="pre">1500</span></code>, no
+lensing), run with CAMB because the symbolic backend cannot produce CMB spectra. It is
+included for completeness and should not be read as the Planck likelihood. A comparison
+against the published Planck covariance is tracked as a follow-up in the roadmap.</p>
+<p>Finally, none of these numbers are targets from the SKAO paper. The paper’s headline
+constraints are on <code class="docutils literal notranslate"><span class="pre">mu</span></code> and <code class="docutils literal notranslate"><span class="pre">Sigma</span></code>, and the historical runs used the external MGCAMB
+tables, which are not shipped here. The purpose of this study is to show that the
+measurement, covariance and Fisher layers are wired consistently for every survey. The
+machine-precision agreement in the observable harness supports the algebra and the bin
+bookkeeping; it is not an end-to-end validation of the photometric angular spectra.</p>
+</section>
+<section id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">#</a></h2>
+<p>The work is guarded by four fast test files that need no solver or network access:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/survey_specs_test.py</span></code> parses every migrated specification, checks that bin edges,
+densities, bias keys and shot-noise keys line up, and compares the DESI bins with the
+historical tables.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/survey_observables_validation_test.py</span></code> checks the reference formulas against
+analytic limits (Kaiser power, IM thermodynamics, noise scaling) and the layout of the
+historical Fig. 1 table.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/survey_forecast_script_test.py</span></code> covers the forecast-script helpers: parameter
+ordering, full-matrix Fisher combination (including a correlated case) and table
+formatting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/survey_covariance_test.py</span></code> builds the DESI ELG, SKAO IM and IM x DESI covariance
+matrices and checks that the effective volumes are positive where the bins overlap, that
+the cross-spectrum uses <code class="docutils literal notranslate"><span class="pre">veff_Ig</span></code>, and that the sky fraction follows the probe (with an
+optional explicit <code class="docutils literal notranslate"><span class="pre">fsky_cross</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/survey_plot_test.py</span></code> pins the marginalised <code class="docutils literal notranslate"><span class="pre">w0</span></code>-<code class="docutils literal notranslate"><span class="pre">wa</span></code> covariance used by the
+comparison figure, so the ellipses cannot silently become conditional errors.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="cmb_benchmarks.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">CMB benchmarks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorials.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorials</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#survey-configurations">Survey configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducing-the-study">Reproducing the study</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observable-validation">Observable validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forecast-comparison">Forecast comparison</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lcdm">LCDM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#w0wacdm">w0waCDM</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#new-desi-specifications-2023-validation-paper">New DESI specifications (2023 validation paper)</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">LCDM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">w0waCDM</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-numbers">Reading the numbers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/survey_validation.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, RWTH Aachen University.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

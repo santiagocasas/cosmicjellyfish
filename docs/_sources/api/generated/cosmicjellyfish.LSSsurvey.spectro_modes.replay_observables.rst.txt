@@ -1,0 +1,6 @@
+replay\_observables
+===================
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: replay_observables

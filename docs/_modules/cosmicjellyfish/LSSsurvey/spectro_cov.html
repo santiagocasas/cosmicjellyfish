@@ -516,6 +516,17 @@
 <span class="sd">                                    Size of the survey sky coverage in square arc minutes</span>
 <span class="sd">        fsky_spectro              : float</span>
 <span class="sd">                                    Survey coverage fraction of the total sky</span>
+<span class="sd">        fsky_volume               : float</span>
+<span class="sd">                                    Sky fraction entering ``volume_survey``: ``fsky_spectro``</span>
+<span class="sd">                                    for galaxy clustering, ``fsky_IM`` for intensity mapping</span>
+<span class="sd">                                    and, for a cross-spectrum, the explicit ``fsky_cross``</span>
+<span class="sd">                                    specification key when present. Otherwise the smaller of</span>
+<span class="sd">                                    the two footprints is used, which assumes that the smaller</span>
+<span class="sd">                                    footprint is fully contained in the larger one.</span>
+<span class="sd">        fsky_cross_assumed_nested : bool</span>
+<span class="sd">                                    True when a cross-spectrum volume used the</span>
+<span class="sd">                                    nested-footprint default instead of an explicit</span>
+<span class="sd">                                    ``fsky_cross``.</span>
 <span class="sd">        dnz                       : float, list</span>
 <span class="sd">                                    Galaxies per square arc minute per redshift bin</span>
 <span class="sd">        z_bins                    : list</span>
@@ -582,6 +593,79 @@
             <span class="c1">## overlapping z bins</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inter_z_bin_mids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_bin_mids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bin_mids</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">inter_z_bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">intersect1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bins</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;inter_z_bin_mids&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_shared_bins</span><span class="p">()</span>
+
+        <span class="c1"># The comoving volume is set by the probe that bounds it. For an</span>
+        <span class="c1"># intensity-mapping-only forecast that is the IM footprint, not the spectroscopic</span>
+        <span class="c1"># one that may also be loaded by the survey block; for a cross-spectrum it is the</span>
+        <span class="c1"># sky observed by both probes. The cross-spectrum sky fraction can be given</span>
+        <span class="c1"># explicitly with ``fsky_cross``; without it we use min(fsky_spectro, fsky_IM),</span>
+        <span class="c1"># which is only exact when the smaller footprint is contained in the larger one.</span>
+        <span class="n">fsky_im</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fsky_IM&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fsky_cross_assumed_nested</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs</span><span class="o">.</span><span class="n">observables</span> <span class="ow">and</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
+            <span class="n">nested</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fsky_spectro</span><span class="p">,</span> <span class="n">fsky_im</span><span class="p">)</span> <span class="k">if</span> <span class="n">fsky_im</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsky_spectro</span>
+            <span class="n">fsky_cross</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fsky_cross&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fsky_cross</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fsky_volume</span> <span class="o">=</span> <span class="n">nested</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fsky_cross_assumed_nested</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fsky_cross</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fsky_cross</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="mf">0.0</span> <span class="o">&lt;</span> <span class="n">fsky_cross</span> <span class="o">&lt;=</span> <span class="n">nested</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1.0e-12</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;fsky_cross must be positive and no larger than the nested &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;footprint min(fsky_spectro, fsky_IM) = </span><span class="si">{</span><span class="n">nested</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">fsky_cross</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fsky_volume</span> <span class="o">=</span> <span class="n">fsky_cross</span>
+        <span class="k">elif</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs</span><span class="o">.</span><span class="n">observables</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fsky_volume</span> <span class="o">=</span> <span class="n">fsky_im</span> <span class="k">if</span> <span class="n">fsky_im</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsky_spectro</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fsky_volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsky_spectro</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_shared_bins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve every bin of ``inter_z_bin_mids`` to its own edges and galaxy-array index.</span>
+
+<span class="sd">        ``inter_z_bin_mids`` holds the bins that both probes share. When the galaxy and the</span>
+<span class="sd">        intensity-mapping grids differ in extent, the position of a shared bin in that array is</span>
+<span class="sd">        not its position in the union of the edges (``global_z_bins``) or in the galaxy arrays</span>
+<span class="sd">        (``dnz``, ``dz_bins``). Looking each shared bin up by its midpoint gives the volume and</span>
+<span class="sd">        the galaxy density of the right redshift interval. For identical grids the lookup is</span>
+<span class="sd">        the identity, so the results do not change.</span>
+
+<span class="sd">        Sets ``inter_bin_edges`` (the ``(lo, hi)`` edges of each shared bin) and</span>
+<span class="sd">        ``inter_gal_index`` (its index in the galaxy arrays, ``None`` without ``GCsp``).</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the galaxy and intensity-mapping bins that share a midpoint do not share their</span>
+<span class="sd">            edges. Combining different intervals would need a rebinning that is not implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">has_gc</span> <span class="o">=</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs</span><span class="o">.</span><span class="n">observables</span>
+        <span class="n">has_im</span> <span class="o">=</span> <span class="s2">&quot;IM&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk_obs</span><span class="o">.</span><span class="n">observables</span>
+        <span class="k">if</span> <span class="n">has_gc</span><span class="p">:</span>
+            <span class="n">edges</span><span class="p">,</span> <span class="n">mids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_bins</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z_bin_mids</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">edges</span><span class="p">,</span> <span class="n">mids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bins</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bin_mids</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inter_bin_edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inter_gal_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">zmid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inter_z_bin_mids</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">mids</span> <span class="o">-</span> <span class="n">zmid</span><span class="p">)))</span>
+            <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">has_gc</span> <span class="ow">and</span> <span class="n">has_im</span><span class="p">:</span>
+                <span class="n">im_mids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bin_mids</span><span class="p">)</span>
+                <span class="n">im_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">im_mids</span> <span class="o">-</span> <span class="n">zmid</span><span class="p">)))</span>
+                <span class="n">im_lo</span><span class="p">,</span> <span class="n">im_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bins</span><span class="p">[</span><span class="n">im_index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">IM_z_bins</span><span class="p">[</span><span class="n">im_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">im_lo</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">hi</span><span class="p">,</span> <span class="n">im_hi</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;galaxy bin [</span><span class="si">{</span><span class="n">lo</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">hi</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">] and intensity-mapping bin &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">im_lo</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">im_hi</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">] share the midpoint </span><span class="si">{</span><span class="n">zmid</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> but not their &quot;</span>
+                        <span class="s2">&quot;edges; the cross and joint analyses need identical bins where the &quot;</span>
+                        <span class="s2">&quot;two surveys overlap&quot;</span>
+                    <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inter_bin_edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inter_gal_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span> <span class="k">if</span> <span class="n">has_gc</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SpectroCov.Tsys_func">
 <a class="viewcode-back" href="../../../api/generated/cosmicjellyfish.LSSsurvey.spectro_cov.SpectroCov.html#cosmicjellyfish.LSSsurvey.spectro_cov.SpectroCov.Tsys_func">[docs]</a>
@@ -633,15 +717,16 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        i : int</span>
-<span class="sd">            Index of the survey redshift bin</span>
+<span class="sd">        ibin : int</span>
+<span class="sd">            Index of the bin in ``inter_z_bin_mids`` (the bins shared by the probes in use)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
 <span class="sd">            Comoving volume of the redshift bin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_bin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">global_z_bins</span><span class="p">[</span><span class="n">ibin</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_z_bins</span><span class="p">[</span><span class="n">ibin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inter_bin_edges</span><span class="p">[</span><span class="n">ibin</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume_bin</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SpectroCov.volume_survey">
@@ -659,7 +744,7 @@
 <span class="sd">        float</span>
 <span class="sd">            survey volume of the redshift bin</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsky_spectro</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_volume</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span>
+        <span class="n">vol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fsky_volume</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_volume</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">vol</span></div>
 
 
@@ -683,7 +768,8 @@
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: zi = </span><span class="si">{</span><span class="n">zi</span><span class="si">}</span><span class="s2"> not in global_z_bin_mids&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="mi">0</span>
-        <span class="n">ndens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnz</span><span class="p">[</span><span class="n">ibin</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz_bins</span><span class="p">[</span><span class="n">ibin</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_volume</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span>
+        <span class="n">gal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inter_gal_index</span><span class="p">[</span><span class="n">ibin</span><span class="p">]</span>  <span class="c1"># galaxy-array index of this shared bin</span>
+        <span class="n">ndens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnz</span><span class="p">[</span><span class="n">gal</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dz_bins</span><span class="p">[</span><span class="n">gal</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_volume</span><span class="p">(</span><span class="n">ibin</span><span class="p">)</span>
         <span class="n">ndens</span> <span class="o">=</span> <span class="n">upm</span><span class="o">.</span><span class="n">areasky</span><span class="p">()</span> <span class="o">*</span> <span class="n">ndens</span>  <span class="c1">## multiply with the full sky area in degrees</span>
         <span class="k">return</span> <span class="n">ndens</span></div>
 

@@ -1,0 +1,6 @@
+output\_tag
+===========
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: output_tag

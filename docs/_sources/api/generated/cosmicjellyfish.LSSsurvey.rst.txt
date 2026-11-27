@@ -34,5 +34,6 @@
    photo_obs
    photo_window
    spectro_cov
+   spectro_modes
    spectro_obs
 

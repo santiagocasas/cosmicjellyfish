@@ -1,0 +1,6 @@
+spectrum\_pair
+==============
+
+.. currentmodule:: cosmicjellyfish.LSSsurvey.spectro_modes
+
+.. autofunction:: spectrum_pair

@@ -478,6 +478,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">cosmicjellyfish.cosmology.cosmology</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cosmology</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.LSSsurvey.spectro_modes</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_spectro_observables</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">misc</span> <span class="k">as</span> <span class="n">ums</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">physmath</span> <span class="k">as</span> <span class="n">upm</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">printing</span> <span class="k">as</span> <span class="n">upt</span>
@@ -740,6 +741,7 @@
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;nonlinear&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;nonlinear_photo&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;bfs8terms&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;spectro_joint&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;vary_bias_str&quot;</span><span class="p">,</span> <span class="s2">&quot;lnb&quot;</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;AP_effect&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;FoG_switch&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -1114,11 +1116,19 @@
     <span class="p">)</span>
     <span class="c1"># ums.deepupdate(specs, specifications)  # deep update keys if passed by users</span>
     <span class="n">specs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">specifications</span><span class="p">)</span>
+    <span class="c1"># A runtime model override should not inherit the root of the survey file&#39;s default model.</span>
+    <span class="k">if</span> <span class="n">specifications</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sp_bias_model&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;linear_log&quot;</span> <span class="ow">and</span> <span class="s2">&quot;sp_bias_root&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">specifications</span><span class="p">:</span>
+        <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;sp_bias_root&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;lnb&quot;</span>
     <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;survey_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">surveyName</span>
     <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;specs_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;specs_dir&quot;</span><span class="p">]</span>  <span class="c1"># Path for additional files like luminosity</span>
 
     <span class="k">if</span> <span class="n">observables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">observables</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;GCph&quot;</span><span class="p">,</span> <span class="s2">&quot;WL&quot;</span><span class="p">]</span>
+    <span class="c1"># &#39;GCspxIM&#39; is the galaxy x IM cross-spectrum; with spectro_joint (or all three of</span>
+    <span class="c1"># GCsp, GCspxIM, IM) the auto- and cross-spectra are combined with their full covariance.</span>
+    <span class="n">observables</span><span class="p">,</span> <span class="n">settings</span><span class="p">[</span><span class="s2">&quot;spectro_mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolve_spectro_observables</span><span class="p">(</span>
+        <span class="n">observables</span><span class="p">,</span> <span class="n">joint</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spectro_joint&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+    <span class="p">)</span>
     <span class="k">global</span> <span class="n">obs</span>
     <span class="n">obs</span> <span class="o">=</span> <span class="n">observables</span>
 
@@ -1278,6 +1288,18 @@
             <span class="c1"># sanity check</span>
             <span class="k">if</span> <span class="n">bias_sample</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">Spectrobiasparams</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: bias_sample not found in bias_parameter keys&quot;</span><span class="p">)</span>
+            <span class="c1"># Check that the selected root matches the active table before evaluating the bias.</span>
+            <span class="k">if</span> <span class="s2">&quot;GCsp&quot;</span> <span class="ow">in</span> <span class="n">obs</span> <span class="ow">and</span> <span class="s2">&quot;linear&quot;</span> <span class="ow">in</span> <span class="n">bias_model</span><span class="p">:</span>
+                <span class="n">root</span> <span class="o">=</span> <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;sp_bias_root&quot;</span><span class="p">]</span>
+                <span class="n">wanted</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">root</span><span class="si">}{</span><span class="n">bias_sample</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">ibin</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">ibin</span> <span class="ow">in</span> <span class="n">specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;z_bins_sp&quot;</span><span class="p">,</span> <span class="p">{})]</span>
+                <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">wanted</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Spectrobiasparams</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;sp_bias_model &#39;</span><span class="si">{</span><span class="n">bias_model</span><span class="si">}</span><span class="s2">&#39; provides the keys &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">bias_prmod</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">..., but sp_bias_root &#39;</span><span class="si">{</span><span class="n">root</span><span class="si">}</span><span class="s2">&#39; looks up &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">missing</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">... Set sp_bias_root together with sp_bias_model &quot;</span>
+                        <span class="s2">&quot;(for example sp_bias_model=&#39;linear_log&#39; with sp_bias_root=&#39;lnb&#39;).&quot;</span>
+                    <span class="p">)</span>
             <span class="n">shot_noise_model</span> <span class="o">=</span> <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;shot_noise_model&quot;</span><span class="p">]</span>
             <span class="n">shot_noise_prtz</span> <span class="o">=</span> <span class="n">specs</span><span class="p">[</span><span class="s2">&quot;shot_noise_parametrization&quot;</span><span class="p">]</span>
             <span class="k">try</span><span class="p">:</span>

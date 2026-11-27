@@ -679,20 +679,30 @@
 <span class="sd">    -----</span>
 <span class="sd">    - This only reconstructs the object with the same options/specifications/parameters.</span>
 <span class="sd">      You still need to call ``.compute()`` on the returned FisherMatrix to perform the run.</span>
+<span class="sd">    - The recorded spectrum mode (``options[&quot;spectro_mode&quot;]``) is restored, so a cross-only</span>
+<span class="sd">      forecast is not replayed as a joint one.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_json</span>
 
     <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.fishermatrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosmicfish</span> <span class="k">as</span> <span class="n">_cff</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.LSSsurvey</span><span class="w"> </span><span class="kn">import</span> <span class="n">spectro_modes</span> <span class="k">as</span> <span class="n">_modes</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jf</span><span class="p">:</span>
         <span class="n">snap</span> <span class="o">=</span> <span class="n">_json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jf</span><span class="p">)</span>
 
-    <span class="n">options</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;options&quot;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;options&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">specifications</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;specifications&quot;</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">fiducialpars</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fiducialpars&quot;</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">freepars</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;freepars&quot;</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">meta</span> <span class="o">=</span> <span class="n">snap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">,</span> <span class="p">{})</span>
     <span class="n">observables</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;observables&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;GCph&quot;</span><span class="p">,</span> <span class="s2">&quot;WL&quot;</span><span class="p">])</span>  <span class="c1"># sane default</span>
+    <span class="c1"># The snapshot stores the resolved observables, where a cross-only run looks like a joint</span>
+    <span class="c1"># request; ask for the recorded spectrum mode so that the replay computes the same matrix.</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spectro_mode&quot;</span><span class="p">)</span>
+    <span class="n">observables</span> <span class="o">=</span> <span class="n">_modes</span><span class="o">.</span><span class="n">replay_observables</span><span class="p">(</span><span class="n">observables</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;Ig&quot;</span><span class="p">:</span>
+        <span class="c1"># The legacy GCsp+IM pair ignores this flag, but GCspxIM honours it.</span>
+        <span class="n">options</span><span class="p">[</span><span class="s2">&quot;spectro_joint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">fm</span> <span class="o">=</span> <span class="n">_cff</span><span class="o">.</span><span class="n">FisherMatrix</span><span class="p">(</span>
         <span class="n">fiducialpars</span><span class="o">=</span><span class="n">fiducialpars</span><span class="p">,</span>

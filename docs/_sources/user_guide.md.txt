@@ -12,6 +12,8 @@ Reference-style guides for using `cosmicjellyfish` beyond the first forecast.
   Fisher approximation.
 - {doc}`cmb_benchmarks`: CMB observables, shipped experiment specifications and the
   smoke-test script.
+- {doc}`survey_validation`: DESI, Rubin/LSST, SKAO and Planck-like forecasts, the migrated
+  historical specifications and their validation against the independent reference recipes.
 
 ```{toctree}
 :maxdepth: 1
@@ -23,4 +25,5 @@ jaxcosmo
 gcsp_intermediate
 likelihood_sampling
 cmb_benchmarks
+survey_validation
 ```

@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
@@ -683,6 +685,15 @@
 <li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_cov.SpectroDerivs.html">SpectroDerivs</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.html">cosmicjellyfish.LSSsurvey.spectro_modes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.joint_gaussian_trace.html">joint_gaussian_trace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.output_tag.html">output_tag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.replay_observables.html">replay_observables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.resolve_spectro_observables.html">resolve_spectro_observables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.spectro_mode.html">spectro_mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_modes.spectrum_pair.html">spectrum_pair</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_obs.html">cosmicjellyfish.LSSsurvey.spectro_obs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="cosmicjellyfish.LSSsurvey.spectro_obs.ComputeGalSpectro.html">ComputeGalSpectro</a></li>
 </ul>
@@ -832,6 +843,30 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of Fisher matrices for each redshift bin</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_per_bin_joint">
+<span class="sig-name descname"><span class="pre">fisher_per_bin_joint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ibin</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cosmicjellyfish/fishermatrix/cosmicfish.html#FisherMatrix.fisher_per_bin_joint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_per_bin_joint" title="Link to this definition">#</a></dt>
+<dd><p>Fisher matrix of one redshift bin from P_gg, P_Ig and P_II analysed together.</p>
+<p>At every <span class="math notranslate nohighlight">\((k, \mu)\)</span> the galaxy and intensity-mapping fields have a
+<span class="math notranslate nohighlight">\(2\times 2\)</span> Gaussian covariance, so the three spectra are correlated and the shared
+modes are counted once. The element is</p>
+<div class="math notranslate nohighlight">
+\[F_{pq} = \frac{V}{4\pi^2} \int k^2 \mathrm{d}k \int_0^1 \mathrm{d}\mu\,
+\mathrm{Tr}\left[C^{-1} \partial_p C\, C^{-1} \partial_q C\right],\]</div>
+<p>which for a single tracer reduces to the usual effective-volume expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ibin</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>) – index of the redshift bin</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fisher matrix of the bin for all free parameters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
@@ -1054,6 +1089,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.set_pk_settings"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.set_pk_settings()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.compute_binned_derivs"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.compute_binned_derivs()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.pk_LSS_Fisher"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.pk_LSS_Fisher()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_per_bin_joint"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.fisher_per_bin_joint()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_per_bin"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.fisher_per_bin()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_calculation"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.fisher_calculation()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cosmicjellyfish.fishermatrix.cosmicfish.FisherMatrix.fisher_integral"><code class="docutils literal notranslate"><span class="pre">FisherMatrix.fisher_integral()</span></code></a></li>
