@@ -1,0 +1,31 @@
+cosmicjellyfish.cosmology.f\_r\_emulators
+=========================================
+
+.. automodule:: cosmicjellyfish.cosmology.f_r_emulators
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Submodules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   MGfit_Winther
+

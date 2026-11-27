@@ -1,0 +1,6 @@
+boost\_extrapolation
+====================
+
+.. currentmodule:: cosmicjellyfish.cosmology.modified_gravity
+
+.. autofunction:: boost_extrapolation

@@ -1,0 +1,6 @@
+kazuya\_correktion
+==================
+
+.. currentmodule:: cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther
+
+.. autofunction:: kazuya_correktion

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Installation &#8212; cosmicjellyfish v2.0.0</title>
+    <title>Installation &#8212; cosmicjellyfish v2.1.0</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/documentation_options.js?v=20623aea"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -56,7 +56,7 @@
     <link rel="prev" title="Getting started" href="getting_started.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0" />
+  <meta name="docsearch:version" content="2.1" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -553,7 +553,7 @@ one exception, since conda-forge stops at 8.37 and <code class="docutils literal
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">emulators</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">euclidemu2</span></code>, for the EuclidEmulator2 nonlinear boost with CLASS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">euclidemu2</span></code> (EuclidEmulator2 nonlinear boost with CLASS) and <code class="docutils literal notranslate"><span class="pre">emantis</span></code> (e-MANTIS f(R) boost)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">jaxcosmo</span></code></p></td>
 <td><p>JAX, <code class="docutils literal notranslate"><span class="pre">jax-cosmo</span></code> and compatibility dependencies for the optional differentiable backend</p></td>
@@ -572,6 +572,38 @@ uv<span class="w"> </span>sync<span class="w"> </span>--extra<span class="w"> </
 uv<span class="w"> </span>sync<span class="w"> </span>--extra<span class="w"> </span>docs<span class="w"> </span>--extra<span class="w"> </span>dev<span class="w">         </span><span class="c1"># several extras</span>
 </pre></div>
 </div>
+</section>
+<section id="hu-sawicki-f-r-gravity-optional-manual-install">
+<h2>Hu-Sawicki f(R) gravity (optional, manual install)<a class="headerlink" href="#hu-sawicki-f-r-gravity-optional-manual-install" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">cosmo_model:</span> <span class="pre">HuSawicki</span></code> profiles (<code class="docutils literal notranslate"><span class="pre">class/frahiclass_hs_photo*.yaml</span></code>) need two packages
+that are <strong>not</strong> installed by any extra:</p>
+<ol class="arabic">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">frahi_class</span></code></strong>, a hi_class-based CLASS with the Hu-Sawicki f(R) model. It provides the
+linear spectra and <code class="docutils literal notranslate"><span class="pre">A_s</span></code> of the f(R) run. <strong>It is currently a private code</strong>
+(<a class="reference external" href="https://github.com/matiasleize/frahi_class">matiasleize/frahi_class</a>): to request
+access, contact Matías Leizerovich (<a class="reference external" href="mailto:mleize&#37;&#52;&#48;df&#46;uba&#46;ar">mleize<span>&#64;</span>df<span>&#46;</span>uba<span>&#46;</span>ar</a>) or open an issue in the
+cosmicjellyfish repository. Build it following the instructions in its own repository. The build must install the Python module <code class="docutils literal notranslate"><span class="pre">hiclassy</span></code> that
+exposes the class <code class="docutils literal notranslate"><span class="pre">HiClass</span></code>. Selecting a <code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo*.yaml</span></code> profile does <strong>not</strong>
+select this wrapper: set <code class="docutils literal notranslate"><span class="pre">class_module:</span> <span class="pre">&quot;hiclassy&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">class_object:</span> <span class="pre">&quot;HiClass&quot;</span></code>
+explicitly in the run options, next to <code class="docutils literal notranslate"><span class="pre">class_config_yaml</span></code> (the defaults are
+<code class="docutils literal notranslate"><span class="pre">classy</span></code> and <code class="docutils literal notranslate"><span class="pre">Class</span></code>). Install it in the same environment as cosmicjellyfish, next to the
+official <code class="docutils literal notranslate"><span class="pre">classy</span></code>, which is still used for the LCDM nonlinear spectrum.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do <strong>not</strong> run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">hiclassy</span></code>. The <code class="docutils literal notranslate"><span class="pre">hiclassy</span></code> package on PyPI is the public
+hi_class, not <code class="docutils literal notranslate"><span class="pre">frahi_class</span></code>, and does not contain the f(R) modifications used here.</p>
+</div>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">emantis</span></code></strong>, only for the <code class="docutils literal notranslate"><span class="pre">NONLINEAR:</span> <span class="pre">model:</span> <span class="pre">'emantis'</span></code> boost (the e-MANTIS emulator).
+It is on PyPI and is included in the <code class="docutils literal notranslate"><span class="pre">emulators</span></code> extra (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&quot;cosmicjellyfish[emulators]&quot;</span></code>
+or <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span> <span class="pre">--extra</span> <span class="pre">emulators</span></code>). The <code class="docutils literal notranslate"><span class="pre">winther2019</span></code> boost needs no extra package, since
+its fitting formula ships with cosmicjellyfish.</p></li>
+</ol>
+<p>Without them the f(R) tests in <code class="docutils literal notranslate"><span class="pre">tests/</span></code> skip themselves, and every other backend keeps
+working. The nonlinear f(R) boosts are described in <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/cosmology/modified_gravity.py</span></code>.</p>
+</section>
+<section id="differentiable-backend">
+<h2>Differentiable backend<a class="headerlink" href="#differentiable-backend" title="Link to this heading">#</a></h2>
 <p>For the optional differentiable backend, use <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">sync</span> <span class="pre">--extra</span> <span class="pre">jaxcosmo</span></code> from a
 checkout containing that implementation. See <a class="reference internal" href="jaxcosmo.html"><span class="doc">JAXcosmo and automatic differentiation</span></a> for the supported
 models, derivative providers and notebook setup.</p>
@@ -642,6 +674,8 @@ runs the test suite.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-from-source">Install from source</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-with-mamba-or-conda">Install with mamba or conda</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-extras">Optional extras</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hu-sawicki-f-r-gravity-optional-manual-install">Hu-Sawicki f(R) gravity (optional, manual install)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-backend">Differentiable backend</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#survey-data">Survey data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-installation">Check the installation</a></li>
 </ul>

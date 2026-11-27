@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Changelog &#8212; cosmicjellyfish v2.0.0</title>
+    <title>Changelog &#8212; cosmicjellyfish v2.1.0</title>
   
   
   
@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="_static/documentation_options.js?v=51b770b3"></script>
+    <script src="_static/documentation_options.js?v=20623aea"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -56,7 +56,7 @@
     <link rel="prev" title="Releasing" href="releasing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0" />
+  <meta name="docsearch:version" content="2.1" />
   
     
     <script src="_static/searchtools.js"></script>
@@ -522,6 +522,17 @@ and this project adheres to <a class="reference external" href="https://semver.o
 <section id="added">
 <h3>Added<a class="headerlink" href="#added" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Hu-Sawicki f(R) with hi_class-based codes (frahi_class): the CLASS wrapper is configurable
+through the <code class="docutils literal notranslate"><span class="pre">class_module</span></code> and <code class="docutils literal notranslate"><span class="pre">class_object</span></code> options (default <code class="docutils literal notranslate"><span class="pre">classy.Class</span></code>), <code class="docutils literal notranslate"><span class="pre">log10fR0</span></code> is
+translated to <code class="docutils literal notranslate"><span class="pre">parameters_smg</span></code> for <code class="docutils literal notranslate"><span class="pre">cosmo_model='HuSawicki'</span></code>, and CLASS profiles
+<code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo*.yaml</span></code> are added.</p></li>
+<li><p>Nonlinear f(R) boosts <code class="docutils literal notranslate"><span class="pre">winther2019</span></code> and <code class="docutils literal notranslate"><span class="pre">emantis</span></code> (<code class="docutils literal notranslate"><span class="pre">cosmology/modified_gravity.py</span></code>): the f(R)
+code gives the linear spectra and <code class="docutils literal notranslate"><span class="pre">A_s</span></code>, and the nonlinear spectrum is a LCDM CLASS spectrum
+with the same <code class="docutils literal notranslate"><span class="pre">A_s</span></code> times the boost, reproducing the MontePython likelihood
+<code class="docutils literal notranslate"><span class="pre">euclid_photometric_z_fofr</span></code> (Sefa76/photometric_fofR); the Winther et al. 2019 fitting formula
+is a verbatim copy of its <code class="docutils literal notranslate"><span class="pre">MGfit_Winther.py</span></code>.</p></li>
+<li><p>Documentation page <code class="docutils literal notranslate"><span class="pre">modified_gravity_fR</span></code> on Hu-Sawicki f(R) forecasts: options, profiles,
+nonlinear boosts and the frahi_class flags they use.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">GCspxIM</span></code> observable for the galaxy x intensity-mapping cross-spectrum. Listing all three
 of <code class="docutils literal notranslate"><span class="pre">GCsp</span></code>, <code class="docutils literal notranslate"><span class="pre">GCspxIM</span></code> and <code class="docutils literal notranslate"><span class="pre">IM</span></code> (or <code class="docutils literal notranslate"><span class="pre">GCspxIM</span></code> with the option <code class="docutils literal notranslate"><span class="pre">spectro_joint=True</span></code>) runs a
 joint auto + cross analysis per redshift bin with the full 2x2 Gaussian covariance of the
@@ -582,6 +593,11 @@ errors were under-converged by 20-38%; the photometric probes are unchanged.</p>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>The reference LCDM spectrum used by the f(R) boosts keeps the shared inputs of the resolved
+f(R) run, including parameters set only in the <code class="docutils literal notranslate"><span class="pre">HuSawicki</span></code> CLASS section (for example
+<code class="docutils literal notranslate"><span class="pre">T_cmb</span></code>); gravity-specific flags and the scalar-field closure are still excluded.</p></li>
+<li><p>The e-MANTIS boost clips to the overlap of the likelihood and emulator ranges, avoiding
+an out-of-range error near the lower LCDM sigma8 bound.</p></li>
 <li><p>Review fixes for the cross-spectrum and joint spectroscopic analyses:</p>
 <ul>
 <li><p>Fisher output files carry the spectrum mode (<code class="docutils literal notranslate"><span class="pre">..._GCspIMGCspxIM_Ig_FM.txt</span></code> and

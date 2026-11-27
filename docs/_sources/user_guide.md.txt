@@ -6,6 +6,8 @@ Reference-style guides for using `cosmicjellyfish` beyond the first forecast.
   matrices.
 - {doc}`derivatives`: the finite-difference schemes and how to choose one.
 - {doc}`jaxcosmo`: the optional JAXcosmo backend, autodiff providers and comparison notebook.
+- {doc}`modified_gravity_fR`: Hu-Sawicki f(R) forecasts with frahi_class and the Winther and
+  e-MANTIS nonlinear boosts.
 - {doc}`gcsp_intermediate`: the GCsp intermediate-parameter forecast and its Jacobian
   projection, with validation results.
 - {doc}`likelihood_sampling`: posterior sampling with Nautilus, to check or replace the
@@ -22,6 +24,7 @@ Reference-style guides for using `cosmicjellyfish` beyond the first forecast.
 comprehensive_guide
 derivatives
 jaxcosmo
+modified_gravity_fR
 gcsp_intermediate
 likelihood_sampling
 cmb_benchmarks

@@ -1,0 +1,6 @@
+ratio\_by\_param
+================
+
+.. currentmodule:: cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther
+
+.. autofunction:: ratio_by_param

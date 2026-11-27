@@ -1,0 +1,824 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Hu-Sawicki f(R) gravity &#8212; cosmicjellyfish v2.1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=33f10437" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="_static/documentation_options.js?v=20623aea"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modified_gravity_fR';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GCsp forecasts through intermediate parameters" href="gcsp_intermediate.html" />
+    <link rel="prev" title="JAXcosmo and automatic differentiation" href="jaxcosmo.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2.1" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="auto">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/icon-light.svg" class="logo__image only-light" alt=""/>
+    <img src="_static/icon-dark.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">cosmicjellyfish</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="development.html">
+    Development
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="comprehensive_guide.html">Comprehensive guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="derivatives.html">Derivative methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jaxcosmo.html">JAXcosmo and automatic differentiation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Hu-Sawicki f(R) gravity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcsp_intermediate.html">GCsp forecasts through intermediate parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="likelihood_sampling.html">Likelihood sampling with Nautilus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmb_benchmarks.html">CMB benchmarks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="survey_validation.html">Survey validation: DESI, Rubin/LSST, SKAO and Planck</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="user_guide.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Hu-Sawicki f(R) gravity</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hu-sawicki-f-r-gravity">
+<h1>Hu-Sawicki f(R) gravity<a class="headerlink" href="#hu-sawicki-f-r-gravity" title="Link to this heading">#</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">cosmicjellyfish</span></code> can forecast constraints on Hu-Sawicki f(R) gravity (n = 1) with the <code class="docutils literal notranslate"><span class="pre">class</span></code>
+backend, using <a class="reference external" href="https://github.com/matiasleize/frahi_class">frahi_class</a>, a hi_class-based CLASS
+that solves the exact f(R) background and the quasi-static perturbations. The model parameter is
+<code class="docutils literal notranslate"><span class="pre">log10fR0</span></code> = log10|f_R0|, with f_R0 = f_R(z = 0) of the solution.</p>
+<p>Everything described here is opt-in: with the default options the behaviour of the <code class="docutils literal notranslate"><span class="pre">class</span></code>
+backend is unchanged.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>frahi_class is not installed by any extra. See <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a> (section <em>Hu-Sawicki f(R)
+gravity</em>) for how to get and build it, and for the optional <code class="docutils literal notranslate"><span class="pre">emantis</span></code> package.</p>
+</section>
+<section id="running-a-forecast">
+<h2>Running a forecast<a class="headerlink" href="#running-a-forecast" title="Link to this heading">#</a></h2>
+<p>Select the frahi_class wrapper explicitly, together with <code class="docutils literal notranslate"><span class="pre">cosmo_model:</span> <span class="pre">HuSawicki</span></code> and one of the
+shipped profiles, and add <code class="docutils literal notranslate"><span class="pre">log10fR0</span></code> to the fiducial parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.fishermatrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosmicfish</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;class_module&quot;</span><span class="p">:</span> <span class="s2">&quot;hiclassy&quot;</span><span class="p">,</span>  <span class="c1"># the Python module built by frahi_class</span>
+    <span class="s2">&quot;class_object&quot;</span><span class="p">:</span> <span class="s2">&quot;HiClass&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cosmo_model&quot;</span><span class="p">:</span> <span class="s2">&quot;HuSawicki&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;class_config_yaml&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;path&gt;/frahiclass_hs_photo_winther2019.yaml&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;nonlinear&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;feedback&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="c1"># survey options as for any photometric forecast</span>
+<span class="p">}</span>
+<span class="n">fiducial</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Omegam&quot;</span><span class="p">:</span> <span class="mf">0.32</span><span class="p">,</span> <span class="s2">&quot;Omegab&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="mf">0.67</span><span class="p">,</span> <span class="s2">&quot;ns&quot;</span><span class="p">:</span> <span class="mf">0.96</span><span class="p">,</span> <span class="s2">&quot;sigma8&quot;</span><span class="p">:</span> <span class="mf">0.815</span><span class="p">,</span> <span class="s2">&quot;mnu&quot;</span><span class="p">:</span> <span class="mf">0.06</span><span class="p">,</span>
+    <span class="s2">&quot;log10fR0&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">5.301</span><span class="p">,</span>  <span class="c1"># |f_R0| = 5e-6</span>
+<span class="p">}</span>
+<span class="n">fisher</span> <span class="o">=</span> <span class="n">cosmicfish</span><span class="o">.</span><span class="n">FisherMatrix</span><span class="p">(</span>
+    <span class="n">fiducialpars</span><span class="o">=</span><span class="n">fiducial</span><span class="p">,</span>
+    <span class="n">freepars</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;log10fR0&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">},</span>  <span class="c1"># plus the other parameters to vary</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+    <span class="n">observables</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;WL&quot;</span><span class="p">,</span> <span class="s2">&quot;GCph&quot;</span><span class="p">],</span>
+    <span class="n">cosmoModel</span><span class="o">=</span><span class="s2">&quot;HuSawicki&quot;</span><span class="p">,</span>
+    <span class="n">surveyName</span><span class="o">=</span><span class="s2">&quot;Euclid&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">fisher</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Selecting a <code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo*.yaml</span></code> profile does <strong>not</strong> select the wrapper: without
+<code class="docutils literal notranslate"><span class="pre">class_module</span></code> and <code class="docutils literal notranslate"><span class="pre">class_object</span></code> the official <code class="docutils literal notranslate"><span class="pre">classy.Class</span></code> is used and the f(R) parameters
+are rejected.</p>
+<p><code class="docutils literal notranslate"><span class="pre">log10fR0</span></code> is translated to the frahi_class input <code class="docutils literal notranslate"><span class="pre">parameters_smg</span> <span class="pre">=</span> <span class="pre">&quot;&lt;log10fR0&gt;,</span> <span class="pre">0.0&quot;</span></code> (the
+second value is the starting guess of the shooting parameter, solved for by frahi_class). As in
+LCDM, <code class="docutils literal notranslate"><span class="pre">w0</span></code> and <code class="docutils literal notranslate"><span class="pre">wa</span></code> are dropped for <code class="docutils literal notranslate"><span class="pre">cosmo_model:</span> <span class="pre">HuSawicki</span></code>.</p>
+</section>
+<section id="shipped-profiles">
+<h2>Shipped profiles<a class="headerlink" href="#shipped-profiles" title="Link to this heading">#</a></h2>
+<p>The profiles live in <code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/configs/default_boltzmann_yaml_files/class/</span></code>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>profile</p></th>
+<th class="head"><p>nonlinear power spectrum</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo.yaml</span></code></p></td>
+<td><p>HMcode-2020 applied by frahi_class to the f(R) linear P(k) (validated against Winther et al. 2019 only for |f_R0| &lt;= 1e-4)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo_winther2019.yaml</span></code></p></td>
+<td><p>LCDM nonlinear P(k) times the Winther et al. 2019 boost</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">frahiclass_hs_photo_emantis.yaml</span></code></p></td>
+<td><p>LCDM nonlinear P(k) times the e-MANTIS boost (needs <code class="docutils literal notranslate"><span class="pre">emantis</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In all of them, massive neutrinos are three degenerate species, and the lensing kernel uses
+Sigma = 1 (the factor 1/(1 + f_R) is neglected, an O(|f_R|) approximation).</p>
+</section>
+<section id="nonlinear-boosts">
+<h2>Nonlinear boosts<a class="headerlink" href="#nonlinear-boosts" title="Link to this heading">#</a></h2>
+<p>With <code class="docutils literal notranslate"><span class="pre">NONLINEAR:</span> <span class="pre">model:</span> <span class="pre">'winther2019'</span></code> or <code class="docutils literal notranslate"><span class="pre">'emantis'</span></code>, frahi_class only provides the linear
+spectra and <code class="docutils literal notranslate"><span class="pre">A_s</span></code>. The nonlinear spectrum is</p>
+<p>P_NL^f(R)(k, z) = P_NL^LCDM(k, z) x B(k, z),</p>
+<p>where P_NL^LCDM is computed with the official <code class="docutils literal notranslate"><span class="pre">classy</span></code> for LCDM with the same parameters and the
+same <code class="docutils literal notranslate"><span class="pre">A_s</span></code> as the f(R) run, and B(k, z) is the f(R) boost. “Same parameters” means the resolved
+inputs of the f(R) run, including overrides that only appear in the <code class="docutils literal notranslate"><span class="pre">HuSawicki</span></code> section (for
+example <code class="docutils literal notranslate"><span class="pre">T_cmb</span></code>). Gravity-specific settings (<code class="docutils literal notranslate"><span class="pre">gravity_model</span></code>, <code class="docutils literal notranslate"><span class="pre">parameters_smg</span></code>, the <code class="docutils literal notranslate"><span class="pre">*_smg</span></code> keys
+and <code class="docutils literal notranslate"><span class="pre">hubble_evolution</span></code>) are removed, and the dark-energy closure (<code class="docutils literal notranslate"><span class="pre">Omega_Lambda</span></code>, <code class="docutils literal notranslate"><span class="pre">Omega_fld</span></code>) is
+taken from the <code class="docutils literal notranslate"><span class="pre">LCDM</span></code> section. The implementation
+(<code class="docutils literal notranslate"><span class="pre">cosmicjellyfish/cosmology/modified_gravity.py</span></code>) reproduces the MontePython likelihood
+<code class="docutils literal notranslate"><span class="pre">euclid_photometric_z_fofr</span></code> (Sefa76/photometric_fofR, used in Koyama et al. 2024):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">winther2019</span></code>: the Winther et al. 2019 fitting formula (arXiv:1903.08798), with <code class="docutils literal notranslate"><span class="pre">hasBug</span> <span class="pre">=</span> <span class="pre">False</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emantis</span></code>: the e-MANTIS emulator, with Omega_m and the LCDM sigma8 clipped to the overlap of the
+likelihood bounds ([0.24, 0.39] and [0.60, 1.00]) and the installed emulator’s bounds.
+With e-MANTIS 1.4.0, this sets the lower LCDM sigma8 bound to 0.6083.</p></li>
+<li><p>Beyond the range of each boost: power-law extrapolation above k_max (10 h/Mpc for Winther, the
+last e-MANTIS bin for e-MANTIS) and above z = 2; B is clipped to [1, 2], and B = 1 outside
+0.001 &lt; k &lt; 50 h/Mpc.</p></li>
+</ul>
+<p>The same boost is applied to the cb spectrum (an approximation, as for the EE2 boost).</p>
+<p>Keys of the <code class="docutils literal notranslate"><span class="pre">NONLINEAR</span></code> section:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>key</p></th>
+<th class="head"><p>default</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">model</span></code></p></td>
+<td><p>—</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">winther2019</span></code> or <code class="docutils literal notranslate"><span class="pre">emantis</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lcdm_nonlinear</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hmcode_2020</span></code></p></td>
+<td><p>nonlinear prescription of the LCDM run; the shipped profiles use <code class="docutils literal notranslate"><span class="pre">halofit</span></code> (Halofit-Takahashi, as in Casas et al. 2023)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fofR_settings</span></code></p></td>
+<td><p>likelihood defaults</p></td>
+<td><p>overrides of <code class="docutils literal notranslate"><span class="pre">modified_gravity.LKL_DEFAULTS</span></code>: <code class="docutils literal notranslate"><span class="pre">use_bug</span></code>, <code class="docutils literal notranslate"><span class="pre">fofR_interpolation_k_boost</span></code>, <code class="docutils literal notranslate"><span class="pre">fofR_interpolation_z_boost</span></code>, <code class="docutils literal notranslate"><span class="pre">k_min_h_by_Mpc</span></code>, <code class="docutils literal notranslate"><span class="pre">k_max_h_by_Mpc</span></code>, <code class="docutils literal notranslate"><span class="pre">zmin</span></code>, <code class="docutils literal notranslate"><span class="pre">zmax</span></code>, <code class="docutils literal notranslate"><span class="pre">nzmax</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cb_prescription</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">neutrino_subtraction</span></code></p></td>
+<td><p>how the LCDM cb spectrum is obtained: <code class="docutils literal notranslate"><span class="pre">neutrino_subtraction</span></code> or <code class="docutils literal notranslate"><span class="pre">class_native</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two derived quantities are stored in the results: <code class="docutils literal notranslate"><span class="pre">lcdm_sigma8</span></code> (sigma8 of the LCDM run, the
+input of e-MANTIS) and <code class="docutils literal notranslate"><span class="pre">sigma8_fofR_kazuya</span></code> (sigma8 of f(R) from the linear Winther enhancement
+with the correction of the likelihood; a cross-check only, not used in the observables).</p>
+</section>
+<section id="frahi-class-flags-in-the-profiles">
+<h2>frahi_class flags in the profiles<a class="headerlink" href="#frahi-class-flags-in-the-profiles" title="Link to this heading">#</a></h2>
+<p>These flags belong to frahi_class and are passed to it unchanged from the <code class="docutils literal notranslate"><span class="pre">HuSawicki</span></code> section of
+the profile. Since frahi_class 2026-11-19 most of them are its defaults for
+<code class="docutils literal notranslate"><span class="pre">gravity_model</span> <span class="pre">=</span> <span class="pre">hu_sawicki</span></code>; the profiles keep them explicit so that older builds give the same
+result. See the frahi_class README for the full list.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>flag</p></th>
+<th class="head"><p>value in the profiles</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gravity_model</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hu_sawicki</span></code></p></td>
+<td><p>Hu-Sawicki f(R), n = 1, with the exact f(R) background</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hs_parametrization</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">log_10(fR0)</span></code></p></td>
+<td><p>the first entry of <code class="docutils literal notranslate"><span class="pre">parameters_smg</span></code> is log10|f_R0|</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hs_convention</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">physical</span></code></p></td>
+<td><p>f_R0 and H0 are those of the solution at z = 0 (<code class="docutils literal notranslate"><span class="pre">lcdm_anchored</span></code>: they refer to the LCDM-like c1/c2)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hs_field</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">u</span></code></p></td>
+<td><p>integration variable u = log((f_R - 1)/f_R0)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">hs_handoff_ic_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">slow</span></code></p></td>
+<td><p>the scalaron starts on the slow manifold at the handoff from GR</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hubble_evolution</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">no</span></code></p></td>
+<td><p>H from the Friedmann constraint (<code class="docutils literal notranslate"><span class="pre">yes</span></code> integrates H; at |f_R0| = 1e-5 it changes sigma8 by ~5e-8)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">qsa_mu_gamma_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
+<td><p>quasi-static mu-gamma closure of the metric potentials, with c_s^2 = 1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qsa_only_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
+<td><p>the scalaron is quasi-static at all times</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">method_qs_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">automatic</span></code></p></td>
+<td><p>quasi-static method of hi_class</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">skip_stability_tests_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
+<td><p>skip the hi_class stability tests</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kineticity_safe_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>no extra kineticity added for numerical safety</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Omega_smg</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">-1</span></code></p></td>
+<td><p>the scalar field closes the energy budget (with <code class="docutils literal notranslate"><span class="pre">Omega_Lambda</span> <span class="pre">=</span> <span class="pre">Omega_fld</span> <span class="pre">=</span> <span class="pre">0</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Link to this heading">#</a></h2>
+<p>For the Euclid photometric probes (WL + GCph + XC, ISTF pessimistic) at |f_R0| = 5e-6, the
+forecast relative error on log10|f_R0| is 2.59 % with the Winther boost and 2.42 % with
+e-MANTIS, compared with 2.7 % in Casas et al. 2023 (Table 2).</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="jaxcosmo.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">JAXcosmo and automatic differentiation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="gcsp_intermediate.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">GCsp forecasts through intermediate parameters</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-a-forecast">Running a forecast</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shipped-profiles">Shipped profiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nonlinear-boosts">Nonlinear boosts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frahi-class-flags-in-the-profiles">frahi_class flags in the profiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/modified_gravity_fR.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, RWTH Aachen University.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

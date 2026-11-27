@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Hu-Sawicki f(R) with hi_class-based codes (frahi_class): the CLASS wrapper is configurable
+  through the `class_module` and `class_object` options (default `classy.Class`), `log10fR0` is
+  translated to `parameters_smg` for `cosmo_model='HuSawicki'`, and CLASS profiles
+  `frahiclass_hs_photo*.yaml` are added.
+- Nonlinear f(R) boosts `winther2019` and `emantis` (`cosmology/modified_gravity.py`): the f(R)
+  code gives the linear spectra and `A_s`, and the nonlinear spectrum is a LCDM CLASS spectrum
+  with the same `A_s` times the boost, reproducing the MontePython likelihood
+  `euclid_photometric_z_fofr` (Sefa76/photometric_fofR); the Winther et al. 2019 fitting formula
+  is a verbatim copy of its `MGfit_Winther.py`.
+- Documentation page `modified_gravity_fR` on Hu-Sawicki f(R) forecasts: options, profiles,
+  nonlinear boosts and the frahi_class flags they use.
 - `GCspxIM` observable for the galaxy x intensity-mapping cross-spectrum. Listing all three
   of `GCsp`, `GCspxIM` and `IM` (or `GCspxIM` with the option `spectro_joint=True`) runs a
   joint auto + cross analysis per redshift bin with the full 2x2 Gaussian covariance of the
@@ -65,6 +76,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The reference LCDM spectrum used by the f(R) boosts keeps the shared inputs of the resolved
+  f(R) run, including parameters set only in the `HuSawicki` CLASS section (for example
+  `T_cmb`); gravity-specific flags and the scalar-field closure are still excluded.
+- The e-MANTIS boost clips to the overlap of the likelihood and emulator ranges, avoiding
+  an out-of-range error near the lower LCDM sigma8 bound.
 - Review fixes for the cross-spectrum and joint spectroscopic analyses:
   - Fisher output files carry the spectrum mode (`..._GCspIMGCspxIM_Ig_FM.txt` and
     `..._joint_FM.txt`), because a cross-only and a joint forecast resolve to the same
@@ -94,6 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The cross-spectrum covariance test now exercises `veff_Ig`, and the `w0`-`wa` figure is
   regrouped into four paired panels without the much weaker Planck-like run, with missing
   inputs raising instead of being silently skipped.
+
 - Example notebooks 04, 05 and 06 now run top to bottom (reported by Kazuya): notebook 04
   defines the Planck parameter list and skips the covariance comparison when its Part-2 inputs are
   missing, 05 combines Fishers with matching fiducials instead of failing on the Planck-like ones

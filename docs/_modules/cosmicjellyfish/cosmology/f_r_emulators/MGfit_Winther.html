@@ -1,0 +1,756 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther &#8212; cosmicjellyfish v2.1.0</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=33f10437" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="../../../../_static/documentation_options.js?v=20623aea"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/cosmicjellyfish/cosmology/f_r_emulators/MGfit_Winther';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="../../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2.1" />
+  
+    
+    <script src="../../../../_static/searchtools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script src="../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="auto">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/icon-light.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../../_static/icon-dark.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">cosmicjellyfish</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../../development.html">
+    Development
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../migration_cosmicjellyfish.html">
+    Migrating from cosmicfishpie
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../validation_data.html">
+    Validation data and examples (cjfp-data)
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../user_guide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../api/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../development.html">
+    Development
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/santiagocasas/cosmicjellyfish" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/cosmicjellyfish/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i><span class="visually-hidden">PyPI</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+  
+<span class="n">fR0_low</span>  <span class="o">=</span> <span class="mf">5e-6</span>
+<span class="n">param_low</span>  <span class="o">=</span> <span class="p">[</span>
+ <span class="mf">0.768779</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.405375</span> <span class="p">,</span> <span class="mf">0.0075176</span> <span class="p">,</span> <span class="mf">0.0288574</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0638224</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.401206</span> <span class="p">,</span> <span class="mf">0.369507</span> <span class="p">,</span> <span class="mf">0.109392</span> <span class="p">,</span> 
+ <span class="o">-</span><span class="mf">0.342089</span> <span class="p">,</span> <span class="mf">0.226376</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.107105</span> <span class="p">,</span> <span class="mf">0.0484649</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.024377</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.051962</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0351849</span> <span class="p">,</span> <span class="mf">0.147194</span> <span class="p">,</span> 
+ <span class="mf">0.061761</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.131382</span> <span class="p">,</span> <span class="mf">0.00759035</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.00101884</span> <span class="p">,</span> <span class="mf">0.0118011</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0296267</span> <span class="p">,</span> <span class="mf">0.025968</span> <span class="p">,</span> <span class="mf">0.076885</span> <span class="p">,</span>  
+ <span class="mf">0.0312734</span> <span class="p">,</span> <span class="mf">0.0293253</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0141899</span> <span class="p">,</span> <span class="mf">0.109011</span> <span class="p">,</span> <span class="mf">0.0818948</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0568241</span> <span class="p">,</span> <span class="mf">0.120272</span> <span class="p">,</span> <span class="mf">0.0249235</span> <span class="p">,</span> 
+ <span class="o">-</span><span class="mf">0.0298492</span> <span class="p">,</span> <span class="mf">0.0354401</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.262769</span> <span class="p">,</span> <span class="mf">0.230278</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.139116</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.132313</span> <span class="p">,</span> <span class="mf">0.13132</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0565551</span> <span class="p">,</span> 
+ <span class="o">-</span><span class="mf">0.0338864</span> <span class="p">,</span> <span class="mf">0.0712653</span> <span class="p">,</span> <span class="mf">0.20246</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.116113</span> <span class="p">,</span> <span class="mf">0.102453</span> <span class="p">,</span> <span class="mf">0.0632254</span> <span class="p">,</span> <span class="mf">0.0694305</span> <span class="p">,</span> <span class="mf">0.00296431</span> <span class="p">,</span>
+ <span class="mf">0.0522931</span> <span class="p">,</span> <span class="mf">0.0780708</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0977045</span><span class="p">]</span>
+
+<span class="n">fR0_mid</span>  <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="n">param_mid</span>  <span class="o">=</span> <span class="p">[</span>
+ <span class="mf">0.936496</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.545832</span> <span class="p">,</span> <span class="mf">0.634804</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0290649</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0954373</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.342491</span> <span class="p">,</span> <span class="mf">0.491066</span> <span class="p">,</span> <span class="mf">0.297816</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.287142</span> <span class="p">,</span>  
+ <span class="o">-</span><span class="mf">0.0399919</span> <span class="p">,</span> <span class="mf">0.3037</span> <span class="p">,</span> <span class="mf">0.360959</span> <span class="p">,</span> <span class="mf">0.000615209</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.00941931</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0181341</span> <span class="p">,</span> <span class="mf">0.376297</span> <span class="p">,</span> <span class="mf">0.486358</span> <span class="p">,</span> <span class="mf">0.0349385</span> <span class="p">,</span> 
+ <span class="mf">0.240066</span> <span class="p">,</span> <span class="mf">0.188202</span> <span class="p">,</span> <span class="mf">0.665834</span> <span class="p">,</span> <span class="mf">0.0122249</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0343399</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0520361</span> <span class="p">,</span> <span class="mf">0.261006</span> <span class="p">,</span> <span class="mf">0.525633</span> <span class="p">,</span> <span class="mf">0.266255</span> <span class="p">,</span> 
+ <span class="mf">0.393546</span> <span class="p">,</span> <span class="mf">0.29088</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.411491</span> <span class="p">,</span> <span class="mf">0.776609</span> <span class="p">,</span> <span class="mf">0.470777</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.681923</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.079589</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.282388</span> <span class="p">,</span> <span class="mf">0.53954</span> <span class="p">,</span> 
+ <span class="o">-</span><span class="mf">0.0930797</span> <span class="p">,</span> <span class="mf">0.0783781</span> <span class="p">,</span> <span class="mf">0.194957</span> <span class="p">,</span> <span class="mf">0.270378</span> <span class="p">,</span> <span class="mf">0.370288</span> <span class="p">,</span> <span class="mf">0.194857</span> <span class="p">,</span> <span class="mf">0.318637</span> <span class="p">,</span> <span class="mf">0.0457011</span> <span class="p">,</span> <span class="mf">0.139237</span> <span class="p">,</span> 
+ <span class="mf">0.033403</span> <span class="p">,</span> <span class="mf">0.0762982</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.000104704</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.00275824</span> <span class="p">,</span> <span class="mf">0.0461644</span> <span class="p">,</span> <span class="mf">0.189897</span><span class="p">]</span>
+
+<span class="n">fR0_high</span> <span class="o">=</span> <span class="mf">5e-5</span>
+<span class="n">param_high</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="mf">0.572477</span> <span class="p">,</span> <span class="mf">0.254686</span> <span class="p">,</span> <span class="mf">1.21637</span> <span class="p">,</span> <span class="mf">0.00046274</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0901242</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.355849</span> <span class="p">,</span> <span class="mf">2.31154</span> <span class="p">,</span> <span class="mf">2.29822</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.483186</span> <span class="p">,</span> <span class="mf">0.4988</span> <span class="p">,</span> 
+ <span class="mf">0.36089</span> <span class="p">,</span> <span class="mf">0.0703424</span> <span class="p">,</span> <span class="mf">0.0257389</span> <span class="p">,</span> <span class="mf">0.0168936</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.030697</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.206992</span> <span class="p">,</span> <span class="mf">0.266084</span> <span class="p">,</span> <span class="mf">0.603357</span> <span class="p">,</span> <span class="mf">0.574264</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.30799</span> <span class="p">,</span> 
+ <span class="mf">0.831644</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.00936448</span> <span class="p">,</span> <span class="mf">0.00221153</span> <span class="p">,</span> <span class="mf">0.0076829</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.650381</span> <span class="p">,</span> <span class="mf">0.0179215</span> <span class="p">,</span> <span class="mf">0.927038</span> <span class="p">,</span> <span class="mf">0.77903</span> <span class="p">,</span> <span class="mf">0.919643</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.936328</span> <span class="p">,</span> 
+ <span class="mf">1.26756</span> <span class="p">,</span> <span class="mf">1.44477</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.44129</span> <span class="p">,</span> <span class="mf">0.219594</span> <span class="p">,</span> <span class="mf">0.353883</span> <span class="p">,</span> <span class="mf">1.02533</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.251705</span> <span class="p">,</span> <span class="mf">0.124875</span> <span class="p">,</span> <span class="mf">0.345995</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.146438</span> <span class="p">,</span> <span class="mf">0.0200251</span> <span class="p">,</span> 
+ <span class="mf">0.0892343</span> <span class="p">,</span> <span class="mf">0.284755</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.158286</span> <span class="p">,</span> <span class="mf">0.541178</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0471913</span> <span class="p">,</span> <span class="mf">0.139772</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.134888</span> <span class="p">,</span> <span class="mf">0.0959162</span> <span class="p">,</span> <span class="mf">0.368186</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.157828</span><span class="p">]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  The general definition of the fitting function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ratio_by_param">
+<a class="viewcode-back" href="../../../../api/generated/cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.ratio_by_param.html#cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.ratio_by_param">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ratio_by_param</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">aminusone</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">param</span><span class="p">,</span><span class="n">hasBug</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="n">aminusone2</span> <span class="o">=</span> <span class="n">aminusone</span><span class="o">*</span><span class="n">aminusone</span>
+  <span class="n">r2</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">r</span>
+
+  <span class="n">b0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">9</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">18</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span> 
+  <span class="n">b1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">19</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">11</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">c0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">12</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">21</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span> 
+  <span class="k">if</span><span class="p">(</span><span class="n">hasBug</span><span class="p">):</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">13</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">22</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">13</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">22</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">5</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">14</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">23</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">d0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">6</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">15</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">24</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span> 
+  <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">7</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">16</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">25</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span> <span class="mi">8</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">17</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">26</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">e0</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span>      <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">27</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">30</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">e1</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span>      <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">28</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">31</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">e2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span>      <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">29</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">32</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span>
+  <span class="n">f0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">33</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">36</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">39</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span> 
+  <span class="n">f1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">34</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">37</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">40</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span>
+  <span class="n">f2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">35</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">38</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">41</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span>
+  <span class="n">g0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">42</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">45</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">48</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span> 
+  <span class="n">g1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">43</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">46</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">49</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span>
+  <span class="n">g2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">44</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">47</span><span class="p">])</span><span class="o">*</span><span class="n">r</span> <span class="o">+</span> <span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">50</span><span class="p">])</span><span class="o">*</span><span class="n">r2</span><span class="p">;</span>
+
+  <span class="n">b</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">aminusone2</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">c0</span> <span class="o">+</span> <span class="n">c1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">c2</span><span class="o">*</span><span class="n">aminusone2</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">d0</span> <span class="o">+</span> <span class="n">d1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">d2</span><span class="o">*</span><span class="n">aminusone2</span>
+  <span class="n">e</span> <span class="o">=</span> <span class="n">e0</span> <span class="o">+</span> <span class="n">e1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">e2</span><span class="o">*</span><span class="n">aminusone2</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="n">f0</span> <span class="o">+</span> <span class="n">f1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">f2</span><span class="o">*</span><span class="n">aminusone2</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="n">g0</span> <span class="o">+</span> <span class="n">g1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">g2</span><span class="o">*</span><span class="n">aminusone2</span>
+
+  <span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">c</span><span class="o">*</span><span class="n">k</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">e</span><span class="o">*</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">d</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">f</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">ratio</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> This is a fitting formula for the enhancement:</span>
+
+<span class="sd"> pofk_enhancement = P(k,z) / P_LCDM(k,z) </span>
+
+<span class="sd"> in Hu-Sawikcy f(R) gravity with n =1</span>
+
+<span class="sd"> [k] is assumed to in units of [h/Mpc]</span>
+<span class="sd"> </span>
+<span class="sd"> NB: If requesting a value outside of the regime we have</span>
+<span class="sd"> fitted for we return the closest value without</span>
+<span class="sd"> any warning</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="pofk_enhancement">
+<a class="viewcode-back" href="../../../../api/generated/cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.pofk_enhancement.html#cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.pofk_enhancement">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pofk_enhancement</span><span class="p">(</span><span class="n">zin</span><span class="p">,</span><span class="n">fR0in</span><span class="p">,</span><span class="n">kin</span><span class="p">,</span><span class="n">hasBug</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zin</span><span class="p">)</span>
+  <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0in</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kin</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">z</span><span class="p">)</span>
+
+  <span class="c1"># The ranges we performed the fit for</span>
+  <span class="n">kmin</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span>
+  <span class="n">kmax</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">;</span>
+  <span class="n">zmin</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+  <span class="n">zmax</span> <span class="o">=</span> <span class="mf">3.0</span><span class="p">;</span>
+  <span class="n">fR0min</span> <span class="o">=</span> <span class="mf">1e-7</span><span class="p">;</span>
+  <span class="n">fR0max</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">;</span>
+
+  <span class="c1"># Bound checks</span>
+  <span class="n">k</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">kmax</span><span class="p">)</span>
+  <span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">zmin</span><span class="p">)</span>  
+  <span class="n">z</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">z</span><span class="p">,</span><span class="n">zmax</span><span class="p">)</span>	
+  <span class="k">if</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&lt;</span> <span class="n">fR0min</span><span class="p">):</span> <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0min</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&gt;</span> <span class="n">fR0max</span><span class="p">):</span> <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0max</span><span class="p">;</span>
+
+  <span class="c1"># The best-fit parameters for the range 1e-7 &lt; fR0 &lt; 5e-6</span>
+  <span class="n">ratio_low</span>  <span class="o">=</span> <span class="n">ratio_by_param</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fR0</span> <span class="o">/</span> <span class="n">fR0_low</span> <span class="p">)</span> <span class="p">,</span> <span class="n">a</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">param_low</span><span class="p">,</span> <span class="n">hasBug</span><span class="o">=</span><span class="n">hasBug</span><span class="p">)</span>
+
+  <span class="c1"># The best-fit parameters for the range 5e-6 &lt; fR0 &lt; 5e-5</span>
+  <span class="n">ratio_mid</span>  <span class="o">=</span> <span class="n">ratio_by_param</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fR0</span> <span class="o">/</span> <span class="n">fR0_mid</span> <span class="p">)</span> <span class="p">,</span> <span class="n">a</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">param_mid</span><span class="p">,</span> <span class="n">hasBug</span><span class="o">=</span><span class="n">hasBug</span><span class="p">)</span>
+
+  <span class="c1"># The best-fit parameters for the range 1e-5 &lt; fR0 &lt; 1e-4</span>
+  <span class="n">ratio_high</span> <span class="o">=</span> <span class="n">ratio_by_param</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">fR0</span> <span class="o">/</span> <span class="n">fR0_high</span><span class="p">)</span> <span class="p">,</span> <span class="n">a</span><span class="o">-</span><span class="mi">1</span> <span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">param_high</span><span class="p">,</span> <span class="n">hasBug</span><span class="o">=</span><span class="n">hasBug</span><span class="p">)</span>
+
+  <span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.0</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&gt;</span> <span class="mf">5e-5</span><span class="p">):</span> 
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio_high</span>
+  <span class="k">elif</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&lt;</span> <span class="mf">5e-6</span><span class="p">):</span> 
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio_low</span>
+  <span class="k">elif</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&gt;</span> <span class="mf">1e-5</span><span class="p">):</span> 
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio_mid</span> <span class="o">+</span> <span class="p">(</span><span class="n">ratio_high</span> <span class="o">-</span> <span class="n">ratio_mid</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">fR0</span> <span class="o">-</span> <span class="mf">1e-5</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">5e-5</span> <span class="o">-</span> <span class="mf">1e-5</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio_low</span> <span class="o">+</span> <span class="p">(</span><span class="n">ratio_mid</span>  <span class="o">-</span> <span class="n">ratio_low</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">fR0</span> <span class="o">-</span> <span class="mf">5e-6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">1e-5</span> <span class="o">-</span> <span class="mf">5e-6</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span></div>
+
+  
+<span class="n">fR0_fid</span>  <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="n">param_fid</span>  <span class="o">=</span> <span class="p">[</span>
+ <span class="mf">3.1</span>       <span class="p">,</span>  <span class="mf">2.34466</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.86362</span>  <span class="p">,</span>  <span class="mf">34.4951</span>   <span class="p">,</span>
+ <span class="mf">28.8637</span>   <span class="p">,</span> <span class="o">-</span><span class="mf">13.1302</span> <span class="p">,</span>  <span class="mf">0.146542</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0103024</span> <span class="p">,</span>
+ <span class="o">-</span><span class="mf">0.149446</span> <span class="p">,</span>  <span class="mf">1.62807</span> <span class="p">,</span>  <span class="mf">0.71291</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">1.41003</span><span class="p">]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> This is a fitting formula for the linear enhancement:</span>
+
+<span class="sd"> pofk_enhancement_linear = Plin(k,z) / Plin_LCDM(k,z) </span>
+
+<span class="sd"> in Hu-Sawikcy f(R) gravity with n =1</span>
+
+<span class="sd"> [k] is assumed to in units of [h/Mpc]</span>
+<span class="sd"> </span>
+<span class="sd"> NB: If requesting a value outside of the regime we have</span>
+<span class="sd"> fitted for we return the closest value without</span>
+<span class="sd"> any warning</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="pofk_enhancement_linear">
+<a class="viewcode-back" href="../../../../api/generated/cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.pofk_enhancement_linear.html#cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.pofk_enhancement_linear">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pofk_enhancement_linear</span><span class="p">(</span><span class="n">zin</span><span class="p">,</span><span class="n">fR0in</span><span class="p">,</span><span class="n">kin</span><span class="p">):</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="n">zin</span>
+  <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0in</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">kin</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">z</span><span class="p">)</span>
+
+  <span class="c1"># The ranges we performed the fit for</span>
+  <span class="n">kmin</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">;</span>
+  <span class="n">kmax</span> <span class="o">=</span> <span class="mf">100.0</span><span class="p">;</span>
+  <span class="n">zmin</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+  <span class="n">zmax</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+  <span class="n">fR0min</span> <span class="o">=</span> <span class="mf">1e-7</span><span class="p">;</span>
+  <span class="n">fR0max</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">;</span>
+  
+  <span class="k">if</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&lt;</span> <span class="n">fR0min</span><span class="p">):</span> <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0min</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">fR0</span> <span class="o">&gt;</span> <span class="n">fR0max</span><span class="p">):</span> <span class="n">fR0</span> <span class="o">=</span> <span class="n">fR0max</span><span class="p">;</span>
+  
+  <span class="c1"># Transform to effective k</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fR0</span> <span class="o">/</span> <span class="n">fR0_fid</span><span class="p">);</span>
+
+  <span class="c1"># Bound checks</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&gt;</span> <span class="n">kmax</span><span class="p">):</span>     <span class="n">k</span>   <span class="o">=</span> <span class="n">kmax</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;</span> <span class="n">zmin</span><span class="p">):</span>     <span class="n">z</span>   <span class="o">=</span> <span class="n">zmin</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">z</span> <span class="o">&gt;</span> <span class="n">zmax</span><span class="p">):</span>     <span class="n">z</span>   <span class="o">=</span> <span class="n">zmax</span><span class="p">;</span>
+  
+  <span class="c1"># Avoid NaN</span>
+  <span class="k">if</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">):</span> <span class="n">k</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="mf">1e-10</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="mf">1e-10</span><span class="p">):</span> <span class="k">return</span> <span class="mf">1.0</span>
+
+  <span class="n">aminusone</span>  <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">;</span>
+  <span class="n">aminusone2</span> <span class="o">=</span> <span class="n">aminusone</span><span class="o">*</span><span class="n">aminusone</span><span class="p">;</span>
+  <span class="n">b0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">0</span><span class="p">]);</span> 
+  <span class="n">b1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">1</span><span class="p">]);</span>
+  <span class="n">b2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">2</span><span class="p">]);</span>
+  <span class="n">c0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">3</span><span class="p">]);</span> 
+  <span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">4</span><span class="p">]);</span>
+  <span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">5</span><span class="p">]);</span>
+  <span class="n">d0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">6</span><span class="p">]);</span> 
+  <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">7</span><span class="p">]);</span>
+  <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">8</span><span class="p">]);</span>
+  <span class="n">e0</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span> <span class="mi">9</span><span class="p">]);</span>
+  <span class="n">e1</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span><span class="mi">10</span><span class="p">]);</span>
+  <span class="n">e2</span> <span class="o">=</span> <span class="p">(</span><span class="n">param_fid</span><span class="p">[</span><span class="mi">11</span><span class="p">]);</span>
+
+  <span class="n">b</span> <span class="o">=</span> <span class="n">b0</span> <span class="o">+</span> <span class="n">b1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="n">aminusone2</span><span class="p">;</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">c0</span> <span class="o">+</span> <span class="n">c1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">c2</span><span class="o">*</span><span class="n">aminusone2</span><span class="p">;</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">d0</span> <span class="o">+</span> <span class="n">d1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">d2</span><span class="o">*</span><span class="n">aminusone2</span><span class="p">;</span>
+  <span class="n">e</span> <span class="o">=</span> <span class="n">e0</span> <span class="o">+</span> <span class="n">e1</span><span class="o">*</span><span class="n">aminusone</span> <span class="o">+</span> <span class="n">e2</span><span class="o">*</span><span class="n">aminusone2</span><span class="p">;</span>
+
+  <span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="n">k</span><span class="o">/</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">e</span> <span class="o">*</span> <span class="n">k</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">ratio</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> This is a fitting formula for the further enhancement of sigma8 of Kazuya:</span>
+
+<span class="sd"> kazuya_correktion  = sigma8f(R) / sigma8fitted </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="kazuya_correktion">
+<a class="viewcode-back" href="../../../../api/generated/cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.kazuya_correktion.html#cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther.kazuya_correktion">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">kazuya_correktion</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mf">6.53905</span> <span class="o">+</span> <span class="mf">11.1906</span><span class="o">/</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.87221</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.204082</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.00826446</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span></div>
+
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2026, RWTH Aachen University.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

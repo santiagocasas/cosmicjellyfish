@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cosmicjellyfish.cosmology.cosmology &#8212; cosmicjellyfish v2.0.0</title>
+    <title>cosmicjellyfish.cosmology.cosmology &#8212; cosmicjellyfish v2.1.0</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../../../_static/documentation_options.js?v=20623aea"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -53,7 +53,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0" />
+  <meta name="docsearch:version" content="2.1" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -472,6 +472,7 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
@@ -495,6 +496,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">savgol_filter</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">cosmicjellyfish.configs.config</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.cosmology.modified_gravity</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">FR_BOOST_MODELS</span><span class="p">,</span>
+    <span class="n">fr_boost_nonlinear</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">numerics</span> <span class="k">as</span> <span class="n">unu</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.utilities.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">printing</span> <span class="k">as</span> <span class="n">upr</span>
 
@@ -699,7 +704,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">camb_results</span><span class="p">(</span><span class="n">camb</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">code</span> <span class="o">==</span> <span class="s2">&quot;class&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">boltzmann_classpars</span> <span class="o">=</span> <span class="n">_backend_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">classy</span><span class="w"> </span><span class="kn">import</span> <span class="n">Class</span>
+            <span class="c1"># The CLASS wrapper is configurable so that hi_class-based codes (e.g. frahi_class,</span>
+            <span class="c1"># module &#39;hiclassy&#39;, class &#39;HiClass&#39;) can be used; default: classy.Class.</span>
+            <span class="n">Class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_module&quot;</span><span class="p">,</span> <span class="s2">&quot;classy&quot;</span><span class="p">)),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_object&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">class_setparams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cosmopars</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">class_results</span><span class="p">(</span><span class="n">Class</span><span class="p">)</span>
@@ -1404,10 +1414,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boltzmann_classpars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NONLINEAR&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;class_native&quot;</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;class_native&quot;</span><span class="p">,</span> <span class="s2">&quot;ee2&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;class_native&quot;</span><span class="p">,</span> <span class="s2">&quot;ee2&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">FR_BOOST_MODELS</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Unknown CLASS nonlinear model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span><span class="si">!r}</span><span class="s2">; &quot;</span>
-                <span class="s2">&quot;expected &#39;class_native&#39; or &#39;ee2&#39;.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;expected &#39;class_native&#39;, &#39;ee2&#39; or one of </span><span class="si">{</span><span class="n">FR_BOOST_MODELS</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="ow">in</span> <span class="n">FR_BOOST_MODELS</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;cosmo_model&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;HuSawicki&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;NONLINEAR model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span><span class="si">!r}</span><span class="s2"> requires cosmo_model &#39;HuSawicki&#39;.&quot;</span>
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cb_prescription</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">boltzmann_classpars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NONLINEAR&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s2">&quot;cb_prescription&quot;</span><span class="p">,</span> <span class="s2">&quot;neutrino_subtraction&quot;</span>
@@ -1504,9 +1518,15 @@
         <span class="k">if</span> <span class="s2">&quot;Omegam&quot;</span> <span class="ow">in</span> <span class="n">classpars</span><span class="p">:</span>
             <span class="n">classpars</span><span class="p">[</span><span class="s2">&quot;Omega_cdm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">classpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;Omegam&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="n">classpars</span><span class="p">[</span><span class="s2">&quot;Omega_b&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">omega_ncdm</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;cosmo_model&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;LCDM&quot;</span><span class="p">:</span>
+        <span class="c1"># Hu-Sawicki f(R) in hi_class-based codes (frahi_class): the model parameter is</span>
+        <span class="c1"># log10|f_R0| (hs_parametrization = &#39;log_10(fR0)&#39; in the class YAML); the second slot of</span>
+        <span class="c1"># parameters_smg (lambda of c1/c2) is solved for by frahi_class (0 = start at 1).</span>
+        <span class="k">if</span> <span class="s2">&quot;log10fR0&quot;</span> <span class="ow">in</span> <span class="n">classpars</span><span class="p">:</span>
+            <span class="n">classpars</span><span class="p">[</span><span class="s2">&quot;parameters_smg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">classpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;log10fR0&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.16g</span><span class="si">}</span><span class="s2">, 0.0&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;cosmo_model&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;LCDM&quot;</span><span class="p">,</span> <span class="s2">&quot;HuSawicki&quot;</span><span class="p">):</span>
             <span class="c1"># CLASS rejects dark-energy evolution parameters in LCDM mode,</span>
             <span class="c1"># even when CosmicJellyfish carries fixed w0/wa in the fiducial.</span>
+            <span class="c1"># Hu-Sawicki f(R) has no fluid dark energy either.</span>
             <span class="n">classpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;w0&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">classpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;wa&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">classpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;w0_fld&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -1547,7 +1567,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">()</span>
         <span class="n">classres</span> <span class="o">=</span> <span class="n">Class</span><span class="p">()</span>
-        <span class="n">classres</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classcosmopars</span><span class="p">)</span>
+        <span class="n">fr_boost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="ow">in</span> <span class="n">FR_BOOST_MODELS</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;nonlinear&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">fr_boost</span><span class="p">:</span>
+            <span class="c1"># f(R) code only for the linear spectra (and A_s); the nonlinear spectrum is a LCDM one times</span>
+            <span class="c1"># the f(R) boost (see modified_gravity.fr_boost_nonlinear).</span>
+            <span class="n">frpars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classcosmopars</span><span class="p">)</span>
+            <span class="n">frpars</span><span class="p">[</span><span class="s2">&quot;non linear&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span>
+            <span class="n">frpars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;nonlinear_min_k_max&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">classres</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">frpars</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">classres</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classcosmopars</span><span class="p">)</span>
         <span class="n">classres</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Classres</span> <span class="o">=</span> <span class="n">classres</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">h_of_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">classres</span><span class="o">.</span><span class="n">Hubble</span><span class="p">)</span>
@@ -1581,7 +1610,9 @@
         <span class="c1">## interpolating function Pk_nl (k,z)</span>
         <span class="n">z_nl</span> <span class="o">=</span> <span class="n">z</span>
         <span class="n">k_nl</span> <span class="o">=</span> <span class="n">k</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="o">==</span> <span class="s2">&quot;ee2&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;nonlinear&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">fr_boost</span><span class="p">:</span>
+            <span class="n">Pk_nl</span><span class="p">,</span> <span class="n">Pk_cb_nl</span><span class="p">,</span> <span class="n">k_nl</span><span class="p">,</span> <span class="n">z_nl</span> <span class="o">=</span> <span class="n">fr_boost_nonlinear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classres</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonlinear_model</span> <span class="o">==</span> <span class="s2">&quot;ee2&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;nonlinear&quot;</span><span class="p">]:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">cosmicjellyfish.cosmology.ee2</span><span class="w"> </span><span class="kn">import</span> <span class="n">class_ee2_boost</span>
 
             <span class="n">boost</span> <span class="o">=</span> <span class="n">class_ee2_boost</span><span class="p">(</span><span class="n">classres</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>

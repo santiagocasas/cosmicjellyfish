@@ -1,0 +1,6 @@
+sigma8\_fofR
+============
+
+.. currentmodule:: cosmicjellyfish.cosmology.modified_gravity
+
+.. autofunction:: sigma8_fofR

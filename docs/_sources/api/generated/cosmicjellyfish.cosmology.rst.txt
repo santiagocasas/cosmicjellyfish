@@ -29,11 +29,13 @@
 
    cosmology
    ee2
+   f_r_emulators
    jax_theory
    jaxcosmo_amplitude
    jaxcosmo_halofit
    jaxcosmo_provider
    jaxcosmo_theory
+   modified_gravity
    nuisance
    symbolic_new
 

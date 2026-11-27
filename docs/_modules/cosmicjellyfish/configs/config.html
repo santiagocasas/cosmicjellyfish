@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cosmicjellyfish.configs.config &#8212; cosmicjellyfish v2.0.0</title>
+    <title>cosmicjellyfish.configs.config &#8212; cosmicjellyfish v2.1.0</title>
   
   
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
-    <script src="../../../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../../../_static/documentation_options.js?v=20623aea"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -53,7 +53,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2.0" />
+  <meta name="docsearch:version" content="2.1" />
   
     
     <script src="../../../_static/searchtools.js"></script>
@@ -646,6 +646,12 @@
 <span class="sd">                                  Path to the configurations for the Einstein-Boltzmann solvers. Defaults to the `boltzmann_yaml_files` folder in the home directory of cosmicjellyfish</span>
 <span class="sd">    class_config_yaml           : str</span>
 <span class="sd">                                  Path to the configurations for class. Defaults to &#39;boltzmann_yaml_path/class/default.yaml&#39;</span>
+<span class="sd">    class_module                : str</span>
+<span class="sd">                                  Python module providing the CLASS wrapper for code = &#39;class&#39;. Defaults to &#39;classy&#39;.</span>
+<span class="sd">                                  Use &#39;hiclassy&#39; for hi_class-based codes such as frahi_class (Hu-Sawicki f(R))</span>
+<span class="sd">    class_object                : str</span>
+<span class="sd">                                  Name of the CLASS wrapper class inside `class_module`. Defaults to &#39;Class&#39;</span>
+<span class="sd">                                  (&#39;HiClass&#39; for hiclassy)</span>
 <span class="sd">    camb_config_yaml            : str</span>
 <span class="sd">                                  Path to the configurations for camb. Defaults to &#39;boltzmann_yaml_path/camb/default.yaml&#39;</span>
 <span class="sd">    fishermatrix_file_extension : str</span>
@@ -769,6 +775,8 @@
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
         <span class="s2">&quot;class_config_yaml&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;boltzmann_yaml_path&quot;</span><span class="p">],</span> <span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="s2">&quot;default.yaml&quot;</span><span class="p">)</span>
     <span class="p">)</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;class_module&quot;</span><span class="p">,</span> <span class="s2">&quot;classy&quot;</span><span class="p">)</span>
+    <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;class_object&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">)</span>
     <span class="n">settings</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
         <span class="s2">&quot;camb_config_yaml&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="s2">&quot;boltzmann_yaml_path&quot;</span><span class="p">],</span> <span class="s2">&quot;camb&quot;</span><span class="p">,</span> <span class="s2">&quot;default.yaml&quot;</span><span class="p">)</span>
     <span class="p">)</span>

@@ -1,0 +1,41 @@
+cosmicjellyfish.cosmology.f\_r\_emulators.MGfit\_Winther
+========================================================
+
+.. automodule:: cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther
+
+   
+   
+   .. rubric:: Module attributes
+
+   .. autosummary::
+   
+      param_high
+      param_fid
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      kazuya_correktion
+      pofk_enhancement
+      pofk_enhancement_linear
+      ratio_by_param
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

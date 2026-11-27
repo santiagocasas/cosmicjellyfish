@@ -1,0 +1,6 @@
+pofk\_enhancement
+=================
+
+.. currentmodule:: cosmicjellyfish.cosmology.f_r_emulators.MGfit_Winther
+
+.. autofunction:: pofk_enhancement

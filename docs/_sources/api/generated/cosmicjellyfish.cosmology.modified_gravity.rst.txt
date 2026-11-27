@@ -1,0 +1,35 @@
+cosmicjellyfish.cosmology.modified\_gravity
+===========================================
+
+.. automodule:: cosmicjellyfish.cosmology.modified_gravity
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      boost_extrapolation
+      fofR_boost_function
+      fofR_boost_grid
+      fr_boost_nonlinear
+      sigma8_fofR
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
