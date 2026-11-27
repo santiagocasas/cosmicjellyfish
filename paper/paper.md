@@ -78,6 +78,10 @@ authors:
   - name: Emilio Bellini
     orcid: 0000-0003-4762-0795
     affiliation: 15
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: software, credit-name: "Software"}
   - name: Kazuya Koyama
     orcid: 0000-0001-6727-6915
     affiliation: 14
@@ -145,34 +149,30 @@ bibliography: paper.bib
 
 # Summary
 
-<!-- [C1] REWORDED + NEW. JOSS wants this section for a "diverse, non-specialist
-audience". I removed the specialist terms (IST:F, FAIR, CAMB-CLASS dashboard,
-"version 2.0") and explain what a forecast is first. Your three "new in this release"
-points are now the last three sentences; the dashboard moved to Research impact [C21].
-CUT: "This is version 2.0 also because MCMC forecasts can now be run with exactly the
-same settings as the Fisher forecast, which allows us to test contours that were not
-obvious before." (the idea is kept, without "version 2.0" and "not obvious"). -->
+<!-- [C1] REPLACED (27 Nov) by the author's own summary text. The previous version
+explained what a forecast is for a non-specialist reader and cited Bradbury2018,
+Bartlett2024a/b, Sui2025 and Raveri2016. Those five citations are back in the new text
+(27 Nov: Raveri2016 attached to a short clause "the Python successor of the CosmicFish
+code", which I added). CHECK: the text has no sentence for non-specialists. The last sentence says the name change was motivated by the
+transition to JAX (replaces "the J stands for JAX"). -->
 
-Galaxy surveys such as Euclid, the Vera C. Rubin Observatory and the SKA Observatory map
-the large-scale structure of the Universe to measure the properties of dark energy, the
-sum of the neutrino masses and possible deviations from General Relativity. Before and
-during such surveys, cosmologists need forecasts: for a given survey design and
-theoretical model, how precisely can each parameter be measured? The Python package
-`cosmicjellyfish` computes the observables of galaxy clustering, weak gravitational lensing, 21cm intensity mapping and the cosmic microwave
-background, and it returns the expected constraints either as a Fisher matrix, a fast
-Gaussian approximation, or as a posterior sampled with Monte Carlo methods. Both routes
-start from the same configuration, so the approximation can be tested against the full
-calculation. Derivatives can be computed by finite differences or by automatic
-differentiation with JAX [@Bradbury2018], and fast symbolic emulators
-[@Bartlett2024a; @Bartlett2024b; @Sui2025] bring a full survey forecast down to seconds.
-
-<!-- [C2] KEPT, shortened. Your logo/name sentence. I kept the half that explains the
-name (useful for a reader who wonders about "jelly"). CUT: "The tentacles of the
-jellyfish in the logo stand for the chains". Restore it if you like it; it costs 12
-words. -->
-
-`cosmicjellyfish` continues `cosmicfishpie`, the Python successor of the Fortran code
-CosmicFish [@Raveri2016]; the J stands for JAX.
+`cosmicjellyfish` is a Python package for Fisher-matrix and Monte Carlo forecasts of
+cosmological surveys, and the current version of `cosmicfishpie`, the Python successor of the
+[CosmicFish](https://github.com/CosmicFish/CosmicFish) code [@Raveri2016], which has been used in about ten publications since the
+Euclid forecast-validation programme [@Blanchard2020]. It computes the
+observables of photometric galaxy clustering and weak lensing, spectroscopic galaxy
+clustering, 21cm intensity mapping and the cosmic microwave background, and returns the
+expected parameter constraints either as a Fisher matrix or as a posterior obtained by
+nested sampling with [Nautilus](https://nautilus-sampler.readthedocs.io/en/latest/), both from a single configuration, so that the Gaussian approximation can
+be tested rather than assumed. Theory predictions are supplied interchangeably by [CAMB](https://github.com/cmbant/CAMB),
+[CLASS](https://github.com/lesgourg/class_public), [symbolic emulators](https://github.com/DeaglanBartlett/symbolic_pofk) [@Bartlett2024a; @Bartlett2024b; @Sui2025] that return a full
+survey forecast in seconds, or [jax-cosmo](https://github.com/DifferentiableUniverseInitiative/jax_cosmo); derivatives come from four finite-difference
+schemes or from automatic differentiation with JAX [@Bradbury2018]. Both routes are validated against each other and against the reference
+[MontePython](https://github.com/brinckmann/montepython_public) Euclid likelihoods [@Casas2024],
+and a public dashboard compares CAMB and CLASS forecasts for 25 validation
+cases. The survey specifications, solver settings, source revisions and chains behind
+every number quoted here are released following the FAIR principles (findable, accessible, interoperable and reusable) [@Wilkinson2016]. The change of name from
+`cosmicfishpie` to `cosmicjellyfish` was motivated by the transition to JAX.
 
 # Statement of need
 
@@ -367,6 +367,16 @@ sets it. Both forecasts take 12 s on a laptop.
 Figure of the Euclid probes (old Fig 1, fig1_euclid_probes.png) DROPPED on 26 Nov:
 one ellipse figure (Fisher vs Nautilus) is enough. -->
 
+<!-- [C15b] NEW (27 Nov): install line. Verified in a clean Python 3.12 venv with
+`uv pip install cosmicjellyfish==2.1.0 git+https://github.com/DeaglanBartlett/symbolic_pofk.git`:
+the first listing below runs unchanged in 14 s. symbolic_pofk is not on PyPI (PyPI rejects
+direct-URL dependencies), hence the second package. The second listing (Nautilus) was not run
+against the wheel here; it was run on the cluster from a source checkout. -->
+
+The examples use version 2.1.0, which is installed with
+`pip install cosmicjellyfish==2.1.0`. The `symbolic` backend used below also needs the
+symbolic emulators of the linear and nonlinear power spectrum [@Bartlett2024a; @Bartlett2024b], which are not on PyPI:
+`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`.
 The defaults reproduce the pessimistic Euclid setup of @Blanchard2020, so a
 photometric and a spectroscopic forecast, and their combination, take three statements:
 
@@ -455,7 +465,8 @@ papers and beyond" (already said in [C19]). -->
 (<https://www.santicasas.space/cosmicjellyfish/dashboard/>) compares CAMB and CLASS
 forecasts for 25 cases: the photometric and spectroscopic Euclid probes in $\Lambda$CDM
 and $w_0w_a$CDM, with and without massive neutrinos and $N_{\mathrm{eff}}$, following
-@Casas2024 and @Archidiacono2025. With the shipped high-precision profiles the two
+@Casas2024 and @Archidiacono2025. The validation data are public and live in a Hugging Face
+dataset (<https://huggingface.co/datasets/santicas/cjfp-data>). With the shipped high-precision profiles the two
 solvers agree to better than 1% on all marginalised errors of the photometric benchmark.
 A Euclid photometric forecast then takes 138 s with CAMB and 186 s with CLASS, and 30 s
 and 111 s with the default profiles; the two forecasts of the example above take about
@@ -568,8 +579,11 @@ this content **[TODO: confirm]**.
 Nautilus validation; acknowledgements to the CosmicFish authors and to the Euclid
 Consortium colleagues involved in the forecast validation.]**
 
-We thank Matteo Martinelli, Valeria Pettorino, Julien Lesgourgues, Nils Schöneberg and Maria
-Archidiacono for scientific ideas, validation and discussions.
+We thank Matteo Martinelli for initiating this project, the ideas, the motivation and for
+bringing researchers together.
+
+We thank Valeria Pettorino, Julien Lesgourgues, Nils Schöneberg and Maria Archidiacono for
+scientific ideas, validation and discussions.
 
 DS acknowledges support from the Fondecyt Regular project N.1251339 (ANID). ML is
 supported by grant PIP 11220200100729CO CONICET and grant 20020170100129BA UBACYT.
@@ -598,11 +612,9 @@ Software, and `content` as Writing -- original draft).
 - **N. Frusciante**: Software.
 - **F. Pace**: Methodology, Software.
 - **K. Koyama**: Conceptualization, Methodology, Supervision, Validation.
-- **E. Bellini**: **[TODO: roles]**.
+- **E. Bellini**: Conceptualization, Data curation, Software.
 - **S. Camera**: Conceptualization, Methodology.
 - **M. Raveri**: Conceptualization, Software (the original IST:Forecast code, started with
   M. Martinelli).
-
-**[TODO: each author to confirm or correct their roles.]**
 
 # References
