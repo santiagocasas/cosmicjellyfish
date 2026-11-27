@@ -8,20 +8,22 @@
   </picture>
 </p>
 
-[![All Contributors](https://img.shields.io/github/all-contributors/santiagocasas/cosmicjellyfish?color=ee8449&style=flat-square)](#contributors-)
+
 [![Documentation](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/docs.yml/badge.svg)](https://www.santicasas.space/cosmicjellyfish/docs/)
 [![PyPI](https://img.shields.io/pypi/v/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![codecov](https://codecov.io/github/santiagocasas/cosmicjellyfish/graph/badge.svg?token=BXTVDPXPUO)](https://codecov.io/github/santiagocasas/cosmicjellyfish)
 [![CI](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
-[![CRediT](https://img.shields.io/badge/contributions-CRediT-using?color=%23cd2653)](https://credit.niso.org/implementing-credit/)
 
+
+[![All Contributors](https://img.shields.io/github/all-contributors/santiagocasas/cosmicjellyfish?color=ee8449&style=flat-square)](#contributors-)
+[![CRediT](https://img.shields.io/badge/contributions-CRediT-using?color=%23cd2653)](https://credit.niso.org/implementing-credit/)
 [![37.50 % FAIR](https://img.shields.io/badge/FAIR_assessment-37.50_%25-red)](https://fair-checker.france-bioinformatique.fr/assessment/68da9e3cc49e421b3e2cf501)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16499/badge)](https://www.bestpractices.dev/projects/16499)
 [![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8B-yellow)](https://fair-software.eu)
 
-`cosmicjellyfish` is a Python package for cosmological Fisher forecasts. It helps prepare and compare forecasts for surveys such as Euclid, DESI, SKAO and CMB experiments.
+`cosmicjellyfish` is a Python package for cosmological Fisher forecasts. It helps prepare and compare forecasts for galaxy surveys such as [Euclid](https://euclid-ec.net/), [DESI](https://www.desi.lbl.gov/), [SKAO](https://www.skao.int/en) and CMB experiments, such as [Planck](https://www.cosmos.esa.int/web/planck) and [SPT](https://pole.uchicago.edu/public/Home.html).
 
 ## Validation data
 
@@ -80,18 +82,13 @@ A photometric forecast with the `symbolic` backend (requires `symbolic_pofk`, se
 from cosmicjellyfish.fishermatrix import cosmicfish as cff
 
 options = {
-    "accuracy": 1,
     "feedback": 1,
     "code": "symbolic",  # or "class" / "camb"
     "cosmo_model": "LCDM",
-    "derivatives": "3PT",
-    "ell_sampling": 25,  # coarse grid for speed, not production accuracy
-    "nonlinear": True,
     "outroot": "first_forecast",
     "results_dir": "results",
     "survey_name": "Euclid",
     "survey_name_photo": "Euclid-Photometric-ISTF-Pessimistic",
-    "survey_name_spectro": False,
 }
 
 fiducial = {"Omegam": 0.32, "h": 0.67}
