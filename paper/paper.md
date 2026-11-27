@@ -374,7 +374,8 @@ direct-URL dependencies), hence the second package. The second listing (Nautilus
 against the wheel here; it was run on the cluster from a source checkout. -->
 
 The examples use version 2.1.0, which is installed with
-`pip install cosmicjellyfish==2.1.0`. The `symbolic` backend used below also needs the
+`pip install cosmicjellyfish==2.1.0` and archived on Zenodo (DOI for all versions:
+[10.5281/zenodo.24593176](https://doi.org/10.5281/zenodo.24593176)). The `symbolic` backend used below also needs the
 symbolic emulators of the linear and nonlinear power spectrum [@Bartlett2024a; @Bartlett2024b], which are not on PyPI:
 `pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`.
 The defaults reproduce the pessimistic Euclid setup of @Blanchard2020, so a
