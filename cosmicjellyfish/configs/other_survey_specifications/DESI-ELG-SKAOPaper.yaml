@@ -1,0 +1,118 @@
+specifications:
+  # DESI Emission Line Galaxies, transcribed from the historical SKAO project
+  # (`survey_specifications/DESI_ELG_GCsp.dat`, area = 14000 deg^2).
+  # The `dn3` column of that table is dN/dz per deg^2 and maps directly onto
+  # `dndOmegadz`; see docs/SURVEY_VALIDATION_ROADMAP.md for the provenance.
+  'spec_sigma_dz': 0.001
+  'spec_sigma_dz_type': 'constant'
+  'area_survey_spectro': 14000
+  'kmax_GCsp': 0.30
+  'kmin_GCsp': 0.001
+  'z_bins_sp':
+    1: [0.60, 0.70]
+    2: [0.70, 0.80]
+    3: [0.80, 0.90]
+    4: [0.90, 1.00]
+    5: [1.00, 1.10]
+    6: [1.10, 1.20]
+    7: [1.20, 1.30]
+    8: [1.30, 1.40]
+    9: [1.40, 1.50]
+    10: [1.50, 1.60]
+    11: [1.60, 1.70]
+  'dndOmegadz':
+    1: 309.0
+    2: 2269.0
+    3: 1923.0
+    4: 2094.0
+    5: 1441.0
+    6: 1353.0
+    7: 1337.0
+    8: 523.0
+    9: 466.0
+    10: 329.0
+    11: 126.0
+  sp_bias_sample: 'g'
+  sp_bias_model: 'linear'
+  sp_bias_root: 'b'
+  sp_bias_parametrization:
+    linear:
+      bg_1: 1.01916188
+      bg_2: 1.04813973
+      bg_3: 1.07832051
+      bg_4: 1.10973998
+      bg_5: 1.14238157
+      bg_6: 1.17619527
+      bg_7: 1.21111165
+      bg_8: 1.24705172
+      bg_9: 1.28393301
+      bg_10: 1.32167414
+      bg_11: 1.36019724
+    linear_log:
+      lnbg_1: 0.01898060
+      lnbg_2: 0.04701691
+      lnbg_3: 0.07540475
+      lnbg_4: 0.10412574
+      lnbg_5: 0.13311518
+      lnbg_6: 0.16228488
+      lnbg_7: 0.19153866
+      lnbg_8: 0.22078214
+      lnbg_9: 0.24992803
+      lnbg_10: 0.27889922
+      lnbg_11: 0.30762972
+    linear_Qbias:
+      bg_1: 1.01916188
+      bg_2: 1.04813973
+      bg_3: 1.07832051
+      bg_4: 1.10973998
+      bg_5: 1.14238157
+      bg_6: 1.17619527
+      bg_7: 1.21111165
+      bg_8: 1.24705172
+      bg_9: 1.28393301
+      bg_10: 1.32167414
+      bg_11: 1.36019724
+      A1: 0.02
+      A2: -2.0
+  shot_noise_model: 'constant'
+  shot_noise_parametrization:
+    constant:
+      Ps_1: 0.0
+      Ps_2: 0.0
+      Ps_3: 0.0
+      Ps_4: 0.0
+      Ps_5: 0.0
+      Ps_6: 0.0
+      Ps_7: 0.0
+      Ps_8: 0.0
+      Ps_9: 0.0
+      Ps_10: 0.0
+      Ps_11: 0.0
+  nonlinear_model: 'default'
+  nonlinear_parametrization:
+    vary_sigmap: True
+    vary_sigmav: True
+    rescale_sigma_pv:
+      sigmap_1: 1.0
+      sigmap_2: 1.0
+      sigmap_3: 1.0
+      sigmap_4: 1.0
+      sigmap_5: 1.0
+      sigmap_6: 1.0
+      sigmap_7: 1.0
+      sigmap_8: 1.0
+      sigmap_9: 1.0
+      sigmap_10: 1.0
+      sigmap_11: 1.0
+      sigmav_1: 1.0
+      sigmav_2: 1.0
+      sigmav_3: 1.0
+      sigmav_4: 1.0
+      sigmav_5: 1.0
+      sigmav_6: 1.0
+      sigmav_7: 1.0
+      sigmav_8: 1.0
+      sigmav_9: 1.0
+      sigmav_10: 1.0
+      sigmav_11: 1.0
+    default:

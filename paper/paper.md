@@ -71,8 +71,9 @@ stands for the new JAX compatibility.
 especially for their combinations, in an efficient, validated and reproducible way.
 
 The code ships survey specifications for Euclid [@Mellier2025], SKAO [@Bacon2020] and
-Planck-like CMB experiments [@Planck2018], and it can load user specifications for DESI
-[@DESI2016] and LSST [@Ivezic2019]. These surveys are far from over: Euclid still has
+Planck-like CMB experiments [@Planck2018], together with validated, opt-in transcriptions
+of the historical specifications for DESI [@DESI2016] and Rubin/LSST [@Ivezic2019]; any
+other survey can be added through a user specification file. These surveys are far from over: Euclid still has
 about six years of observations ahead and LSST ten, and their cross-correlations have
 barely been studied so far. A forecasting code of this kind will therefore remain useful
 for a long time. Moreover, the step from here into real-data analysis is no longer a
@@ -372,6 +373,34 @@ Fisher matrix (20 parameters) takes about 8 s and the GCsp one (15 parameters) a
 2.5 s **[TODO: measured on two cores of a cloud VM; replace by your own hardware]**. With
 CAMB and CLASS we provide several levels of accuracy and precision, and the Fisher
 matrices take less or more time depending on that.
+
+**Cross-survey validation.** To check that the pipeline is not tied to Euclid, we
+transcribed the DESI, Rubin/LSST and SKAO specifications of @Casas2023SKAO into the
+current schema and compared the resulting observables---bin densities, biases, survey
+volumes, the galaxy and intensity-mapping spectra, the beam, the thermal noise, and the
+photometric redshift distributions and bin counts---against an independent
+re-implementation of the historical recipes. All algebra-level ingredients agree at
+machine precision. The photometric angular spectra are not re-compared against the
+historical project here; they are covered by the existing observable tests. The residual
+shape difference in the SKAO Fig. 1 spectra is below 1.5 per cent over the calibrated
+range, with an amplitude offset consistent with (but not uniquely attributable to) the
+modified-gravity fiducial used in the original runs. Running all configurations on a
+common GR fiducial then
+produces a consistent set of constraints (\autoref{fig:surveys}). The ranking between
+surveys in that comparison reflects the adopted specifications---sky area, redshift
+binning and scale cuts---rather than the telescopes themselves, which is exactly the
+behaviour expected from a specification-driven code.
+
+![Left: marginalised $1\sigma$ errors on $\Omega_m$ and $\sigma_8$ in $\Lambda$CDM. Centre
+and right: $w_0$--$w_a$ Fisher ellipses ($1\sigma$) of the photometric probes (Euclid,
+Rubin/LSST) and of the spectroscopic probes (Euclid GCsp, DESI ELG+BGS, and SKAO intensity
+mapping analysed jointly with the DESI ELG sample). Everything uses the same GR fiducial
+and all nuisance parameters are marginalised. DESI ELG and BGS cover different redshifts
+and are added as independent Fisher matrices; for SKAO IM and DESI ELG the auto- and
+cross-spectra are analysed together with their full Gaussian covariance
+(\texttt{observables=["GCsp","GCspxIM","IM"]}). The DESI specifications are those of the
+SKAO paper and will be updated. The figure is produced by
+`paper/scripts/fig4_survey_comparison.py`.\label{fig:surveys}](figures/fig4_survey_comparison.png){ width=100% }
 
 **Chains against Fisher matrices.** We have also validated our chains against our own
 Fisher matrices and shown that they agree (\autoref{fig:nautilus}). For Euclid WL, GCsp

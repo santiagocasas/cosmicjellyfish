@@ -1,0 +1,179 @@
+#!/usr/bin/env python
+"""Generate the DESI tracer specifications of the 2023 DESI validation paper.
+
+The numbers come from Table 7 and the bias paragraph that follows it in
+
+    DESI Collaboration, "Validation of the Scientific Program for the Dark Energy
+    Spectroscopic Instrument", arXiv:2306.06307, Sec. VI.1 (BAO and RSD forecasts).
+
+The forecasts of that paper were produced with GoFish (https://github.com/ladosamushia/GoFish,
+input file ``input_files/DESI_All_nbar.txt``). The GoFish input file is NOT identical to Table 7
+(its densities are older and its biases are constants), so Table 7 is the authority here.
+
+Conversions
+-----------
+* Table 7 lists surface densities in deg^-2 per redshift bin of width 0.1, so
+  ``dndOmegadz = density / 0.1`` (deg^-2 per unit redshift), the unit used by the YAML files.
+* The paper gives the linear bias as ``b(z) = A / D(z)`` with ``D(0) = 1``. The Fisher code
+  takes one free bias per bin, so ``b_i = A / D(z_mid)`` is evaluated once at the fiducial
+  cosmology (flat LCDM, Omega_m = 0.32). When the cosmology is varied, the per-bin biases are
+  nuisance parameters and are not forced to follow ``A / D(z)``.
+* The Lyman-alpha forest (z > 2.1) is not included: the paper forecasts it with a different
+  code and gives no effective volume for it.
+
+The legacy ``DESI-BGS-SKAOPaper`` and ``DESI-ELG-SKAOPaper`` files are not touched.
+
+Usage
+-----
+::
+
+    uv run python scripts/validation/generate_desi_validation_specs.py          # write the files
+    uv run python scripts/validation/generate_desi_validation_specs.py --check  # compare only
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+import numpy as np
+from scipy.integrate import quad
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SPEC_DIR = REPO_ROOT / "cosmicjellyfish" / "configs" / "other_survey_specifications"
+
+FIDUCIAL_OMEGAM = 0.32
+BIN_WIDTH = 0.1
+AREA_DEG2 = 14000
+
+# Table 7 of arXiv:2306.06307: surface density in deg^-2 per bin of width 0.1.
+TRACERS: dict[str, dict] = {
+    "BGS": {
+        "title": "DESI Bright Galaxy Survey (BGS Bright)",
+        "zmin": 0.0,
+        "amplitude": 1.34,
+        "density": [101.1, 231.3, 216.9, 97.3],
+    },
+    "LRG": {
+        "title": "DESI Luminous Red Galaxies (LRG)",
+        "zmin": 0.4,
+        "amplitude": 1.7,
+        "density": [47.5, 65.6, 80.0, 93.2, 99.3, 63.7, 28.3],
+    },
+    "ELG": {
+        "title": "DESI Emission Line Galaxies (ELG_LOP)",
+        "zmin": 1.1,
+        "amplitude": 0.84,
+        "density": [108.0, 103.6, 97.1, 87.7, 55.4],
+    },
+    "QSO": {
+        "title": "DESI Quasars (clustering QSO)",
+        "zmin": 1.6,
+        "amplitude": 1.2,
+        "density": [12.1, 11.8, 11.1, 10.6, 9.5],
+    },
+}
+
+
+def growth_factor(z: float, omegam: float = FIDUCIAL_OMEGAM) -> float:
+    """Linear growth factor of flat LCDM normalised to ``D(0) = 1``."""
+
+    def hubble(x: float) -> float:
+        return float(np.sqrt(omegam * (1.0 + x) ** 3 + 1.0 - omegam))
+
+    def integral(z0: float) -> float:
+        return quad(lambda x: (1.0 + x) / hubble(x) ** 3, z0, np.inf)[0]
+
+    return hubble(z) * integral(z) / (hubble(0.0) * integral(0.0))
+
+
+def tracer_table(name: str) -> dict:
+    """Bin edges, dn/dOmega/dz and fiducial bias of one tracer."""
+    info = TRACERS[name]
+    edges = [
+        (round(info["zmin"] + i * BIN_WIDTH, 10), round(info["zmin"] + (i + 1) * BIN_WIDTH, 10))
+        for i in range(len(info["density"]))
+    ]
+    dndomegadz = [density / BIN_WIDTH for density in info["density"]]
+    bias = [info["amplitude"] / growth_factor(0.5 * (lo + hi)) for lo, hi in edges]
+    return {"edges": edges, "dndOmegadz": dndomegadz, "bias": bias, **info}
+
+
+def render(name: str) -> str:
+    """Return the YAML text for one tracer."""
+    table = tracer_table(name)
+    n = len(table["edges"])
+    zlo, zhi = table["edges"][0][0], table["edges"][-1][1]
+    lines = [
+        "specifications:",
+        f"  # {table['title']}, {zlo:.1f} < z < {zhi:.1f}, area = {AREA_DEG2} deg^2.",
+        "  # Source: DESI Collaboration, 'Validation of the Scientific Program for the Dark Energy",
+        "  # Spectroscopic Instrument', arXiv:2306.06307, Table 7 (surface density per bin of width",
+        "  # 0.1, converted to dn/dOmega/dz) and the bias paragraph that follows it.",
+        f"  # Linear bias b(z) = {table['amplitude']} / D(z) with D(0) = 1, evaluated per bin at",
+        f"  # z_mid for flat LCDM with Omega_m = {FIDUCIAL_OMEGAM}. The per-bin values are free",
+        "  # nuisance parameters in the Fisher matrix, not constrained to follow A / D(z).",
+        "  # Selecting sp_bias_model: 'linear_log' uses the 'lnb' root by default.",
+        "  # The paper forecasts were made with GoFish (https://github.com/ladosamushia/GoFish);",
+        "  # its public input file differs from Table 7, which is the authority here.",
+        "  # Generated by scripts/validation/generate_desi_validation_specs.py; do not edit by hand.",
+        "  'spec_sigma_dz': 0.001",
+        "  'spec_sigma_dz_type': 'constant'",
+        f"  'area_survey_spectro': {AREA_DEG2}",
+        "  'kmax_GCsp': 0.30",
+        "  'kmin_GCsp': 0.001",
+        "  'z_bins_sp':",
+    ]
+    lines += [f"    {i + 1}: [{lo:.2f}, {hi:.2f}]" for i, (lo, hi) in enumerate(table["edges"])]
+    lines.append("  'dndOmegadz':")
+    lines += [f"    {i + 1}: {value:.1f}" for i, value in enumerate(table["dndOmegadz"])]
+    lines += ["  sp_bias_sample: 'g'", "  sp_bias_model: 'linear'", "  sp_bias_root: 'b'"]
+    lines += ["  sp_bias_parametrization:", "    linear:"]
+    lines += [f"      bg_{i + 1}: {b:.8f}" for i, b in enumerate(table["bias"])]
+    lines.append("    linear_log:")
+    lines += [f"      lnbg_{i + 1}: {np.log(b):.8f}" for i, b in enumerate(table["bias"])]
+    lines.append("    linear_Qbias:")
+    lines += [f"      bg_{i + 1}: {b:.8f}" for i, b in enumerate(table["bias"])]
+    lines += ["      A1: 0.02", "      A2: -2.0"]
+    lines += ["  shot_noise_model: 'constant'", "  shot_noise_parametrization:", "    constant:"]
+    lines += [f"      Ps_{i + 1}: 0.0" for i in range(n)]
+    lines += [
+        "  nonlinear_model: 'default'",
+        "  nonlinear_parametrization:",
+        "    vary_sigmap: True",
+        "    vary_sigmav: True",
+        "    rescale_sigma_pv:",
+    ]
+    lines += [f"      sigmap_{i + 1}: 1.0" for i in range(n)]
+    lines += [f"      sigmav_{i + 1}: 1.0" for i in range(n)]
+    lines.append("    default:")
+    return "\n".join(lines) + "\n"
+
+
+def output_path(name: str) -> Path:
+    """Location of the generated file for one tracer."""
+    return SPEC_DIR / f"DESI-{name}-Validation2023.yaml"
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Entry point."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="Only compare with the files on disk.")
+    args = parser.parse_args(argv)
+    status = 0
+    for name in TRACERS:
+        path = output_path(name)
+        text = render(name)
+        if args.check:
+            same = path.exists() and path.read_text(encoding="utf-8") == text
+            print(f"{path.name}: {'up to date' if same else 'DIFFERS'}")
+            status |= 0 if same else 1
+        else:
+            path.write_text(text, encoding="utf-8")
+            print(f"wrote {path.relative_to(REPO_ROOT)}")
+    return status
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -187,20 +187,30 @@ def load_fisher_from_json(json_path):
     -----
     - This only reconstructs the object with the same options/specifications/parameters.
       You still need to call ``.compute()`` on the returned FisherMatrix to perform the run.
+    - The recorded spectrum mode (``options["spectro_mode"]``) is restored, so a cross-only
+      forecast is not replayed as a joint one.
     """
     import json as _json
 
     from cosmicjellyfish.fishermatrix import cosmicfish as _cff
+    from cosmicjellyfish.LSSsurvey import spectro_modes as _modes
 
     with open(json_path, "r") as jf:
         snap = _json.load(jf)
 
-    options = snap.get("options", {})
+    options = snap.get("options", {}).copy()
     specifications = snap.get("specifications", {})
     fiducialpars = snap.get("fiducialpars", {})
     freepars = snap.get("freepars", {})
     meta = snap.get("metadata", {})
     observables = meta.get("observables", ["GCph", "WL"])  # sane default
+    # The snapshot stores the resolved observables, where a cross-only run looks like a joint
+    # request; ask for the recorded spectrum mode so that the replay computes the same matrix.
+    mode = options.get("spectro_mode")
+    observables = _modes.replay_observables(observables, mode)
+    if mode == "Ig":
+        # The legacy GCsp+IM pair ignores this flag, but GCspxIM honours it.
+        options["spectro_joint"] = False
 
     fm = _cff.FisherMatrix(
         fiducialpars=fiducialpars,
