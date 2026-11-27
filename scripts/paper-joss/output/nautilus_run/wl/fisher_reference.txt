@@ -1,0 +1,10 @@
+#
+# This file contains a Fisher matrix created with the CosmicFish code.
+#
+# The parameters of this Fisher matrix are:
+#
+#    1    Omegam    \Omega_{{\rm m}, 0}    0.32
+#    2    sigma8    \sigma_8    0.815584
+#
+3.1295659226098959E+06     2.3323125247144951E+06     
+2.3323125247144951E+06     1.7683804864686001E+06     

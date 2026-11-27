@@ -1,0 +1,89 @@
+{
+  "case": "joint",
+  "git_revision": "b50f5b784f0c9a26513dfa1a7bad52faf9a57e65",
+  "free_params": [
+    "Omegam",
+    "sigma8"
+  ],
+  "sample_nuisances": true,
+  "nuisance_sigma": 5.0,
+  "reference_kind": "marginal",
+  "sampled_parameters": [
+    "Omegam",
+    "sigma8",
+    "AIA",
+    "betaIA",
+    "etaIA",
+    "lnbg_1",
+    "lnbg_2",
+    "lnbg_3",
+    "lnbg_4",
+    "Ps_1",
+    "Ps_2",
+    "Ps_3",
+    "Ps_4"
+  ],
+  "prior_ranges": {
+    "Omegam": [
+      0.28,
+      0.36
+    ],
+    "sigma8": [
+      0.75,
+      0.87
+    ],
+    "AIA": [
+      -17.745066884815646,
+      21.185066884815644
+    ],
+    "betaIA": [
+      -2.994270842333954,
+      7.334270842333954
+    ],
+    "etaIA": [
+      -12.84776689663525,
+      12.02776689663525
+    ],
+    "lnbg_1": [
+      0.36433618184050354,
+      0.3945635981594965
+    ],
+    "lnbg_2": [
+      0.4585192296862091,
+      0.4890921703137909
+    ],
+    "lnbg_3": [
+      0.5417640277226384,
+      0.5734394922773615
+    ],
+    "lnbg_4": [
+      0.6253359479860597,
+      0.6571777920139402
+    ],
+    "Ps_1": [
+      -107.0692840865987,
+      107.0692840865987
+    ],
+    "Ps_2": [
+      -114.9318703605337,
+      114.9318703605337
+    ],
+    "Ps_3": [
+      -129.06332699106838,
+      129.06332699106838
+    ],
+    "Ps_4": [
+      -134.5156669737102,
+      134.5156669737102
+    ]
+  },
+  "n_live": 500,
+  "n_eff": 2000,
+  "workers": 64,
+  "checkpoint": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/nautilus_joint_nlive500_neff2000_dim13.hdf5",
+  "chain": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/chain_joint.csv",
+  "fisher_reference": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher_reference.txt",
+  "fisher_raw": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher_raw.txt",
+  "elapsed_seconds": 2175.3163805007935,
+  "effective_sample_size": 2092.779796942819
+}
