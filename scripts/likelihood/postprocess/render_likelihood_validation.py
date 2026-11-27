@@ -139,7 +139,12 @@ def _render_joint_overview(
         shade_alpha=0.18,
         ls_fisher="--",
         lw_fisher=2.0,
-        legend_kwargs={"fontsize": 11, "loc": "upper right", "frameon": True},
+        legend_kwargs={
+            "fontsize": 11,
+            "loc": "upper right",
+            "frameon": True,
+            "handlelength": 3.5,
+        },
         label_font_size=13,
         tick_font_size=10,
         smooth=5,
