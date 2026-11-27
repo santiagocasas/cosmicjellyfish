@@ -82,7 +82,8 @@ uv run python ../scripts/fig5_spectro_survey_comparison.py   # about 2 min
 
 `fig5_spectro_survey_comparison.py` drives `scripts/validation/run_survey_forecasts.py` with
 the Euclid GCsp, DESI 2023 (BGS, LRG, ELG, QSO) and SKAO IM x DESI cases, so it needs the
-DESI-2023 and SKAO-IM specifications and the survey-forecast runner from `main`. It writes
+DESI-2023 and SKAO-IM specifications and the survey-forecast runner that came in with
+`main`. It writes
 `paper/figures/fig5_spectro_survey_comparison.png` directly and keeps the per-model JSON
 reports in a temporary directory.
 
