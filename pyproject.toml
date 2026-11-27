@@ -72,7 +72,7 @@ jaxcosmo = [
     "jax>=0.4.30",
     "jaxlib>=0.4.30",
     "jax-cosmo==0.1.0",
-    "setuptools<81",
+    "setuptools<85",
 ]
 docs = [
     "Sphinx>=8.1.3,<8.2.0",
