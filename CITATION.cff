@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: Please cite this project if you use it.
 title: CosmicJellyFish
 version: 2.1.0
+doi: 10.5281/zenodo.24593176
 repository-code: https://github.com/santiagocasas/cosmicjellyfish
 authors:
   - family-names: Casas Castro

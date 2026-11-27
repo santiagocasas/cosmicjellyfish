@@ -12,6 +12,7 @@
 [![Documentation](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/docs.yml/badge.svg)](https://www.santicasas.space/cosmicjellyfish/docs/)
 [![PyPI](https://img.shields.io/pypi/v/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cosmicjellyfish)](https://pypi.org/project/cosmicjellyfish/)
+[![DOI](https://zenodo.org/badge/722733401.svg)](https://doi.org/10.5281/zenodo.24593176)
 [![codecov](https://codecov.io/github/santiagocasas/cosmicjellyfish/graph/badge.svg?token=BXTVDPXPUO)](https://codecov.io/github/santiagocasas/cosmicjellyfish)
 [![CI](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/santiagocasas/cosmicjellyfish/actions/workflows/ci.yml)
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
