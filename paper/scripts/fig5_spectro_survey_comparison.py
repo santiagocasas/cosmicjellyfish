@@ -29,6 +29,7 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import to_rgba
 from matplotlib.patches import Ellipse
 from matplotlib.ticker import MaxNLocator
 
@@ -63,7 +64,7 @@ ENTRIES = (
 )
 PARAMETER_LABELS = {"Omegam": r"$\Omega_m$", "sigma8": r"$\sigma_8$"}
 FIDUCIAL_W0WA = (-1.0, 0.0)
-#: Joint confidence levels of the contours: 68.27% (solid) and 95.45% (dashed).
+#: Joint confidence levels of the contours: 68.27% (filled) and 95.45% (open).
 CONTOUR_SIGMAS = (1.515, 2.486)
 FONT = 12
 
@@ -100,25 +101,24 @@ def w0wa_covariance(report: dict, members: tuple[str, ...]) -> np.ndarray:
 
 
 def draw_ellipse(
-    axis, covariance: np.ndarray, colour: str, label: str, fill_alpha: float = 0.0
+    axis, covariance: np.ndarray, colour: str, label: str, fill_alpha: float = 0.25
 ) -> None:
-    """Draw the 68.27% (solid) and 95.45% (dashed) joint contours at the fiducial point."""
+    """Draw the 68.27% (filled) and 95.45% (open) joint contours at the fiducial point."""
     eigenvalues, eigenvectors = np.linalg.eigh(covariance)
     order = np.argsort(eigenvalues)[::-1]
     eigenvalues = eigenvalues[order]
     eigenvectors = eigenvectors[:, order]
     angle = np.degrees(np.arctan2(eigenvectors[1, 0], eigenvectors[0, 0]))
-    for index, (sigma, linestyle) in enumerate(zip(CONTOUR_SIGMAS, ("-", "--"))):
+    for index, sigma in enumerate(CONTOUR_SIGMAS):
         axis.add_patch(
             Ellipse(
                 FIDUCIAL_W0WA,
                 width=2.0 * sigma * np.sqrt(eigenvalues[0]),
                 height=2.0 * sigma * np.sqrt(eigenvalues[1]),
                 angle=angle,
-                facecolor=colour if (fill_alpha and index == 0) else "none",
+                facecolor=to_rgba(colour, fill_alpha) if index == 0 else "none",
                 edgecolor=colour,
-                alpha=1.0 if index == 0 else 0.55,
-                linestyle=linestyle,
+                linestyle="-",
                 linewidth=1.8,
                 label=label if index == 0 else None,
             )
@@ -129,11 +129,13 @@ def bar_panel(axis, report: dict) -> None:
     """Marginalised LCDM errors on Omega_m and sigma_8, one pair of bars per survey."""
     width = 0.38
     positions = np.arange(len(ENTRIES))
+    largest = 0.0
     for index, parameter in enumerate(("Omegam", "sigma8")):
         values = []
         for _name, _label, _colour, members in ENTRIES:
             names, cov = covariance(report, members)
             values.append(float(np.sqrt(cov[names.index(parameter), names.index(parameter)])))
+        largest = max(largest, max(values))
         axis.barh(
             positions + (index - 0.5) * width,
             values,
@@ -154,8 +156,10 @@ def bar_panel(axis, report: dict) -> None:
     axis.set_yticks(positions)
     axis.set_yticklabels([label for _name, label, _colour, _members in ENTRIES], fontsize=FONT - 1)
     axis.invert_yaxis()
-    axis.set_xscale("log")
-    axis.set_xlim(right=axis.get_xlim()[1] * 2.2)
+    # Linear scale: bar lengths stay proportional to the errors. A log axis made
+    # 3.1e-3 look far smaller than 4.8e-3 and misrepresented the DESI constraint.
+    axis.set_xlim(0.0, largest * 1.28)
+    axis.ticklabel_format(axis="x", style="sci", scilimits=(-3, -3))
     axis.set_xlabel(r"marginalised $1\sigma$, $\Lambda$CDM", fontsize=FONT)
     axis.tick_params(axis="x", labelsize=FONT - 1)
     axis.grid(axis="x", alpha=0.3)
@@ -179,7 +183,7 @@ def ellipse_panel(axis, report: dict) -> None:
     axis.tick_params(labelsize=FONT - 1)
     axis.set_xlabel(r"$w_0$", fontsize=FONT)
     axis.set_ylabel(r"$w_a$", fontsize=FONT)
-    axis.set_title(r"$w_0w_a$CDM, 68.27% (solid) and 95.45% (dashed)", fontsize=FONT)
+    axis.set_title(r"$w_0w_a$CDM, 68.27% (filled) and 95.45% (open)", fontsize=FONT)
     axis.legend(fontsize=FONT - 2, loc="upper right", frameon=False)
 
 
