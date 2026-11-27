@@ -42,6 +42,14 @@ authors:
     roles:
       - {credit: conceptualization, credit-name: "Conceptualization"}
       - {credit: software, credit-name: "Software"}
+  - name: Ziad Sakr
+    orcid: 0000-0002-4823-3757
+    affiliation: "18, 19, 20"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
   - name: Domenico Sapone
     orcid: 0000-0001-7089-4503
     affiliation: 5
@@ -67,6 +75,9 @@ authors:
     roles:
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: software, credit-name: "Software"}
+  - name: Emilio Bellini
+    orcid: 0000-0003-4762-0795
+    affiliation: 15
   - name: Kazuya Koyama
     orcid: 0000-0001-6727-6915
     affiliation: 14
@@ -75,9 +86,6 @@ authors:
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: supervision, credit-name: "Supervision"}
       - {credit: validation, credit-name: "Validation"}
-  - name: Emilio Bellini
-    orcid: 0000-0003-4762-0795
-    affiliation: 15
   - name: Stefano Camera
     orcid: 0000-0003-3399-3574
     affiliation: "10, 11, 12, 16"
@@ -125,6 +133,12 @@ affiliations:
     index: 16
   - name: Department of Physics, University of Genova, and INFN – Sezione di Genova, Italy
     index: 17
+  - name: Instituto de Física Teórica, Spain
+    index: 18
+  - name: Institut de Recherche en Astrophysique et Planétologie, France
+    index: 19
+  - name: Université Saint Joseph, Lebanon
+    index: 20
 date: 23 November 2026
 bibliography: paper.bib
 ---
@@ -563,6 +577,7 @@ Software, and `content` as Writing -- original draft).
 - **S. Pamuk**: Conceptualization, Investigation, Methodology, Software, Validation,
   Writing -- original draft.
 - **V. M. Sabarish**: Conceptualization, Software.
+- **Z. Sakr**: Conceptualization, Methodology, Software, Validation.
 - **D. Sapone**: Conceptualization, Software, Supervision.
 - **M. Leizerovich**: Conceptualization, Software (Hu-Sawicki $f(R)$ interface to
   hi_class-based codes, frahi_class, and the Winther and e-MANTIS nonlinear boosts),
