@@ -5,9 +5,11 @@ Reads the statistics JSON written by ``render_likelihood_validation.py`` for the
 run, the tracked reference statistics of the published run, and the per-case
 ``case_metadata.json`` (wall-clock times). Prints one table and writes it to
 ``<out-dir>/comparison.md``. Nested sampling is stochastic, so the reproduced
-numbers agree with the paper only within the sampling noise (a few per mille on the
-errors for n_eff = 2000); the paper quotes max |sigma_Nautilus / sigma_Fisher - 1|
-over Omegam and sigma8, rounded.
+numbers agree with the paper only within the sampling noise (about 1/sqrt(2 ESS), i.e.
+1-1.5% on an error bar for n_eff = 2000); the paper quotes max |sigma_Nautilus /
+sigma_Fisher - 1| over Omegam and sigma8, rounded, from the reference run of 27 Nov 2026
+(see scripts/paper-joss/README.md). The "published run" column is the first run of the
+same chains, tracked in scripts/likelihood_validation_results/.
 """
 
 from __future__ import annotations
@@ -24,9 +26,9 @@ STATS_NAME = "wl_gcsp_symbolic_euclid_64cpu_statistics.json"
 CASES = {"wl": "WL", "gcsp": "GCsp", "joint": "WL+GCsp"}
 # Values printed in paper/paper.md ("Fisher matrices against posteriors").
 PAPER = {
-    "WL": {"dims": 5, "max_sigma_dev_percent": 5.0, "minutes": 17},
-    "GCsp": {"dims": 10, "max_sigma_dev_percent": 0.4, "minutes": 22},
-    "WL+GCsp": {"dims": 13, "max_sigma_dev_percent": 1.3, "minutes": 105},
+    "WL": {"dims": 5, "max_sigma_dev_percent": 1.4, "minutes": 11},
+    "GCsp": {"dims": 10, "max_sigma_dev_percent": 1.2, "minutes": 10},
+    "WL+GCsp": {"dims": 13, "max_sigma_dev_percent": 0.9, "minutes": 36},
 }
 
 

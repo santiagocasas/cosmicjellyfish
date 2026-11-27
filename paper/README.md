@@ -98,6 +98,7 @@ from the 64-core chains (see the likelihood validation page of the documentation
 - The repository linters (`isort`, `black`, `ruff`) also run on `paper/scripts/`; the
   scripts pass them as delivered.
 - Do not change numbers in the text without rerunning the source: the autodiff numbers
-  come from `scripts/fig2_autodiff.py`, the Nautilus numbers and timings from
-  `docs/source/likelihood_validation.md`, the CAMB/CLASS timings from
+  come from `scripts/paper-joss/autodiff_numbers.py`, the Nautilus numbers and timings
+  from `scripts/paper-joss/reproduce_all.sh` (see `scripts/paper-joss/README.md`; the
+  first run is in `docs/source/likelihood_validation.md`), the CAMB/CLASS timings from
   `docs/source/default_vs_hp_profiles.md`.

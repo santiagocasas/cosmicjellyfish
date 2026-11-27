@@ -3,8 +3,9 @@
 #
 # Run from anywhere; paths are resolved relative to the repository root.
 # Defaults reproduce the published run (64 workers, n_live 500, n_eff 2000).
-# Expected wall time on 64 cores: ~2.5 h for the three Nautilus chains, plus a few
-# minutes for the listings and the autodiff numbers.
+# Expected wall time: ~70 min in total for all steps (reference run: 64 workers on a
+# 36-core node; the three Nautilus chains took 11, 10 and 36 min). Slower machines
+# may need a few hours; see scripts/paper-joss/README.md.
 #
 # Environment variables (all optional):
 #   WORKERS   Nautilus workers per chain                  (default 64)

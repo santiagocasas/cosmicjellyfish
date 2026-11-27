@@ -7,7 +7,7 @@ Scripts that regenerate the figure and the numbers of the JOSS paper
 |---|---|---|
 | The two code listings (run exactly as printed) | `check_listings.py` | ~1 min + one WL Nautilus run (8 workers) |
 | Autodiff vs finite differences: 0.05% and 0.4% for 17 parameters | `autodiff_numbers.py` | a few minutes |
-| Figure 1 (Fisher vs Nautilus) and the 5%, 0.4%, 1.3% agreement | `reproduce_all.sh` (steps `nautilus render`) | ~2.5 h on 64 cores |
+| Figure 1 (Fisher vs Nautilus) and the 1.4%, 1.2%, 0.9% agreement | `reproduce_all.sh` (steps `nautilus render`) | ~1 h on 64 workers (36 physical cores) |
 | Table of reproduced vs published numbers and timings | `compare_with_paper.py` | seconds |
 
 ## Overnight run on a 64-core machine (e.g. freyja)
@@ -24,7 +24,7 @@ uv sync --extra symbolic --extra jaxcosmo
 # 3. Quick smoke test first (a few minutes, no Nautilus chains)
 STEPS="autodiff" bash scripts/paper-joss/reproduce_all.sh
 
-# 4. Full run in the background, survives logout (~2.5 h on 64 cores)
+# 4. Full run in the background, survives logout (~70 min, see the reference run below)
 nohup bash scripts/paper-joss/reproduce_all.sh > paper-joss.log 2>&1 &
 
 # 5. Follow it / check later
@@ -74,4 +74,27 @@ skipped. All options are listed at the top of `reproduce_all.sh`.
   `listings/`.
 
 Nested sampling is stochastic: expect agreement with the published errors within the
-sampling noise (a few per mille for `n_eff = 2000`), not bit-for-bit.
+sampling noise, not bit-for-bit. With an effective sample size of 2000 to 3000 the error
+bar on a posterior sigma has a sampling error of about 1/sqrt(2 ESS), i.e. about 1.3%.
+
+## Reference run (27 Nov 2026)
+
+Branch `paper/joss-draft` at `b50f5b7`, one node with 36 physical cores (Xeon Gold 6140)
+and `WORKERS=64`; all five steps (`listings autodiff nautilus render compare`) finished
+without errors in about 70 min.
+
+| Item | Paper | Reference run |
+|---|---|---|
+| Listing 1 (Fisher, WL+GCph) | runs as printed | 15 s |
+| Listing 2 (Nautilus, WL, 8 workers) | runs as printed | 743 s |
+| Autodiff vs finite differences, 17 parameters | 0.05% (JAX), 0.4% (NumPy) | 0.048%, 0.376% |
+| Max sigma deviation, WL | 1.4% | 1.43% |
+| Max sigma deviation, GCsp | 1.2% | 1.16% |
+| Max sigma deviation, WL+GCsp | 0.9% | 0.94% |
+| Chain wall time WL / GCsp / WL+GCsp | 11 / 10 / 36 min | 11 / 10 / 36 min |
+
+The first run of the same chains (`docs/source/likelihood_validation.md`) gave 4.8%, 0.37%
+and 1.25% and took 17, 22 and 105 min. Its WL reference errors were about 3 sigma high
+and its GCsp deviation was a low draw, so the reference run is the more representative
+one. The wall times depend on the hardware; the old ones are not a prediction for another
+machine.

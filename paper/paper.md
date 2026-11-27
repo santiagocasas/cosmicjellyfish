@@ -478,6 +478,16 @@ CUT: the core-hour conversion (18, 24 and 112 core-hours); restore if you want i
 The autodiff numbers replace the dropped Figure 2 (my run of notebook 07's setup;
 0.38% NumPy observable, 0.05% and 1.8e-5 same JAX observable). -->
 
+<!-- [C23c] UPDATED (27 Nov) with the reproduction run of scripts/paper-joss on
+paper/joss-draft @ b50f5b7 (36-core Xeon Gold 6140 node, 64 workers, 70 min for all five
+steps): max sigma deviation 1.43% (WL), 1.16% (GCsp), 0.94% (WL+GCsp); chains 11, 10 and
+36 min; autodiff 0.0477% and 0.376%. The earlier numbers (5%, 0.4%, 1.3%; 17 min, 22 min,
+1 h 45 min) come from the first run in docs/source/likelihood_validation.md, whose WL
+reference errors were ~3 sigma high; the 0.4% of GCsp was a low draw (ESS 2836 gives a
+sampling error of ~1.3%). The figure file in paper/figures is still the one of the
+first run: replace it with scripts/paper-joss/output/fig_fisher_vs_nautilus.png if you
+want figure and text to come from the same run. -->
+
 <!-- [C23b] NEW (26 Nov): one ellipse figure only; the text says explicitly that the
 Fisher matrices were validated before. CHECK the citations: Blanchard2020 (code
 comparison), Casas2024 (Fisher vs MontePython MCMC), Archidiacono2025 (Fisher vs MCMC
@@ -489,12 +499,15 @@ and against MCMC posteriors [@Casas2024; @Archidiacono2025], and the dashboard a
 keeps tracking them. We repeat the comparison here with the built-in sampler. For Euclid
 weak lensing, spectroscopic clustering and their combination, with all nuisance parameters sampled (5, 10 and 13 dimensions),
 the marginalised Nautilus errors on $\Omega_{\mathrm{m}}$ and $\sigma_8$ agree with the
-Fisher errors to within 5%, 0.4% and 1.3% (\autoref{fig:nautilus}). The chains took 17
-min, 22 min and 1 h 45 min on 64 cores: affordable enough to check the Gaussian
-approximation case by case instead of assuming it. For the
+Fisher errors to within 1.4%, 1.2% and 0.9% (\autoref{fig:nautilus}). With about 2000
+to 3000 effective samples per chain, the sampling noise on an error bar is itself about
+1%. The chains took 11 min, 10 min and 36 min on 64 workers: affordable enough to check
+the Gaussian approximation case by case instead of assuming it. For the
 photometric probes, the automatic-differentiation errors agree with finite differences
 of the same JAX observable to 0.05%, and with the standard NumPy implementation to 0.4%,
-for all 17 parameters.
+for all 17 parameters. The figure, these numbers, the timings and the two code listings
+above are regenerated from a clean checkout by `scripts/paper-joss/reproduce_all.sh`,
+in about 70 min on one 64-worker node.
 
 ![Fisher forecasts (dark, thick lines) against Nautilus posteriors (light, thin lines)
 for Euclid weak lensing, spectroscopic clustering and their combination, with the
