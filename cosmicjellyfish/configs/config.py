@@ -178,6 +178,12 @@ def init(
                                   Path to the configurations for the Einstein-Boltzmann solvers. Defaults to the `boltzmann_yaml_files` folder in the home directory of cosmicjellyfish
     class_config_yaml           : str
                                   Path to the configurations for class. Defaults to 'boltzmann_yaml_path/class/default.yaml'
+    class_module                : str
+                                  Python module providing the CLASS wrapper for code = 'class'. Defaults to 'classy'.
+                                  Use 'hiclassy' for hi_class-based codes such as frahi_class (Hu-Sawicki f(R))
+    class_object                : str
+                                  Name of the CLASS wrapper class inside `class_module`. Defaults to 'Class'
+                                  ('HiClass' for hiclassy)
     camb_config_yaml            : str
                                   Path to the configurations for camb. Defaults to 'boltzmann_yaml_path/camb/default.yaml'
     fishermatrix_file_extension : str
@@ -301,6 +307,8 @@ def init(
     settings.setdefault(
         "class_config_yaml", os.path.join(settings["boltzmann_yaml_path"], "class", "default.yaml")
     )
+    settings.setdefault("class_module", "classy")
+    settings.setdefault("class_object", "Class")
     settings.setdefault(
         "camb_config_yaml", os.path.join(settings["boltzmann_yaml_path"], "camb", "default.yaml")
     )

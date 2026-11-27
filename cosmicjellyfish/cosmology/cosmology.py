@@ -6,6 +6,7 @@ This module contains useful cosmological functions.
 
 """
 
+import importlib
 import os
 import sys
 import threading
@@ -29,6 +30,10 @@ from scipy.interpolate import (
 from scipy.signal import savgol_filter
 
 import cosmicjellyfish.configs.config as cfg
+from cosmicjellyfish.cosmology.modified_gravity import (
+    FR_BOOST_MODELS,
+    fr_boost_nonlinear,
+)
 from cosmicjellyfish.utilities.utils import numerics as unu
 from cosmicjellyfish.utilities.utils import printing as upr
 
@@ -231,7 +236,12 @@ class boltzmann_code:
             self.camb_results(camb)
         elif code == "class":
             self.boltzmann_classpars = _backend_parameters(self.configuration, code)
-            from classy import Class
+            # The CLASS wrapper is configurable so that hi_class-based codes (e.g. frahi_class,
+            # module 'hiclassy', class 'HiClass') can be used; default: classy.Class.
+            Class = getattr(
+                importlib.import_module(self.settings.get("class_module", "classy")),
+                self.settings.get("class_object", "Class"),
+            )
 
             self.class_setparams(self.cosmopars)
             self.class_results(Class)
@@ -910,10 +920,14 @@ class boltzmann_code:
         self.nonlinear_model = self.boltzmann_classpars.get("NONLINEAR", {}).get(
             "model", "class_native"
         )
-        if self.nonlinear_model not in ("class_native", "ee2"):
+        if self.nonlinear_model not in ("class_native", "ee2") + FR_BOOST_MODELS:
             raise ValueError(
                 f"Unknown CLASS nonlinear model {self.nonlinear_model!r}; "
-                "expected 'class_native' or 'ee2'."
+                f"expected 'class_native', 'ee2' or one of {FR_BOOST_MODELS}."
+            )
+        if self.nonlinear_model in FR_BOOST_MODELS and self.settings["cosmo_model"] != "HuSawicki":
+            raise ValueError(
+                f"NONLINEAR model {self.nonlinear_model!r} requires cosmo_model 'HuSawicki'."
             )
         self.cb_prescription = self.boltzmann_classpars.get("NONLINEAR", {}).get(
             "cb_prescription", "neutrino_subtraction"
@@ -1007,9 +1021,15 @@ class boltzmann_code:
         if "Omegam" in classpars:
             classpars["Omega_cdm"] = classpars.pop("Omegam") - classpars["Omega_b"] - omega_ncdm
 
-        if self.settings["cosmo_model"] == "LCDM":
+        # Hu-Sawicki f(R) in hi_class-based codes (frahi_class): the model parameter is
+        # log10|f_R0| (hs_parametrization = 'log_10(fR0)' in the class YAML); the second slot of
+        # parameters_smg (lambda of c1/c2) is solved for by frahi_class (0 = start at 1).
+        if "log10fR0" in classpars:
+            classpars["parameters_smg"] = f"{classpars.pop('log10fR0'):.16g}, 0.0"
+        if self.settings["cosmo_model"] in ("LCDM", "HuSawicki"):
             # CLASS rejects dark-energy evolution parameters in LCDM mode,
             # even when CosmicJellyfish carries fixed w0/wa in the fiducial.
+            # Hu-Sawicki f(R) has no fluid dark energy either.
             classpars.pop("w0", None)
             classpars.pop("wa", None)
             classpars.pop("w0_fld", None)
@@ -1047,7 +1067,16 @@ class boltzmann_code:
         """
         self.results = types.SimpleNamespace()
         classres = Class()
-        classres.set(self.classcosmopars)
+        fr_boost = self.nonlinear_model in FR_BOOST_MODELS and self.settings["nonlinear"]
+        if fr_boost:
+            # f(R) code only for the linear spectra (and A_s); the nonlinear spectrum is a LCDM one times
+            # the f(R) boost (see modified_gravity.fr_boost_nonlinear).
+            frpars = dict(self.classcosmopars)
+            frpars["non linear"] = "none"
+            frpars.pop("nonlinear_min_k_max", None)
+            classres.set(frpars)
+        else:
+            classres.set(self.classcosmopars)
         classres.compute()
         self.Classres = classres
         self.results.h_of_z = np.vectorize(classres.Hubble)
@@ -1081,7 +1110,9 @@ class boltzmann_code:
         ## interpolating function Pk_nl (k,z)
         z_nl = z
         k_nl = k
-        if self.nonlinear_model == "ee2" and self.settings["nonlinear"]:
+        if fr_boost:
+            Pk_nl, Pk_cb_nl, k_nl, z_nl = fr_boost_nonlinear(self, classres, k, z)
+        elif self.nonlinear_model == "ee2" and self.settings["nonlinear"]:
             from cosmicjellyfish.cosmology.ee2 import class_ee2_boost
 
             boost = class_ee2_boost(classres, k, z)
