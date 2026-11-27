@@ -563,6 +563,7 @@ Software, and `content` as Writing -- original draft).
 - **S. Pamuk**: Conceptualization, Investigation, Methodology, Software, Validation,
   Writing -- original draft.
 - **V. M. Sabarish**: Conceptualization, Software.
+- **Z. Sakr**: Conceptualization, Methodology, Software, Validation.
 - **D. Sapone**: Conceptualization, Software, Supervision.
 - **M. Leizerovich**: Conceptualization, Software (Hu-Sawicki $f(R)$ interface to
   hi_class-based codes, frahi_class, and the Winther and e-MANTIS nonlinear boosts),
