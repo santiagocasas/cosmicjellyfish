@@ -68,6 +68,8 @@ authors:
     orcid: 0000-0002-7375-1230
     affiliation: "8, 9"
     roles:
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: methodology, credit-name: "Methodology"}
       - {credit: software, credit-name: "Software"}
   - name: Francesco Pace
     orcid: 0000-0001-8039-0480
@@ -75,6 +77,7 @@ authors:
     roles:
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: software, credit-name: "Software"}
+      - {credit: data-curation, credit-name: "Data curation"}
   - name: Emilio Bellini
     orcid: 0000-0003-4762-0795
     affiliation: 15
@@ -471,29 +474,37 @@ in this section are public (<https://huggingface.co/datasets/santicas/cjfp-data>
 
 # AI usage disclosure
 
-<!-- [C25] UPDATED. The manuscript paragraph now reflects what happened in this
-conversation, including this restructuring. Model names: earlier sessions ran on
-Claude Fable 5.2, this one on Claude Opus 5.5. The software part is still yours to
-write. JOSS: tools and versions, where applied, and an affirmation of human review.
-26 Nov: "to produce Figure 1" removed (that figure was dropped). -->
+Over the last year, several large language models were used as coding assistants for the
+code, tests and documentation: OpenAI GPT models, from GPT-5 to, most recently, GPT-6.1
+Astra, Sol and Luna; Anthropic Claude models, mostly Claude Opus 5.5 and Claude Sonnet 5.5
+and earlier versions; and many open-weight models served kindly by Blablador, the LLM service of
+the Jülich Supercomputing Centre for Helmholtz AI
+(<https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/blablador_api_access/>), mostly
+DeepSeek-V4.1-Flash, but also Mistral, Kimi and Muse models. The repository ships an
+`AGENTS.md` guide for coding agents.
 
-**[TODO, authors: state which coding assistants were used for the code, tests and
-documentation, and for which parts. The repository ships an `AGENTS.md` guide for coding
-agents.]**
+The development decisions were recorded with the Agent-Native Research Artifact (ARA)
+protocol [@Liu2026ARA] (<https://github.com/ARA-Labs/Agent-Native-Research-Artifact>). At
+the end of each working session with a coding agent, the questions, decisions, experiments,
+pivots and dead ends are written to an exploration graph, each tagged with its provenance:
+proposed and executed by a human, proposed by the agent, or proposed by the agent and revised
+by a human. The trace is public on the `dev` branch of the repository, and
+\autoref{fig:ara} shows it for the last months of development.
+
+![Exploration graph of the ARA trace of `cosmicjellyfish`. Each point is a node, placed by
+date and node type and coloured by provenance; grey lines connect a node to the nodes it
+depends on. Produced with
+`paper/scripts/fig6_ara_trace.py`.\label{fig:ara}](figures/fig6_ara_trace.png){ width=100% }
 
 For this manuscript, the authors wrote the first draft of the Summary, Statement of need,
-State of the field, Software design and the validation text. Claude (Anthropic; models
-Claude Fable 5.2 and Claude Opus 5.5) was used to correct the language, to restructure
+State of the field, Software design and the validation text. Claude (Anthropic; mostly
+Claude Opus 5.5) was used to correct the language, to restructure
 the text to the JOSS guidelines, to propose and format references, to draft the Research
 impact statement from the repository documentation, to test the code listings against the
 repository. The authors reviewed, edited and validated all of
-this content **[TODO: confirm]**.
+this content.
 
 # Acknowledgements
-
-**[TODO: funding; computing time on JURECA at the Jülich Supercomputing Centre for the
-Nautilus validation; acknowledgements to the CosmicFish authors and to the Euclid
-Consortium colleagues involved in the forecast validation.]**
 
 We thank Matteo Martinelli for initiating this project, the ideas, the motivation and for
 bringing researchers together.
@@ -503,6 +514,11 @@ scientific ideas, validation and discussions.
 
 DS acknowledges support from the Fondecyt Regular project N.1251339 (ANID). ML is
 supported by grant PIP 11220200100729CO CONICET and grant 20020170100129BA UBACYT.
+
+We acknowledge the use of computing resources at the JURECA cluster of the
+Forschungszentrum Jülich (FZJ) under the project name paj2526 and punch_astro. We
+acknowledge the Blablador service of Helmholtz AI at the Jülich Supercomputing Centre for
+access to open-weight large language models.
 
 # Author contributions
 
@@ -522,15 +538,12 @@ Software, and `content` as Writing -- original draft).
 - **V. M. Sabarish**: Conceptualization, Software.
 - **Z. Sakr**: Conceptualization, Methodology, Software, Validation.
 - **D. Sapone**: Conceptualization, Software, Supervision.
-- **M. Leizerovich**: Conceptualization, Software (Hu-Sawicki $f(R)$ interface to
-  hi_class-based codes, frahi_class, and the Winther and e-MANTIS nonlinear boosts),
-  Validation.
-- **N. Frusciante**: Software.
-- **F. Pace**: Methodology, Software.
+- **M. Leizerovich**: Conceptualization, Software, Validation.
+- **N. Frusciante**: Methodology, Software, Data curation.
+- **F. Pace**: Methodology, Software, Data curation.
 - **K. Koyama**: Conceptualization, Methodology, Supervision, Validation.
 - **E. Bellini**: Conceptualization, Data curation, Software.
 - **S. Camera**: Conceptualization, Methodology.
-- **M. Raveri**: Conceptualization, Software (the original IST:Forecast code, started with
-  M. Martinelli).
+- **M. Raveri**: Conceptualization, Software.
 
 # References
