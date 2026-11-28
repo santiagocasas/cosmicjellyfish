@@ -1,0 +1,49 @@
+{
+  "case": "wl",
+  "git_revision": "b50f5b784f0c9a26513dfa1a7bad52faf9a57e65",
+  "free_params": [
+    "Omegam",
+    "sigma8"
+  ],
+  "sample_nuisances": true,
+  "nuisance_sigma": 5.0,
+  "reference_kind": "marginal",
+  "sampled_parameters": [
+    "Omegam",
+    "sigma8",
+    "AIA",
+    "betaIA",
+    "etaIA"
+  ],
+  "prior_ranges": {
+    "Omegam": [
+      0.28,
+      0.36
+    ],
+    "sigma8": [
+      0.75,
+      0.87
+    ],
+    "AIA": [
+      -17.762018683031663,
+      21.20201868303166
+    ],
+    "betaIA": [
+      -3.0302140459343025,
+      7.370214045934302
+    ],
+    "etaIA": [
+      -12.861789336764128,
+      12.041789336764127
+    ]
+  },
+  "n_live": 500,
+  "n_eff": 2000,
+  "workers": 64,
+  "checkpoint": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/wl/nautilus_wl_nlive500_neff2000_dim5.hdf5",
+  "chain": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/wl/chain_wl.csv",
+  "fisher_reference": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/wl/fisher_reference.txt",
+  "fisher_raw": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/wl/fisher_raw.txt",
+  "elapsed_seconds": 650.3480253219604,
+  "effective_sample_size": 2182.1295435625584
+}

@@ -1,0 +1,8 @@
+#
+# This file contains the parameter names for a Fisher matrix.
+#
+Omegam    \Omega_{{\rm m}, 0}    0.32
+sigma8    \sigma_8    0.815584
+AIA    A_{IA}    1.72
+betaIA    \beta_{IA}    2.17
+etaIA    \eta_{IA}    -0.41

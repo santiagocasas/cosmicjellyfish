@@ -14,480 +14,556 @@ authors:
     orcid: 0000-0002-4751-5138
     corresponding: true
     affiliation: "1, 2"  # TODO: confirm affiliations
-  - name: Matteo Martinelli
-    affiliation: 3  # TODO: ORCID
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: project-administration, credit-name: "Project administration"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: supervision, credit-name: "Supervision"}
+      - {credit: validation, credit-name: "Validation"}
+      - {credit: visualization, credit-name: "Visualization"}
+      - {credit: writing-original-draft, credit-name: "Writing – original draft"}
+      - {credit: writing-review-editing, credit-name: "Writing – review & editing"}
   - name: Sefa Pamuk
     orcid: 0009-0004-0852-8624
-    affiliation: 4
-  - name: Sabarish V. M.
-    affiliation: 5  # TODO: ORCID, name format
+    affiliation: 3
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
+      - {credit: writing-original-draft, credit-name: "Writing – original draft"}
+  - name: V. M. Sabarish
+    orcid: 0000-0001-5677-0838
+    affiliation: "2, 4"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: software, credit-name: "Software"}
+  - name: Ziad Sakr
+    orcid: 0000-0002-4823-3757
+    affiliation: "18, 19, 20"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
+  - name: Domenico Sapone
+    orcid: 0000-0001-7089-4503
+    affiliation: 5
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: supervision, credit-name: "Supervision"}
+  - name: Matías Leizerovich
+    orcid: 0000-0002-6438-2285
+    affiliation: "6, 7"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: validation, credit-name: "Validation"}
+  - name: Noemi Frusciante
+    orcid: 0000-0002-7375-1230
+    affiliation: "8, 9"
+    roles:
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+  - name: Francesco Pace
+    orcid: 0000-0001-8039-0480
+    affiliation: "10, 11, 12, 13"
+    roles:
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: software, credit-name: "Software"}
+      - {credit: data-curation, credit-name: "Data curation"}
+  - name: Emilio Bellini
+    orcid: 0000-0003-4762-0795
+    affiliation: 15
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: data-curation, credit-name: "Data curation"}
+      - {credit: software, credit-name: "Software"}
+  - name: Kazuya Koyama
+    orcid: 0000-0001-6727-6915
+    affiliation: 14
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+      - {credit: supervision, credit-name: "Supervision"}
+      - {credit: validation, credit-name: "Validation"}
+  - name: Stefano Camera
+    orcid: 0000-0003-3399-3574
+    affiliation: "10, 11, 12, 16"
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: methodology, credit-name: "Methodology"}
+  - name: Marco Raveri
+    orcid: 0000-0002-7354-3802
+    affiliation: 17
+    roles:
+      - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: software, credit-name: "Software"}
 affiliations:
-  - name: Theoretische Teilchenphysik und Kosmologie, RWTH Aachen University, Germany 
-    index: 2
-  - name: Scientific Information, German Aerospace Center (DLR), Germany
+  - name: Institute for Theoretical Particle Physics and Cosmology (TTK), RWTH Aachen University, Germany
     index: 1
-  - name: TODO affiliation of M. Martinelli
+  - name: Scientific Information, German Aerospace Center (DLR), Germany
+    index: 2
+  - name: Instituto de Física de Cantabria (IFCA), Spain
     index: 3
-  - name: Universidad de Cantabria, Spain
+  - name: Hamburger Sternwarte, Universität Hamburg, Germany
     index: 4
-  - name: TODO affiliation of Sabarish V. M.
+  - name: Departamento de Física, FCFM, Universidad de Chile, Chile
     index: 5
-date: 13 November 2026
+  - name: Departamento de Física, Facultad de Ciencias Exactas y Naturales, Universidad de Buenos Aires, Argentina
+    index: 6
+  - name: Instituto de Física de Buenos Aires (IFIBA), CONICET – Universidad de Buenos Aires, Argentina
+    index: 7
+  - name: 'Dipartimento di Fisica "E. Pancini", Università degli Studi di Napoli "Federico II", Italy'
+    index: 8
+  - name: INFN – Sezione di Napoli, Italy
+    index: 9
+  - name: Dipartimento di Fisica, Università degli Studi di Torino, Italy
+    index: 10
+  - name: INFN – Sezione di Torino, Italy
+    index: 11
+  - name: INAF – Osservatorio Astrofisico di Torino, Italy
+    index: 12
+  - name: Instituto de Astrofísica e Ciências do Espaço, Faculdade de Ciências, Universidade de Lisboa, Portugal
+    index: 13
+  - name: Institute of Cosmology and Gravitation, University of Portsmouth, United Kingdom
+    index: 14
+  - name: Center for Astrophysics and Cosmology, University of Nova Gorica, Slovenia
+    index: 15
+  - name: Department of Physics and Astronomy, University of the Western Cape, South Africa
+    index: 16
+  - name: Department of Physics, University of Genova, and INFN – Sezione di Genova, Italy
+    index: 17
+  - name: Instituto de Física Teórica, Spain
+    index: 18
+  - name: Institut de Recherche en Astrophysique et Planétologie, France
+    index: 19
+  - name: Université Saint Joseph, Lebanon
+    index: 20
+date: 23 November 2026
 bibliography: paper.bib
 ---
 
 # Summary
 
-`cosmicjellyfish` is a Python package for cosmological forecasts with Fisher-matrix and
-Monte Carlo methods. Given a fiducial cosmology and a survey specification, it computes
-the observables of galaxy clustering, weak lensing, intensity mapping and the cosmic
-microwave background (CMB), and it returns the expected constraints on cosmological
-parameters, either as a Fisher matrix or as a sampled posterior. Previously known as
-`cosmicfishpie`, it has been used in about ten papers since the Euclid IST:F forecasts
-[@Blanchard2020].
 
-Three things are new in this release:
-
-- **Speed.** The symbolic emulator [@Bartlett2024a; @Bartlett2024b; @Sui2025] gives
-  Fisher matrices in about 5 seconds.
-- **Differentiability.** The integration of JAX [@Bradbury2018] and of the `jax-cosmo`
-  backend [@Campagne2023] allows for autodiff Fisher matrices.
-- **Fisher and MCMC from the same settings.** This is version 2.0 also because MCMC
-  forecasts can now be run with exactly the same settings as the Fisher forecast, which
-  allows us to test contours that were not obvious before.
-
-This is also, to our knowledge, the only project that provides a CAMB--CLASS validation
-dashboard for many cosmological models in a FAIR way (Findable, Accessible,
-Interoperable, Reusable) [@Wilkinson2016], with all the ini files, YAML files and a full
-reproducibility pipeline. A companion DagsHub repository contains the validation data for
-both Fisher matrices and MCMC chains.
-
-The tentacles of the jellyfish in the logo stand for the chains, and the J in the name
-stands for the new JAX compatibility.
+`cosmicjellyfish` is a Python package for Fisher-matrix and Monte Carlo forecasts of
+cosmological surveys. It is the current version of `cosmicfishpie`, the Python successor of the
+[CosmicFish](https://github.com/CosmicFish/CosmicFish) code [@Raveri2016], and has been used in about ten
+publications since the Euclid forecast-validation programme [@Blanchard2020]. It computes the
+observables of photometric galaxy clustering and weak lensing, spectroscopic galaxy
+clustering, 21cm intensity mapping and the cosmic microwave background, and returns the
+expected parameter constraints either as a Fisher matrix or as a posterior obtained by
+nested sampling with [Nautilus](https://nautilus-sampler.readthedocs.io/en/latest/), both from a single configuration, so that going beyond the Gaussian approximation for a forecast, is only a matter of computing time. Theory predictions are supplied interchangeably by [CAMB](https://github.com/cmbant/CAMB),
+[CLASS](https://github.com/lesgourg/class_public), [symbolic emulators](https://github.com/DeaglanBartlett/symbolic_pofk) [@Bartlett2024a; @Bartlett2024b; @Sui2025], or [jax-cosmo](https://github.com/DifferentiableUniverseInitiative/jax_cosmo); derivatives come from four finite-difference
+schemes or from automatic differentiation with JAX [@Bradbury2018]. Both routes are validated against each other and against the reference
+[MontePython](https://github.com/brinckmann/montepython_public) Euclid likelihoods [@Casas2024],
+and a public dashboard compares CAMB and CLASS forecasts for 25 validation
+cases. The survey specifications, solver settings, source revisions and chains behind
+every number quoted here are released following the FAIR principles (findable, accessible, interoperable and reusable) [@Wilkinson2016]. The change of name from
+`cosmicfishpie` to `cosmicjellyfish` was motivated by the transition to JAX and the availability of Monte Carlo methods.
 
 # Statement of need
 
-`cosmicjellyfish` is needed to forecast constraints for current and future probes, and
-especially for their combinations, in an efficient, validated and reproducible way.
 
-The code ships survey specifications for Euclid [@Mellier2025], SKAO [@Bacon2020] and
-Planck-like CMB experiments [@Planck2018], together with validated, opt-in transcriptions
-of the historical specifications for DESI [@DESI2016] and Rubin/LSST [@Ivezic2019]; any
-other survey can be added through a user specification file. These surveys are far from over: Euclid still has
-about six years of observations ahead and LSST ten, and their cross-correlations have
-barely been studied so far. A forecasting code of this kind will therefore remain useful
-for a long time. Moreover, the step from here into real-data analysis is no longer a
-large one.
+Forecasts shape the analysis of a survey long before the data arrives: they guide the
+choice of scale cuts and redshift binning, the modelling of galaxy bias, intrinsic
+alignments and baryonic feedback, and they set the expected sensitivity to the neutrino
+mass [@Archidiacono2025] and to dynamical dark energy. Fisher forecasts are the standard tool because they
+need tens of model evaluations instead of the $10^5$ to $10^6$ of a sampler, but they
+rest on two assumptions: stable numerical derivatives of the observables, and a nearly
+Gaussian posterior. Neither is routinely checked, and independent Fisher pipelines have
+differed by 10% or more before their recipes were harmonised [@Blanchard2020].
 
-The plan for the future is twofold:
-
-- implement new probes, such as SPHEREx [@Dore2014], WST [@Mainieri2024] and other
-  futuristic probes, or extensions such as SPT-10k **[TODO: cite SPT-10k]**;
-- implement cross-correlations that have been studied in previous papers, such as dark
-  sirens $\times$ Euclid GCph **[TODO: cite Giona's paper]**.
+`cosmicjellyfish` is built to make both checks inexpensive. The same observable can be
+differentiated with four finite-difference schemes or by automatic differentiation, and
+the same configuration can be sampled with the nested sampler Nautilus [@Lange2023].
+Specifications for Euclid
+[@Mellier2025], the SKA Observatory [@Bacon2020] and CMB experiments [@Planck2018] are
+shipped, transcriptions of DESI [@DESI2016] and Rubin/LSST [@Ivezic2019] specifications
+are available, and further surveys are added as YAML files. The intended users are
+members of survey collaborations preparing forecast and validation studies, theorists who
+need the sensitivity of a survey to a new model, and students, for whom the package is a
+compact route from a power spectrum to a parameter constraint.
 
 # State of the field
 
-**Unvalidated forecasts.** Many forecasts in the literature, especially those based on
-Fisher matrices, are not validated. We have seen in the Euclid IST:F paper
-[@Blanchard2020] and in other works that independent pipelines differed by 10% or more,
-and that it was hard to make them agree. The same lesson appears elsewhere: the Fisher
-approach for spectroscopic surveys had to be validated against MCMC [@YahiaCherif2021],
-numerical derivatives were shown to be a major source of instability in LSST-like
-forecasts [@Bhandari2021], and the Euclid $\times$ CMB forecasts needed their own
-cross-validation [@Ilic2022]. Recent tools address parts of the problem: `Augur`
-[@Rogozenski2026] is the Fisher tool of LSST DESC, built on CCL [@Chisari2019] and
-validated against CosmoSIS [@Zuntz2015] and nested sampling, and `DerivKit`
-[@Sarcevic2026] provides stable numerical derivatives independently of any cosmology
-code. General samplers such as MontePython [@Audren2013; @Brinckmann2019] and Cobaya
-[@Torrado2021] can produce forecasts, but they are not Fisher codes.
+Several codes produce forecasts for large-scale structure surveys. `Augur` [@Rogozenski2026] is the Fisher tool of the LSST Dark Energy Science
+Collaboration, built on CCL [@Chisari2019] and validated against CosmoSIS [@Zuntz2015]
+and nested sampling, and `DerivKit` [@Sarcevic2026] provides stable numerical
+derivatives independently of any cosmology code. General inference frameworks such as
+MontePython [@Audren2013; @Brinckmann2019] and Cobaya [@Torrado2021] contain forecasting
+likelihoods, but they are not Fisher codes. Differentiable libraries such as `jax-cosmo`
+[@Campagne2023], CosmoPower-JAX [@Piras2023] and `cloelib` [@Bonici2026] provide
+predictions and gradients; `jax-cosmo` also builds Gaussian angular covariances and a
+Fisher matrix by automatic differentiation, but none of them ships validated survey
+specifications or a multi-probe forecasting pipeline.
 
-**CAMB versus CLASS.** Beyond the original comparisons of the two codes at the level of
-spectra [@Lesgourgues2011; @LesgourguesTram2011], almost no one has published validated
-comparisons between CAMB [@Lewis2000] and CLASS [@Blas2011] at the level of forecasts,
-especially in the neutrino sector [@Archidiacono2025]. `cosmicjellyfish` therefore also
-acts as a translator between these two codes in a FAIR way, or at least on the road to
-FAIR.
+Three gaps remain. First, validation: the Fisher approach for spectroscopic surveys had
+to be validated against MCMC [@YahiaCherif2021], and numerical derivatives were found to
+dominate the instability of LSST-like forecasts [@Bhandari2021]. Second, CAMB and CLASS
+have been compared at the level of power spectra [@Lesgourgues2011;
+@LesgourguesTram2011], but rarely at the level of forecasts, where the accuracy settings
+for massive neutrinos matter most [@Archidiacono2025]. Third, `jax-cosmo` compared
+automatic and finite differences for two parameters [@Campagne2023]; a controlled
+comparison for a full Euclid forecast with 17 cosmological and nuisance parameters, and
+against an independent NumPy implementation of the same observable, was missing.
 
-**Autodiff Fisher matrices.** `jax-cosmo` showcased autodiff Fisher matrices and compared
-them with finite differences from CCL for two parameters [@Campagne2023], and
-differentiable emulators have followed in recent years [@Piras2023]. Here we show, for a
-full Euclid setup with nuisance parameters, that the autodiff Fisher matrix agrees well
-with finite differences of the same observable, and also with a non-JAX implementation of
-the observable.
-
-**An independent testing ground.** Finally, we have implemented likelihoods that agree
-with the direct Fisher method. The Fisher recipes were validated against the MontePython
-likelihoods in 2023 [@Casas2024], and those likelihoods were in turn used as a backbone
-of current likelihoods such as `cloelike` [@cloelike2026], which uses `cloelib`
-[@Bonici2026]. `cosmicjellyfish` is therefore a very good way of having a fully
-independent but modern code as a backdrop, testing ground and validation tool.
+We extended `cosmicfishpie` instead of contributing to these frameworks for two reasons.
+The checks above require exchanging one element of the forecast (theory, derivative,
+or Fisher against posterior) while keeping all others fixed, so the survey
+specification, observable, covariance, derivative and sampler must live in one code
+base; this does not map onto a single likelihood or theory module of a general
+framework. Second, the code is the reference implementation of published Euclid
+forecasts [@Blanchard2020; @Casas2024; @Archidiacono2025; @Casas2026fR; @Frusciante2024], and those results had to stay
+reproducible. Its Fisher recipes were validated against the MontePython likelihoods
+[@Casas2024], which served as a basis for current Euclid likelihood codes such as
+`cloelike` [@cloelike2026]; `cosmicjellyfish` is therefore an independent reference for
+them.
 
 # Software design
 
-The software is designed in a very modular way. The package layout follows the steps of a
-forecast:
+A forecast is a chain of exchangeable elements: theory backend, survey specification,
+observable and covariance, derivative method, and Fisher assembly or likelihood. The
+design choices below serve one aim: to change one element while keeping the others
+fixed, so that a difference in the result can be attributed.
 
-```text
-cosmicjellyfish/
-  cosmology/     background, power spectra, backends, nuisance models
-  LSSsurvey/     photometric, spectroscopic and intensity-mapping probes
-  CMBsurvey/     CMB observables and covariances
-  fishermatrix/  FisherMatrix driver, finite-difference and autodiff derivatives
-  likelihood/    photometric and spectroscopic likelihoods, Nautilus sampler
-  analysis/      Fisher operations, plotting, chains on top of Fisher contours
-  configs/       survey specifications and Boltzmann-solver profiles (YAML)
+**One interface for several theory backends.** CAMB [@Lewis2000], CLASS [@Blas2011],
+the SYREN emulators [@Bartlett2024a; @Bartlett2024b; @Sui2025], `jax-cosmo` and precomputed tables
+are wrapped behind one `cosmo_functions` interface and selected with a single option.
+The emulators reduce a survey forecast from minutes to seconds, at the cost of a restricted model space ($\Lambda$CDM and $w_0w_a$CDM with
+massive neutrinos); the Boltzmann solvers remain the reference, with the precision
+profiles of @Archidiacono2025 shipped as YAML files. New backends, such as the
+differentiable DISCO-DJ [@Hahn2024] or CosmoPower-JAX [@Piras2023], only need to
+implement this interface. Beyond $\Lambda$CDM, a modified-gravity module for Hu-Sawicki
+$f(R)$ gravity loads the Winther fitting formula [@Winther2019] and the e-MANTIS emulator
+[@SaezCasares2024] for the nonlinear boost of the power spectrum.
+
+**Derivative methods replace only the Jacobian.** Finite differences (three-point,
+four-point forward, polynomial fit and an adaptive scheme) and automatic differentiation
+are implemented as derivative providers that return the Jacobian of an observable; the
+covariance and the Fisher assembly are shared, so the two Fisher matrices differ only in
+the derivative. Automatic differentiation needs the observables written in JAX, so
+the photometric and spectroscopic observables exist in two implementations, one in NumPy
+and one in JAX. The JAX version currently covers flat $\Lambda$CDM and $w_0w_a$CDM with
+massless neutrinos, and the code raises an error outside this range instead of quietly
+falling back to finite differences. We keep both on purpose: each one checks the other,
+and their outputs are compared in continuous integration.
+
+**Sampling without gradients.** The likelihoods reuse the observable and covariance
+code, and they are sampled with Nautilus [@Lange2023], which needs no gradients and
+therefore works with CAMB and CLASS. Other samplers, such as pocoMC [@Karamanis2022], and
+gradient-based methods such as Hamiltonian Monte Carlo with the JAX backend, can be added
+through the same likelihood interface.
+
+**Configuration as data.** Survey specifications and solver settings are versioned YAML
+files, and every run writes its full settings to a JSON file, so a forecast can be
+rebuilt from its output. Every setting has a default that reproduces the Euclid
+forecast-validation recipes [@Blanchard2020], so a user only has to specify the settings
+that should differ from the Euclid setup, as in the example below. The former import
+path `cosmicfishpie` is kept as a deprecated alias, so configurations of published
+forecasts still run.
+
+# Example
+
+The examples use version 2.1.0, archived on Zenodo (DOI for all versions:
+[10.5281/zenodo.24593176](https://doi.org/10.5281/zenodo.24593176)). The `symbolic`
+backend used below also needs the symbolic emulators of the linear and nonlinear power
+spectrum [@Bartlett2024a; @Bartlett2024b], which are not on PyPI, so the installation is:
+
+```bash
+pip install cosmicjellyfish==2.1.0
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
 ```
 
-**Cosmology and backends.** The cosmology module computes the background and other
-quantities, and it calls the different backends: CAMB [@Lewis2000] and CLASS [@Blas2011]
-through their Python wrappers, SYREN (`symbolic_pofk`), a fast symbolic emulator
-[@Bartlett2024a; @Bartlett2024b; @Sui2025], and `jax-cosmo`, a JAX implementation of the
-cosmological background and perturbation quantities [@Campagne2023]. The backend is
-chosen with a single option, `options["code"]`, which takes `"camb"`, `"class"`,
-`"symbolic"`, `"jaxcosmo"` or `"external"` (precomputed tables). This design makes it
-easy to implement other backends in the future, such as CosmoPower-JAX [@Piras2023] and
-DISCO-DJ [@Hahn2024], which are also differentiable.
-
-**Probes.** The photometric, spectroscopic and intensity-mapping probes are coded
-independently in their own modules, and they work with any cosmological backend. The CMB
-part can in principle also be used with several backends, although for the moment we
-limit it to CAMB. In the near future we might integrate it with candl [@Balkenhol2024] to
-get easier access to CMB likelihoods.
-
-**Derivatives.** The derivatives are also coded in a modular way, so that the different
-finite-difference methods (`3PT`, `4PT_FWD`, `POLY`, `STEM`) can be used independently,
-and JAX autodiff can be used instead by passing a derivative provider to `FisherMatrix`.
-
-**Likelihoods and sampling.** We also have independent likelihood modules with several
-options, and modules that manage the runs with Nautilus [@Lange2023]. While Nautilus is
-the standard sampler for now, this can easily be extended to samplers such as pocoMC
-[@Karamanis2022] and others, and to gradient-based methods such as HMC that make use of
-autodiff gradients, as was done in `jax-cosmo` [@Campagne2023].
-
-**Analysis and plotting.** Finally, the code provides a set of tools for analysing and
-plotting Fisher matrices: marginalising, combining, reparametrising and so on. Chains can
-easily be plotted on top of Fisher contours, using ChainConsumer [@Hinton2016].
-
-# Usage examples
-
-## A Euclid photometric Fisher matrix, combined with spectroscopic
-
-A simple Euclid photometric Fisher matrix, combined with the spectroscopic one and
-marginalised over the nuisance parameters. With the symbolic backend the two forecasts
-take a few seconds on a laptop. The result is shown in \autoref{fig:probes}.
+The defaults reproduce the pessimistic Euclid setup of @Blanchard2020, so a
+photometric and a spectroscopic forecast, and their combination, take three statements:
 
 ```python
-from cosmicjellyfish.analysis.fisher_operations import marginalise
-from cosmicjellyfish.analysis.fishconsumer import make_triangle_plot
-from cosmicjellyfish.fishermatrix import cosmicfish as cff
+from cosmicjellyfish.fishermatrix.cosmicfish import FisherMatrix
 
-fiducial = {"Omegam": 0.32, "Omegab": 0.05, "h": 0.67,
-            "ns": 0.96, "sigma8": 0.815584}
-freepars = {"Omegam": 0.01, "h": 0.01, "sigma8": 0.01}  # relative steps
-
-
-def options(photo, spectro):
-    return {
-        "code": "symbolic",  # or "camb" / "class"
-        "accuracy": 1,
-        "nonlinear": True,
-        "derivatives": "3PT",
-        "results_dir": "results",
-        "outroot": "example",
-        "survey_name": "Euclid",
-        "survey_name_photo": photo,
-        "survey_name_spectro": spectro,
-    }
-
-
-photo = cff.FisherMatrix(
-    fiducialpars=fiducial,
-    freepars=freepars,
-    options=options("Euclid-Photometric-ISTF-Pessimistic", False),
-    observables=["WL", "GCph"],
-    cosmoModel="LCDM",
-    surveyName="Euclid",
-).compute()
-
-spectro = cff.FisherMatrix(
-    fiducialpars=fiducial,
-    freepars=freepars,
-    options=options(False, "Euclid-Spectroscopic-ISTF-Pessimistic"),
-    observables=["GCsp"],
-    cosmoModel="LCDM",
-    surveyName="Euclid",
-).compute()
-
+photo = FisherMatrix(options={"code": "symbolic", "feedback": 1},
+                     observables=["WL", "GCph"], cosmoModel="LCDM").compute()
+spectro = FisherMatrix(options={"code": "symbolic", "feedback": 1},
+                       observables=["GCsp"], cosmoModel="LCDM").compute()
 combined = photo + spectro  # nuisance parameters of both probes are kept
-reduced = marginalise(combined, ["Omegam", "h", "sigma8"])
-print(reduced.get_confidence_bounds())  # marginalised 1-sigma errors
-
-make_triangle_plot(
-    fishers=[spectro, photo, combined],
-    fisher_labels=["GCsp", "WL+GCph", "WL+GCph+GCsp"],
-    params=["Omegam", "h", "sigma8"],
-    savefile="euclid_triangle.png",
-)
 ```
 
-Another experiment is added in the same way, by choosing another shipped specification
-(for example `"SKAO-Spectroscopic-Redbook"`) and summing the resulting Fisher matrix.
+Both Fisher matrices together take about 15 s on a laptop with 16 cores.
 
-![Marginalised constraints from Euclid spectroscopic clustering (GCsp), the photometric
-probes (WL+GCph) and their combination, for flat $\Lambda$CDM with the IST:F pessimistic
-specifications and the symbolic backend. This is the output of the example
-above.\label{fig:probes}](figures/fig1_euclid_probes.png){ width=75% }
+<!-- [C16] NEW short paragraph replacing the autodiff listing (old 35 lines). The
+autodiff route is one extra argument, which is itself the design point of [C11].
+TESTED: with "code": "jaxcosmo" the default fiducial is refused (mnu = 0.06; the JAX
+backend needs massless neutrinos), so the sentence says a massless fiducial is needed.
+Notebook 07 shows the full comparison. -->
 
-## A Nautilus chain that matches the Fisher matrix
+Replacing `"symbolic"` by `"camb"` or `"class"` repeats the forecast with a Boltzmann
+solver. To use `"jaxcosmo"`, install the optional backend with
+`pip install "cosmicjellyfish[jaxcosmo]==2.1.0"`. With a massless-neutrino fiducial,
+passing `derivative_provider=JaxAutodiffProvider()` to `FisherMatrix` replaces the finite
+differences by automatic differentiation. The likelihood is sampled with the same
+survey, theory and fiducial settings; the listing below is a minimal two-parameter
+weak-lensing demonstration (the full benchmark is described in the next section):
 
-A simple example running a chain with Nautilus from the same settings as the Fisher
-forecast. The sampler writes the weighted chain, a resumable checkpoint and a metadata
-file, which are then loaded and plotted on top of the Fisher contours.
+<!-- [C17] SIMPLIFIED listing (old: 2 blocks, 45 lines; now 12 lines). Dropped ell
+sampling, results_dir, outroot, survey names, n_eff and verbose: all have defaults.
+The sampler needs fiducial, priors and the four sampler settings shown.
+On paper/joss-draft (no code patches) the options must also contain "survey_name"
+(sampler.py reads options["survey_name"]) and "feedback" (read by FisherMatrix in the
+main process), so the listing sets both. NOT re-run on this branch (Nautilus run
+skipped on purpose); checked against the code only.
+The plotting part (load chain + triangle plot) is gone: notebook 06 shows it. -->
 
 ```python
 from cosmicjellyfish.likelihood import NautilusSampler
 
 config = {
     "name": "wl_demo",
-    "fiducial": fiducial,  # as above
     "observables": ["WL"],
-    "options": {
-        "code": "symbolic",
-        "cosmo_model": "LCDM",
-        "accuracy": 1,
-        "nonlinear": True,
-        "ell_sampling": 25,  # coarse grid for speed
-        "results_dir": "results",
-        "outroot": "wl_demo",
-        "survey_name": "Euclid",
-        "survey_name_photo": "Euclid-Photometric-ISTF-Pessimistic",
-        "survey_name_spectro": False,
-    },
+    "fiducial": {"Omegam": 0.32, "Omegab": 0.05, "h": 0.67,
+                 "ns": 0.96, "sigma8": 0.815584},
+    "options": {"code": "symbolic", "cosmo_model": "LCDM",
+                "survey_name": "Euclid", "feedback": 1},
     "priors": {"Omegam": [0.28, 0.36], "sigma8": [0.75, 0.87]},
-    "sampler_settings": {"n_live": 500, "n_networks": 1, "n_batch": 50,
-                         "pool": 8, "n_eff": 2000, "verbose": False},
+    "sampler_settings": {"n_live": 500, "n_networks": 1, "n_batch": 50, "pool": 8},
 }
 
-if __name__ == "__main__":  # required for pool > 1: workers are spawned
+if __name__ == "__main__":  # worker processes are spawned
     NautilusSampler(config).run()
 ```
 
-```python
-from cosmicjellyfish.analysis.fishconsumer import (
-    load_Nautilus_chains_from_txt,
-    make_triangle_plot,
-)
-from cosmicjellyfish.likelihood.sampler import load_chain_metadata
-
-chain_file, sampled_fiducial, metadata, labels = load_chain_metadata(
-    "chains/chains_wl_demo"
-)
-columns = open(chain_file).readline().lstrip("# ").split()[:-2]
-chain = load_Nautilus_chains_from_txt(chain_file, columns)
-
-make_triangle_plot(
-    chains=[chain], chain_labels=["Nautilus"],
-    fishers=[fisher], fisher_labels=["Fisher"],  # a WL Fisher matrix
-    params=columns, truth_values=sampled_fiducial, param_labels=labels,
-    savefile="wl_chain_vs_fisher.png",
-)
-```
-
-A chain that samples only the cosmological parameters has to be compared with the Fisher
-matrix at fixed nuisance parameters (`eliminate_parameters`); when the nuisance
-parameters are sampled as well, it is compared with the marginalised one, as in
-\autoref{fig:nautilus}.
-
-## A JAX autodiff Fisher matrix against the standard one
-
-Finally, a JAX autodiff Fisher matrix against the standard finite-difference one, with
-the same `jaxcosmo` theory. This needs the optional extra,
-`pip install "cosmicjellyfish[jaxcosmo]"`.
-
-```python
-from cosmicjellyfish.fishermatrix.cosmicfish import FisherMatrix
-from cosmicjellyfish.fishermatrix.jaxcosmo_derivatives import JaxAutodiffProvider
-
-fiducial = {"10^9As": 2.1, "Omegam": 0.32, "Omegab": 0.05,
-            "h": 0.67, "ns": 0.96, "mnu": 0.0}
-freepars = {name: 0.01 for name in ("10^9As", "Omegam", "Omegab", "h")}
-
-
-def forecast(provider, outroot):
-    options = {  # a fresh dictionary for each forecast
-        "code": "jaxcosmo",
-        "accuracy": 1,
-        "nonlinear": True,
-        "derivatives": "3PT",
-        "results_dir": "results",
-        "outroot": outroot,
-        "survey_name_photo": "Euclid-Photometric-ISTF-Pessimistic",
-    }
-    return FisherMatrix(
-        fiducialpars=fiducial,
-        freepars=freepars,
-        options=options,
-        observables=["GCph", "WL"],
-        cosmoModel="LCDM",
-        surveyName="Euclid",
-        derivative_provider=provider,
-    ).compute()
-
-
-fisher_ad = forecast(JaxAutodiffProvider(), "photo_ad")  # autodiff (jax.jacfwd)
-fisher_fd = forecast(None, "photo_fd")  # standard finite differences
-
-print(fisher_ad.get_confidence_bounds() / fisher_fd.get_confidence_bounds())
-```
-
-For this setup the marginalised errors of the two routes agree to better than 0.4% for
-all 17 cosmological and nuisance parameters (\autoref{fig:autodiff}). When the finite
-differences are taken on the same JAX observable (`JaxFiniteDifferenceProvider`), the
-agreement improves to better than 0.05%, and the two Fisher matrices differ by
-$1.8\times10^{-5}$ in $\max|\Delta F|/\max|F|$. The remaining difference is therefore due
-to the two implementations of the observable and not to the derivative method.
-
-![Marginalised errors from finite differences relative to those from automatic
-differentiation, for the Euclid WL+GCph forecast with the `jaxcosmo` backend. Filled
-circles: finite differences of the same JAX observable. Open squares: finite differences
-of the standard NumPy observable.\label{fig:autodiff}](figures/fig2_autodiff_ratios.png)
-
-# Validation and performance
-
-**Validation.** The CAMB--CLASS validation and the MontePython validation are documented
-in the validation dashboard (<https://www.santicasas.space/cosmicjellyfish/dashboard/>),
-with all the scripts and results in the data folders of the DagsHub repository
-(<https://dagshub.com/santiagocasas/cjfp-data>). The suite covers 25 cases: photometric
-and spectroscopic Euclid probes for $\Lambda$CDM and $w_0w_a$CDM, with and without
-massive neutrinos and $N_{\mathrm{eff}}$, following the settings of @Casas2024 and
-@Archidiacono2025. `cosmicjellyfish` itself (formerly `cosmicfishpie`) was validated in
-several Euclid papers and beyond [@Blanchard2020; @Casas2024; @Archidiacono2025].
-
-**Performance.** For a Euclid photometric forecast, the default profiles take about 30 s
-(CAMB) and 111 s (CLASS), against 138 s and 186 s for the high-precision profiles of
-@Archidiacono2025. The performance has been improving over the years. With the symbolic
-module we now obtain Fisher matrices in a few seconds, also for models such as
-$w_0w_a$CDM: with seven cosmological parameters and all nuisance parameters, the WL+GCph
-Fisher matrix (20 parameters) takes about 8 s and the GCsp one (15 parameters) about
-2.5 s **[TODO: measured on two cores of a cloud VM; replace by your own hardware]**. With
-CAMB and CLASS we provide several levels of accuracy and precision, and the Fisher
-matrices take less or more time depending on that.
-
-**Cross-survey validation.** To check that the pipeline is not tied to Euclid, we
-transcribed the DESI, Rubin/LSST and SKAO specifications of @Casas2023SKAO into the
-current schema and compared the resulting observables---bin densities, biases, survey
-volumes, the galaxy and intensity-mapping spectra, the beam, the thermal noise, and the
-photometric redshift distributions and bin counts---against an independent
-re-implementation of the historical recipes. All algebra-level ingredients agree at
-machine precision. The photometric angular spectra are not re-compared against the
-historical project here; they are covered by the existing observable tests. The residual
-shape difference in the SKAO Fig. 1 spectra is below 1.5 per cent over the calibrated
-range, with an amplitude offset consistent with (but not uniquely attributable to) the
-modified-gravity fiducial used in the original runs. Running all configurations on a
-common GR fiducial then
-produces a consistent set of constraints (\autoref{fig:surveys}). The ranking between
-surveys in that comparison reflects the adopted specifications---sky area, redshift
-binning and scale cuts---rather than the telescopes themselves, which is exactly the
-behaviour expected from a specification-driven code.
-
-![Left: marginalised $1\sigma$ errors on $\Omega_m$ and $\sigma_8$ in $\Lambda$CDM. Centre
-and right: $w_0$--$w_a$ Fisher ellipses ($1\sigma$) of the photometric probes (Euclid,
-Rubin/LSST) and of the spectroscopic probes (Euclid GCsp, DESI ELG+BGS, and SKAO intensity
-mapping analysed jointly with the DESI ELG sample). Everything uses the same GR fiducial
-and all nuisance parameters are marginalised. DESI ELG and BGS cover different redshifts
-and are added as independent Fisher matrices; for SKAO IM and DESI ELG the auto- and
-cross-spectra are analysed together with their full Gaussian covariance
-(\texttt{observables=["GCsp","GCspxIM","IM"]}). The DESI specifications are those of the
-SKAO paper and will be updated. The figure is produced by
-`paper/scripts/fig4_survey_comparison.py`.\label{fig:surveys}](figures/fig4_survey_comparison.png){ width=100% }
-
-**Chains against Fisher matrices.** We have also validated our chains against our own
-Fisher matrices and shown that they agree (\autoref{fig:nautilus}). For Euclid WL, GCsp
-and their combination, with all nuisance parameters sampled, the marginalised Nautilus
-errors on $\Omega_{\mathrm{m}}$ and $\sigma_8$ are within 5%, 0.4% and 1.3% of the Fisher
-ones, respectively, and the posterior means lie within 0.1$\sigma$ of the fiducial
-values.
-
-The timings of these runs are interesting in themselves. With the symbolic backend, 64
-Nautilus workers on JURECA, `n_live=500` and a target of 2000 effective samples, the WL
-chain (5 sampled dimensions) took 17 minutes, the GCsp chain (10 dimensions) 22 minutes
-and the joint WL+GCsp chain (13 dimensions) 1 hour and 45 minutes. A full posterior for
-the Euclid primary probes, including nuisance parameters, is thus obtained in about 18,
-24 and 112 core-hours, respectively, while the corresponding Fisher matrices take
-seconds. This makes it affordable to check the Gaussian approximation case by case,
-instead of assuming it.
-
-![Fisher forecasts (dark, thick lines) against Nautilus posteriors (light, thin lines)
-for Euclid weak lensing, spectroscopic clustering and their combination, with the
-symbolic backend and all nuisance parameters marginalised in both
-cases.\label{fig:nautilus}](figures/fig3_fisher_vs_nautilus.png){ width=75% }
-
 # Research impact statement
 
-As `cosmicfishpie`, the code has been used in about ten publications. It started with
-the Euclid IST:F forecasts for the spectroscopic and photometric probes [@Blanchard2020],
-and it was then used in several Euclid papers forecasting extended models, such as $f(R)$
-gravity [@Casas2026fR] and scalar-field and other modified-gravity models
-[@Frusciante2024], and models of inflation [@Ballardini2024] **[TODO: confirm that these
-three are the papers you mean]**. It served in the paper validating the MontePython
-likelihoods [@Casas2024] and in the Euclid paper on the sensitivity to neutrino
-cosmology, which used MontePython and `cosmicfishpie` together [@Archidiacono2025]. It
-was also used in the papers on radio $\times$ optical probes with SKAO [@Casas2023SKAO]
-and in a few other works **[TODO: cite the remaining papers]**.
 
-The Boltzmann-solver precision profiles validated in those works are shipped with the
-package, and the validation dashboard, the posterior chains and the cluster workflows are
-public, so that every comparison quoted here can be reproduced from a recorded source
-revision.
+**Publications.** As `cosmicfishpie`, the code has been used in about ten publications.
+It produced the Euclid forecasts for the spectroscopic and photometric probes
+[@Blanchard2020], and was then used in Euclid forecasts for $f(R)$ gravity
+[@Casas2026fR], for scale-independent modifications of gravity [@Frusciante2024] and for
+primordial features [@Ballardini2024], in the validation of the MontePython forecasting
+likelihoods [@Casas2024], in the Euclid study of the sensitivity to neutrino parameters
+[@Archidiacono2025], and in forecasts for radio and optical survey synergies with the SKA
+Observatory [@Casas2023SKAO]. Earlier works with the code and its predecessors cover modified gravity and
+dark energy [@Casas2017; @Frusciante2019; @Atayde2024], inflation and its connection to dark
+energy [@Casas2018; @Casas2019; @Akrami2021], the anisotropic stress [@Sakr2025], the validation
+of the Fisher approach for spectroscopic surveys [@YahiaCherif2021] and the impact of nonlinear
+and baryonic feedback prescriptions on weak lensing [@Martinelli2021].
 
-# Documentation
+**Community.** The code is developed openly on GitHub, with code review through pull
+requests and continuous integration; the twelve authors of this paper work at institutions
+in eleven countries.
 
-The documentation (<https://www.santicasas.space/cosmicjellyfish/docs/>) contains an
-installation guide, a first forecast, a user guide on backends, observables, derivative
-methods and likelihood sampling, the validation reports and an API reference. Eight
-tutorial notebooks in the repository cover the cosmology interface, spectroscopic and
-photometric forecasts, the CMB, Fisher post-processing, Nautilus sampling, autodiff
-against finite differences, and forecasts in intermediate parameters. A migration guide
-describes the change from `cosmicfishpie`, whose import path keeps working as a
-deprecated alias.
+**Validation suite.** A public dashboard
+(<https://www.santicasas.space/cosmicjellyfish/dashboard/>) compares CAMB and CLASS
+forecasts for 25 cases: the photometric and spectroscopic Euclid probes in $\Lambda$CDM
+and $w_0w_a$CDM, with and without massive neutrinos and $N_{\mathrm{eff}}$, following
+@Casas2024 and @Archidiacono2025. The validation data are public and live in a Hugging Face
+dataset (<https://huggingface.co/datasets/santicas/cjfp-data>). With the shipped high-precision profiles the two
+solvers agree to better than 1% on all marginalised errors of the photometric benchmark.
+A Euclid photometric forecast then takes 138 s with CAMB and 186 s with CLASS, and 30 s
+and 111 s with the default profiles.
 
-# Availability
+**Fisher matrices against posteriors.** The Fisher matrices of the code have been
+validated in several earlier works, against independent Fisher codes [@Blanchard2020]
+and against MCMC posteriors [@Casas2024; @Archidiacono2025], and the dashboard above
+keeps tracking them. We repeat the comparison here with the built-in sampler. For Euclid
+weak lensing (WL), spectroscopic clustering (GCsp) and their combination, with all
+nuisance parameters sampled (5, 10 and 13 dimensions), the Fisher forecast and the
+Nautilus posterior are almost indistinguishable (\autoref{fig:nautilus}). The marginalised
+errors on $\Omega_{\mathrm{m}}$ and $\sigma_8$ agree to within 1.4%, 1.2% and 0.9%, which is
+the size of the sampling noise itself: with about 2000 to 3000 effective samples per
+chain, the noise on an error bar is about 1%. For these benchmarks, the Fisher
+approximation therefore reproduces the marginalised widths of $\Omega_{\mathrm{m}}$ and
+$\sigma_8$ to within the estimated sampling precision, and the chains, which took 11 min,
+10 min and 36 min on 64 workers, are cheap enough to check it case by case instead of
+assuming it. The figure and these numbers
+are produced by `scripts/paper-joss/reproduce_all.sh` (steps `nautilus` and `render`),
+which runs the three chains and draws the comparison in about 70 min on one 64-worker
+node.
 
-`cosmicjellyfish` is released under the Apache 2.0 licence. The source code is hosted at
-<https://github.com/santiagocasas/cosmicjellyfish> and the package is installed with
-`pip install cosmicjellyfish` for Python 3.10 to 3.12. Validation data and workflows are
-available at <https://dagshub.com/santiagocasas/cjfp-data>.
+![Fisher forecasts (dashed lines) and Nautilus posteriors (thin solid lines) for Euclid
+weak lensing, spectroscopic clustering and their combination, with the symbolic backend
+and all nuisance parameters marginalised in both cases. The combination assumes that WL
+and GCsp are statistically independent: the log-likelihoods are summed and the Fisher
+matrices added. Reproduced by
+`scripts/paper-joss/reproduce_all.sh`.\label{fig:nautilus}](figures/fig3_fisher_vs_nautilus.png){ width=70% }
+
+**Automatic differentiation.** Two Fisher matrices can differ for two reasons: the way
+the derivatives are taken, and the way the observable is computed. To separate them, we
+compute the Euclid photometric Fisher matrix (WL and photometric clustering, 17
+parameters) three times: with automatic differentiation of the JAX observable, which has
+no step size; with finite differences of the same JAX observable, which isolates the
+derivative method; and with finite differences of the standard NumPy implementation, which
+also tests the implementation of the observable itself (\autoref{fig:autodiff}). The
+marginalised errors agree to 0.05% for the same JAX observable and to 0.4% for the NumPy
+implementation, for all 17 parameters. The JAX and NumPy implementations are therefore
+equivalent for this purpose, and the finite-difference steps are small enough not to bias
+the errors, so any of the three routes can be used. These deviations are far below the 10%
+or more by which independent Fisher pipelines have differed [@Blanchard2020]. The numbers
+come from `scripts/paper-joss/autodiff_numbers.py` and the figure from
+`scripts/paper-joss/plot_autodiff_ratios.py`, both run by the `autodiff` step of
+`scripts/paper-joss/reproduce_all.sh` in a few minutes.
+
+![Marginalised errors from finite differences relative to automatic differentiation for
+the Euclid photometric forecast with the `jaxcosmo` backend, for the 17 free parameters
+(cosmological, galaxy bias and intrinsic alignment): same JAX observable (dots) and
+standard NumPy observable (squares). Reproduced by
+`scripts/paper-joss/plot_autodiff_ratios.py`.\label{fig:autodiff}](figures/fig2_autodiff_ratios.png){ width=90% }
+
+**Surveys and spectroscopic settings.** The code ships specifications for
+Euclid[^euclid] [@Mellier2025], DESI[^desi] [@DESI2016], Rubin/LSST[^rubin]
+[@Ivezic2019], the SKA Observatory[^skao] [@Bacon2020], MeerKLASS[^meerklass]
+[@Santos2017], Planck[^planck] [@Planck2018], the Simons Observatory[^so] [@Ade2019]
+and CMB-S4[^cmbs4] [@Abazajian2016]. Euclid is provided for the photometric and
+spectroscopic probes, with the pessimistic and optimistic settings of @Blanchard2020 and
+the data-release settings of @Archidiacono2025; the SKA Observatory for photometric and
+spectroscopic clustering and for intensity mapping, summarized in @Casas2023SKAO; and DESI for the target samples of
+its survey-validation programme [@DESI2024]. Spectroscopic clustering carries
+more settings than the survey itself: the bias model (a linear bias per redshift bin,
+parametrised directly or by its logarithm, or a scale-dependent bias), the shot noise,
+the nonlinear velocity-dispersion damping, the redshift errors and the scale cuts, with
+the corresponding nuisance parameters all free in the Fisher matrix.
+
+[^euclid]: <https://www.euclid-ec.org>
+[^desi]: <https://www.desi.lbl.gov>
+[^rubin]: <https://rubinobservatory.org>
+[^skao]: <https://www.skao.int>
+[^meerklass]: <https://meerklass.github.io>
+[^planck]: <https://www.cosmos.esa.int/web/planck>
+[^so]: <https://simonsobservatory.org>
+[^cmbs4]: <https://cmb-s4.org>
+
+\autoref{fig:spectro} compares Euclid spectroscopic clustering, the
+four DESI samples (BGS, LRG, ELG and QSO) and SKAO intensity mapping combined with the
+DESI ELG sample, on a common $\Lambda$CDM fiducial and with all nuisance parameters marginalised.
+The ranking reflects the specifications as transcribed and, for DESI, the assumption that
+the four samples are independent, since they cover disjoint redshift ranges. The figure is
+produced by `paper/scripts/fig5_spectro_survey_comparison.py` in about 2 min.
+
+![Spectroscopic forecasts for Euclid GCsp, the four DESI samples (independent blocks
+added) and SKAO intensity mapping with the DESI ELG sample (auto- and cross-spectra),
+with all nuisance parameters marginalised. Left: marginalised errors on
+$\Omega_{\mathrm{m}}$ and $\sigma_8$ in $\Lambda$CDM. Right: 68.27% and 95.45% contours
+in the $w_0$-$w_a$ plane in $w_0w_a$CDM. Reproduced by
+`paper/scripts/fig5_spectro_survey_comparison.py`.\label{fig:spectro}](figures/fig5_spectro_survey_comparison.png){ width=100% }
+
+**Modified gravity.** The code also has a modified-gravity module for Hu-Sawicki
+$f(R)$ gravity. The $f(R)$ background and linear growth come from a `hi_class`
+[@Zumalacarregui2017] based solver (`frahiclassy`, which will be made available soon), and the nonlinear power
+spectrum is the $\Lambda$CDM one multiplied by a boost, either the fitting formula of
+@Winther2019 or the e-MANTIS emulator [@SaezCasares2024]. The implementation follows
+closely the MontePython likelihood used for the $f(R)$ photometric analysis of
+@Koyama2025
+(<https://github.com/Sefa76/photometric_fofR/>).
+On the grid in multipole and redshift of that likelihood, the boost agrees exactly (zero
+difference) with it, for both models and for $10^{-7} \le |f_{R0}| \le 10^{-4}$. The table
+shows the resulting Fisher errors for the pessimistic Euclid setting (WL, photometric
+clustering and their cross-correlation) in the $f(R)$ model of @Casas2026fR, against the
+Fisher forecast of that paper. The errors on $\Omega_\mathrm{m}$ and $n_\mathrm{s}$
+agree within 2% and that on $\Omega_\mathrm{b}$ within 7%, while those on $h$ and
+$\sigma_8$ are 10% to 22% larger here; in $\Lambda$CDM they coincide. Possible
+contributors are the sky fraction ($f_\mathrm{sky}=0.35$ here, 15000 deg$^2$
+$\approx 0.364$ there) and the scale-independent growth used here for the intrinsic
+alignment; the different sky fraction alone raises the errors by only about 2%
+($\sqrt{0.364/0.35}\approx 1.02$), so it explains little of the difference. The error on
+$\log_{10}|f_{R0}|$ is 0.137 with the Winther boost and 0.128 with e-MANTIS, against 0.143
+in @Casas2026fR. The MCMC analysis of @Koyama2025 gives 0.11 for both
+boosts, in a different parameter basis.
+
+| Error | $\Omega_\mathrm{m}$ (%) | $\Omega_\mathrm{b}$ (%) | $h$ (%) | $n_\mathrm{s}$ (%) | $\sigma_8$ (%) | $\sigma(\log_{10}\lvert f_{R0}\rvert)$ |
+|:-------------------|-----:|-----:|-----:|-----:|-----:|-----:|
+| Table 2 of @Casas2026fR | 0.80 | 5.0 | 3.3 | 1.7 | 0.40 | 0.143 |
+| `cosmicjellyfish`, Winther boost | 0.81 | 5.34 | 3.64 | 1.74 | 0.48 | 0.137 |
+| `cosmicjellyfish`, e-MANTIS boost | 0.82 | 5.37 | 3.72 | 1.76 | 0.49 | 0.128 |
+
+Table: Fisher forecast for the $f(R)$ model of @Casas2026fR, Euclid pessimistic setting: marginalised relative errors (%) on the $\Lambda$CDM parameters and absolute error on $\log_{10}|f_{R0}|$.
+
+The configurations, source revisions and chains behind every number
+in this section are public (<https://huggingface.co/datasets/santicas/cjfp-data>). The
+$f(R)$ table, however, cannot yet be rerun from public inputs alone, since it needs the
+`frahiclassy` solver, which is not public yet.
 
 # AI usage disclosure
 
-**[TODO: to be completed and confirmed by the authors. JOSS asks for the tools and
-versions, where they were applied, and a statement of human verification.]**
+Over the last year, several large language models were used as coding assistants for the
+code, tests and documentation: OpenAI GPT models, from GPT-5 to, most recently, GPT-6.1
+Astra, Sol and Luna; Anthropic Claude models, mostly Claude Opus 5.5 and Claude Sonnet 5.5
+and earlier versions; and many open-weight models served kindly by Blablador, the LLM service of
+the Jülich Supercomputing Centre for Helmholtz AI
+(<https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/blablador_api_access/>), mostly
+DeepSeek-V4.1-Flash, but also Mistral, Kimi and Muse models. The repository ships an
+`AGENTS.md` guide for coding agents. All AI-assisted changes to the code, tests and
+documentation went through pull requests reviewed by the authors, and were checked by the
+unit tests, the continuous integration and the validation suite described above.
 
-*Software and documentation:* **[TODO: state which coding assistants were used for the
-code, tests and documentation, and for which parts. The repository ships an `AGENTS.md`
-guide for coding agents.]**
+The development decisions were recorded with the Agent-Native Research Artifact (ARA)
+protocol [@Liu2026ARA] (<https://github.com/ARA-Labs/Agent-Native-Research-Artifact>). At
+the end of each working session with a coding agent, the questions, decisions, experiments,
+pivots and dead ends are written to an exploration graph, each tagged with its provenance:
+proposed and executed by a human, proposed by the agent, or proposed by the agent and revised
+by a human. The trace is public on the `dev` branch of the repository, and
+\autoref{fig:ara} shows it for the last months of development.
 
-*This manuscript:* the authors wrote the first draft of the Summary, Statement of need,
-State of the field, Software design, Usage examples and Validation sections. Claude
-(Anthropic) **[TODO: model version]** was then used to correct the language and organise
-that text, to propose and format references, to draft the Research impact, Documentation
-and Availability sections from the repository documentation, to test the code listings
-against the repository, and to produce Figures 1 and 2. The authors reviewed, edited and
-validated all of this content **[TODO: confirm]**.
+![Exploration graph of the ARA trace of `cosmicjellyfish`. Each point is a node, placed by
+date and node type and coloured by provenance; grey lines connect a node to the nodes it
+depends on. Produced with
+`paper/scripts/fig6_ara_trace.py`.\label{fig:ara}](figures/fig6_ara_trace.png){ width=100% }
+
+For this manuscript, the authors wrote the first draft of the Summary, Statement of need,
+State of the field, Software design and the validation text. Claude (Anthropic; mostly
+Claude Opus 5.5) was used to correct the language, to restructure
+the text to the JOSS guidelines, to propose and format references, to draft the Research
+impact statement from the repository documentation, to test the code listings against the
+repository. The authors reviewed, edited and validated all of
+this content.
 
 # Acknowledgements
 
-**[TODO: funding; computing time on JURECA at the Jülich Supercomputing Centre for the
-Nautilus validation; acknowledgements to the CosmicFish authors and to the Euclid
-Consortium colleagues involved in the forecast validation.]**
+We thank Matteo Martinelli for initiating this project, the ideas, the motivation and for
+bringing researchers together.
+
+We thank Valeria Pettorino, Julien Lesgourgues, Nils Schöneberg and Maria Archidiacono for
+scientific ideas, validation and discussions.
+
+DS acknowledges support from the Fondecyt Regular project N.1251339 (ANID). ML is
+supported by grant PIP 11220200100729CO CONICET and grant 20020170100129BA UBACYT.
+
+We acknowledge the use of computing resources at the JURECA cluster of the
+Forschungszentrum Jülich (FZJ) under the project name paj2526 and punch_astro. We
+acknowledge the Blablador service of Helmholtz AI at the Jülich Supercomputing Centre for
+access to open-weight large language models.
 
 # Author contributions
 
-Following the all-contributors record of the repository: S. Casas leads and maintains the
-project and contributed to research, validation data, tests, tutorials and documentation.
-S. Pamuk contributed code, design, tests, examples, documentation and code review.
-M. Martinelli contributed code and design. Sabarish V. M. contributed code and
-documentation. **[TODO: expand as needed.]**
+Author contributions follow the CRediT (Contributor Roles Taxonomy) [@Brand2015]. For
+the authors who had not specified their roles, we derived a first proposal from the
+all-contributors record of the repository (`code` as Software, `ideas` as Conceptualization,
+`design` as Methodology, `research` as Investigation, `test`, `bug`, `review` and
+`userTesting` as Validation, `data` as Data curation, `projectManagement` and `maintenance`
+as Project administration, `mentoring` as Supervision, `doc`, `example` and `tutorial` as
+Software, and `content` as Writing -- original draft).
+
+- **S. Casas**: Conceptualization, Data curation, Investigation, Methodology, Project
+  administration, Software, Supervision, Validation, Visualization, Writing -- original
+  draft, Writing -- review & editing.
+- **S. Pamuk**: Conceptualization, Investigation, Methodology, Software, Validation,
+  Writing -- original draft.
+- **V. M. Sabarish**: Conceptualization, Investigation, Software.
+- **Z. Sakr**: Conceptualization, Investigation, Methodology, Software, Validation.
+- **D. Sapone**: Conceptualization, Software, Supervision.
+- **M. Leizerovich**: Conceptualization, Software, Validation.
+- **N. Frusciante**: Methodology, Software, Data curation.
+- **F. Pace**: Methodology, Software, Data curation.
+- **K. Koyama**: Conceptualization, Methodology, Supervision, Validation.
+- **E. Bellini**: Conceptualization, Data curation, Software.
+- **S. Camera**: Conceptualization, Methodology.
+- **M. Raveri**: Conceptualization, Software.
 
 # References

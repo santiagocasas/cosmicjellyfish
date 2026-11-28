@@ -1,0 +1,307 @@
+{
+  "metadata": {
+    "cf_version": "CosmicFish_v2.0.0",
+    "git_commit": "b50f5b784f0c9a26513dfa1a7bad52faf9a57e65",
+    "timestamp": "2026-11-26T23:03:35Z",
+    "observables": [
+      "GCsp"
+    ],
+    "totaltime_sec": 1.743030309677124,
+    "matrix_files": {
+      "txt": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher//CosmicFish_v2.0.0_GCsp_symb_demo__GCsp_FM.txt",
+      "paramnames": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher//CosmicFish_v2.0.0_GCsp_symb_demo__GCsp_FM.paramnames",
+      "dat_specs": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher//CosmicFish_v2.0.0_GCsp_symb_demo__GCsp_FM_specs.dat",
+      "json_specs": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher//CosmicFish_v2.0.0_GCsp_symb_demo__GCsp_FM_specs.json"
+    },
+    "env_flags": {
+      "COSMICFISH_FAST_EFF": null,
+      "COSMICFISH_FAST_P": null,
+      "COSMICFISH_FAST_KERNEL": null
+    }
+  },
+  "options": {
+    "accuracy": 1,
+    "feedback": 1,
+    "code": "symbolic",
+    "nonlinear": true,
+    "cosmo_model": "LCDM",
+    "survey_name": "Euclid",
+    "survey_name_photo": "Euclid-Photometric-ISTF-Pessimistic",
+    "survey_name_spectro": "Euclid-Spectroscopic-ISTF-Pessimistic",
+    "derivatives": "3PT",
+    "results_dir": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/scripts/paper-joss/output/nautilus_run/joint/fisher/",
+    "outroot": "GCsp_symb_demo_",
+    "specs_dir_default": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_survey_specifications",
+    "specs_dir": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_survey_specifications",
+    "external_data_dir": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/external_data",
+    "survey_specs": "ISTF-Optimistic",
+    "survey_name_radio_IM": "SKAO-IM-Redbook",
+    "fail_on_specs_not_found": false,
+    "nonlinear_photo": true,
+    "bfs8terms": false,
+    "vary_bias_str": "lnb",
+    "AP_effect": true,
+    "FoG_switch": true,
+    "GCsp_linear": false,
+    "fix_cosmo_nl_terms": true,
+    "Pshot_nuisance_fiducial": 0.0,
+    "pivot_z_IA": 0.0,
+    "spectro_Pk_k_samples": 1025,
+    "spectro_Pk_mu_samples": 17,
+    "timing": false,
+    "activateMG": false,
+    "external_activateMG": false,
+    "memorize_cosmo": false,
+    "SUPPRESS_WARNINGS": true,
+    "boltzmann_yaml_path": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_boltzmann_yaml_files",
+    "class_config_yaml": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_boltzmann_yaml_files/class/default.yaml",
+    "camb_config_yaml": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_boltzmann_yaml_files/camb/default.yaml",
+    "symbolic_config_yaml": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_boltzmann_yaml_files/symbolic/default.yaml",
+    "jaxcosmo_config_yaml": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_boltzmann_yaml_files/jaxcosmo/default.yaml",
+    "fishermatrix_file_extension": ".txt",
+    "savgol_window": 101,
+    "savgol_polyorder": 3,
+    "savgol_width": 1.358528901113328,
+    "savgol_internalsamples": 800,
+    "savgol_internalkmin": 0.001,
+    "eps_cosmopars": 0.01,
+    "eps_gal_nuispars": 0.0001,
+    "eps_gal_nonlinpars": 0.01,
+    "GCsp_Tracer": "matter",
+    "GCph_Tracer": "matter",
+    "ell_sampling": "accuracy",
+    "ShareDeltaNeff": false,
+    "kh_rescaling_bug": false,
+    "kh_rescaling_beforespecerr_bug": false,
+    "colossus_base_dir": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish",
+    "colossus_persistence": ""
+  },
+  "specifications": {
+    "z_bins_GCph": [
+      0.001,
+      0.418,
+      0.56,
+      0.678,
+      0.789,
+      0.9,
+      1.019,
+      1.155,
+      1.324,
+      1.576,
+      2.5
+    ],
+    "z_bins_WL": [
+      0.001,
+      0.418,
+      0.56,
+      0.678,
+      0.789,
+      0.9,
+      1.019,
+      1.155,
+      1.324,
+      1.576,
+      2.5
+    ],
+    "zm": 0.9,
+    "ngamma": 1.5,
+    "ngal_sqarmin_GCph": 30,
+    "ngal_sqarmin_WL": 30,
+    "photo_z_params": {
+      "fout": 0.1,
+      "co": 1,
+      "cb": 1,
+      "sigma_o": 0.05,
+      "sigma_b": 0.05,
+      "zo": 0.1,
+      "zb": 0.0
+    },
+    "fsky_GCph": 0.35,
+    "lmax_GCph": 750,
+    "lmin_GCph": 10,
+    "ellipt_error": 0.3,
+    "fsky_WL": 0.35,
+    "lmax_WL": 1500,
+    "lmin_WL": 10,
+    "kmax": 30.0,
+    "vary_ph_bias": 0.06,
+    "vary_IA_pars": 0.035,
+    "ph_bias_model": "binned",
+    "ph_bias_parametrization": {
+      "binned": {
+        "keystr": "b",
+        "generate_bias_keys": true
+      },
+      "binned_constant": {
+        "keystr": "b",
+        "generate_bias_keys": true
+      },
+      "sqrt": {
+        "b0": 1.0
+      },
+      "flagship": {
+        "A": 1.0,
+        "B": 2.5,
+        "C": 2.8,
+        "D": 1.6
+      }
+    },
+    "IA_params": {
+      "IA_model": "eNLA",
+      "AIA": 1.72,
+      "betaIA": 2.17,
+      "etaIA": -0.41
+    },
+    "ngalbin_WL": [
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684
+    ],
+    "binrange_WL": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "ngalbin_GCph": [
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684,
+      35454308.58012684
+    ],
+    "binrange_GCph": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "z0": 0.6363961030678927,
+    "z0_p": 0.6363961030678927,
+    "spec_sigma_dz": 0.002,
+    "spec_sigma_dz_type": "constant",
+    "area_survey_spectro": 15000,
+    "kmax_GCsp": 0.25,
+    "kmin_GCsp": 0.001,
+    "z_bins_sp": {
+      "1": [
+        0.9,
+        1.1
+      ],
+      "2": [
+        1.1,
+        1.3
+      ],
+      "3": [
+        1.3,
+        1.5
+      ],
+      "4": [
+        1.5,
+        1.8
+      ]
+    },
+    "dndOmegadz": {
+      "1": 1815.0,
+      "2": 1701.5,
+      "3": 1410.0,
+      "4": 940.97
+    },
+    "sp_bias_sample": "g",
+    "sp_bias_model": "linear_log",
+    "sp_bias_root": "lnb",
+    "sp_bias_parametrization": {
+      "linear": {
+        "bg_1": 1.4614804,
+        "bg_2": 1.6060949,
+        "bg_3": 1.746479,
+        "bg_4": 1.898866
+      },
+      "linear_log": {
+        "lnbg_1": 0.37944989,
+        "lnbg_2": 0.4738057,
+        "lnbg_3": 0.55760176,
+        "lnbg_4": 0.64125687
+      },
+      "linear_Qbias": {
+        "bg_1": 1.4614804,
+        "bg_2": 1.6060949,
+        "bg_3": 1.746479,
+        "bg_4": 1.898866,
+        "A1": 0.02,
+        "A2": -2.0
+      }
+    },
+    "shot_noise_model": "constant",
+    "shot_noise_parametrization": {
+      "constant": {
+        "Ps_1": 0.0,
+        "Ps_2": 0.0,
+        "Ps_3": 0.0,
+        "Ps_4": 0.0
+      }
+    },
+    "fsky_spectro": 0.3636102608321519,
+    "fsky_IM": 0.0,
+    "survey_name": "Euclid",
+    "specs_dir": "/scratch/work/casas/cosmicjellyfishpie_release/cosmicjellyfish/cosmicjellyfish/configs/default_survey_specifications"
+  },
+  "fiducialpars": {
+    "Omegam": 0.32,
+    "Omegab": 0.05,
+    "h": 0.67,
+    "ns": 0.96,
+    "sigma8": 0.815584
+  },
+  "freepars": {
+    "Omegam": 0.01,
+    "sigma8": 0.01,
+    "lnbg_1": 0.0001,
+    "lnbg_2": 0.0001,
+    "lnbg_3": 0.0001,
+    "lnbg_4": 0.0001,
+    "Ps_1": 0.0001,
+    "Ps_2": 0.0001,
+    "Ps_3": 0.0001,
+    "Ps_4": 0.0001
+  },
+  "allparams": {
+    "Omegam": 0.32,
+    "Omegab": 0.05,
+    "h": 0.67,
+    "ns": 0.96,
+    "sigma8": 0.815584,
+    "lnbg_1": 0.37944989,
+    "lnbg_2": 0.4738057,
+    "lnbg_3": 0.55760176,
+    "lnbg_4": 0.64125687,
+    "Ps_1": 0.0,
+    "Ps_2": 0.0,
+    "Ps_3": 0.0,
+    "Ps_4": 0.0
+  }
+}

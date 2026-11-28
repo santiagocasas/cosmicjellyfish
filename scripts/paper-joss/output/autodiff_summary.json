@@ -1,0 +1,29 @@
+{
+  "n_params": 17,
+  "params": [
+    "10^9As",
+    "Omegam",
+    "Omegab",
+    "h",
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8",
+    "b9",
+    "b10",
+    "AIA",
+    "betaIA",
+    "etaIA"
+  ],
+  "max_abs_jax_fd_percent": 0.04765533552333334,
+  "max_abs_numpy_fd_percent": 0.376111319472372,
+  "paper": {
+    "jax_fd_percent": 0.05,
+    "numpy_fd_percent": 0.4,
+    "n_params": 17
+  }
+}

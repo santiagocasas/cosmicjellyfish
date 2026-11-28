@@ -1,0 +1,31 @@
+% Generated from paper.md by paper/make_arxiv.sh -- edit paper.md, not this file.
+% Layout: front_matter/preamble.tex and front_matter/margin.tex (JOSS style,
+% from the cloelib arXiv submission).
+\input{front_matter/preamble}
+\renewcommand\Authand{, }
+\renewcommand\Authands{, }
+
+\title{$if(latex-title)$$latex-title$$else$$title$$endif$}
+
+\date{\vspace{-7ex}}
+
+\begin{document}
+% --- Authors & affiliations (authblk), from the YAML header of paper.md ---
+$for(authors)$
+\author[$authors.affiliation$]{$authors.name$$if(authors.corresponding)$\thanks{Corresponding author$if(authors.email)$: $authors.email$$endif$}$endif$$if(authors.orcid)$\,\orcidlink{$authors.orcid$}$endif$}
+$endfor$
+
+$for(affiliations)$
+\affil[$affiliations.index$]{$affiliations.name$}
+$endfor$
+
+\maketitle
+
+\input{front_matter/margin}
+
+$body$
+
+\bibliographystyle{mnras}
+\bibliography{paper}
+
+\end{document}

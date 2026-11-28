@@ -8,6 +8,13 @@
 !docs/source/_static/likelihood_validation/*.png
 !docs/source/_static/ns_response/*.png
 !docs/source/_static/survey_validation/*.png
+# The five figures cited by the JOSS paper (the scripts in paper/scripts regenerate 1, 2, 4 and 5).
+!paper/figures/fig1_euclid_probes.png
+!paper/figures/fig2_autodiff_ratios.png
+!paper/figures/fig3_fisher_vs_nautilus.png
+!paper/figures/fig4_survey_comparison.png
+!paper/figures/fig5_spectro_survey_comparison.png
+paper/figures/*.txt
 # Generated chains are local outputs; published suites live in cjfp-data.
 /chains/
 # build artifacts
@@ -84,3 +91,7 @@ docs/source/api/generated/
 
 # Local planning state (never commit)
 .sisyphus/
+paper/jats/
+
+# JOSS paper reproduction outputs (scripts/paper-joss/reproduce_all.sh)
+scripts/paper-joss/output/

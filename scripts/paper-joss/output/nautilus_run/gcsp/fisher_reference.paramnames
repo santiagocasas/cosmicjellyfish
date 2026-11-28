@@ -1,0 +1,5 @@
+#
+# This file contains the parameter names for a Fisher matrix.
+#
+Omegam    \Omega_{{\rm m}, 0}    0.32
+sigma8    \sigma_8    0.815584
