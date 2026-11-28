@@ -69,7 +69,6 @@ def main() -> int:
     text = PAPER.read_text(encoding="utf-8")
     authors = front_matter(text)["authors"]
     prose = prose_roles(text)
-    names = {norm(v): k for k, v in CREDIT.items()}
     errors = []
 
     for author in authors:
