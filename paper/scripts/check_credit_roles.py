@@ -70,6 +70,7 @@ def main() -> int:
     authors = front_matter(text)["authors"]
     prose = prose_roles(text)
     errors = []
+    expected = set()
 
     for author in authors:
         name = author["name"]
@@ -87,6 +88,7 @@ def main() -> int:
 
         initials = " ".join(f"{p[0]}." if not p.endswith(".") else p for p in name.split()[:-1])
         key = f"{initials} {name.split()[-1]}"
+        expected.add(key)
         if key not in prose:
             errors.append(f"{name}: no bullet {key!r} in 'Author contributions'")
             continue
@@ -97,6 +99,9 @@ def main() -> int:
             errors.append(f"{name}: '{r}' in YAML but not in prose")
         if not roles:
             print(f"warning: {name} has no roles yet")
+
+    for key in sorted(prose.keys() - expected):
+        errors.append(f"{key!r}: contribution bullet has no YAML author")
 
     n = sum(len(a.get("roles", [])) for a in authors)
     for e in errors:

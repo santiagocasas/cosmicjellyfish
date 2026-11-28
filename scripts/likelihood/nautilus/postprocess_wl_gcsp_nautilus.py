@@ -29,8 +29,8 @@ def _read_case(run_dir: Path, label: str) -> tuple[dict, pd.DataFrame, object]:
     if not metadata_path.is_file():
         raise FileNotFoundError(f"Missing completed {label} case metadata: {metadata_path}")
     metadata = json.loads(metadata_path.read_text())
-    chain_path = Path(metadata["chain"])
-    reference_path = Path(metadata["fisher_reference"])
+    chain_path = case_dir / Path(metadata["chain"]).name
+    reference_path = case_dir / Path(metadata["fisher_reference"]).name
     if not chain_path.is_file() or not reference_path.is_file():
         raise FileNotFoundError(f"{label} metadata points to missing chain or Fisher file")
     return metadata, pd.read_csv(chain_path), fm.fisher_matrix(file_name=str(reference_path))

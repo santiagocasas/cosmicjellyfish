@@ -62,8 +62,8 @@ The "Draft PDF" workflow (`.github/workflows/draft-pdf.yml`) runs on every push 
 branch, so each commit of a paper PR gets a draft PDF. It can also be started by hand
 from the Actions tab ("Draft PDF" -> "Run workflow").
 
-To get the PDF of the latest push: Actions -> the run -> Artifacts -> `paper`.
-With the `gh` CLI: `gh run download --name paper` (add `--dir paper-draft` to choose
+To get the PDF of the latest push: Actions -> the run -> Artifacts -> `paper.pdf`.
+With the `gh` CLI: `gh run download --name paper.pdf` (add `--dir paper-draft` to choose
 the target folder).
 
 The workflow uses `openjournals/openjournals-draft-action`, which runs the same Docker

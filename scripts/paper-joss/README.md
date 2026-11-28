@@ -58,7 +58,7 @@ sigma; 5, 10 and 13 dimensions), each with 64 workers, `n_live = 500` and
 roughly inversely). Quick check without sampling:
 
 ```bash
-STEPS="listings autodiff" bash scripts/paper-joss/reproduce_all.sh
+STEPS="autodiff" bash scripts/paper-joss/reproduce_all.sh
 ```
 
 An interrupted run is resumed with `RESUME=1` and the same settings; finished chains are

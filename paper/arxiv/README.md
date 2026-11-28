@@ -23,7 +23,9 @@ Output, both ignored by git:
   (`ms.tex`, `ms.bbl`, `front_matter/`, `figures/`, `paper.bib`, `mnras.bst`)
 
 Requirements: pandoc >= 3.2 (otherwise Docker is used with the `pandoc/core` image),
-and pdflatex + bibtex for the preview and the `.bbl`. If the `cm-super` fonts are not
+and a TeX Live installation with pdflatex, BibTeX, `orcidlink`, and the TikZ `bayesnet`
+library (`tikzlibrarybayesnet.code.tex`) for the preview and the `.bbl`. A minimal TeX
+installation may omit these packages. If the `cm-super` fonts are not
 installed locally, the preview falls back to Latin Modern; the uploaded files are not
 changed by this, and arXiv has the fonts.
 

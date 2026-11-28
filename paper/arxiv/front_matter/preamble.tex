@@ -93,7 +93,8 @@
 \def\href@Notdoi#1#2{\def\tempa{#1}\def\tempb{#2}%
   \ifx\tempa\tempb\relax\href@Urllike{#1}{#2}\else
   \href@Orig{#1}{#2}\fi}
-\def\href#1#2{%
+\def\href{\@ifnextchar[{\href@Orig}{\href@Wrap}}%
+\def\href@Wrap#1#2{%
   \IfBeginWith{#1}{https://doi.org}%
   {\href@Urllike{#1}{#2}}{\href@Notdoi{#1}{#2}}}
 \makeatother
@@ -160,7 +161,7 @@
 % cosmicjellyfish: footer with this paper's citation line.
 \fancyfoot[L]{%
   \parbox[t]{0.98\headwidth}{\footnotesize\sffamily
-  Casas \textit{et al.} (\the\year), \textttOrig{cosmicjellyfish}: Fisher-matrix and Monte Carlo forecasts for cosmological surveys in Python and JAX. Preprint submitted to the \textit{Journal of Open Source Software}}%
+  Casas \textit{et al.} (2026), \textttOrig{cosmicjellyfish}: Fisher-matrix and Monte Carlo forecasts for cosmological surveys in Python and JAX. Preprint submitted to the \textit{Journal of Open Source Software}}%
 }
 
 

@@ -1,12 +1,21 @@
 -- Inline code -> \texttt{...} (as in the cloelib paper), instead of
 -- \passthrough{\lstinline!...!} produced by pandoc's listings mode.
--- The text is kept as a Str, so pandoc escapes LaTeX special characters.
+-- Keep text in Str nodes for LaTeX escaping and emit spaces explicitly.
 function Code(el)
-  return {
-    pandoc.RawInline("latex", "\\texttt{"),
-    pandoc.Str(el.text),
-    pandoc.RawInline("latex", "}"),
-  }
+  local result = {pandoc.RawInline("latex", "\\texttt{")}
+  local pos = 1
+  for first, last in el.text:gmatch("() +()") do
+    if first > pos then
+      table.insert(result, pandoc.Str(el.text:sub(pos, first - 1)))
+    end
+    table.insert(result, pandoc.RawInline("latex", string.rep("{\\space}", last - first)))
+    pos = last
+  end
+  if pos <= #el.text then
+    table.insert(result, pandoc.Str(el.text:sub(pos)))
+  end
+  table.insert(result, pandoc.RawInline("latex", "}"))
+  return result
 end
 
 -- The bibliography heading comes from \bibliography{} (natbib), so the

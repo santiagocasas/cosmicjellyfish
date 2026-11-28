@@ -618,10 +618,9 @@ FUNCTION {either.or.check}
 FUNCTION {format.bvolume}
 { volume empty$
     { "" }
-    { "" series tie.or.space.connect
-      volume empty$
-        'skip$
-        { " Vol. " * volume * }
+    { series empty$
+        { "Vol. " volume * }
+        { "" series tie.or.space.connect " Vol. " * volume * }
       if$
       "volume and number" number either.or.check
     }
@@ -990,7 +989,7 @@ FUNCTION {inbook}
       new.sentence
       publisher "publisher" output.check
       address output
-      format.pages output
+      format.chapter.pages output
     }
     { format.chapter.pages "chapter and pages" output.check
       format.book.crossref output.nonnull
@@ -1017,9 +1016,7 @@ FUNCTION {incollection}
       publisher "publisher" output.check
       address output
     }
-    { format.incoll.inproc.crossref output.nonnull
-      format.chapter.pages output
-    }
+    { format.incoll.inproc.crossref output.nonnull }
   if$
   format.chapter.pages output
   format.eprint "eprint" output.check.nocomma
@@ -1154,7 +1151,6 @@ FUNCTION {techreport}
   address output
   format.eprint "eprint" output.check.nocomma
   format.doi "doi" output.check.nocomma
-  format.url output
   fin.entry
 }
 
@@ -1532,8 +1528,16 @@ FUNCTION {calc.label}
   or
     'author.editor.key.label.full
     { type$ "proceedings" =
-        { editor format.names.label }
-        { author format.names.label }
+        { editor empty$
+            'editor.key.label
+            { editor format.names.label }
+          if$
+        }
+        { author empty$
+            'author.key.label
+            { author format.names.label }
+          if$
+        }
       if$
     }
   if$
@@ -1681,7 +1685,7 @@ FUNCTION {presort}
   purify$                       % remove {braces} round names, to avoid confusing sorting
   "    "
   *
-  year number.for.presort *
+  year field.or.null purify$ #-1 #4 substring$ *
   #1 entry.max$ substring$
   'presort.key :=
   presort.key

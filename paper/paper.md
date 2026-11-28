@@ -203,7 +203,9 @@ derivatives independently of any cosmology code. General inference frameworks su
 MontePython [@Audren2013; @Brinckmann2019] and Cobaya [@Torrado2021] contain forecasting
 likelihoods, but they are not Fisher codes. Differentiable libraries such as `jax-cosmo`
 [@Campagne2023], CosmoPower-JAX [@Piras2023] and `cloelib` [@Bonici2026] provide
-predictions and gradients, but not survey specifications, covariances or Fisher tools.
+predictions and gradients; `jax-cosmo` also builds Gaussian angular covariances and a
+Fisher matrix by automatic differentiation, but none of them ships validated survey
+specifications or a multi-probe forecasting pipeline.
 
 Three gaps remain. First, validation: the Fisher approach for spectroscopic surveys had
 to be validated against MCMC [@YahiaCherif2021], and numerical derivatives were found to
@@ -211,9 +213,9 @@ dominate the instability of LSST-like forecasts [@Bhandari2021]. Second, CAMB an
 have been compared at the level of power spectra [@Lesgourgues2011;
 @LesgourguesTram2011], but rarely at the level of forecasts, where the accuracy settings
 for massive neutrinos matter most [@Archidiacono2025]. Third, `jax-cosmo` compared
-automatic and finite differences for two parameters [@Campagne2023]; a comparison for a
-full survey with nuisance parameters, and against a non-differentiable implementation of
-the same observable, was missing.
+automatic and finite differences for two parameters [@Campagne2023]; a controlled
+comparison for a full Euclid forecast with 17 cosmological and nuisance parameters, and
+against an independent NumPy implementation of the same observable, was missing.
 
 We extended `cosmicfishpie` instead of contributing to these frameworks for two reasons.
 The checks above require exchanging one element of the forecast (theory, derivative,
@@ -272,11 +274,16 @@ forecasts still run.
 
 # Example
 
-The examples use version 2.1.0, which is installed with
-`pip install cosmicjellyfish==2.1.0` and archived on Zenodo (DOI for all versions:
-[10.5281/zenodo.24593176](https://doi.org/10.5281/zenodo.24593176)). The `symbolic` backend used below also needs the
-symbolic emulators of the linear and nonlinear power spectrum [@Bartlett2024a; @Bartlett2024b], which are not on PyPI:
-`pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git`.
+The examples use version 2.1.0, archived on Zenodo (DOI for all versions:
+[10.5281/zenodo.24593176](https://doi.org/10.5281/zenodo.24593176)). The `symbolic`
+backend used below also needs the symbolic emulators of the linear and nonlinear power
+spectrum [@Bartlett2024a; @Bartlett2024b], which are not on PyPI, so the installation is:
+
+```bash
+pip install cosmicjellyfish==2.1.0
+pip install git+https://github.com/DeaglanBartlett/symbolic_pofk.git
+```
+
 The defaults reproduce the pessimistic Euclid setup of @Blanchard2020, so a
 photometric and a spectroscopic forecast, and their combination, take three statements:
 
@@ -299,10 +306,12 @@ backend needs massless neutrinos), so the sentence says a massless fiducial is n
 Notebook 07 shows the full comparison. -->
 
 Replacing `"symbolic"` by `"camb"` or `"class"` repeats the forecast with a Boltzmann
-solver. With `"jaxcosmo"` and a fiducial cosmology with massless neutrinos, passing
-`derivative_provider=JaxAutodiffProvider()` to `FisherMatrix` replaces the finite
-differences by automatic differentiation. A posterior for the same setup is obtained by
-sampling the likelihood:
+solver. To use `"jaxcosmo"`, install the optional backend with
+`pip install "cosmicjellyfish[jaxcosmo]==2.1.0"`. With a massless-neutrino fiducial,
+passing `derivative_provider=JaxAutodiffProvider()` to `FisherMatrix` replaces the finite
+differences by automatic differentiation. The likelihood is sampled with the same
+survey, theory and fiducial settings; the listing below is a minimal two-parameter
+weak-lensing demonstration (the full benchmark is described in the next section):
 
 <!-- [C17] SIMPLIFIED listing (old: 2 blocks, 45 lines; now 12 lines). Dropped ell
 sampling, results_dir, outroot, survey names, n_eff and verbose: all have defaults.
@@ -347,9 +356,9 @@ energy [@Casas2018; @Casas2019; @Akrami2021], the anisotropic stress [@Sakr2025]
 of the Fisher approach for spectroscopic surveys [@YahiaCherif2021] and the impact of nonlinear
 and baryonic feedback prescriptions on weak lensing [@Martinelli2021].
 
-**Community.** The code is developed openly on GitHub by eleven contributors, with code
-review through pull requests and continuous integration; the eleven authors of this paper
-work at institutions in nine countries.
+**Community.** The code is developed openly on GitHub, with code review through pull
+requests and continuous integration; the twelve authors of this paper work at institutions
+in eleven countries.
 
 **Validation suite.** A public dashboard
 (<https://www.santicasas.space/cosmicjellyfish/dashboard/>) compares CAMB and CLASS
@@ -370,17 +379,20 @@ nuisance parameters sampled (5, 10 and 13 dimensions), the Fisher forecast and t
 Nautilus posterior are almost indistinguishable (\autoref{fig:nautilus}). The marginalised
 errors on $\Omega_{\mathrm{m}}$ and $\sigma_8$ agree to within 1.4%, 1.2% and 0.9%, which is
 the size of the sampling noise itself: with about 2000 to 3000 effective samples per
-chain, the noise on an error bar is about 1%. For these setups the Gaussian approximation
-therefore holds, and the chains, which took 11 min, 10 min and 36 min on 64 workers, are
-cheap enough to check it case by case instead of assuming it. The figure and these numbers
+chain, the noise on an error bar is about 1%. For these benchmarks, the Fisher
+approximation therefore reproduces the marginalised widths of $\Omega_{\mathrm{m}}$ and
+$\sigma_8$ to within the estimated sampling precision, and the chains, which took 11 min,
+10 min and 36 min on 64 workers, are cheap enough to check it case by case instead of
+assuming it. The figure and these numbers
 are produced by `scripts/paper-joss/reproduce_all.sh` (steps `nautilus` and `render`),
 which runs the three chains and draws the comparison in about 70 min on one 64-worker
 node.
 
 ![Fisher forecasts (dashed lines) and Nautilus posteriors (thin solid lines) for Euclid
 weak lensing, spectroscopic clustering and their combination, with the symbolic backend
-and all nuisance parameters marginalised in both cases. The two agree closely in every
-case. Reproduced by
+and all nuisance parameters marginalised in both cases. The combination assumes that WL
+and GCsp are statistically independent: the log-likelihoods are summed and the Fisher
+matrices added. Reproduced by
 `scripts/paper-joss/reproduce_all.sh`.\label{fig:nautilus}](figures/fig3_fisher_vs_nautilus.png){ width=70% }
 
 **Automatic differentiation.** Two Fisher matrices can differ for two reasons: the way
@@ -456,23 +468,27 @@ shows the resulting Fisher errors for the pessimistic Euclid setting (WL, photom
 clustering and their cross-correlation) in the $f(R)$ model of @Casas2026fR, against the
 Fisher forecast of that paper. The errors on $\Omega_\mathrm{m}$ and $n_\mathrm{s}$
 agree within 2% and that on $\Omega_\mathrm{b}$ within 7%, while those on $h$ and
-$\sigma_8$ are 10% to 22% larger here; in $\Lambda$CDM they coincide. We attribute this
-partly to the sky fraction ($f_\mathrm{sky}=0.35$ here, 15000 deg$^2$ $\approx 0.364$
-there) and to the scale-independent growth used here for the intrinsic alignment. The
-error on $\log_{10}|f_{R0}|$ is 0.137 with the Winther boost and 0.128 with e-MANTIS,
-against 0.143 in @Casas2026fR. The MCMC analysis of @Koyama2025 gives 0.11 for both
+$\sigma_8$ are 10% to 22% larger here; in $\Lambda$CDM they coincide. Possible
+contributors are the sky fraction ($f_\mathrm{sky}=0.35$ here, 15000 deg$^2$
+$\approx 0.364$ there) and the scale-independent growth used here for the intrinsic
+alignment; the different sky fraction alone raises the errors by only about 2%
+($\sqrt{0.364/0.35}\approx 1.02$), so it explains little of the difference. The error on
+$\log_{10}|f_{R0}|$ is 0.137 with the Winther boost and 0.128 with e-MANTIS, against 0.143
+in @Casas2026fR. The MCMC analysis of @Koyama2025 gives 0.11 for both
 boosts, in a different parameter basis.
 
-| Relative error (%) | $\Omega_\mathrm{m}$ | $\Omega_\mathrm{b}$ | $h$ | $n_\mathrm{s}$ | $\sigma_8$ | $\log_{10}\lvert f_{R0}\rvert$ |
+| Error | $\Omega_\mathrm{m}$ (%) | $\Omega_\mathrm{b}$ (%) | $h$ (%) | $n_\mathrm{s}$ (%) | $\sigma_8$ (%) | $\sigma(\log_{10}\lvert f_{R0}\rvert)$ |
 |:-------------------|-----:|-----:|-----:|-----:|-----:|-----:|
-| Table 2 of @Casas2026fR | 0.80 | 5.0 | 3.3 | 1.7 | 0.40 | 2.7 |
-| `cosmicjellyfish`, Winther boost | 0.81 | 5.34 | 3.64 | 1.74 | 0.48 | 2.59 |
-| `cosmicjellyfish`, e-MANTIS boost | 0.82 | 5.37 | 3.72 | 1.76 | 0.49 | 2.42 |
+| Table 2 of @Casas2026fR | 0.80 | 5.0 | 3.3 | 1.7 | 0.40 | 0.143 |
+| `cosmicjellyfish`, Winther boost | 0.81 | 5.34 | 3.64 | 1.74 | 0.48 | 0.137 |
+| `cosmicjellyfish`, e-MANTIS boost | 0.82 | 5.37 | 3.72 | 1.76 | 0.49 | 0.128 |
 
-Table: Fisher forecast for the $f(R)$ model of @Casas2026fR, Euclid pessimistic setting, marginalised relative errors.
+Table: Fisher forecast for the $f(R)$ model of @Casas2026fR, Euclid pessimistic setting: marginalised relative errors (%) on the $\Lambda$CDM parameters and absolute error on $\log_{10}|f_{R0}|$.
 
 The configurations, source revisions and chains behind every number
-in this section are public (<https://huggingface.co/datasets/santicas/cjfp-data>).
+in this section are public (<https://huggingface.co/datasets/santicas/cjfp-data>). The
+$f(R)$ table, however, cannot yet be rerun from public inputs alone, since it needs the
+`frahiclassy` solver, which is not public yet.
 
 # AI usage disclosure
 
@@ -483,7 +499,9 @@ and earlier versions; and many open-weight models served kindly by Blablador, th
 the Jülich Supercomputing Centre for Helmholtz AI
 (<https://sdlaml.pages.jsc.fz-juelich.de/ai/guides/blablador_api_access/>), mostly
 DeepSeek-V4.1-Flash, but also Mistral, Kimi and Muse models. The repository ships an
-`AGENTS.md` guide for coding agents.
+`AGENTS.md` guide for coding agents. All AI-assisted changes to the code, tests and
+documentation went through pull requests reviewed by the authors, and were checked by the
+unit tests, the continuous integration and the validation suite described above.
 
 The development decisions were recorded with the Agent-Native Research Artifact (ARA)
 protocol [@Liu2026ARA] (<https://github.com/ARA-Labs/Agent-Native-Research-Artifact>). At

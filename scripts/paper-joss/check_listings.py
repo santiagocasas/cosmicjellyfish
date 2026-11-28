@@ -48,9 +48,13 @@ def main() -> int:
             print(f"--- listing {n} ---\n{code}")
         return 0
 
+    selected = args.only or range(1, len(listings) + 1)
+    for n in selected:
+        if not 1 <= n <= len(listings):
+            parser.error(f"listing {n} is out of range (1-{len(listings)})")
+
     workdir = args.out_dir.resolve() / "listings"
     workdir.mkdir(parents=True, exist_ok=True)
-    selected = args.only or range(1, len(listings) + 1)
     failed = []
     for n in selected:
         script = workdir / f"listing_{n}.py"

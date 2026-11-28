@@ -20,7 +20,7 @@
 #
 # Examples:
 #   bash scripts/paper-joss/reproduce_all.sh
-#   STEPS="listings autodiff" bash scripts/paper-joss/reproduce_all.sh   # quick, no sampling
+#   STEPS="autodiff" bash scripts/paper-joss/reproduce_all.sh   # quick, no sampling
 #   nohup bash scripts/paper-joss/reproduce_all.sh > reproduce.log 2>&1 &
 set -euo pipefail
 
@@ -42,6 +42,24 @@ export PYTHONPATH="$REPO/scripts/likelihood/nautilus${PYTHONPATH:+:$PYTHONPATH}"
 
 has_step() { [[ " $STEPS " == *" $1 "* ]]; }
 stamp() { date '+%Y-%m-%d %H:%M:%S'; }
+
+has_case_artifacts() {
+    "${PY[@]}" - "$1" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+case_dir = Path(sys.argv[1])
+try:
+    metadata = json.loads((case_dir / "case_metadata.json").read_text())
+    for key in ("chain", "fisher_reference"):
+        artifact = case_dir / Path(metadata[key]).name
+        if not artifact.is_file() or artifact.stat().st_size == 0:
+            sys.exit(1)
+except (OSError, ValueError, KeyError, TypeError):
+    sys.exit(1)
+PY
+}
 
 echo "[$(stamp)] repo $(git rev-parse --short HEAD 2>/dev/null || echo unknown), steps: $STEPS"
 echo "[$(stamp)] outputs in $OUT_DIR"
@@ -66,7 +84,7 @@ if has_step nautilus; then
     resume_flag=()
     [[ "$RESUME" == "1" ]] && resume_flag=(--resume)
     for case in wl gcsp joint; do
-        if [[ -f "$RUN_DIR/$case/case_metadata.json" ]]; then
+        if has_case_artifacts "$RUN_DIR/$case"; then
             echo "[$(stamp)] nautilus $case already finished, skipping"
             continue
         fi
