@@ -2,8 +2,8 @@ session:
   id: 2026-11-26_001
   date: '2026-11-26'
   started: '2026-11-26T00:00'
-  last_turn: '2026-11-26T00:00'
-  turn_count: 22
+  last_turn: '2026-11-26T23:53'
+  turn_count: 49
   summary: >-
     Catch-up record for 14-26 Nov (backfilled, the epilogue had not been running): PR triage of
     cosmicjellyfish, four authorship PRs merged into paper/joss-draft, CI path rules, metadata
@@ -93,6 +93,196 @@ events_logged:
     routing: direct
     provenance: user
     summary: "ellipses switched to 68.27%/95.45% 2D contours (fishconsumer convention); figures and notebook 09 regenerated"
+  - turn: 23
+    type: decision
+    id: "N141"
+    routing: direct
+    provenance: user
+    summary: "PR #253 CodeRabbit findings triaged: 12 threads fixed with tests, JATS skipped; export file names carry Ig/joint"
+  - turn: 24
+    type: decision
+    id: "N142"
+    routing: direct
+    provenance: user
+    summary: "No broad local rerun; live CodeRabbit scope verified, legacy Ig replay edge case flagged, CI to validate pushed fixes"
+  - turn: 25
+    type: decision
+    id: "N143"
+    routing: direct
+    provenance: user-revised
+    summary: "Applied the legacy Ig replay fix; all three focused regression cases passed."
+  - turn: 26
+    type: decision
+    id: "N144"
+    routing: direct
+    provenance: user-revised
+    summary: "Created three local PR #253 review-fix commits; awaiting maintainer push."
+  - turn: 27
+    type: experiment
+    id: "N145"
+    routing: direct
+    provenance: ai-executed
+    summary: "PR #265 real e-MANTIS smoke test passed at nominal input and failed at the documented lower sigma8 clamp."
+  - turn: 28
+    type: experiment
+    id: "N146"
+    routing: direct
+    provenance: ai-executed
+    summary: "PR #265 clamp verified with real e-MANTIS; main integration prepared locally, awaiting commit."
+  - turn: 29
+    type: decision
+    id: "N147"
+    routing: direct
+    provenance: user-revised
+    summary: "Created local merge commit fc5a109 for PR #265; awaiting maintainer push."
+  - turn: 30
+    type: experiment
+    id: "N148"
+    routing: direct
+    provenance: ai-executed
+    summary: "Audited PR #253 GitHub threads: 5 still open, including 2 deferred JATS findings."
+  - turn: 31
+    type: decision
+    id: "N149"
+    routing: direct
+    provenance: user-revised
+    summary: "Closed four PR #253 threads after posting a follow-up; log-bias behavior remains open."
+  - turn: 32
+    type: decision
+    id: "N150"
+    routing: direct
+    provenance: user-revised
+    summary: "Defaulted runtime linear_log to lnb; focused regression and spec generator check passed."
+  - turn: 33
+    type: decision
+    id: "N151"
+    routing: direct
+    provenance: user-revised
+    summary: "Committed PR #253 log-bias default locally as a53d3a7."
+  - turn: 34
+    type: question
+    id: "N152"
+    routing: direct
+    provenance: ai-executed
+    summary: "Verified the PR #265 finding that auxiliary LCDM drops shared HuSawicki inputs."
+  - turn: 35
+    type: decision
+    id: "N153"
+    routing: direct
+    provenance: user-revised
+    summary: "Moved the LCDM reference run onto the resolved f(R) inputs and added a T_cmb regression."
+  - turn: 42
+    type: experiment
+    id: "N159"
+    routing: direct
+    provenance: user
+    summary: "Reference run of scripts/paper-joss (36 cores, 64 workers, 70 min): errors agree 1.4/1.2/0.9%, chains 11/10/36 min, autodiff 0.05/0.38%; paper text, READMEs, compare script updated"
+  - turn: 45
+    type: decision
+    id: "N162"
+    routing: direct
+    provenance: user
+    summary: "Surgical Summary edits on the paper branch: user-written Summary, citations restored (Raveri2016, Bartlett2024a/b, Sui2025, Bradbury2018), Nautilus link; nothing built or tested by request"
+  - turn: 46
+    type: decision
+    id: "N163"
+    routing: direct
+    provenance: user
+    summary: "Bellini CRediT roles set by the user (Software, Ideas, Data) mapped to Software, Conceptualization, Data curation; front matter and prose bullet updated; checker 12 authors/43 roles/0 errors"
+  - turn: 47
+    type: decision
+    id: "N164"
+    routing: direct
+    provenance: user
+    summary: "Roles are final (no author confirmation needed); dedicated acknowledgement for M. Martinelli (initiating the project, ideas, motivation, bringing researchers together); other four thanks kept in a separate sentence"
+  - turn: 48
+    type: decision
+    id: "N165"
+    routing: direct
+    provenance: user
+    summary: "Paper Validation suite paragraph now says the validation data are public in the Hugging Face dataset santicas/cjfp-data"
+  - turn: 49
+    type: decision
+    id: "N166"
+    routing: direct
+    provenance: user
+    summary: "Paper cites ARA; new Figure 4 shows the ARA exploration graph"
+ai_actions:
+  - turn: 35
+    action: "Rewrote the LCDM parameter construction in fr_boost_nonlinear; added a regression test and a docs/CHANGELOG note; 50 passed, 3 skipped."
+    provenance: ai-executed
+    files_changed:
+      - cosmicjellyfish/cosmology/modified_gravity.py
+      - tests/modified_gravity_test.py
+      - docs/source/modified_gravity_fR.md
+      - CHANGELOG.md
+  - turn: 38
+    action: "Swapped Bellini and Koyama in paper.md and CITATION.cff and moved Sakr after Sabarish in CITATION; committed c7d3c58 on sakr-pr280."
+    provenance: ai-executed
+    files_changed:
+      - paper/paper.md
+      - CITATION.cff
+  - turn: 39
+    action: "Resolved the CHANGELOG conflict by merging Added/Changed/Fixed bullets from both sides (8 branch + 18 main bullets, no duplicates); committed merge da349b4; removed cfp-sakr and pulled cfp-paper to 6cd21ea."
+    provenance: ai-executed
+    files_changed:
+      - CHANGELOG.md
+  - turn: 40
+    action: "Fast-forwarded main to 8c22788, removed the merged cfp-fr-emulators and cfp-notebooks worktrees, and merged origin/main into paper/joss-draft in the working tree; rebuilt the JOSS PDF."
+    provenance: ai-executed
+    files_changed:
+      - .gitignore
+      - paper/README.md
+      - paper/paper.md
+  - turn: 36
+    type: decision
+    id: "N153"
+    routing: direct
+    provenance: user
+    summary: "Committed the resolved-input fix as 6d47e28; nothing pushed."
+  - turn: 37
+    type: decision
+    id: "N154"
+    routing: direct
+    provenance: user-revised
+    summary: "Rebased PR #280 onto paper/joss-draft; Sakr added as 12th author with affiliations 18-20."
+  - turn: 38
+    type: decision
+    id: "N155"
+    routing: direct
+    provenance: user
+    summary: "Reordered the #280 author list: Sakr after Sabarish, Bellini before Koyama."
+  - turn: 39
+    type: decision
+    id: "N156"
+    routing: direct
+    provenance: user
+    summary: "Merged origin/main into fr_emulators (da349b4), union of both CHANGELOG Unreleased buckets; dropped the #280 worktree after its merge."
+  - turn: 40
+    type: decision
+    id: "N157"
+    routing: direct
+    provenance: ai-executed
+    summary: "Resolved the #252 merge of origin/main into paper/joss-draft: ours in paper.md/README, .gitignore union, untracked generated paper/jats; staged, not committed."
+  - turn: 41
+    type: decision
+    id: "N158"
+    routing: direct
+    provenance: user
+    summary: "User approved merging main into the paper branch (no main development before release); committed as 6df9a4f, branch 0 behind main."
+
+  - turn: 43
+    type: question
+    id: "N160"
+    routing: direct
+    provenance: ai-executed
+    summary: "Checked a ChatGPT review of the paper: survey fallback, symbolic_pofk install, Fig. 1 scope and validation caveats confirmed; jax-cosmo 'no covariances/Fisher' claim is wrong (README has Gaussian cl covariance + hessian Fisher). New Summary dropped 5 citations (Bradbury2018, Bartlett2024a/b, Sui2025, Raveri2016)."
+  - turn: 44
+    type: decision
+    id: "N161"
+    routing: direct
+    provenance: user
+    summary: "v2.1.0 released by the user (PyPI, Publish and Release jobs ok); paper Example now says pip install cosmicjellyfish==2.1.0 plus git install of symbolic_pofk; listing 1 verified on the PyPI wheel (14 s)."
 
 ai_actions:
   - turn: 1

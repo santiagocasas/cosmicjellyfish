@@ -2721,3 +2721,343 @@ tree:
   evidence: [cfp-survey/scripts/validation/plot_survey_validation.py, cfp-survey/docs/source/survey_validation.md]
   also_depends_on: [N139]
   status: resolved
+
+- id: N141
+  type: decision
+  title: "PR #253 CodeRabbit review: 12 of 13 threads fixed, 2 skipped; export_fisher mode tag"
+  provenance: user
+  timestamp: "2026-11-26T23:30"
+  choice: >
+    User asked to verify each CodeRabbit finding on PR #253 and the export_fisher comment,
+    fix the valid ones, skip the rest with a reason. All were checked against current code
+    first. FIXED: export root now carries _Ig/_joint (only those two modes collide; gg/II and
+    photometric names unchanged; mode read via spectro_modes.spectro_mode, not the attribute
+    that is unset without spectro); snapshot replay restores Ig via replay_observables in
+    load_fisher_from_json; shared galaxy/IM bins resolved per interval in SpectroCov
+    (_set_shared_bins), ValueError when edges differ; sp_bias_model/root mismatch raises early;
+    reference_pgg array dispersions; non-finite differences rejected (_worst_difference);
+    P_noise_21 and plot unit labels; symbolic_pofk guard in _forecast; docs/KNOWN_ISSUES/roadmap
+    wording. Tests added (7 new + 3 shared-bin unit tests). SKIPPED: paper/jats/paper.jats
+    findings (generated artifact, already untracked on paper/joss-draft, paper.md already has the
+    requested wording, standing rule: paper changes only on the paper branch).
+    Design choice: config.py does NOT trust a stored spectro_mode, because settings = options
+    is mutated in place and a reused dict would turn an explicit three-name request into Ig.
+    Behaviour change: DESI-ELG with the default SKAO-IM-Redbook (shared midpoint 1.65, edges
+    [1.6,1.7] vs [1.5,1.8]) used to run with a wrong volume and now raises.
+  alternatives: ["honour settings['spectro_mode'] in config", "remap bias keys by model in nuisance and jaxcosmo", "rebin mismatched grids"]
+  evidence: [cfp-survey/tests/spectro_modes_test.py, cfp-survey/tests/spectro_cov_test.py, cfp-survey/tests/survey_covariance_test.py, cfp-survey/tests/survey_observables_validation_test.py]
+  also_depends_on: [N140]
+  status: resolved
+
+- id: N142
+  type: decision
+  title: "PR #253 follow-up: inspect local review fixes and leave broad validation to CI"
+  provenance: user
+  timestamp: "2026-11-26T23:07"
+  choice: >
+    Avoid another broad local test run. GitHub still shows 13 inline threads plus one
+    out-of-diff export finding on 56c6d8e. N141's tally includes the export finding:
+    eleven inline items were addressed locally (bias mismatch by fail-fast only), two
+    generated JATS items deferred. Inspection found that an Ig snapshot with the legacy
+    pair and spectro_joint=True could replay as joint; proposed normalizing the flag in
+    the reconstructed options. Existing pytest log reports 651 passed, 3 skipped.
+  evidence: ["https://github.com/santiagocasas/cosmicjellyfish/pull/253", /tmp/opencode/full_tests.log]
+  also_depends_on: [N141]
+  status: open
+
+- id: N143
+  type: decision
+  title: "Preserve cross-only spectrum mode when replaying legacy snapshots"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:14"
+  choice: >
+    For snapshots recording Ig, clear spectro_joint in the copied replay options.
+    Keep the saved options intact. Focused replay regression passed for the explicit
+    cross-only request, the joint triplet, and the legacy GCsp+IM pair with the flag set.
+  evidence: [cfp-survey/cosmicjellyfish/utilities/utils.py, cfp-survey/tests/spectro_modes_test.py]
+  also_depends_on: [N142]
+  status: resolved
+
+- id: N144
+  type: decision
+  title: "Commit PR #253 review fixes in three groups"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:16"
+  choice: >
+    Commit export and replay (2de11dd), shared-bin and bias configuration (769b2bb),
+    and validation diagnostics and documentation (ee512d0). Leave the local uv.lock
+    edit out. All staged diff checks passed; broad validation remains with CI.
+  evidence: [2de11dd, 769b2bb, ee512d0]
+  also_depends_on: [N143]
+  status: resolved
+- id: N145
+  type: experiment
+  title: "Smoke-test PR #265 against e-MANTIS 1.4.0"
+  provenance: ai-executed
+  timestamp: "2026-11-26T23:23"
+  evidence: [eafe31c, cosmicjellyfish/cosmology/modified_gravity.py]
+  result: >
+    At h=0.67, Omega_m=0.32, and -log10|f_R0|=5.301, the real boost returned
+    1.01828 at k=0.1 and z=0.5 for sigma8_LCDM=0.815. At sigma8_LCDM=0.60
+    the configured clamp passed 0.60 through and the emulator rejected it:
+    its lower bound is 0.6083. GitHub also reported a merge conflict with main.
+  status: resolved
+- id: N146
+  type: experiment
+  title: "Verify the e-MANTIS clamp for PR #265"
+  provenance: ai-executed
+  timestamp: "2026-11-26T23:26"
+  also_depends_on: [N145]
+  evidence: [cosmicjellyfish/cosmology/modified_gravity.py, tests/cosmology_test.py]
+  result: >
+    Intersected the likelihood and emulator bounds. Real e-MANTIS 1.4.0 gave identical
+    boosts at input sigma8_LCDM 0.60 and 0.6083 (1.0271167) and preserved the nominal
+    result. Focused tests: 14 passed, one skipped. Prepared integration of origin/main
+    dd632a9 and resolved the changelog in the working tree; offline lock check passed.
+  status: resolved
+- id: N147
+  type: decision
+  title: "Commit the main integration and e-MANTIS fix for PR #265"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:33"
+  choice: "Record the conflict resolution and verified clamp in one local merge commit."
+  evidence: [fc5a109]
+  also_depends_on: [N146]
+  status: resolved
+- id: N148
+  type: experiment
+  title: "Audit CodeRabbit thread state on PR #253"
+  provenance: ai-executed
+  timestamp: "2026-11-26T23:36"
+  also_depends_on: [N144]
+  evidence: [ee512d0, 'https://github.com/santiagocasas/cosmicjellyfish/pull/253']
+  result: >
+    GitHub lists 8 resolved and 5 unresolved CodeRabbit inline threads. Shared-bin
+    indexing and Euclid-default documentation are fixed in the pushed head; log-bias
+    selection now fails clearly unless the matching root is supplied. Two stale
+    generated JATS findings remain deferred. The export collision fix is pushed.
+    The PR has no merge conflict but main requires conversation resolution.
+  status: resolved
+- id: N149
+  type: decision
+  title: "Close verified PR #253 threads and defer generated JATS"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:41"
+  choice: "Close two fixed threads and two generated-JATS threads with a documented deferral; leave the logarithmic bias behavior open for a maintainer decision."
+  evidence: ['https://github.com/santiagocasas/cosmicjellyfish/pull/253#issuecomment-7204894714']
+  also_depends_on: [N148]
+  status: resolved
+- id: N150
+  type: decision
+  title: "Default runtime linear_log bias to lnb on PR #253"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:43"
+  choice: "Infer lnb for a runtime linear_log override when the caller omits the root. Reject incompatible explicit roots early."
+  evidence: [cosmicjellyfish/configs/config.py, tests/survey_covariance_test.py]
+  also_depends_on: [N149]
+  status: resolved
+- id: N151
+  type: decision
+  title: "Commit the logarithmic bias default for PR #253"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:44"
+  choice: "Commit the verified runtime default and aligned spec comments as a53d3a7."
+  evidence: [a53d3a7]
+  also_depends_on: [N150]
+  status: resolved
+- id: N152
+  type: question
+  title: "Preserve shared CLASS inputs in the f(R) boost reference run"
+  provenance: ai-executed
+  timestamp: "2026-11-26T23:47"
+  description: "PR #265 rebuilds auxiliary LCDM inputs without the HuSawicki section, dropping shared overrides such as T_cmb. Propose using resolved inputs while separating gravity flags and LCDM closure."
+  evidence: ['https://github.com/santiagocasas/cosmicjellyfish/pull/265#discussion_r4713927671', cosmicjellyfish/cosmology/modified_gravity.py]
+  status: resolved
+- id: N153
+  type: decision
+  title: "Build the auxiliary LCDM inputs from the resolved f(R) parameters"
+  provenance: user-revised
+  timestamp: "2026-11-26T23:52"
+  choice: >-
+    Start from boltzmann_classpars['LCDM'] merged with the resolved classcosmopars, strip the
+    hi_class-only f(R) keys (hs_*, *_smg, gravity_model, hubble_evolution), restore Omega_Lambda
+    and Omega_fld from the LCDM section, then fix A_s and the nonlinear prescription as before.
+    Regression test covers a T_cmb override that exists only in HuSawicki. Committed as 6d47e28.
+  alternatives: ["Merge changebasis_class(cosmopars) as before and keep the shared-input gap."]
+  evidence: [cosmicjellyfish/cosmology/modified_gravity.py, tests/modified_gravity_test.py, docs/source/modified_gravity_fR.md]
+  also_depends_on: [N152]
+  status: resolved
+- id: N154
+  type: decision
+  title: "Port PR #280 (Sakr affiliation) to paper/joss-draft by rebase"
+  provenance: user-revised
+  timestamp: "2026-11-27T12:36"
+  choice: >-
+    Retarget #280 to paper/joss-draft and rebase his three commits onto it instead of merging
+    the paper branch into his main-based branch, so the PR diff stays CITATION.cff + paper.md
+    and the paper branch does not absorb main's 44 newer commits. Merge conflicts resolved
+    keeping the joss-draft front matter: Sakr after Sabarish, affiliations 18-20, CRediT roles
+    Conceptualization/Methodology/Software/Validation, bullet in the contributions list.
+  alternatives: ["Merge paper/joss-draft into sakr_paper (the earlier authorship recipe), which would pull main into the paper branch."]
+  evidence: [CITATION.cff, paper/paper.md, 'https://github.com/santiagocasas/cosmicjellyfish/pull/280']
+  status: resolved
+- id: N155
+  type: decision
+  title: "Author order in PR #280: Sakr fourth, Bellini before Koyama"
+  provenance: user
+  timestamp: "2026-11-27T12:58"
+  choice: >-
+    Settle the paper author sequence at Casas, Pamuk, Sabarish, Sakr, Sapone, Leizerovich,
+    Frusciante, Pace, Bellini, Koyama, Camera, Raveri: Sakr right after Sabarish, Bellini one
+    place up, Camera/Koyama/Raveri closing the list.
+  alternatives: ["Leave the order produced by the rebase (Koyama then Bellini, Sakr already fourth)."]
+  evidence: ["cfp-sakr/paper/paper.md", "cfp-sakr/CITATION.cff", "commit c7d3c58"]
+  also_depends_on: [N154]
+  status: resolved
+- id: N156
+  type: decision
+  title: "Merge main into fr_emulators with a union CHANGELOG"
+  provenance: user
+  timestamp: "2026-11-27T13:20"
+  choice: >-
+    Resolve the only #265 conflict by rewriting the Unreleased block as the union of both
+    sides: Added keeps the three f(R) bullets followed by main's survey bullets, Changed
+    takes main's three bullets, Fixed keeps the two f(R)/e-MANTIS fixes followed by main's
+    survey review fixes. Verified all 26 source bullets are present with no duplicates.
+  alternatives: ["Keep only the branch bullets and drop main's survey entries (loses released notes)."]
+  evidence: ["cfp-fr-emulators/CHANGELOG.md", "merge da349b4"]
+  also_depends_on: [N153]
+  status: resolved
+- id: N157
+  type: decision
+  title: "Resolve PR #252 by merging main into paper/joss-draft"
+  provenance: ai-executed
+  timestamp: "2026-11-27T13:30"
+  choice: >-
+    Bring the 51 main commits into the paper branch with one merge commit and keep the
+    branch's paper content where the two versions disagree: paper/paper.md and
+    paper/README.md take ours (the v2-derived draft), .gitignore unions both figure
+    exceptions, and the generated paper/jats tree (paper.jats from main, plus a fig4 PNG)
+    is dropped because the branch stopped tracking build output.
+  alternatives: ["Rebase the 63 paper commits onto main, which would rewrite every authorship merge commit."]
+  evidence: ["cfp-paper/paper/paper.md", "cfp-paper/.gitignore", "check_credit_roles 12 authors / 40 roles"]
+  also_depends_on: [N155]
+  status: resolved
+- id: N158
+  type: decision
+  title: "Main is frozen until release: merge it into paper/joss-draft"
+  provenance: user
+  timestamp: "2026-11-27T13:40"
+  choice: >-
+    Accept that paper/joss-draft absorbs all of main (merge 6df9a4f) because no development
+    will land on main before the release and the paper; the branch diff against main stays
+    paper-only (17 files).
+  alternatives: ["Keep the branch paper-only by rebasing its 63 commits onto main."]
+  evidence: ["merge 6df9a4f", "git diff origin/main --stat: 17 paper files"]
+  also_depends_on: [N157]
+  status: resolved
+- id: N159
+  type: experiment
+  title: "Reproduction run of scripts/paper-joss on a 36-core node"
+  provenance: user
+  timestamp: "2026-11-27T14:00"
+  result: >-
+    70 min total with 64 workers. Nautilus vs Fisher max sigma deviation 1.43% (WL), 1.16% (GCsp),
+    0.94% (WL+GCsp), ESS 2100-2800 (sampling noise ~1.3%); chains 11/10/36 min; autodiff 0.0477% and
+    0.376%. The first run (5%, 0.4%, 1.3%; 17/22/105 min) had WL errors ~3 sigma high and a lucky GCsp
+    draw. Paper text, paper-joss README, compare_with_paper.py and reproduce_all.sh updated to the
+    reference run; figure PNG still from the first run.
+  evidence: ["scripts/paper-joss/README.md reference run table", "paper.md comment C23c"]
+  also_depends_on: [N133]
+  status: resolved
+
+- id: N160
+  type: question
+  title: "ChatGPT review of the paper checked against repo"
+  provenance: ai-executed
+  timestamp: "2026-11-27T16:00"
+  description: >-
+    User pasted a ChatGPT review. Confirmed: listings need symbolic_pofk from git and a release newer than
+    v2.0.0 (99 commits since); DESI/Rubin silently fall back to Euclid specs (docs/KNOWN_ISSUES.md);
+    Fig. 1 caption lacks the probe-independence assumption and the sampler listing is WL-only with 2 free
+    parameters while text implies a matched setup; cross-survey paragraph omits shared-cosmology caveat,
+    k range and 0.5-6.8% amplitude offset. Wrong in the paper: jax-cosmo is said to lack covariances and
+    Fisher tools, but its README computes a Gaussian cl covariance and a hessian Fisher. Also found my own
+    slip: the new user-written Summary removed the only citations of Bradbury2018, Bartlett2024a/b, Sui2025
+    and Raveri2016.
+  evidence: ["jax-cosmo README", "docs/KNOWN_ISSUES.md", "docs/source/survey_validation.md", "paper/paper.md"]
+  status: open
+
+- id: N161
+  type: decision
+  title: "Paper cites the released v2.1.0 and the symbolic_pofk git install"
+  provenance: user
+  timestamp: "2026-11-27T16:25"
+  choice: >-
+    After the user tagged v2.1.0 (PyPI live), the paper states pip install cosmicjellyfish==2.1.0 and the
+    separate git install of symbolic_pofk, which PyPI cannot carry as a dependency.
+  evidence: ["clean py3.12 venv: listing 1 runs unchanged in 14 s", "PyPI JSON for 2.1.0"]
+  alternatives: ["pin only cosmicjellyfish (listings would fail with symbolic backend)"]
+  status: resolved
+
+- id: N162
+  type: decision
+  title: "Summary rewritten by the user; citations and Nautilus link restored"
+  provenance: user
+  timestamp: "2026-11-27T17:10"
+  choice: >-
+    Summary is the user's own text, with the name-change sentence tied to the JAX transition. Citations
+    dropped by that replacement were put back, and Nautilus is linked to its docs. Edits were kept surgical
+    at the user's request (no build, no tests).
+  evidence: ["paper/paper.md Summary", "comment C1"]
+  alternatives: ["move the citations into Software design"]
+  status: resolved
+
+- id: N163
+  type: decision
+  title: "Bellini CRediT roles: Software, Conceptualization, Data curation"
+  provenance: user
+  timestamp: "2026-11-27T17:30"
+  choice: >-
+    The user gave Bellini's roles as Software, Ideas, Data. Ideas maps to Conceptualization and Data to
+    Data curation, so that all roles stay within the 14 CRediT terms.
+  evidence: ["paper/scripts/check_credit_roles.py: 12 authors, 43 roles, 0 errors"]
+  alternatives: ["keep the TODO until Bellini confirms"]
+  status: resolved
+
+- id: N164
+  type: decision
+  title: "CRediT roles final; special acknowledgement for Martinelli"
+  provenance: user
+  timestamp: "2026-11-27T17:45"
+  choice: >-
+    The user closed the role confirmation (TODO line removed) and asked for a separate acknowledgement
+    thanking M. Martinelli for initiating the project, the ideas, the motivation and bringing researchers together.
+  evidence: ["paper/paper.md Acknowledgements and Author contributions"]
+  alternatives: ["keep him in the shared thanks sentence"]
+  status: resolved
+
+- id: N165
+  type: decision
+  title: "Validation data hosted in a public Hugging Face dataset, cited in the paper"
+  provenance: user
+  timestamp: "2026-11-27T18:00"
+  choice: >-
+    The paper's Validation suite paragraph points to https://huggingface.co/datasets/santicas/cjfp-data,
+    stated as public and as the place where the validation data now live.
+  evidence: ["paper/paper.md Validation suite paragraph"]
+  alternatives: []
+  status: resolved
+
+- id: N166
+  type: decision
+  title: "Cite ARA in the JOSS paper and show the trace as a figure"
+  provenance: user
+  timestamp: "2026-11-28T06:00"
+  choice: >
+    AI usage disclosure cites ARA (Liu2026ARA, arXiv:2604.24658) and adds Figure 4,
+    a timeline of the exploration graph (type lanes, provenance colours, dependency arcs)
+    made by paper/scripts/fig6_ara_trace.py from cfp-dev/ara (187 nodes, 179 edges).
+  evidence: ["cfp-paper paper/paper.md, paper/paper.bib, paper/scripts/fig6_ara_trace.py (uncommitted)"]
+  status: resolved
+
