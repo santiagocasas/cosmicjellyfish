@@ -41,12 +41,14 @@ authors:
     affiliation: "2, 4"
     roles:
       - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
       - {credit: software, credit-name: "Software"}
   - name: Ziad Sakr
     orcid: 0000-0002-4823-3757
     affiliation: "18, 19, 20"
     roles:
       - {credit: conceptualization, credit-name: "Conceptualization"}
+      - {credit: investigation, credit-name: "Investigation"}
       - {credit: methodology, credit-name: "Methodology"}
       - {credit: software, credit-name: "Software"}
       - {credit: validation, credit-name: "Validation"}
@@ -535,8 +537,8 @@ Software, and `content` as Writing -- original draft).
   draft, Writing -- review & editing.
 - **S. Pamuk**: Conceptualization, Investigation, Methodology, Software, Validation,
   Writing -- original draft.
-- **V. M. Sabarish**: Conceptualization, Software.
-- **Z. Sakr**: Conceptualization, Methodology, Software, Validation.
+- **V. M. Sabarish**: Conceptualization, Investigation, Software.
+- **Z. Sakr**: Conceptualization, Investigation, Methodology, Software, Validation.
 - **D. Sapone**: Conceptualization, Software, Supervision.
 - **M. Leizerovich**: Conceptualization, Software, Validation.
 - **N. Frusciante**: Methodology, Software, Data curation.
