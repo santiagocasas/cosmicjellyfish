@@ -1,0 +1,143 @@
+\DeclareMathOperator{\yellm}{\mathit{Y}}
+\newcommand\yellmarb[3]{\, _{#1}\!\!\yellm^{#2}_{\!#3}}
+\newcommand{\br}[1]{\left( #1 \right)}
+\newcommand{\bc}[1]{\left\{ #1 \right\}}
+\newcommand{\bb}[1]{\left[ #1 \right]}
+\newcommand{\ba}[1]{\left\langle #1 \right\rangle}
+%\DeclareMathOperator{\smalldelta}{\Delta}
+%\newcommand\yellmarb[1]{\, _{#1}\!\yellm}
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+\newcommand{\pkgfont}{\texttt} % change here if you prefer \textsf or \textsc
+\newcommand{\pkg}[2][]{%
+  \if\relax\detokenize{#1}\relax
+    \pkgfont{#2}%
+  \else
+    \href{#1}{\pkgfont{#2}}%
+  \fi
+}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstdefinelanguage{YAML}{
+  keywords={true, false, null},
+  keywordstyle=\color{blue}\bfseries,
+  comment=[l]{\#},
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color{teal},
+  morestring=[b]",
+  morestring=[b]',
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!8},
+  frame=single,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+}
+
+
+\newcommand{\eg}{\emph{e.g.}\xspace}
+\newcommand{\ie}{\emph{i.e.}\xspace}
+\newcommand{\etc}{\emph{etc.}\xspace}
+\newcommand{\etal}{\emph{et al.}\xspace}
+
+\newcommand{\threextwo}{3$\times$2pt}
+
+
+
+% ============================================================
+% Astronomy Journal Macros for BibTeX
+% ============================================================
+
+% American Astronomical Society Journals
+\newcommand{\aj}{AJ}                    % Astronomical Journal
+\newcommand{\apj}{ApJ}                  % Astrophysical Journal
+\newcommand{\apjl}{ApJL}                % Astrophysical Journal Letters
+\newcommand{\apjs}{ApJS}                % Astrophysical Journal Supplement
+\newcommand{\apss}{Ap\&SS}              % Astrophysics and Space Science
+\newcommand{\aap}{A\&A}                 % Astronomy and Astrophysics
+\newcommand{\aapr}{A\&ARv}              % Astronomy and Astrophysics Review
+\newcommand{\aaps}{A\&AS}              % Astronomy and Astrophysics Supplement
+\newcommand{\pasp}{PASP}                % Publications of the ASP
+\newcommand{\pasj}{PASJ}                % Publications of the ASJ
+\newcommand{\mnras}{MNRAS}              % Monthly Notices of the RAS
+\newcommand{\nat}{Nature}               % Nature
+\newcommand{\sci}{Science}              % Science
+\newcommand{\prd}{Phys.~Rev.~D}        % Physical Review D
+\newcommand{\prl}{Phys.~Rev.~Lett.}    % Physical Review Letters
+\newcommand{\jcap}{JCAP}               % Journal of Cosmology and
+                                        % Astroparticle Physics
+\newcommand{\araa}{ARA\&A}             % Annual Review of Astronomy
+                                        % and Astrophysics
+\newcommand{\physrep}{Phys.~Rep.}      % Physics Reports
+\newcommand{\sovast}{Soviet~Ast.}      % Soviet Astronomy
+\newcommand{\ssr}{Space~Sci.~Rev.}     % Space Science Reviews
+
+
+% ------------------------------------------------------------
+% Macros for acknowledgement texts
+%
+\newcommand*{\AckInstitutions}{a number of agencies and
+  institutes that have supported the development of \textit{Euclid}, in
+  particular
+  the Agenzia Spaziale Italiana,
+  the Austrian Forschungsf\"orderungsgesellschaft funded through BMIMI,
+  the Belgian Science Policy,
+  the Canadian Euclid Consortium,
+  the Deutsches Zentrum f\"ur Luft- und Raumfahrt,
+  the DTU Space and the Niels Bohr Institute in Denmark,
+  the French Centre National d'Etudes Spatiales,
+  the Funda\c{c}\~{a}o para a Ci\^{e}ncia e a Tecnologia,
+  the Hungarian Academy of Sciences,
+  the Ministerio de Ciencia, Innovaci\'{o}n y Universidades,
+  the National Aeronautics and Space Administration,
+  the National Astronomical Observatory of Japan,
+  the Netherlandse Onderzoekschool Voor Astronomie,
+  the Norwegian Space Agency,
+  the Research Council of Finland,
+  the Romanian Space Agency,
+  the Swiss Space Office (SSO) at the State Secretariat for Education, Research, and Innovation (SERI),
+  and the United Kingdom Space Agency.
+  A complete and detailed list is available on the \textit{Euclid}\ web site
+  (\url{www.euclid-ec.org/consortium/community/}).\xspace}
+
+\newcommand{\AckEC}{The Euclid Consortium acknowledges the European
+  Space Agency and \AckInstitutions}
+\newcommand{\AckECon}{The authors acknowledge the Euclid Consortium,
+  the European Space Agency, and \AckInstitutions}
+\newcommand{\AckECol}{The authors acknowledge the Euclid
+  Collaboration, the European Space Agency, and \AckInstitutions}
+
+\newcommand{\AckERO}{This work has made use of the Early Release
+  Observations (ERO) data from the \textit{Euclid}\/ mission of the European
+  Space Agency (ESA), 2024,
+  \url{https://doi.org/10.57780/esa-qmocze3}. }
+
+\newcommand{\AckQone}{This work has made use of the \textit{Euclid} Quick Release
+  Q1 data from the \textit{Euclid}\/ mission of the European Space Agency
+  (ESA), 2025, \url{https://doi.org/10.57780/esa-2853f3b}. }
+
+\newcommand{\AckQtwo}{This work has made use of the \textit{Euclid} Quick
+  Release Q2 data from the \textit{Euclid}\/ mission of the European Space Agency
+  (ESA), 2026, available at
+  \url{https://www.cosmos.esa.int/web/euclid/q2-data-release}. }
+
+\newcommand{\AckDRone}{This work has made use of the \textit{Euclid} Data
+  Release 1 (DR1) from the European Space Agency (ESA) mission \textit{Euclid},
+  available at
+  \url{https://www.cosmos.esa.int/web/euclid/data-release-dr1}. }
+
+
+\newcommand{\AckDatalabs}{This research makes use of ESA Datalabs
+  (\url{datalabs.esa.int}), an initiative by ESA’s Data Science and
+  Archives Division in the Science and Operations Department,
+  Directorate of Science. }
+
+\newcommand{\AckCosmoHub}{This work has made use of CosmoHub,
+  developed by PIC (maintained by IFAE and CIEMAT) in collaboration
+  with ICE-CSIC. CosmoHub received funding from the Spanish government
+  (MCIN/AEI/10.13039/501100011033), the EU NextGeneration/PRTR
+  (PRTR-C17.I1), and the Generalitat de Catalunya.}

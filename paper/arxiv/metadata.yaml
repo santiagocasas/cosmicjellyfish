@@ -1,0 +1,3 @@
+# Extra metadata used only for the arXiv LaTeX build (make_arxiv.sh).
+# The title as typeset on arXiv, with the package name in monospace as in cloelib.
+latex-title: "`cosmicjellyfish`: Fisher-matrix and Monte Carlo forecasts for cosmological surveys in Python and JAX"

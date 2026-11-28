@@ -1,0 +1,47 @@
+% Sidebar on the first page, JOSS style (from the cloelib arXiv submission).
+% Fill in the DOI, Zenodo archive, review link and dates once they exist.
+%
+% The sidebar is attached to the line after \maketitle and shifted up by
+% \sidebaroffset so that it starts level with the title. The value depends on
+% the length of the author and affiliation block: cloelib (60 authors) used
+% -500pt. Make it less negative if the sidebar overlaps the header logo, more
+% negative if it starts below the title.
+\newcommand{\sidebaroffset}{-260pt}
+\marginpar{
+  \begin{flushleft}
+  \vspace{\sidebaroffset}
+  \sffamily\small
+
+  {\bfseries DOI: N/A}
+
+  \vspace{2mm}
+
+  {\bfseries Software}
+  \begin{itemize}
+    \setlength\itemsep{0em}
+    \item \href{https://github.com/santiagocasas/cosmicjellyfish}{\color{linky}{Repository}} \ExternalLink
+    \item \href{https://www.santicasas.space/cosmicjellyfish/docs/}{\color{linky}{Documentation}} \ExternalLink
+    \item \href{https://www.santicasas.space/cosmicjellyfish/dashboard/}{\color{linky}{Validation dashboard}} \ExternalLink
+    \item \href{https://huggingface.co/datasets/santicas/cjfp-data}{\color{linky}{Validation data}} \ExternalLink
+    \item \href{https://doi.org/10.5281/zenodo.24593176}{\color{linky}{Archive (Zenodo)}} \ExternalLink
+  \end{itemize}
+
+  \vspace{2mm}
+  {\bfseries Install:}\\ \textttOrig{pip install cosmicjellyfish}
+
+  \vspace{2mm}
+  \par\noindent\hrulefill\par
+  \vspace{2mm}
+
+  {\bfseries Submitted:} N/A \\
+  {\bfseries Published:} N/A
+
+  \vspace{2mm}
+  {\bfseries License}\\
+  Authors retain copyright and release the work under CC BY 4.0
+  (\href{http://creativecommons.org/licenses/by/4.0/}{\color{linky}{link}}).
+  The software is released under the Apache 2.0 licence.
+  \end{flushleft}
+}
+
+\vspace{.2cm}
